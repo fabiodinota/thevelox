@@ -9,16 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^1.6.5",
     "next": "14.1.0",
+    "next-pwa": "^5.6.0",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/dotenv": "^8.2.0",
+    "@types/next-pwa": "^5.6.9",
+    "@types/node": "^20.11.5",
     "@types/raf": "^3.4.3",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "dotenv": "^16.3.2",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "postcss": "^8",
