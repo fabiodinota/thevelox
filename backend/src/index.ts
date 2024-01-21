@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from 'cors';
+import { PrismaClient } from '@prisma/client'
 
 dotenv.config();
 
@@ -11,8 +12,25 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server???");
+const prisma = new PrismaClient()
+
+app.get("/", async (req: Request, res: Response) => {
+    const allUsers = await prisma.users.findMany()
+    res.send(allUsers);
+    console.log(allUsers)
+});
+
+app.post("/auth/signup", async (req: Request, res: Response) => {
+    const { username, email, password } = req.body;
+    const newUser = await prisma.users.create({
+        data: {
+            username,
+            email,
+            password
+        }
+    });
+    res.send(newUser);
+    console.log(newUser)
 });
 
 app.listen(port, () => {
