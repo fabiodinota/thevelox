@@ -17,7 +17,6 @@ export const metadata: Metadata = {
 	generator: "Next.js",
 	manifest: "/manifest.json",
 	keywords: [],
-	themeColor: "#E42B2B",
 	authors: [{ name: "Fabio Di Nota" }],
 	viewport:
 		"minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
@@ -36,10 +35,15 @@ export default function RootLayout({
 		<ThemeProvider>
 			<SessionProvider>
 				<html lang="en">
+                    <head>
+                        {/* themecolor meta tag */}
+                        <meta name="theme-color" content={"#E42B2B"} />
+                        {/* manifest meta tags */}
+                    </head>
 					<body
 						className={
 							inter.className +
-							"bg-white dark:bg-background text-black dark:text-white"
+							"bg-white dark:bg-background text-black dark:text-white overflow-x-hidden"
 						}
 					>
 						{children}

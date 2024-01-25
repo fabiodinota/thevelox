@@ -7,6 +7,7 @@ import { useTheme } from "./context/themeContext";
 import { Canvas, useFrame, ThreeElements } from "@react-three/fiber";
 import * as THREE from "three";
 import { useSession } from "./context/sessionContext";
+import { Map } from "./Map";
 
 function Box(props: ThreeElements["mesh"]) {
 	const meshRef = useRef<THREE.Mesh>(null!);
@@ -173,6 +174,14 @@ export default function Home() {
 				<Box position={[-1.2, 0, 0]} />
 				<Box position={[1.2, 0, 0]} />
 			</Canvas>
+                <a href="#map">Go to Map</a>
+                <div className="w-screen h-screen overflow-hidden relative">
+                    <div style={{ backdropFilter: "blur(16px)"}} className="absolute left-1/2 -translate-x-1/2 bottom-10 z-[9999] backdrop-bl bg-white/20 flex justify-center items-center border border-gray-100 w-full max-w-[900px] h-[80px] rounded-xl">
+                        test mavbar
+                    </div>
+                    <Map />
+                </div>
 		</main>
 	);
 }
+

@@ -3,12 +3,13 @@
 import axios from "axios";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import parseToken from "../utils/parseToken";
+import Cookies from 'js-cookie';
 
-// Create a context to manage the theme
+// Create a context to manage the session
 export const SessionContext = createContext({
 	user: null as User | null,
 	isAuthenticated: false,
-	signIn: (credentials: object) => Promise.resolve(), // Updated signature
+	signIn: (credentials: object) => Promise.resolve(),
 	signUp: (userData: object) => Promise.resolve(),
 	signOut: () => {},
 });
@@ -35,35 +36,19 @@ type User = {
 
 export const SessionProvider = ({ children }: SessionProviderProps) => {
 	const [user, setUser] = useState<User | null>(null);
-	const [accessToken, setAccessToken] = useState<string>(() => {
-		if (typeof localStorage !== "undefined") {
-			return localStorage.getItem("accessToken") || "";
-		} else {
-			return ""; // Handle the case where localStorage is not available (e.g., server-side rendering)
-		}
-	});
-	const [refreshToken, setRefreshToken] = useState<string>(() => {
-		if (typeof localStorage !== "undefined") {
-			return localStorage.getItem("refreshToken") || "";
-		} else {
-			return ""; // Handle the case where localStorage is not available (e.g., server-side rendering)
-		}
-	});
+	const [accessToken, setAccessToken] = useState<string>(() => Cookies.get('accessToken') || '');
+	const [refreshToken, setRefreshToken] = useState<string>(() => Cookies.get('refreshToken') || '');
 
 	console.log("User: ", user);
 
 	// Store the access token in localStorage
 	useEffect(() => {
-		if (typeof localStorage !== "undefined") {
-			localStorage.setItem("accessToken", accessToken);
-		}
+		Cookies.set('accessToken', accessToken, { expires: 7, secure: true, sameSite: 'Lax' });
 	}, [accessToken]);
 
-	// Store the refresh token in localStorage
+	// Store the refresh token in a cookie
 	useEffect(() => {
-		if (typeof localStorage !== "undefined") {
-			localStorage.setItem("refreshToken", refreshToken);
-		}
+		Cookies.set('refreshToken', refreshToken, { expires: 7, secure: true, sameSite: 'Lax' });
 	}, [refreshToken]);
 
 	// Function to refresh the access token
@@ -97,7 +82,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 		const tokenExpirationInterval = setInterval(
 			checkTokenExpiration,
 			60 * 1000
-		); // Check every minute
+		);
 
 		return () => {
 			clearInterval(tokenExpirationInterval);
@@ -175,9 +160,14 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 
 	// Sign-out function
 	const signOut = () => {
-		setAccessToken("");
-		setRefreshToken("");
-		setUser(null); // Clear the user data in the session context
+		  // Remove the cookies
+          Cookies.remove('accessToken');
+          Cookies.remove('refreshToken');
+      
+          // Clear the user data and tokens in the state
+          setUser(null);
+          setAccessToken("");
+          setRefreshToken("");
 	};
 
 	return (
