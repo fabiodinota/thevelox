@@ -13,6 +13,7 @@ function Box(props: ThreeElements["mesh"]) {
 	const meshRef = useRef<THREE.Mesh>(null!);
 	const [hovered, setHover] = useState(false);
 	const [active, setActive] = useState(false);
+
 	useFrame((state, delta) => (meshRef.current.rotation.x += delta));
 	return (
 		<mesh
@@ -38,6 +39,9 @@ export default function Home() {
 	const [username, setUsername] = useState<string>("");
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
+
+    const [startStation, setStartStation] = useState<string>("");
+    const [destinationStation, setDestinationStation] = useState<string>("");
 
 	const { theme, toggleTheme } = useTheme();
 
@@ -73,6 +77,19 @@ export default function Home() {
 	const handleSignOut = async () => {
 		await signOut();
 	};
+
+    const handleSearch = async () => {
+        console.log(startStation, destinationStation);
+
+
+        await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/map/search?startStation=${startStation}&targetStation=${destinationStation}`)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log("Err: ", err);
+            });
+    };
 
 	return (
 		<main className="flex h-full flex-col items-center justify-between p-24 gap-10">
@@ -174,6 +191,29 @@ export default function Home() {
 				<Box position={[-1.2, 0, 0]} />
 				<Box position={[1.2, 0, 0]} />
 			</Canvas>
+
+            {/* start station input */}
+
+            {/* start station input */}
+            <input
+                onChange={(e) => setStartStation(e.target.value)}
+                type="text"
+                placeholder="Start Station"
+                className="w-full h-[50px] border border-gray-500 bg-white dark:bg-background rounded-xl px-5"
+            />
+            {/* destination station input */}
+            {/* destination station input */}
+            <input
+                onChange={(e) => setDestinationStation(e.target.value)}
+                type="text"
+                placeholder="Destination Station"
+                className="w-full h-[50px] border border-gray-500 bg-white dark:bg-background rounded-xl px-5"
+            />
+            {/* search button */}
+            <button onClick={handleSearch} className="w-full h-[50px] bg-blue-500 text-white rounded-xl">
+                Search
+            </button>
+
                 <a href="#map">Go to Map</a>
                 <div className="w-screen h-screen overflow-hidden relative">
                     <div style={{ backdropFilter: "blur(16px)"}} className="absolute left-1/2 -translate-x-1/2 bottom-10 z-[9999] backdrop-bl bg-white/20 flex justify-center items-center border border-gray-100 w-full max-w-[900px] h-[80px] rounded-xl">

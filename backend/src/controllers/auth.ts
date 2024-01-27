@@ -25,11 +25,9 @@ export const signUp = async (req: Request, res: Response) => {
 
 	if (existingUser) {
 		console.log("User with that username or email already exists");
-		return res
-			.status(409)
-			.send({
-				message: "User with that username or email already exists",
-			});
+		return res.status(409).send({
+			message: "User with that username or email already exists",
+		});
 	}
 
 	const newUser = await prisma.users.create({

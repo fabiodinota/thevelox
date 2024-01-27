@@ -67,7 +67,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 
 	// Check token expiration and refresh automatically
 	useEffect(() => {
-		const tokenExpirationThreshold = 1 * 60 * 1000; // e.g., 2 minutes before expiration
+		const tokenExpirationThreshold = 10 * 60 * 1000; // e.g., 2 minutes before expiration
 
 		const checkTokenExpiration = () => {
 			const tokenData = parseToken(accessToken);

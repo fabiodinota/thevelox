@@ -1,0 +1,2814 @@
+{
+	"id": "76bf5ec2-11b6-4f5b-b244-6d7ff80b8f79",
+	"nodes": [
+		{
+			"id": "657fea46-70e7-462e-9c2e-9229281a4e5e",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Gateway Gardens",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "fa86f144-3907-4a25-a704-d1d55e54c984",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Paramount Park",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "a7d877a6-107d-40dd-989a-8637db0fb2bd",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Quantum Quay",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "8898026c-8409-44a7-9dae-16118aacbe88",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Culture Cross",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "02f3b124-ce54-4b88-98de-cbf266dec811",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Magnate Mall",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "704b1e03-3592-46ec-b426-7e06944f5a32",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Harmony Hub",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "726ee07e-7f62-45dc-b2ef-d301df96e4d7",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Central Station",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 7,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "addfccf0-6598-497d-a95a-b87e8f2d80fd",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Infinity Inlet",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "1e048660-3daf-46c6-abb0-113eb0756e4b",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Catalyst Court",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "30dcd975-cf37-48e8-909e-6a4f47b8b431",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Paragon Place",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "aeed40ef-2509-4c44-8d18-7a8e86c9500b",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Heritage Hall",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "3b389a05-352e-4a4a-af92-b169e903646e",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Synergy Street",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "6c5dee08-0d32-4e43-893c-22c0839720f3",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Emblem Estates",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "83f5dc03-9cc7-4bc0-b312-4258c2ba970a",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Monarch Meadows",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "26458971-d560-4a1a-9711-10b40e262cd5",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Echo Esplanade",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "8a3b1916-1368-4c42-8869-5eb08f172dcc",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Marvel Mile",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "eb7dad54-75f7-47a7-903e-98f4ab1cdebc",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Urban Uplink",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "73aba4df-4520-4beb-bff9-7c15dfdb4e69",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Radiant Row",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "118139ba-1f1c-4f1b-9d98-ef1ab4987943",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Triumph Terrace",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "286568aa-cd49-4fb8-aa15-9d5facb5938c",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Beacon Boulevard",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "fbedbf56-6b9b-4e79-9404-6a8da3950ab0",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Epoch End",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "6be0974f-65cc-4338-af32-457a636e6fc1",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Pioneer Plaza",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "aaf0320b-10c7-4da2-958c-60a0c2581a98",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Iconic Isle",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "fbdedeb6-3f06-4332-b34e-56bb283e89f2",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Circuit City",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "0ca0b873-1052-4830-b725-d63ad68b6b38",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Visionary Vale",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "7383d73d-3832-4935-87d1-8e3e9540af36",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Chronicle Corner",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "c3fd233d-f114-48f4-ba46-b2c756c487dc",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Meridian Market",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "d770ec9c-97eb-4483-8a13-cce76dc64f94",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Progress Pointe",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "ddf16e00-4293-4f90-9660-5e1708f16799",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Venture View",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "2dd10f7b-f10c-4bdc-b68c-7db243a567cd",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Driftwood Domain",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "6c188608-6a37-4c8a-9081-ba29d790cc46",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Venture Vista",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "0f5fdc40-e831-4d2d-97ab-ac86a3c718c0",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Crossroad Crescent",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "9b2bf949-68b0-4e09-8c18-60dc69accd08",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Vertex Alley",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "453aa79a-7f5c-4c50-aeba-6ecc8adcb420",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Fusion Forum",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 4,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "7d499851-912a-4985-ba49-ac293138e7c7",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Axis Alley",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "d5fcabb4-b2e5-4097-93cb-70b6c28b384c",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Serenity Station",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "f8b69cb1-0558-4501-aa88-6d27e8038c8c",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Core Crossing",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "e6dc413e-2933-4df9-8268-fc445f0376a7",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "boulevard Base",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "f8cc7a0c-f1b5-4b6b-b3a3-53206d7b4616",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Spire Site",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "4a95fef5-5fb9-44e5-b7b8-12c49079d5d5",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Prosperity Point",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "ca725052-9bf6-4174-8b76-eccaed22ba64",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Citadel Center",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 4,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "09c23cf3-dab3-4e16-be2b-c119ffe039fd",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Enclave Edge",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "c40ced19-e4d2-4ea4-a796-2b200e2b9419",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Concourse Corner",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "17abc036-4eeb-4231-a76d-8b362699fa9d",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Landmark Lane",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 4,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "57082218-6501-461a-8721-818ca823cce9",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Coastal Corner",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "2fee6354-0540-44e4-8bc3-fd89f7027d10",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Junction Juncture",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 4,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "ec98056e-be4d-42e4-8eb5-1e8f5dad3a41",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Infinity Island",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "fb40967a-9051-40ed-8453-34169b7d83d7",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Terminal Terrace",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "f5ca068f-31da-4ed6-9962-85f9debacd42",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Monolith Mews",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "5a1daced-35dc-4156-a4d1-31f66f2cbbc5",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Harmony Heights",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "e0f2f899-e3c0-4f62-86ef-64f46330b1e5",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Vision Venue",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "0aaab9ee-f323-4010-9405-4eeb176e05b3",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "District Dock",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "311b21c7-0d3e-452f-9596-01093182a94b",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Exchange Enclave",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "7c782eb8-57d8-433c-9ca1-4d8c394f289c",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Network Nook",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "5baf690f-f066-4a5d-b8a5-4b0cb7732b07",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Galleon Gate",
+			"description": "",
+			"image": null,
+			"reference": "",
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "c8113d85-b8b8-44fd-a20a-c20649e884d7",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Oceanic Outpost",
+			"description": "",
+			"image": null,
+			"reference": "",
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "273eda0d-a924-4a42-9228-de015bce21d4",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Lighthouse Landing",
+			"description": "",
+			"image": null,
+			"reference": "",
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "f6a95169-0e25-4b77-b827-93985b2cfbfb",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Manta Market",
+			"description": "",
+			"image": null,
+			"reference": "",
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "a92b7ca0-a06c-4c17-bbf5-187365a9d539",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Marina Meadows",
+			"description": "",
+			"image": null,
+			"reference": "",
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "6e8d67fd-15ec-4f8c-8df0-01ec653aad27",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Pearl Parkway",
+			"description": "",
+			"image": null,
+			"reference": "",
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "9b1d1f4c-e9ab-453b-8b47-d9f8b6c4e398",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Foam Fold",
+			"description": "",
+			"image": null,
+			"reference": "",
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "1e5e8718-ca3f-4ea6-af4e-31f94ea584d8",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Seagate Central",
+			"description": "",
+			"image": null,
+			"reference": "",
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "610a663f-5a7b-4f57-b477-e0d05719ca2f",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Saltwater Suite",
+			"description": "",
+			"image": null,
+			"reference": "",
+			"properties": {},
+			"degree": 4,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "5e1b9454-578d-47f9-81ef-cd5b0d03cb80",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Dune Dock",
+			"description": "",
+			"image": null,
+			"reference": "",
+			"properties": {},
+			"degree": 4,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "5358f1dc-0985-454e-b8c9-d959b292a4f0",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Pacific Plaza",
+			"description": "",
+			"image": null,
+			"reference": "",
+			"properties": {},
+			"degree": 4,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "42b5ed35-5559-4702-ba1f-99e12d5aeb7b",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Reef Road",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "960ad1ec-d816-48d0-ad2f-fc3f0e513248",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Brine Bridge",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "f0bf5330-a5d7-4aad-b990-6ea50ff89bbd",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Sapphire Station",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "5d22d723-3524-4f3f-8063-87ce2b3f736b",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Pelagic Plaza",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "7a22c5c0-9131-4344-b4b6-89bc3f164e1a",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Crest Cove",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "794173b0-f7d9-40bf-bbe3-c358310c82dd",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Starfish Street",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 5,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "588e2e92-8cfa-4ad1-aed1-e2c528479344",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Harbor Heights",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "24979c80-648c-4d94-88ca-c5882c95639a",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Lagoon Lane",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "f6489455-8ed3-4488-97b4-ebd93bcdbf73",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Horizon Hub",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "2b314a10-8d84-48ea-be7c-0de257d3b83f",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Abyss Alley",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "cf664894-37f7-41b7-a919-df93b76d5203",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Saltwater Suite",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "9ca1cc5f-b34f-4435-9d77-c39708e0f37d",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Seagrass Grove",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "e272ae59-75e5-43f0-a51b-5ad4a070b90f",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Ocean Boulevard",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "f3045dcd-bb8b-45da-9d9d-f33113cd60f8",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Park Ave",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "d837f35d-605f-43f5-aebc-e18544f40209",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Crystal Ave",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "d355b8be-d394-4138-91c3-64137e36d59a",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Riley Park",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "a8944be4-5c62-43c3-895b-454b81dd3a7c",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Diamond Ave",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "bfd503ee-58b9-4451-9794-772bc6491655",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Plankton Place",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 1,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "546c5fe8-7f8b-4f16-8382-ecd36fb542f6",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Aquifer Ave",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "a004cf5c-af0d-4f91-a203-5acb5e5bf010",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Deep Dive Den",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "abc5a5a2-c382-4dcf-b245-4d05cfeee3d5",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Fleet Footway",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "e5ecd464-d641-4790-ab4b-c6cf4647ee7e",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Seashell Sector",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 2,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "dab11e38-1958-426f-968b-87405610e66f",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Salinity Station",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 1,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "6ba9ba6c-4f20-4baa-89bd-f77576cb8f27",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Civic Square",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "48e68d76-2b83-4ab3-8b99-510da5ac5eaf",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Metro Hub",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "6986ea97-9e4f-4761-8489-b79306869c12",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": " Apex Tower",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "1583338f-9a81-4c85-8949-edfb4a97cab4",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Plaza Central",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "0f55df58-246d-4c68-a049-6720d56fc145",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Union Terminal",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "1a3b749a-78ad-48fe-b8d5-265fb5c437f4",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Forum Fields",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "a601b993-a619-4714-ba8b-042965864e1e",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Capital Court",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "1a233b59-df5c-4ae6-a322-1d9943afde7a",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Summit Point",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 3,
+			"__typename": "NodeData"
+		},
+		{
+			"id": "b1aa3b3e-54fe-40c5-aec6-8c5544ec1b36",
+			"typeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "Terrace Turn",
+			"description": null,
+			"image": null,
+			"reference": null,
+			"properties": {},
+			"degree": 4,
+			"__typename": "NodeData"
+		}
+	],
+	"edges": [
+		{
+			"id": "d657f57c-9e8d-4c9f-91db-a0aef1628cb6",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "794173b0-f7d9-40bf-bbe3-c358310c82dd",
+			"targetId": "588e2e92-8cfa-4ad1-aed1-e2c528479344",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "a75b5838-17a2-40dd-b8c5-e2084fbcd491",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "1e048660-3daf-46c6-abb0-113eb0756e4b",
+			"targetId": "7383d73d-3832-4935-87d1-8e3e9540af36",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "7217ae8f-cff5-4326-8486-67ed77675ae5",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "0ca0b873-1052-4830-b725-d63ad68b6b38",
+			"targetId": "8a3b1916-1368-4c42-8869-5eb08f172dcc",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "b27512d2-bf12-485e-b8f7-bd014b29f304",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "8a3b1916-1368-4c42-8869-5eb08f172dcc",
+			"targetId": "726ee07e-7f62-45dc-b2ef-d301df96e4d7",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "04e3b0f7-d9da-4aed-980b-ee8e054a9e0a",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "addfccf0-6598-497d-a95a-b87e8f2d80fd",
+			"targetId": "726ee07e-7f62-45dc-b2ef-d301df96e4d7",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "062dbd0e-5a5d-4d2d-9082-c1b053dd1a91",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "286568aa-cd49-4fb8-aa15-9d5facb5938c",
+			"targetId": "118139ba-1f1c-4f1b-9d98-ef1ab4987943",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "bfa17f39-5429-4fcc-a8a6-8d0bda78f5b9",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "eb7dad54-75f7-47a7-903e-98f4ab1cdebc",
+			"targetId": "726ee07e-7f62-45dc-b2ef-d301df96e4d7",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "8ed62466-2fed-48ea-926a-4f90ed911e9f",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "a7d877a6-107d-40dd-989a-8637db0fb2bd",
+			"targetId": "286568aa-cd49-4fb8-aa15-9d5facb5938c",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "b647d808-0a3a-4e14-8a4b-3b02c7bd16bb",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "26458971-d560-4a1a-9711-10b40e262cd5",
+			"targetId": "83f5dc03-9cc7-4bc0-b312-4258c2ba970a",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "4d5526bf-a322-4158-83af-94d20fa2b55e",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "02f3b124-ce54-4b88-98de-cbf266dec811",
+			"targetId": "726ee07e-7f62-45dc-b2ef-d301df96e4d7",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "806ccc0f-bcf1-4d47-8a79-801061d93eda",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "6c5dee08-0d32-4e43-893c-22c0839720f3",
+			"targetId": "addfccf0-6598-497d-a95a-b87e8f2d80fd",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "d14a5cce-2c6b-4eb0-b905-7434cd5181bf",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "83f5dc03-9cc7-4bc0-b312-4258c2ba970a",
+			"targetId": "726ee07e-7f62-45dc-b2ef-d301df96e4d7",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "498870c9-8a43-47b9-a459-b3de04ea7098",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "73aba4df-4520-4beb-bff9-7c15dfdb4e69",
+			"targetId": "fbdedeb6-3f06-4332-b34e-56bb283e89f2",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "0cdbc791-d1fd-427a-941e-cef89f17ab6f",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "02f3b124-ce54-4b88-98de-cbf266dec811",
+			"targetId": "704b1e03-3592-46ec-b426-7e06944f5a32",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "e4589ed0-90db-44d9-a407-82eb02b037b7",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "0ca0b873-1052-4830-b725-d63ad68b6b38",
+			"targetId": "addfccf0-6598-497d-a95a-b87e8f2d80fd",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "3e76df27-8012-45c9-b69b-47fde320bc05",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "8898026c-8409-44a7-9dae-16118aacbe88",
+			"targetId": "aaf0320b-10c7-4da2-958c-60a0c2581a98",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "dc6ad180-aead-416b-881c-2755de9c2b70",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "6be0974f-65cc-4338-af32-457a636e6fc1",
+			"targetId": "26458971-d560-4a1a-9711-10b40e262cd5",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "09ee238a-cbff-4bfb-b8c0-73084ed8311c",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "726ee07e-7f62-45dc-b2ef-d301df96e4d7",
+			"targetId": "30dcd975-cf37-48e8-909e-6a4f47b8b431",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "1e9cbb38-e66a-4526-a91e-3dc331de4edc",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "02f3b124-ce54-4b88-98de-cbf266dec811",
+			"targetId": "3b389a05-352e-4a4a-af92-b169e903646e",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "6d8799e0-5cf7-41f9-b799-b511e4439af9",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "ddf16e00-4293-4f90-9660-5e1708f16799",
+			"targetId": "aeed40ef-2509-4c44-8d18-7a8e86c9500b",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "a9493d5b-34c2-427a-9d3d-1fe953349dda",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "30dcd975-cf37-48e8-909e-6a4f47b8b431",
+			"targetId": "fbedbf56-6b9b-4e79-9404-6a8da3950ab0",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "f9d98e12-9acd-4828-8b27-061958b85109",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "3b389a05-352e-4a4a-af92-b169e903646e",
+			"targetId": "1e048660-3daf-46c6-abb0-113eb0756e4b",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "f23210f3-8c88-4ed4-8970-ee1ed19e6efb",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "118139ba-1f1c-4f1b-9d98-ef1ab4987943",
+			"targetId": "c3fd233d-f114-48f4-ba46-b2c756c487dc",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "6d8d7d92-cee8-47e2-89fd-2f2ae6ce2c8e",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "fa86f144-3907-4a25-a704-d1d55e54c984",
+			"targetId": "6c5dee08-0d32-4e43-893c-22c0839720f3",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "27c89e6d-e129-4cde-83d0-d9804912c3e2",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "aeed40ef-2509-4c44-8d18-7a8e86c9500b",
+			"targetId": "fa86f144-3907-4a25-a704-d1d55e54c984",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "b69e5f5d-6f14-4f6b-9231-c86b756c6ae4",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "eb7dad54-75f7-47a7-903e-98f4ab1cdebc",
+			"targetId": "a7d877a6-107d-40dd-989a-8637db0fb2bd",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "aeb422cd-b774-4913-8de4-72fab9e2bc1e",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "0ca0b873-1052-4830-b725-d63ad68b6b38",
+			"targetId": "d770ec9c-97eb-4483-8a13-cce76dc64f94",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "f31e4952-ad6f-4928-a3ff-53c18c16170b",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "8898026c-8409-44a7-9dae-16118aacbe88",
+			"targetId": "726ee07e-7f62-45dc-b2ef-d301df96e4d7",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "71cbb93d-752a-484a-ba9e-b10bca8f7898",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "704b1e03-3592-46ec-b426-7e06944f5a32",
+			"targetId": "73aba4df-4520-4beb-bff9-7c15dfdb4e69",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "9632cac8-221e-4605-b366-e9267cc7ae06",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "fbdedeb6-3f06-4332-b34e-56bb283e89f2",
+			"targetId": "0f55df58-246d-4c68-a049-6720d56fc145",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "6c709cea-5532-4e21-a3e8-b267a2834579",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "aaf0320b-10c7-4da2-958c-60a0c2581a98",
+			"targetId": "6986ea97-9e4f-4761-8489-b79306869c12",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "ed0744d1-6c52-4ea0-a75e-d81195f53d18",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "fbedbf56-6b9b-4e79-9404-6a8da3950ab0",
+			"targetId": "1583338f-9a81-4c85-8949-edfb4a97cab4",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "bdc4b47b-841d-4531-a834-2bafa1861bc5",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "d770ec9c-97eb-4483-8a13-cce76dc64f94",
+			"targetId": "1a3b749a-78ad-48fe-b8d5-265fb5c437f4",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "01d9f037-e032-4724-b2ca-2ab23ef8207e",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "ddf16e00-4293-4f90-9660-5e1708f16799",
+			"targetId": "6ba9ba6c-4f20-4baa-89bd-f77576cb8f27",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "04210efd-ec68-4293-97a2-f65a37182e0f",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "c3fd233d-f114-48f4-ba46-b2c756c487dc",
+			"targetId": "1a233b59-df5c-4ae6-a322-1d9943afde7a",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "a32d1fdf-2907-45ff-b9a8-b989fd6f95df",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "6be0974f-65cc-4338-af32-457a636e6fc1",
+			"targetId": "48e68d76-2b83-4ab3-8b99-510da5ac5eaf",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "55dbd9dc-57e0-42f8-a14b-960ee91e42f0",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "7383d73d-3832-4935-87d1-8e3e9540af36",
+			"targetId": "a601b993-a619-4714-ba8b-042965864e1e",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "35bd0b0c-734f-4ae2-a27f-d0daa81a83f1",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "5358f1dc-0985-454e-b8c9-d959b292a4f0",
+			"targetId": "5e1b9454-578d-47f9-81ef-cd5b0d03cb80",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "aaa868d7-725b-4f56-af89-0d3c55f38748",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "5e1b9454-578d-47f9-81ef-cd5b0d03cb80",
+			"targetId": "610a663f-5a7b-4f57-b477-e0d05719ca2f",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "68d2cee4-3f28-4df7-a023-c94ee4ec6559",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "9b1d1f4c-e9ab-453b-8b47-d9f8b6c4e398",
+			"targetId": "c8113d85-b8b8-44fd-a20a-c20649e884d7",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "11857a29-5f77-47ad-8597-6086065d3107",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "e272ae59-75e5-43f0-a51b-5ad4a070b90f",
+			"targetId": "9ca1cc5f-b34f-4435-9d77-c39708e0f37d",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "575680e1-e94f-4792-9ada-b6e85eed2b68",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "e272ae59-75e5-43f0-a51b-5ad4a070b90f",
+			"targetId": "794173b0-f7d9-40bf-bbe3-c358310c82dd",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "6baf8f65-cd51-41f0-bc03-a8a4f99c7227",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "a92b7ca0-a06c-4c17-bbf5-187365a9d539",
+			"targetId": "273eda0d-a924-4a42-9228-de015bce21d4",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "41c43596-5ea0-4ad5-b5da-c5cc846fabab",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "f0bf5330-a5d7-4aad-b990-6ea50ff89bbd",
+			"targetId": "2b314a10-8d84-48ea-be7c-0de257d3b83f",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "35321974-1ec4-4008-8b9c-bfae004d2dc2",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "5d22d723-3524-4f3f-8063-87ce2b3f736b",
+			"targetId": "610a663f-5a7b-4f57-b477-e0d05719ca2f",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "fb7bdf95-c611-4a3a-bc16-5a48f005c5a2",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "cf664894-37f7-41b7-a919-df93b76d5203",
+			"targetId": "9ca1cc5f-b34f-4435-9d77-c39708e0f37d",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "45c919ce-b027-4f72-b4e6-3f5d03ba67ec",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "a004cf5c-af0d-4f91-a203-5acb5e5bf010",
+			"targetId": "546c5fe8-7f8b-4f16-8382-ecd36fb542f6",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "2decdf06-5351-41a9-a03d-941027847974",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "f0bf5330-a5d7-4aad-b990-6ea50ff89bbd",
+			"targetId": "cf664894-37f7-41b7-a919-df93b76d5203",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "6ed3617d-ddfb-455f-bd36-08cd1bab3929",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "a8944be4-5c62-43c3-895b-454b81dd3a7c",
+			"targetId": "d355b8be-d394-4138-91c3-64137e36d59a",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "813b34a9-24f1-4321-b48b-b7693b54d25f",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "42b5ed35-5559-4702-ba1f-99e12d5aeb7b",
+			"targetId": "960ad1ec-d816-48d0-ad2f-fc3f0e513248",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "c6dccd7c-12d9-4065-9d46-2dc1d0c414c2",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "610a663f-5a7b-4f57-b477-e0d05719ca2f",
+			"targetId": "1e5e8718-ca3f-4ea6-af4e-31f94ea584d8",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "52592fdb-4435-4635-a18c-ea87785bb297",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "2b314a10-8d84-48ea-be7c-0de257d3b83f",
+			"targetId": "7a22c5c0-9131-4344-b4b6-89bc3f164e1a",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "459369b2-b0c3-4034-a517-7c347f5e462d",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "f6a95169-0e25-4b77-b827-93985b2cfbfb",
+			"targetId": "5358f1dc-0985-454e-b8c9-d959b292a4f0",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "324ca9b8-3c8f-4054-9343-baeb51d1f222",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "d837f35d-605f-43f5-aebc-e18544f40209",
+			"targetId": "d355b8be-d394-4138-91c3-64137e36d59a",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "0ebc51f8-531a-469f-80fe-e1996d1ddf94",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "794173b0-f7d9-40bf-bbe3-c358310c82dd",
+			"targetId": "5d22d723-3524-4f3f-8063-87ce2b3f736b",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "c3e34675-1df7-4499-818e-a817eb5d7f4d",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "f6489455-8ed3-4488-97b4-ebd93bcdbf73",
+			"targetId": "f0bf5330-a5d7-4aad-b990-6ea50ff89bbd",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "64304479-8cc2-459a-8ceb-733a8fb55c5b",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "f3045dcd-bb8b-45da-9d9d-f33113cd60f8",
+			"targetId": "d837f35d-605f-43f5-aebc-e18544f40209",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "c969ddc6-494a-4f7a-89c4-31119c40b0bc",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "5358f1dc-0985-454e-b8c9-d959b292a4f0",
+			"targetId": "42b5ed35-5559-4702-ba1f-99e12d5aeb7b",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "36472197-e1f2-4fbd-bc70-1b2f76164452",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "5baf690f-f066-4a5d-b8a5-4b0cb7732b07",
+			"targetId": "9b1d1f4c-e9ab-453b-8b47-d9f8b6c4e398",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "165c4883-b41e-4d06-9129-d344b008b8fa",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "794173b0-f7d9-40bf-bbe3-c358310c82dd",
+			"targetId": "f3045dcd-bb8b-45da-9d9d-f33113cd60f8",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "ebbbbe4a-0abd-4172-8248-3b1e23723115",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "273eda0d-a924-4a42-9228-de015bce21d4",
+			"targetId": "6e8d67fd-15ec-4f8c-8df0-01ec653aad27",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "52548be0-90da-4a1c-918b-76e115eb70e4",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "5e1b9454-578d-47f9-81ef-cd5b0d03cb80",
+			"targetId": "794173b0-f7d9-40bf-bbe3-c358310c82dd",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "fb6cc756-ac04-4ec2-aa33-8856ed4c4466",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "1e5e8718-ca3f-4ea6-af4e-31f94ea584d8",
+			"targetId": "a92b7ca0-a06c-4c17-bbf5-187365a9d539",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "02504a86-6318-416f-91c8-832cbd1a965d",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "2dd10f7b-f10c-4bdc-b68c-7db243a567cd",
+			"targetId": "5e1b9454-578d-47f9-81ef-cd5b0d03cb80",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "78b08c92-cd6a-4623-8d1a-c62ddd33a2be",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "c8113d85-b8b8-44fd-a20a-c20649e884d7",
+			"targetId": "f6a95169-0e25-4b77-b827-93985b2cfbfb",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "0507e7d6-e3e2-454b-92d2-3f33b81f81d9",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "2dd10f7b-f10c-4bdc-b68c-7db243a567cd",
+			"targetId": "5358f1dc-0985-454e-b8c9-d959b292a4f0",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "2836bc96-bbe6-498e-bacd-d2d53eb3a5bb",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "546c5fe8-7f8b-4f16-8382-ecd36fb542f6",
+			"targetId": "e5ecd464-d641-4790-ab4b-c6cf4647ee7e",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "523f280d-8203-4610-b013-e39cc9a58faa",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "f6489455-8ed3-4488-97b4-ebd93bcdbf73",
+			"targetId": "610a663f-5a7b-4f57-b477-e0d05719ca2f",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "86bbce7b-d2dc-49d2-a5aa-b2b76ed587bd",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "abc5a5a2-c382-4dcf-b245-4d05cfeee3d5",
+			"targetId": "a004cf5c-af0d-4f91-a203-5acb5e5bf010",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "42337e19-cb24-4b80-8112-43922c4b3171",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "bfd503ee-58b9-4451-9794-772bc6491655",
+			"targetId": "abc5a5a2-c382-4dcf-b245-4d05cfeee3d5",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "cfb686ba-f06c-4ea5-905a-c9fc8e4de8fb",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "6e8d67fd-15ec-4f8c-8df0-01ec653aad27",
+			"targetId": "48e68d76-2b83-4ab3-8b99-510da5ac5eaf",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "0ed9de76-64a1-4c4f-b39d-6d1af3b204ed",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "a8944be4-5c62-43c3-895b-454b81dd3a7c",
+			"targetId": "1a233b59-df5c-4ae6-a322-1d9943afde7a",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "b86d9eb9-387e-4a6c-8a00-fd70feab04e8",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "e5ecd464-d641-4790-ab4b-c6cf4647ee7e",
+			"targetId": "a601b993-a619-4714-ba8b-042965864e1e",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "947e0619-6c97-4fe8-b4cb-1a179797fd26",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "960ad1ec-d816-48d0-ad2f-fc3f0e513248",
+			"targetId": "1a3b749a-78ad-48fe-b8d5-265fb5c437f4",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "7fd5ceb0-32e7-46c0-b5fb-835c4e7c8762",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "7a22c5c0-9131-4344-b4b6-89bc3f164e1a",
+			"targetId": "6986ea97-9e4f-4761-8489-b79306869c12",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "860e1305-8747-4c86-9a1b-90faff2f09df",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "24979c80-648c-4d94-88ca-c5882c95639a",
+			"targetId": "1583338f-9a81-4c85-8949-edfb4a97cab4",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "5d5d9b8c-b49a-490b-a3ba-a5df90d6ffac",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "5baf690f-f066-4a5d-b8a5-4b0cb7732b07",
+			"targetId": "6ba9ba6c-4f20-4baa-89bd-f77576cb8f27",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "8e504264-52c5-457d-9242-541e4f242724",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "dab11e38-1958-426f-968b-87405610e66f",
+			"targetId": "0f55df58-246d-4c68-a049-6720d56fc145",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "b69eac66-a2d3-47c0-b979-eaedea871dee",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "0aaab9ee-f323-4010-9405-4eeb176e05b3",
+			"targetId": "b1aa3b3e-54fe-40c5-aec6-8c5544ec1b36",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "b1aaee7e-b429-4b00-9136-b24aa3bd142e",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "b1aa3b3e-54fe-40c5-aec6-8c5544ec1b36",
+			"targetId": "311b21c7-0d3e-452f-9596-01093182a94b",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "fdf2847c-fe94-43ad-aeb0-a8e26bb019ce",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "311b21c7-0d3e-452f-9596-01093182a94b",
+			"targetId": "657fea46-70e7-462e-9c2e-9229281a4e5e",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "4a1bb1da-2114-4aaa-b1b2-29e5e27b2870",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "453aa79a-7f5c-4c50-aeba-6ecc8adcb420",
+			"targetId": "f8b69cb1-0558-4501-aa88-6d27e8038c8c",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "cae311f6-8463-4cc6-9343-ae39ec582da4",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "ca725052-9bf6-4174-8b76-eccaed22ba64",
+			"targetId": "b1aa3b3e-54fe-40c5-aec6-8c5544ec1b36",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "0d327f5f-e072-4a58-b509-f7b2a1636517",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "17abc036-4eeb-4231-a76d-8b362699fa9d",
+			"targetId": "5a1daced-35dc-4156-a4d1-31f66f2cbbc5",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "bdcf55f1-b9ad-4628-a248-dd20df997091",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "9b2bf949-68b0-4e09-8c18-60dc69accd08",
+			"targetId": "6986ea97-9e4f-4761-8489-b79306869c12",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "f5ac8ac1-23f4-44d7-9a35-56d6c1bd88d6",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "c40ced19-e4d2-4ea4-a796-2b200e2b9419",
+			"targetId": "453aa79a-7f5c-4c50-aeba-6ecc8adcb420",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "1925083e-39bc-41ba-ba49-6bd8b9c4d8b2",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "ca725052-9bf6-4174-8b76-eccaed22ba64",
+			"targetId": "7d499851-912a-4985-ba49-ac293138e7c7",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "bb6e945c-54a6-4796-8b79-ba8887969b51",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "453aa79a-7f5c-4c50-aeba-6ecc8adcb420",
+			"targetId": "09c23cf3-dab3-4e16-be2b-c119ffe039fd",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "d2ad3e09-fed4-4146-abf1-09b9246356b7",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "2fee6354-0540-44e4-8bc3-fd89f7027d10",
+			"targetId": "ec98056e-be4d-42e4-8eb5-1e8f5dad3a41",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "908bee83-07ac-4fa1-8bbf-a5bc1be272dd",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "48e68d76-2b83-4ab3-8b99-510da5ac5eaf",
+			"targetId": "e0f2f899-e3c0-4f62-86ef-64f46330b1e5",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "c544ef90-c498-41a1-a9bb-cd377a8fe74f",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "d5fcabb4-b2e5-4097-93cb-70b6c28b384c",
+			"targetId": "e0f2f899-e3c0-4f62-86ef-64f46330b1e5",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "5d89e52c-169c-4095-b283-de5e4f4346c6",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "f8cc7a0c-f1b5-4b6b-b3a3-53206d7b4616",
+			"targetId": "7d499851-912a-4985-ba49-ac293138e7c7",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "26efa26b-2cef-4b5e-8082-980caa19f09d",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "c40ced19-e4d2-4ea4-a796-2b200e2b9419",
+			"targetId": "d5fcabb4-b2e5-4097-93cb-70b6c28b384c",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "9a2e3c6e-4dd0-4593-903b-9a775816f650",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "5a1daced-35dc-4156-a4d1-31f66f2cbbc5",
+			"targetId": "fb40967a-9051-40ed-8453-34169b7d83d7",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "64766dd9-9815-4c31-8077-944dfb1454ab",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "17abc036-4eeb-4231-a76d-8b362699fa9d",
+			"targetId": "e6dc413e-2933-4df9-8268-fc445f0376a7",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "041f276a-b296-4ab8-913e-8e2eeb509aa3",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "d5fcabb4-b2e5-4097-93cb-70b6c28b384c",
+			"targetId": "657fea46-70e7-462e-9c2e-9229281a4e5e",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "5b2cabad-fa89-415a-aa92-5cfc1f0dac9e",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "6ba9ba6c-4f20-4baa-89bd-f77576cb8f27",
+			"targetId": "0aaab9ee-f323-4010-9405-4eeb176e05b3",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "96d087b1-b2ae-495b-9a04-cc2b661f4f17",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "f8cc7a0c-f1b5-4b6b-b3a3-53206d7b4616",
+			"targetId": "f8b69cb1-0558-4501-aa88-6d27e8038c8c",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "6b94167d-0c06-49b1-adac-a5d56b8952cf",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "ca725052-9bf6-4174-8b76-eccaed22ba64",
+			"targetId": "e6dc413e-2933-4df9-8268-fc445f0376a7",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "b0234225-3453-4cdc-b7d2-5a665a963997",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "5a1daced-35dc-4156-a4d1-31f66f2cbbc5",
+			"targetId": "f5ca068f-31da-4ed6-9962-85f9debacd42",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "aeb881a3-5bd3-40cc-8bcb-bc178cbfea76",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "311b21c7-0d3e-452f-9596-01093182a94b",
+			"targetId": "f8cc7a0c-f1b5-4b6b-b3a3-53206d7b4616",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "d66cfbda-9586-4c15-8fe5-e32f1559f7d1",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "ca725052-9bf6-4174-8b76-eccaed22ba64",
+			"targetId": "2fee6354-0540-44e4-8bc3-fd89f7027d10",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "6b8338fd-2fc4-4228-af93-4b74e0f06b89",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "f8b69cb1-0558-4501-aa88-6d27e8038c8c",
+			"targetId": "9b2bf949-68b0-4e09-8c18-60dc69accd08",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "c20822e3-4d5d-46e9-b117-f370ef43c782",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "09c23cf3-dab3-4e16-be2b-c119ffe039fd",
+			"targetId": "17abc036-4eeb-4231-a76d-8b362699fa9d",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "c3c97117-c1e1-46c5-b9e4-fb788685cc10",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "7c782eb8-57d8-433c-9ca1-4d8c394f289c",
+			"targetId": "b1aa3b3e-54fe-40c5-aec6-8c5544ec1b36",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "3b184d0d-afdb-49b5-92cc-d41dd38a7e8f",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "ec98056e-be4d-42e4-8eb5-1e8f5dad3a41",
+			"targetId": "7c782eb8-57d8-433c-9ca1-4d8c394f289c",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "ee78ff06-b3f8-49dc-b80a-73af2169b08f",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "4a95fef5-5fb9-44e5-b7b8-12c49079d5d5",
+			"targetId": "0f55df58-246d-4c68-a049-6720d56fc145",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "f7b5ce6b-0005-416e-9797-8acfec643ed8",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "1a3b749a-78ad-48fe-b8d5-265fb5c437f4",
+			"targetId": "7c782eb8-57d8-433c-9ca1-4d8c394f289c",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "5586864c-2481-4c30-b3a0-b0504d1395f8",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "f5ca068f-31da-4ed6-9962-85f9debacd42",
+			"targetId": "1a233b59-df5c-4ae6-a322-1d9943afde7a",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "6087fcab-cf2d-4f14-9ef9-6de8b52c2b28",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "0f5fdc40-e831-4d2d-97ab-ac86a3c718c0",
+			"targetId": "6c188608-6a37-4c8a-9081-ba29d790cc46",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "70cdc539-d6b9-4a6a-9800-1e512ef77ad4",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "0f5fdc40-e831-4d2d-97ab-ac86a3c718c0",
+			"targetId": "453aa79a-7f5c-4c50-aeba-6ecc8adcb420",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "ec9f5c68-2c15-488d-8e4f-8f9fa44d217b",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "4a95fef5-5fb9-44e5-b7b8-12c49079d5d5",
+			"targetId": "17abc036-4eeb-4231-a76d-8b362699fa9d",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "34876ca8-e960-49b7-b3f2-ed58b0962205",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "6c188608-6a37-4c8a-9081-ba29d790cc46",
+			"targetId": "a601b993-a619-4714-ba8b-042965864e1e",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "cfa111c5-25aa-4364-a790-486019cfb383",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "2fee6354-0540-44e4-8bc3-fd89f7027d10",
+			"targetId": "57082218-6501-461a-8721-818ca823cce9",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "a9d0e595-7169-4049-916b-78c1ef2869d4",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "fb40967a-9051-40ed-8453-34169b7d83d7",
+			"targetId": "2fee6354-0540-44e4-8bc3-fd89f7027d10",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "8176984b-7138-48d1-81cc-0dc9da17d134",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "1583338f-9a81-4c85-8949-edfb4a97cab4",
+			"targetId": "57082218-6501-461a-8721-818ca823cce9",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "5aeae3e1-9698-49b1-ade9-babb661bd122",
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"weight": 1,
+			"properties": {},
+			"sourceId": "588e2e92-8cfa-4ad1-aed1-e2c528479344",
+			"targetId": "24979c80-648c-4d94-88ca-c5882c95639a",
+			"__typename": "EdgeData"
+		},
+		{
+			"id": "c7dacfd2-1aaa-4272-b0cd-83f3b1c17839",
+			"weight": 1,
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"sourceId": "dab11e38-1958-426f-968b-87405610e66f",
+			"targetId": "bfd503ee-58b9-4451-9794-772bc6491655"
+		},
+		{
+			"id": "25866514-6763-4d14-aa26-5b9cd727e824",
+			"weight": 1,
+			"typeId": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"sourceId": "bfd503ee-58b9-4451-9794-772bc6491655",
+			"targetId": "9ca1cc5f-b34f-4435-9d77-c39708e0f37d"
+		}
+	],
+	"nodeTypes": [
+		{
+			"id": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"name": "station",
+			"description": null,
+			"color": "#000000",
+			"minSize": null,
+			"maxSize": null,
+			"sizeField": null,
+			"labelField": null,
+			"properties": [],
+			"__typename": "NodeType"
+		}
+	],
+	"edgeTypes": [
+		{
+			"id": "bb3164f7-39c9-4d48-b7fb-1f4953e992a5",
+			"name": "level",
+			"description": null,
+			"directed": false,
+			"color": "#a6de53",
+			"minSize": null,
+			"maxSize": null,
+			"sizeField": null,
+			"labelField": null,
+			"sourceNodeTypeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"targetNodeTypeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"properties": [],
+			"__typename": "EdgeType"
+		},
+		{
+			"id": "50aaf9bc-7bf7-4999-8519-a945c96516b9",
+			"name": "route",
+			"description": null,
+			"directed": false,
+			"color": "#308c6f",
+			"minSize": null,
+			"maxSize": null,
+			"sizeField": null,
+			"labelField": null,
+			"sourceNodeTypeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"targetNodeTypeId": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+			"properties": [],
+			"__typename": "EdgeType"
+		}
+	],
+	"settings": {
+		"shortenNodeLabels": false,
+		"showEdgeWeights": false,
+		"adjustNodeLabelsOnSave": false,
+		"alwaysDisplayEdgeLabels": false,
+		"nodeSizeRatio": 30,
+		"showImagesOnGraph": false,
+		"interpolateSizesOnFullGraph": true,
+		"variableLabelSizes": false,
+		"displaySmallLabels": false,
+		"__typename": "GraphSettings"
+	},
+	"name": "thevelox",
+	"slug": null,
+	"accessLevel": 0,
+	"isHub": false,
+	"isLocked": false,
+	"isPinned": false,
+	"description": null,
+	"image": null,
+	"createdAt": "2024-01-26T21:54:36.111Z",
+	"updatedAt": "2024-01-27T21:12:58.035Z",
+	"owner": {
+		"id": "e25e6f8d-b309-4302-99f1-577dff9f04e2",
+		"username": "fabski.luna",
+		"firstname": "Fabio",
+		"lastname": "Di Nota",
+		"image": "/files/users/e25e6f8d-b309-4302-99f1-577dff9f04e2/avatar.jpg",
+		"hasProPlan": false,
+		"hasOrgPlan": false,
+		"createdAt": "2024-01-26T14:51:32.048Z",
+		"__typename": "User"
+	},
+	"membersCount": 1,
+	"members": [
+		{
+			"id": "e25e6f8d-b309-4302-99f1-577dff9f04e2",
+			"username": "fabski.luna",
+			"firstname": "Fabio",
+			"lastname": "Di Nota",
+			"image": "/files/users/e25e6f8d-b309-4302-99f1-577dff9f04e2/avatar.jpg",
+			"hasProPlan": false,
+			"hasOrgPlan": false,
+			"createdAt": "2024-01-26T14:51:32.048Z",
+			"__typename": "User"
+		}
+	],
+	"__typename": "Graph",
+	"nodesPosition": {
+		"657fea46-70e7-462e-9c2e-9229281a4e5e": {
+			"x": 281.27300362342584,
+			"y": -9.089137189201196
+		},
+		"fa86f144-3907-4a25-a704-d1d55e54c984": {
+			"x": 645.1107089315542,
+			"y": 1.4593954295084517
+		},
+		"a7d877a6-107d-40dd-989a-8637db0fb2bd": {
+			"x": 676.2685904182513,
+			"y": -90.6055410795073
+		},
+		"8898026c-8409-44a7-9dae-16118aacbe88": {
+			"x": 597.9913239526451,
+			"y": -62.14394392158176
+		},
+		"02f3b124-ce54-4b88-98de-cbf266dec811": {
+			"x": 641.4075649662755,
+			"y": -75.83822848354217
+		},
+		"704b1e03-3592-46ec-b426-7e06944f5a32": {
+			"x": 642.361625120584,
+			"y": -104.97582210430963
+		},
+		"726ee07e-7f62-45dc-b2ef-d301df96e4d7": {
+			"x": 676.658229856488,
+			"y": -51.42064933033052
+		},
+		"addfccf0-6598-497d-a95a-b87e8f2d80fd": {
+			"x": 699.1852532135885,
+			"y": -19.623071998396135
+		},
+		"1e048660-3daf-46c6-abb0-113eb0756e4b": {
+			"x": 617.6149507107654,
+			"y": -101.2211543148805
+		},
+		"30dcd975-cf37-48e8-909e-6a4f47b8b431": {
+			"x": 734.6806187842684,
+			"y": -47.03139921300869
+		},
+		"aeed40ef-2509-4c44-8d18-7a8e86c9500b": {
+			"x": 652.6869259408058,
+			"y": 17.36679028532789
+		},
+		"3b389a05-352e-4a4a-af92-b169e903646e": {
+			"x": 627.8549539148282,
+			"y": -86.88515002796933
+		},
+		"6c5dee08-0d32-4e43-893c-22c0839720f3": {
+			"x": 674.3495243576035,
+			"y": -7.965431277241569
+		},
+		"83f5dc03-9cc7-4bc0-b312-4258c2ba970a": {
+			"x": 616.2230680008455,
+			"y": -43.40576149579475
+		},
+		"26458971-d560-4a1a-9711-10b40e262cd5": {
+			"x": 615.7166306246162,
+			"y": -21.628954253664823
+		},
+		"8a3b1916-1368-4c42-8869-5eb08f172dcc": {
+			"x": 724.0284095702739,
+			"y": -24.48960942137551
+		},
+		"eb7dad54-75f7-47a7-903e-98f4ab1cdebc": {
+			"x": 654.8202956855272,
+			"y": -83.1304822385402
+		},
+		"73aba4df-4520-4beb-bff9-7c15dfdb4e69": {
+			"x": 687.4176392184607,
+			"y": -107.7064895875308
+		},
+		"118139ba-1f1c-4f1b-9d98-ef1ab4987943": {
+			"x": 739.731232024594,
+			"y": -72.91302939084892
+		},
+		"286568aa-cd49-4fb8-aa15-9d5facb5938c": {
+			"x": 704.0861357331544,
+			"y": -89.73624279638759
+		},
+		"fbedbf56-6b9b-4e79-9404-6a8da3950ab0": {
+			"x": 767.8809269130397,
+			"y": -42.59876130867784
+		},
+		"6be0974f-65cc-4338-af32-457a636e6fc1": {
+			"x": 588.830423809528,
+			"y": -1.7549487347544543
+		},
+		"aaf0320b-10c7-4da2-958c-60a0c2581a98": {
+			"x": 576.9346579811775,
+			"y": -62.53981592110847
+		},
+		"fbdedeb6-3f06-4332-b34e-56bb283e89f2": {
+			"x": 688.3739900635478,
+			"y": -144.3929152205057
+		},
+		"0ca0b873-1052-4830-b725-d63ad68b6b38": {
+			"x": 724.9931097113518,
+			"y": -4.06700256548827
+		},
+		"7383d73d-3832-4935-87d1-8e3e9540af36": {
+			"x": 596.7936108625041,
+			"y": -122.72516074524725
+		},
+		"c3fd233d-f114-48f4-ba46-b2c756c487dc": {
+			"x": 760.3293530894509,
+			"y": -109.4023129392223
+		},
+		"d770ec9c-97eb-4483-8a13-cce76dc64f94": {
+			"x": 752.3305878686954,
+			"y": 11.28170080145407
+		},
+		"ddf16e00-4293-4f90-9660-5e1708f16799": {
+			"x": 654.9428833973915,
+			"y": 33.831328527311435
+		},
+		"2dd10f7b-f10c-4bdc-b68c-7db243a567cd": {
+			"x": -5.465670101343335,
+			"y": -22.44265677858871
+		},
+		"6c188608-6a37-4c8a-9081-ba29d790cc46": {
+			"x": 241.94421529381853,
+			"y": -121.1156767109398
+		},
+		"0f5fdc40-e831-4d2d-97ab-ac86a3c718c0": {
+			"x": 243.9732141764606,
+			"y": -94.44555876294338
+		},
+		"9b2bf949-68b0-4e09-8c18-60dc69accd08": {
+			"x": 218.0571703667121,
+			"y": -53.052033341815715
+		},
+		"453aa79a-7f5c-4c50-aeba-6ecc8adcb420": {
+			"x": 263.9629450685586,
+			"y": -78.02347186696392
+		},
+		"7d499851-912a-4985-ba49-ac293138e7c7": {
+			"x": 314.0528472424337,
+			"y": -24.36008510332448
+		},
+		"d5fcabb4-b2e5-4097-93cb-70b6c28b384c": {
+			"x": 244.66665287892914,
+			"y": -29.18061703665517
+		},
+		"f8b69cb1-0558-4501-aa88-6d27e8038c8c": {
+			"x": 261.12725289933053,
+			"y": -36.664287584022716
+		},
+		"e6dc413e-2933-4df9-8268-fc445f0376a7": {
+			"x": 351.5201822611482,
+			"y": -67.83488153195609
+		},
+		"f8cc7a0c-f1b5-4b6b-b3a3-53206d7b4616": {
+			"x": 286.7373625297303,
+			"y": -24.360091665383866
+		},
+		"4a95fef5-5fb9-44e5-b7b8-12c49079d5d5": {
+			"x": 317.8484667257208,
+			"y": -129.37093299907352
+		},
+		"ca725052-9bf6-4174-8b76-eccaed22ba64": {
+			"x": 352.963983675259,
+			"y": -35.31643896185832
+		},
+		"09c23cf3-dab3-4e16-be2b-c119ffe039fd": {
+			"x": 279.35853180337443,
+			"y": -93.30495021756246
+		},
+		"c40ced19-e4d2-4ea4-a796-2b200e2b9419": {
+			"x": 245.2307983878225,
+			"y": -61.44008680815199
+		},
+		"17abc036-4eeb-4231-a76d-8b362699fa9d": {
+			"x": 316.81916848952767,
+			"y": -95.88915137344203
+		},
+		"57082218-6501-461a-8721-818ca823cce9": {
+			"x": 403.93119520898466,
+			"y": -52.62302173788546
+		},
+		"2fee6354-0540-44e4-8bc3-fd89f7027d10": {
+			"x": 379.51977707891024,
+			"y": -56.91196792228924
+		},
+		"ec98056e-be4d-42e4-8eb5-1e8f5dad3a41": {
+			"x": 379.5197834656348,
+			"y": -31.79113700050693
+		},
+		"fb40967a-9051-40ed-8453-34169b7d83d7": {
+			"x": 379.19771367928576,
+			"y": -70.76062724745933
+		},
+		"f5ca068f-31da-4ed6-9962-85f9debacd42": {
+			"x": 403.0302930950955,
+			"y": -101.67855643286657
+		},
+		"5a1daced-35dc-4156-a4d1-31f66f2cbbc5": {
+			"x": 378.5535933088142,
+			"y": -96.2035082543931
+		},
+		"e0f2f899-e3c0-4f62-86ef-64f46330b1e5": {
+			"x": 243.2654711979572,
+			"y": -4.9747227291955225
+		},
+		"0aaab9ee-f323-4010-9405-4eeb176e05b3": {
+			"x": 324.0603494365937,
+			"y": 15.685498337162358
+		},
+		"311b21c7-0d3e-452f-9596-01093182a94b": {
+			"x": 312.6699949464372,
+			"y": -6.21901137960527
+		},
+		"7c782eb8-57d8-433c-9ca1-4d8c394f289c": {
+			"x": 382.7039492349921,
+			"y": -6.019003754223413
+		},
+		"5baf690f-f066-4a5d-b8a5-4b0cb7732b07": {
+			"x": -18.767270447142327,
+			"y": 43.49769433685419
+		},
+		"c8113d85-b8b8-44fd-a20a-c20649e884d7": {
+			"x": -3.724543625447006,
+			"y": 4.316998261365017
+		},
+		"273eda0d-a924-4a42-9228-de015bce21d4": {
+			"x": -57.258742527353526,
+			"y": 6.4897187039310245
+		},
+		"f6a95169-0e25-4b77-b827-93985b2cfbfb": {
+			"x": 10.82783355884917,
+			"y": -5.590984511569054
+		},
+		"a92b7ca0-a06c-4c17-bbf5-187365a9d539": {
+			"x": -40.53700301407028,
+			"y": -7.445073078544602
+		},
+		"6e8d67fd-15ec-4f8c-8df0-01ec653aad27": {
+			"x": -72.04095333956099,
+			"y": 20.650478417986477
+		},
+		"9b1d1f4c-e9ab-453b-8b47-d9f8b6c4e398": {
+			"x": -17.885601227998507,
+			"y": 17.265262457751096
+		},
+		"1e5e8718-ca3f-4ea6-af4e-31f94ea584d8": {
+			"x": -23.970116907028785,
+			"y": -18.128399334124516
+		},
+		"610a663f-5a7b-4f57-b477-e0d05719ca2f": {
+			"x": -19.71161447001508,
+			"y": -35.2848816278556
+		},
+		"5e1b9454-578d-47f9-81ef-cd5b0d03cb80": {
+			"x": 19.217348530441292,
+			"y": -34.67789545696089
+		},
+		"5358f1dc-0985-454e-b8c9-d959b292a4f0": {
+			"x": 18.52974230204663,
+			"y": -21.226863098275672
+		},
+		"42b5ed35-5559-4702-ba1f-99e12d5aeb7b": {
+			"x": 44.321254677927044,
+			"y": -2.1353692158030944
+		},
+		"960ad1ec-d816-48d0-ad2f-fc3f0e513248": {
+			"x": 73.79318262363813,
+			"y": 23.903922473217783
+		},
+		"f0bf5330-a5d7-4aad-b990-6ea50ff89bbd": {
+			"x": -65.78171996061462,
+			"y": -31.3735538765636
+		},
+		"5d22d723-3524-4f3f-8063-87ce2b3f736b": {
+			"x": -21.223959793722916,
+			"y": -50.55669740207174
+		},
+		"7a22c5c0-9131-4344-b4b6-89bc3f164e1a": {
+			"x": -127.62690687824565,
+			"y": -37.42773070254869
+		},
+		"794173b0-f7d9-40bf-bbe3-c358310c82dd": {
+			"x": 19.530621222372336,
+			"y": -49.695278822214746
+		},
+		"588e2e92-8cfa-4ad1-aed1-e2c528479344": {
+			"x": 62.79337997602785,
+			"y": -37.348488568638984
+		},
+		"24979c80-648c-4d94-88ca-c5882c95639a": {
+			"x": 101.91888561521615,
+			"y": -38.99833889891488
+		},
+		"f6489455-8ed3-4488-97b4-ebd93bcdbf73": {
+			"x": -47.12912874707993,
+			"y": -25.423705719158985
+		},
+		"2b314a10-8d84-48ea-be7c-0de257d3b83f": {
+			"x": -86.3921858487307,
+			"y": -37.9574436012775
+		},
+		"cf664894-37f7-41b7-a919-df93b76d5203": {
+			"x": -66.33687605178132,
+			"y": -55.17567142179527
+		},
+		"9ca1cc5f-b34f-4435-9d77-c39708e0f37d": {
+			"x": -47.983653141533786,
+			"y": -86.37320928907964
+		},
+		"e272ae59-75e5-43f0-a51b-5ad4a070b90f": {
+			"x": -21.58573815487711,
+			"y": -65.39626983153421
+		},
+		"f3045dcd-bb8b-45da-9d9d-f33113cd60f8": {
+			"x": 28.381796743792684,
+			"y": -71.52435566354067
+		},
+		"d837f35d-605f-43f5-aebc-e18544f40209": {
+			"x": 49.35872193580676,
+			"y": -84.95903571424591
+		},
+		"d355b8be-d394-4138-91c3-64137e36d59a": {
+			"x": 71.74982808930989,
+			"y": -99.5721758513104
+		},
+		"a8944be4-5c62-43c3-895b-454b81dd3a7c": {
+			"x": 93.43329806338612,
+			"y": -115.20374998025204
+		},
+		"bfd503ee-58b9-4451-9794-772bc6491655": {
+			"x": -26.970296891361784,
+			"y": -114.27889383971555
+		},
+		"546c5fe8-7f8b-4f16-8382-ecd36fb542f6": {
+			"x": -110.20733969466022,
+			"y": -116.30658135605285
+		},
+		"a004cf5c-af0d-4f91-a203-5acb5e5bf010": {
+			"x": -86.16637274964336,
+			"y": -115.83518183155348
+		},
+		"abc5a5a2-c382-4dcf-b245-4d05cfeee3d5": {
+			"x": -55.52593497267378,
+			"y": -116.54227868205803
+		},
+		"e5ecd464-d641-4790-ab4b-c6cf4647ee7e": {
+			"x": -134.01263072250964,
+			"y": -138.4619863893652
+		},
+		"dab11e38-1958-426f-968b-87405610e66f": {
+			"x": -25.898967880730897,
+			"y": -154.1829020319727
+		},
+		"6ba9ba6c-4f20-4baa-89bd-f77576cb8f27": {
+			"x": 324.3202837361763,
+			"y": 38.24601720200201
+		},
+		"48e68d76-2b83-4ab3-8b99-510da5ac5eaf": {
+			"x": 230.60106316746305,
+			"y": 16.26962035027011
+		},
+		"6986ea97-9e4f-4761-8489-b79306869c12": {
+			"x": 185.84184963804793,
+			"y": -51.60287464660876
+		},
+		"1583338f-9a81-4c85-8949-edfb4a97cab4": {
+			"x": 444.6206032657892,
+			"y": -46.15229234111012
+		},
+		"0f55df58-246d-4c68-a049-6720d56fc145": {
+			"x": 321.5414666693219,
+			"y": -159.97731968786388
+		},
+		"1a3b749a-78ad-48fe-b8d5-265fb5c437f4": {
+			"x": 406.5329467556436,
+			"y": 10.001124715654134
+		},
+		"a601b993-a619-4714-ba8b-042965864e1e": {
+			"x": 218.1701692575328,
+			"y": -139.9609706094136
+		},
+		"1a233b59-df5c-4ae6-a322-1d9943afde7a": {
+			"x": 428.4731930170443,
+			"y": -120.68021118601769
+		},
+		"b1aa3b3e-54fe-40c5-aec6-8c5544ec1b36": {
+			"x": 351.5140052206655,
+			"y": -5.634895199373033
+		}
+	},
+	"analysisData": {
+		"modules": [
+			{
+				"type": "centrality",
+				"id": "module-0b66c7ee-d400-4fbd-8e36-2240f362408b",
+				"label": "Most central nodes (degree)",
+				"description": "Degree centrality shows a node's number of connections.",
+				"parameters": {
+					"nodeType": { "all": true },
+					"property": { "metric": "degree" }
+				},
+				"data": {
+					"values": [
+						{
+							"node": "794173b0-f7d9-40bf-bbe3-c358310c82dd",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 5
+						},
+						{
+							"node": "610a663f-5a7b-4f57-b477-e0d05719ca2f",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 4
+						},
+						{
+							"node": "5358f1dc-0985-454e-b8c9-d959b292a4f0",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 3
+						},
+						{
+							"node": "5e1b9454-578d-47f9-81ef-cd5b0d03cb80",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 3
+						},
+						{
+							"node": "f0bf5330-a5d7-4aad-b990-6ea50ff89bbd",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 3
+						},
+						{
+							"node": "9ca1cc5f-b34f-4435-9d77-c39708e0f37d",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 3
+						},
+						{
+							"node": "bfd503ee-58b9-4451-9794-772bc6491655",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 3
+						},
+						{
+							"node": "1e5e8718-ca3f-4ea6-af4e-31f94ea584d8",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "9b1d1f4c-e9ab-453b-8b47-d9f8b6c4e398",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "a92b7ca0-a06c-4c17-bbf5-187365a9d539",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "f6a95169-0e25-4b77-b827-93985b2cfbfb",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "273eda0d-a924-4a42-9228-de015bce21d4",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "c8113d85-b8b8-44fd-a20a-c20649e884d7",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "42b5ed35-5559-4702-ba1f-99e12d5aeb7b",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "588e2e92-8cfa-4ad1-aed1-e2c528479344",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "5d22d723-3524-4f3f-8063-87ce2b3f736b",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "f6489455-8ed3-4488-97b4-ebd93bcdbf73",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "2b314a10-8d84-48ea-be7c-0de257d3b83f",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "cf664894-37f7-41b7-a919-df93b76d5203",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "e272ae59-75e5-43f0-a51b-5ad4a070b90f",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "f3045dcd-bb8b-45da-9d9d-f33113cd60f8",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "d837f35d-605f-43f5-aebc-e18544f40209",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "d355b8be-d394-4138-91c3-64137e36d59a",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "abc5a5a2-c382-4dcf-b245-4d05cfeee3d5",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "a004cf5c-af0d-4f91-a203-5acb5e5bf010",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "546c5fe8-7f8b-4f16-8382-ecd36fb542f6",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 2
+						},
+						{
+							"node": "6e8d67fd-15ec-4f8c-8df0-01ec653aad27",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 1
+						},
+						{
+							"node": "5baf690f-f066-4a5d-b8a5-4b0cb7732b07",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 1
+						},
+						{
+							"node": "960ad1ec-d816-48d0-ad2f-fc3f0e513248",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 1
+						},
+						{
+							"node": "24979c80-648c-4d94-88ca-c5882c95639a",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 1
+						},
+						{
+							"node": "7a22c5c0-9131-4344-b4b6-89bc3f164e1a",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 1
+						},
+						{
+							"node": "a8944be4-5c62-43c3-895b-454b81dd3a7c",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 1
+						},
+						{
+							"node": "e5ecd464-d641-4790-ab4b-c6cf4647ee7e",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 1
+						},
+						{
+							"node": "dab11e38-1958-426f-968b-87405610e66f",
+							"type": "1b4f1630-7155-4c14-b76a-775ce0b64113",
+							"score": 1
+						}
+					]
+				}
+			}
+		],
+		"displayedClustering": null
+	}
+}

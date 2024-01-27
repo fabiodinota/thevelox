@@ -13,8 +13,7 @@ export const Map = () => {
                 smooth={true}
                 doubleClick={{ disabled: true }}
                 panning={{ velocityDisabled: false }}
-                wheel={{ step: 0.001, smoothStep: 0.001,  }}
-                velocityAnimation={{ easing: 'easeIn' }}            
+                wheel={{ step: 0.001, smoothStep: 0.001 }}
                 >
                 <TransformComponent
                     contentClass='w-full h-full'
