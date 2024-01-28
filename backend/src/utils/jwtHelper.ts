@@ -36,6 +36,7 @@ if (!process.env.JWT_REFRESH_TOKEN_SECRET) {
 }
 const refreshSecretKey = process.env.JWT_REFRESH_TOKEN_SECRET;
 
+// Helper function to verify a refresh token
 export const verifyRefreshToken = (token: string) => {
 	return new Promise((resolve, reject) => {
 		jwt.verify(token, refreshSecretKey, (error, decoded) => {

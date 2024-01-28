@@ -4,6 +4,7 @@ import { verifyRefreshToken, generateAccessToken } from "../utils/jwtHelper";
 
 const prisma = new PrismaClient();
 
+// Refresh the JWT Access Token.
 export const refreshJWTToken = async (req: Request, res: Response) => {
 	const { refreshToken } = req.body;
 

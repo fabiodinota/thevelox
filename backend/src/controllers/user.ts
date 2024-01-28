@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+// Get a user by id
 export const getUser = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	try {

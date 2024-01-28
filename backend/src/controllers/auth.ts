@@ -5,6 +5,7 @@ import { generateAccessToken, generateRefreshToken } from "../utils/jwtHelper";
 
 const prisma = new PrismaClient();
 
+// Sign up a new user with username, email, and password
 export const signUp = async (req: Request, res: Response) => {
 	const { username, email, password } = req.body;
 
@@ -45,6 +46,7 @@ export const signUp = async (req: Request, res: Response) => {
 	res.send({ user: newUser, accessToken, refreshToken });
 };
 
+// Sign in a user based on username and password
 export const signIn = async (req: Request, res: Response) => {
 	const { username, password } = req.body;
 
