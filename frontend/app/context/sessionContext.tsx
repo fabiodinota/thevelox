@@ -43,14 +43,14 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	// Store the access token in localStorage
 	useEffect(() => {
         if(accessToken !== ""){
-		    Cookies.set('accessToken', accessToken, { expires: 1, secure: true, sameSite: 'Lax' });
+		    Cookies.set('accessToken', accessToken, { expires: 1, secure: true, sameSite: 'None' });
         }
 	}, [accessToken]);
 
 	// Store the refresh token in a cookie
 	useEffect(() => {
         if(refreshToken !== ""){
-		    Cookies.set('refreshToken', refreshToken, { expires: 7, secure: true, sameSite: 'Lax' });
+		    Cookies.set('refreshToken', refreshToken, { expires: 7, secure: true, sameSite: 'None' });
         }
 	}, [refreshToken]);
 
