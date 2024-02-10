@@ -43,14 +43,14 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	// Store the access token in localStorage
 	useEffect(() => {
         if(accessToken !== ""){
-		    Cookies.set('accessToken', accessToken, { expires: 1, secure: true, sameSite: 'None', domain: ".thevelox.co" });
+		    Cookies.set('accessToken', accessToken, { expires: 1, secure: true, sameSite: 'Lax', domain: process.env.NEXT_PUBLIC_ORIGIN });
         }
 	}, [accessToken]);
 
 	// Store the refresh token in a cookie
 	useEffect(() => {
         if(refreshToken !== ""){
-		    Cookies.set('refreshToken', refreshToken, { expires: 7, secure: true, sameSite: 'None', domain: ".thevelox.co" });
+		    Cookies.set('refreshToken', refreshToken, { expires: 7, secure: true, sameSite: 'Lax', domain: process.env.NEXT_PUBLIC_ORIGIN });
         }
 	}, [refreshToken]);
 
