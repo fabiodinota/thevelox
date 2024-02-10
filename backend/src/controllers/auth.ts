@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { hashPassword, verifyPassword } from "../utils/hashPassword";
 import { generateAccessToken, generateRefreshToken } from "../utils/jwtHelper";
+import { encryptToken } from "../utils/cryptToken";
 
 const prisma = new PrismaClient();
 
@@ -42,8 +43,11 @@ export const signUp = async (req: Request, res: Response) => {
 	const accessToken = generateAccessToken(newUser.user_id); // Set expiresIn as needed
 	const refreshToken = generateRefreshToken(newUser.user_id); // Set expiresIn as needed
 
+    const encryptedAccessToken = encryptToken(accessToken);
+    const encryptedRefreshToken = encryptToken(refreshToken);
+
 	console.log("New user created: ", newUser);
-	res.send({ user: newUser, accessToken, refreshToken });
+	res.send({ user: newUser, encryptedAccessToken, encryptedRefreshToken });
 };
 
 // Sign in a user based on username and password
@@ -68,8 +72,12 @@ export const signIn = async (req: Request, res: Response) => {
 		const accessToken = generateAccessToken(user.user_id); // Set expiresIn as needed
 		const refreshToken = generateRefreshToken(user.user_id); // Set expiresIn as needed
 
+        const encryptedAccessToken = encryptToken(accessToken);
+        const encryptedRefreshToken = encryptToken(refreshToken);
+
 		console.log("User authenticated: ", user);
-		res.send({ user, accessToken, refreshToken });
+
+		res.send({ user, encryptedAccessToken, encryptedRefreshToken });
 	} else {
 		console.log("Password is incorrect");
 		res.status(401).send({ message: "Password is incorrect" });

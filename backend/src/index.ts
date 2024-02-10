@@ -7,6 +7,8 @@ import jwtRouter from "./routes/jwt";
 import userRouter from "./routes/user";
 import mapRouter from "./routes/map";
 import bodyParser from "body-parser";
+import cookieParser from 'cookie-parser';
+import { authenticateToken } from "./middleware/authenticateToken";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -16,16 +18,22 @@ const app: Express = express();
 const port = process.env.PORT || 8080;
 
 // Cors and body parser middleware
-app.use(cors());
+const corsOptions = {
+    origin: process.env.HOST, // Allow only this origin to send requests with credentials
+    credentials: true, // Allow credentials (cookies, HTTP authentication) to be sent with requests
+  };
+  
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 // Initialize Prisma
 const prisma = new PrismaClient();
 
 // A sample route
-app.get("/", async (req: Request, res: Response) => {
+app.get("/", authenticateToken, async (req: Request, res: Response) => {
 	const allUsers = await prisma.users.findMany();
 	res.send(allUsers);
 	console.log(allUsers);

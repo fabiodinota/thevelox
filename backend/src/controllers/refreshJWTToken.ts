@@ -1,12 +1,15 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { verifyRefreshToken, generateAccessToken } from "../utils/jwtHelper";
+import { decryptToken, encryptToken } from "../utils/cryptToken";
 
 const prisma = new PrismaClient();
 
 // Refresh the JWT Access Token.
 export const refreshJWTToken = async (req: Request, res: Response) => {
-	const { refreshToken } = req.body;
+	const { encryptedRefreshToken } = req.body;
+
+    const refreshToken = decryptToken(encryptedRefreshToken) as string;
 
 	console.log("Refresh token:", refreshToken);
 
@@ -15,8 +18,6 @@ export const refreshJWTToken = async (req: Request, res: Response) => {
 		const decoded = (await verifyRefreshToken(refreshToken)) as {
 			user_id: number;
 		};
-
-		console.log("Decoded token:", decoded); // Log the decoded token to check its contents
 
 		// Check if the user exists (you can also include additional checks here)
 		const user = await prisma.users.findUnique({
@@ -30,8 +31,10 @@ export const refreshJWTToken = async (req: Request, res: Response) => {
 
 		const accessToken = generateAccessToken(user.user_id);
 
+        const encryptedAccessToken = encryptToken(accessToken);
+
 		console.log("New access token generated");
-		res.json({ accessToken });
+		res.json({ encryptedAccessToken });
 	} catch (error) {
 		console.error("Error:", error);
 		console.log("Invalid refresh token");

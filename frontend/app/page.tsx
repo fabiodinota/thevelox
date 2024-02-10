@@ -8,6 +8,8 @@ import { Canvas, useFrame, ThreeElements } from "@react-three/fiber";
 import * as THREE from "three";
 import { useSession } from "./context/sessionContext";
 import { Map } from "./Map";
+import Autocomplete from "react-autocomplete";
+import Link from "next/link";
 
 function Box(props: ThreeElements["mesh"]) {
 	const meshRef = useRef<THREE.Mesh>(null!);
@@ -40,21 +42,20 @@ export default function Home() {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 
-    const [startStation, setStartStation] = useState<string>("");
-    const [destinationStation, setDestinationStation] = useState<string>("");
-
 	const { theme, toggleTheme } = useTheme();
 
-	const { user, signUp, signIn, signOut } = useSession();
+	const { user, signUp, signIn, signOut, isAuthenticated } = useSession();
 
 	const handleTest = async () => {
-		await axios(`${process.env.NEXT_PUBLIC_API_URL}`)
-			.then((res) => {
-				setData(res?.data);
-			})
-			.catch((err) => {
-				console.log("Err: ", err);
-			});
+        if(isAuthenticated){
+            await axios(`${process.env.NEXT_PUBLIC_API_URL}`, { withCredentials: true })
+                .then((res) => {
+                    setData(res?.data);
+                })
+                .catch((err) => {
+                    console.log("Err: ", err);
+                });
+        }
 
 		toggleTheme();
 	};
@@ -78,18 +79,6 @@ export default function Home() {
 		await signOut();
 	};
 
-    const handleSearch = async () => {
-        console.log(startStation, destinationStation);
-
-
-        await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/map/search?startStation=${startStation}&targetStation=${destinationStation}`)
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch((err) => {
-                console.log("Err: ", err);
-            });
-    };
 
 	return (
 		<main className="flex h-full flex-col items-center justify-between p-24 gap-10">
@@ -138,7 +127,8 @@ export default function Home() {
 				/>
 				<button
 					onClick={handleSignUp}
-					className="rounded-lg bg-red-500 py-3 "
+                    disabled={isAuthenticated}
+					className="rounded-lg bg-red-500 py-3 disabled:opacity-50"
 				>
 					Submit
 				</button>
@@ -159,7 +149,8 @@ export default function Home() {
 				/>
 				<button
 					onClick={handleSignIn}
-					className="rounded-lg bg-red-500 py-3 "
+                    disabled={isAuthenticated}
+					className="rounded-lg bg-red-500 py-3 disabled:opacity-50"
 				>
 					Submit
 				</button>
@@ -195,32 +186,8 @@ export default function Home() {
             {/* start station input */}
 
             {/* start station input */}
-            <input
-                onChange={(e) => setStartStation(e.target.value)}
-                type="text"
-                placeholder="Start Station"
-                className="w-full h-[50px] border border-gray-500 bg-white dark:bg-background rounded-xl px-5"
-            />
-            {/* destination station input */}
-            {/* destination station input */}
-            <input
-                onChange={(e) => setDestinationStation(e.target.value)}
-                type="text"
-                placeholder="Destination Station"
-                className="w-full h-[50px] border border-gray-500 bg-white dark:bg-background rounded-xl px-5"
-            />
-            {/* search button */}
-            <button onClick={handleSearch} className="w-full h-[50px] bg-blue-500 text-white rounded-xl">
-                Search
-            </button>
 
-                <a href="#map">Go to Map</a>
-                <div className="w-screen h-screen overflow-hidden relative">
-                    <div style={{ backdropFilter: "blur(16px)"}} className="absolute left-1/2 -translate-x-1/2 bottom-10 z-[9999] backdrop-bl bg-white/20 flex justify-center items-center border border-gray-100 w-full max-w-[900px] h-[80px] rounded-xl">
-                        test mavbar
-                    </div>
-                    <Map />
-                </div>
+            <Link href={isAuthenticated ? "/map" : "/signin"}>Go to Map</Link>
 		</main>
 	);
 }

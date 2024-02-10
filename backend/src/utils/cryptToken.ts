@@ -1,4 +1,4 @@
-/* import CryptoJS from "crypto-js";
+import CryptoJS from "crypto-js";
 
 // Secret key for encryption and decryption (replace with your secret key)
 const secretKey = process.env.CRYPT_SECRET_KEY;
@@ -14,10 +14,17 @@ const encryptToken = (token: string) => {
 
 // Function to decrypt a token
 const decryptToken = (encryptedToken: string) => {
-	const bytes = CryptoJS.AES.decrypt(encryptedToken, secretKey);
-	const decryptedToken = bytes.toString(CryptoJS.enc.Utf8);
-	return decryptedToken;
-};
+    try {
+      const bytes = CryptoJS.AES.decrypt(encryptedToken, secretKey);
+      const decryptedToken = bytes.toString(CryptoJS.enc.Utf8);
+      if (!decryptedToken) {
+        throw new Error('Failed to decrypt the token.');
+      }
+      return decryptedToken;
+    } catch (error) {
+      console.error('Error decrypting token:', error);
+      return false; // Or handle the error as appropriate for your application
+    }
+  };
 
 export { encryptToken, decryptToken };
- */

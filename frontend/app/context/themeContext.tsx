@@ -26,10 +26,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 	const [theme, setTheme] = useState<"light" | "dark">("light");
 
 	useEffect(() => {
-		const storedTheme = localStorage.getItem("theme") as
-			| "light"
-			| "dark"
-			| null;
+		const storedTheme = localStorage.getItem("theme") as "light" | "dark";
 		if (storedTheme) {
 			setTheme(storedTheme);
 		} else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -46,6 +43,14 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 		localStorage.setItem("theme", newTheme);
 		document.documentElement.classList.toggle("dark");
 	};
+
+    useEffect(() => {
+        if (theme === "dark") {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+    }, [theme]);
 
 	return (
 		<ThemeContext.Provider value={{ theme, toggleTheme }}>

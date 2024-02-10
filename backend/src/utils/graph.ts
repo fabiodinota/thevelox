@@ -12,7 +12,7 @@ interface INode {
 interface IEdge {
 	sourceId: string;
 	targetId: string;
-    lineId: Set<string>;
+    lines: Set<string>;
 }
 
 class Node {
@@ -64,18 +64,43 @@ class Graph {
 		const sourceNode = this.nodes.get(sourceId);
 		const targetNode = this.nodes.get(targetId);
         
-        const edgeWeight = 1; // All edges have the same weight
+        let edgeWeight = 1; // All edges have the same weight
         if (sourceNode && targetNode) {
+            const existingEdge = sourceNode.edges.find(edge => edge.target === targetNode);
+            if (existingEdge) {
+                throw new Error(`Edge already exists: ${sourceId} -> ${targetId}`);
+            }
             // Determine the common lines between the source and target nodes
-            const commonLines = [...sourceNode.lines].filter(x => targetNode.lines.has(x));
-    
+            const sourceLines = [...sourceNode.lines];
+            const sourceEdgeLines = sourceLines.filter(line => targetNode.lines.has(line));
+
+            if(sourceEdgeLines.length === 0) { 
+                edgeWeight = 10; // Add a penalty for changing levels
+                const targetLinesArray = Array.from(targetNode.lines);
+                const sourceLinesArray = Array.from(sourceNode.lines);
+                console.log(`${sourceLinesArray[0]} level-change ${targetLinesArray[0]}`)
+                sourceEdgeLines.push(`${sourceLinesArray[0]} level-change ${targetLinesArray[0]}`)
+            }
             // Add edge from source to target
-            let edge = new Edge(sourceNode, targetNode, commonLines, edgeWeight);
+            let edge = new Edge(sourceNode, targetNode, sourceEdgeLines, edgeWeight);
             sourceNode.edges.push(edge);
             this.edges.push(edge);
-    
+            // print edge
+
+            // Add same lines for the edge from target to source
+            const targetLines = [...targetNode.lines];
+            const targetEdgeLines = targetLines.filter(line => sourceNode.lines.has(line));
+            
+            if(targetEdgeLines.length === 0) { 
+                edgeWeight = 10;
+                const targetLinesArray = Array.from(targetNode.lines);
+                const sourceLinesArray = Array.from(sourceNode.lines);
+                console.log(`${targetLinesArray[0]} level-change ${sourceLinesArray[0]}`)
+                targetEdgeLines.push(`${targetLinesArray[0]} level-change ${sourceLinesArray[0]}`)
+            }
+
             // Add edge from target back to source for undirected graph
-            edge = new Edge(targetNode, sourceNode, commonLines, edgeWeight);
+            edge = new Edge(targetNode, sourceNode, targetEdgeLines, edgeWeight);
             targetNode.edges.push(edge);
             this.edges.push(edge);
         } else {
@@ -84,7 +109,7 @@ class Graph {
 	}
 
     // Make use of BFS to find the shortest path, no matter how many transfers
-	findShortestPath(startId: string, targetId: string): string[] {
+	findShortestPath(startId: string, targetId: string): { path: string[], lines: string[] } {
 		const visited = new Map<string, boolean>();
 		const previous = new Map<string, string | null>();
 		const queue: Node[] = [];
@@ -98,12 +123,12 @@ class Graph {
 		const startNode = this.nodes.get(startId);
 		if (!startNode) {
 			console.log(`Start node with ID ${startId} not found.`);
-			return [];
+			return { path: [], lines: [] };
 		}
 
 		if (startId === targetId) {
 			console.log(`Start node and target node are the same.`);
-			return [];
+			return { path: [startNode.name], lines: []  };
 		}
 
 		console.log(`Starting BFS from: ${startNode.name}`);
@@ -128,8 +153,8 @@ class Graph {
 					path.unshift(this.nodes.get(current)?.name ?? "Unknown");
 					current = previous.get(current) ?? null;
 				}
-
-				return path;
+                const lines = this.calculateLines(path);
+				return { path, lines };
 			}
 
 			currentNode.edges.forEach((edge) => {
@@ -147,7 +172,8 @@ class Graph {
 				startNode.name
 			}`
 		);
-		return [];
+        
+		return { path: [], lines: [] };
 	}
 
     // Input node name and return ID
@@ -164,97 +190,148 @@ class Graph {
     // Find the optimal path using a modified Dijkstra's algorithm.
     findOptimalPath(startId: string, targetId: string): { path: string[], lines: string[] } {
         const costs = new Map<string, number>();
-        const previous = new Map<string, { nodeId: string, lineId: string | null }>();
-        const priorityQueue = new PriorityQueue<{ node: Node, lineId: string | null, cost: number }>((a, b) => {
-            if (a.cost < b.cost) return -1;
-            if (a.cost > b.cost) return 1;
-            return 0;
-        });
-        const lineChangePenalty = 3;
+        const previous = new Map<string, string>();
+        const priorityQueue = new PriorityQueue<{ nodeId: string, cost: number }>((a, b) => a.cost - b.cost);
+        const visited = new Set<string>(); // New set to keep track of visited nodes
 
-        this.nodes.forEach((node, nodeId) => {
-            costs.set(nodeId, 0);
+    
+        this.nodes.forEach((_, nodeId) => {
+            costs.set(nodeId, Infinity);
         });
-        
+    
         costs.set(startId, 0);
-        priorityQueue.enq({ node: this.nodes.get(startId)!, lineId: null, cost: 0 });
-
-        console.log(`Starting Dijkstra's algorithm from: ${this.nodes.get(startId)?.name}`);
-        console.log(costs)
-
+        priorityQueue.enq({ nodeId: startId, cost: 0 });
+    
         while (!priorityQueue.isEmpty()) {
-            console.log("Priority queue:", priorityQueue.peek());
-            const current = priorityQueue.deq();
-            const currentNode = current.node;
-            const currentCost = costs.get(currentNode.id) || 0;
-        
-            // Skip processing if a better path has been found already
-            if (current.cost > currentCost) {
-                console.log(`Skipping node ${currentNode.name} as a better path has been found.`);
-                continue;
-            }
-        
-            console.log(`Dequeued node: ${currentNode.name}, Cost: ${current.cost}, Line: ${current.lineId || 'None'}`);
-        
-            if (currentNode.id === targetId) {
-                console.log("Reached target node, breaking loop.");
+            const { nodeId: currentId, cost: currentCost } = priorityQueue.deq();
+    
+            if (visited.has(currentId)) continue; // Skip if node is already visited
+            visited.add(currentId); // Mark the node as visited
+    
+            if (currentId === targetId) {
+                console.log(`Reached target node (${targetId}), breaking loop.`);
                 break;
             }
     
+            const currentNode = this.nodes.get(currentId);
+            if (!currentNode) {
+                throw new Error(`Node with ID ${currentId} not found`);
+            }
             currentNode.edges.forEach(edge => {
-                const nextNode = edge.target;
-                const edgeCost = 0;
-                const lineChangeCost = (current.lineId && !edge.lines.has(current.lineId)) ? lineChangePenalty : 0;
-                const newCost = currentCost + edgeCost + lineChangeCost;
-        
-                console.log(`Considering edge: ${currentNode.name} -> ${nextNode.name}, Current Cost: ${currentCost}, Edge Cost: ${edgeCost}, Line Change Cost: ${lineChangeCost}, New Cost: ${newCost}`);
-        
-                if (newCost < (costs.get(nextNode.id) || Infinity)) {
-                    console.log(`Updating cost for node: ${nextNode.name}, from ${costs.get(nextNode.id)} to ${newCost}`);
-                    costs.set(nextNode.id, newCost);
-                    previous.set(nextNode.id, { nodeId: currentNode.id, lineId: this.getLineForEdge(currentNode.id, nextNode.id) });
-                    priorityQueue.enq({ node: nextNode, lineId: this.getLineForEdge(currentNode.id, nextNode.id), cost: newCost });
+                const nextId = edge.target.id;
+                const transferCost = this.calculateTransferCost(currentId, nextId, previous.get(currentId));
+                const newCost = currentCost + edge.weight + transferCost;
+
+                console.log("New Cost: ", newCost, "Current Cost: ", currentCost, "Edge Weight: ", edge.weight, "Transfer Cost: ", transferCost)
+    
+                if (newCost < (costs.get(nextId) || Infinity)) {
+                    costs.set(nextId, newCost);
+                    previous.set(nextId, currentId);
+                    priorityQueue.enq({ nodeId: nextId, cost: newCost });
                 }
             });
         }
+        return this.reconstructPath(startId, targetId, previous);
+    }
+    
+    
+    calculateTransferCost(currentId: string, nextId: string, previousId: string | undefined): number {
+        if (!previousId) return 0;
 
-        // Reconstruct path from previous map to return
-        return this.reconstructPath(previous, startId, targetId);
+        const currentLines = this.nodes.get(currentId)?.lines ?? new Set<string>();
+        const previousLines = this.nodes.get(previousId!)?.lines ?? new Set<string>();
+
+        const nextLines = this.nodes.get(nextId)?.lines ?? new Set<string>();
+        const lineChangePenalty = 15;
+    
+        const commonLines = new Set([...currentLines].filter(x => nextLines.has(x) && previousLines.has(x)));
+        //if it contains level-change, return 5 please
+
+        return commonLines.size > 0 ? 0 : lineChangePenalty;
     }
 
-    // Find the line ID for the edge between two nodes
-    private getLineForEdge(sourceId: string, targetId: string): string | null {
-        const sourceNode = this.nodes.get(sourceId);
-        const targetNode = this.nodes.get(targetId);
-        if (!sourceNode || !targetNode) {
-            return null;
-        }
-
-        const commonLines = new Set([...sourceNode.lines].filter(x => targetNode.lines.has(x)));
-        console.log(`Common lines between ${sourceNode.name} and ${targetNode.name}:`, commonLines)
-        return commonLines.size > 0 ? commonLines.values().next().value : null;
-    }
-
-    // Reconstruct the path from the previous map
-    private reconstructPath(previous: Map<string, { nodeId: string, lineId: string | null }>, startId: string, targetId: string): { path: string[], lines: string[] } {
+    reconstructPath(startId: string, targetId: string, previous: Map<string, string>): { path: string[], lines: string[] } {
         const path = [];
-        const lines = [];
         let currentId = targetId;
-        while (currentId !== startId) {
-            const previousNode = previous.get(currentId);
-            if (!previousNode) {
-                break;
+    
+        while (currentId && currentId !== startId) {
+            const currentNode = this.nodes.get(currentId);
+            if (currentNode) {
+                path.unshift(currentNode.name);
+                currentId = previous.get(currentId)!;
+            } else {
+                console.error(`Node with ID ${currentId} not found. Check if node IDs are correct and match those in the 'nodes' map.`);
+                break;  // Exit the loop if a node is not found
             }
-            console.log(`Reconstructing path. Current node: ${this.nodes.get(currentId)?.name}, Line: ${previousNode.lineId}`);
-            path.unshift(this.nodes.get(currentId)!.name);
-            if (previousNode.lineId) {
-                lines.unshift(previousNode.lineId);
-            }
-            currentId = previousNode.nodeId;
         }
-        path.unshift(this.nodes.get(startId)!.name); // Add start node at the beginning
+    
+        // Check if the start node is correctly added
+        if (currentId === startId) {
+            path.unshift(this.nodes.get(startId)?.name ?? "Unknown");
+        } else {
+            console.error(`Start node with ID ${startId} was not reached. Path reconstruction incomplete.`);
+        }
+    
+        const lines = this.calculateLines(path);
         return { path, lines };
     }
+
+    calculateLines(path: string[]): string[] {
+        const lines = [];
+        let lastUsedLine: string | null = null; // Track the last used line with format "level-line"
+    
+        for (let i = 1; i < path.length; i++) {
+            const currentNodeId = this.getNodeIdByName(path[i]);
+            const previousNodeId = this.getNodeIdByName(path[i - 1]);
+            const currentNode = this.nodes.get(currentNodeId);
+            const previousNode = this.nodes.get(previousNodeId);
+    
+            if (currentNode && previousNode) {
+                const commonLines = new Set([...currentNode.lines].filter(x => previousNode.lines.has(x)));
+                let line: string;
+    
+                // Function to extract level from the line identifier
+                const getLevel = (line: string) => line.split('-')[0];
+    
+                // Determine if a level change or transfer is necessary
+                if (lastUsedLine && commonLines.has(lastUsedLine)) {
+                    // Continue using the same line if possible
+                    line = lastUsedLine;
+                } else if (commonLines.size > 0) {
+                    // If there are common lines, pick one that continues the last level if possible
+                    const preferredLines = Array.from(commonLines).filter(l => lastUsedLine && getLevel(l) === getLevel(lastUsedLine));
+                    if (preferredLines.length > 0) {
+                        // Continue on the same level if possible
+                        line = preferredLines[0];
+                    } else {
+                        // Otherwise, just pick the first common line
+                        line = commonLines.values().next().value;
+                    }
+                    lastUsedLine = line; // Update the last used line
+                } else {
+                    // Handle level change or transfer
+                    if (lastUsedLine && getLevel(lastUsedLine) !== getLevel(Array.from(currentNode.lines)[0])) {
+                        // Level change if the first part of the line identifier changes
+                        line = `level-change:${lastUsedLine}->${Array.from(currentNode.lines)[0]}`;
+                    } else {
+                        // Transfer within the same level
+                        line = Array.from(currentNode.lines)[0];
+                    }
+                    lastUsedLine = null; // Potentially reset last used line as it's a change
+                }
+                lines.push(line);
+            } else {
+                console.log(`Node with ID ${currentNodeId} or ${previousNodeId} not found`);
+            }
+        }
+        console.log(`Calculated Lines: ${lines}`);
+        return lines;
+    }
+    
+    
+    
+
+
 }
 
 // Load graph from JSON file, add nodes and edges.
@@ -269,7 +346,7 @@ export function loadGraphFromJson(filePath: string): Graph {
 		graph.addNode(nodeData.id, nodeData.name);
 	});
 
-    
+
     jsonData.lines.forEach((lineData: { id: string, name: string, stations: string[] }) => {
         lineData.stations.forEach(stationName => {
             const stationId = graph.getNodeIdByName(stationName);
@@ -279,10 +356,16 @@ export function loadGraphFromJson(filePath: string): Graph {
             }
         });
     });
-    
+
     jsonData.edges.forEach((edgeData: IEdge) => {
         graph.addEdge(edgeData.sourceId, edgeData.targetId);
+
     });
+    
+ /*    jsonData.edges.forEach((edge: IEdge) => {
+        // check if node has lines
+		    console.log(`Lines: ${edge.lines}, Source: ${edge.sourceId}, Target: ${edge.targetId}`);
+	}); */
 
 	console.log("Graph loaded from JSON file");
 	return graph;

@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import React, { createContext, useContext, useState, useEffect } from "react";
-import parseToken from "../utils/parseToken";
 import Cookies from 'js-cookie';
 
 // Create a context to manage the session
@@ -43,87 +42,58 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 
 	// Store the access token in localStorage
 	useEffect(() => {
-		Cookies.set('accessToken', accessToken, { expires: 7, secure: true, sameSite: 'Lax' });
+        if(accessToken !== ""){
+		    Cookies.set('accessToken', accessToken, { expires: 1, secure: true, sameSite: 'Lax' });
+        }
 	}, [accessToken]);
 
 	// Store the refresh token in a cookie
 	useEffect(() => {
-		Cookies.set('refreshToken', refreshToken, { expires: 7, secure: true, sameSite: 'Lax' });
+        if(refreshToken !== ""){
+		    Cookies.set('refreshToken', refreshToken, { expires: 7, secure: true, sameSite: 'Lax' });
+        }
 	}, [refreshToken]);
 
 	// Function to refresh the access token
-	const refreshAccessToken = async () => {
-		try {
-			console.log("Refreshing access token...: ", refreshToken);
-			const response = await axios.post(
-				`${process.env.NEXT_PUBLIC_API_URL}/jwt/refresh`,
-				{ refreshToken }
-			);
-			setAccessToken(response.data.accessToken);
-		} catch (error) {
-			console.error("Error refreshing access token:", error);
-		}
-	};
+    const refreshAccessToken = async () => {
+        try {
+          const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/jwt/refresh`,
+            { encryptedRefreshToken: refreshToken } // Assuming refreshToken is already stored securely
+          );
+          // Assuming the server will return a new access token directly without encryption
+          setAccessToken(response.data.encryptedAccessToken);
+        } catch (error) {
+          console.error("Error refreshing access token:", error);
+        }
+      };
+      
+      // Trigger token refresh at regular intervals or before making an API call
+      useEffect(() => {
+        const tokenRefreshInterval = setInterval(refreshAccessToken, 10 * 60 * 1000); // e.g., every 15 minutes
+      
+        return () => clearInterval(tokenRefreshInterval);
+      }, []);
 
-	// Check token expiration and refresh automatically
-	useEffect(() => {
-		const tokenExpirationThreshold = 10 * 60 * 1000; // e.g., 2 minutes before expiration
+    const fetchUserData = async () => {
+        try {
+            if (accessToken) {
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/getUser`, { withCredentials: true });
 
-		const checkTokenExpiration = () => {
-			const tokenData = parseToken(accessToken);
-			if (tokenData && typeof tokenData !== "string" && tokenData.exp) {
-				const currentTime = Math.floor(Date.now() / 1000);
-				if (tokenData.exp - currentTime < tokenExpirationThreshold) {
-					refreshAccessToken();
-				}
-			}
-		};
-
-		const tokenExpirationInterval = setInterval(
-			checkTokenExpiration,
-			60 * 1000
-		);
-
-		return () => {
-			clearInterval(tokenExpirationInterval);
-		};
-	}, [accessToken]);
+                setUser(response.data);
+            }
+        } catch (error) {
+            // Handle any errors (e.g., token expiration, unauthorized access)
+            console.error("Error fetching user data:", error);
+        }
+    };
 
 	useEffect(() => {
-		// Define a function to fetch the user data
-		const fetchUserData = async () => {
-			try {
-				const tokenData = parseToken(accessToken);
-
-				if (
-					tokenData &&
-					typeof tokenData !== "string" &&
-					"user_id" in tokenData
-				) {
-					// Make a GET request to /user/getUser/:id using the access token
-					const response = await axios.get(
-						`${process.env.NEXT_PUBLIC_API_URL}/user/getUser/${tokenData.user_id}`,
-						{
-							headers: {
-								Authorization: `Bearer ${accessToken}`, // Include the access token in the headers
-							},
-						}
-					);
-
-					// Update the user object in your session context or state with the fetched data
-					setUser(response.data); // Assuming setUser is a state updater function in your component
-				}
-			} catch (error) {
-				// Handle any errors (e.g., token expiration, unauthorized access)
-				console.error("Error fetching user data:", error);
-			}
-		};
-
 		// Check if there is an access token available
 		if (accessToken) {
 			fetchUserData(); // Call the function to fetch user data
 		}
-	}, []); // Empty dependency array means this effect runs once when the component mounts
+	}, []);
 
 	// Sign-in function
 	const signIn = async (credentials: object) => {
@@ -132,8 +102,9 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 				`${process.env.NEXT_PUBLIC_API_URL}/auth/signin`,
 				credentials
 			);
-			setAccessToken(response.data.accessToken);
-			setRefreshToken(response.data.refreshToken);
+
+			setAccessToken(response.data.encryptedAccessToken);
+			setRefreshToken(response.data.encryptedRefreshToken);
 			setUser(response.data.user); // Update the user data in the session context
 		} catch (error) {
 			// Handle sign-in errors
@@ -149,8 +120,8 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 				userData
 			);
 
-			setAccessToken(response.data.accessToken);
-			setRefreshToken(response.data.refreshToken);
+			setAccessToken(response.data.encryptedAccessToken);
+			setRefreshToken(response.data.encryptedRefreshToken);
 			setUser(response.data.user); // Update the user data in the session context
 		} catch (error) {
 			// Handle sign-up errors

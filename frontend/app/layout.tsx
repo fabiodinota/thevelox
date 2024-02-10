@@ -18,8 +18,6 @@ export const metadata: Metadata = {
 	manifest: "/manifest.json",
 	keywords: [],
 	authors: [{ name: "Fabio Di Nota" }],
-	viewport:
-		"minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
 	icons: [
 		{ rel: "apple-touch-icon", url: "/icons/icon-192x192.png" },
 		{ rel: "icon", url: "/icons/icon-192x192.png" },
@@ -38,7 +36,11 @@ export default function RootLayout({
                     <head>
                         {/* themecolor meta tag */}
                         <meta name="theme-color" content={"#E42B2B"} />
-                        {/* manifest meta tags */}
+                        {/* viewport meta tag */}
+                        <meta
+                            name="viewport"
+                            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
+                        />
                     </head>
 					<body
 						className={

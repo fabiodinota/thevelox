@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+/* import jwt from "jsonwebtoken";
 
 // Function to parse a JWT token and extract data
 const parseToken = (token: string) => {
@@ -12,3 +12,4 @@ const parseToken = (token: string) => {
 };
 
 export default parseToken;
+ */
