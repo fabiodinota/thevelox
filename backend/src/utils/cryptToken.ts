@@ -14,6 +14,9 @@ const encryptToken = (token: string) => {
 
 // Function to decrypt a token
 const decryptToken = (encryptedToken: string) => {
+    if(encryptedToken === undefined) {
+        return "No token provided.";
+    }
     try {
       const bytes = CryptoJS.AES.decrypt(encryptedToken, secretKey);
       const decryptedToken = bytes.toString(CryptoJS.enc.Utf8);

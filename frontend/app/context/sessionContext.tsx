@@ -70,14 +70,16 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
       
       // Trigger token refresh at regular intervals or before making an API call
       useEffect(() => {
-        const tokenRefreshInterval = setInterval(refreshAccessToken, 10 * 60 * 1000); // e.g., every 15 minutes
-      
-        return () => clearInterval(tokenRefreshInterval);
+        if(user){
+            const tokenRefreshInterval = setInterval(refreshAccessToken, 10 * 60 * 1000); // e.g., every 15 minutes
+        
+            return () => clearInterval(tokenRefreshInterval);
+        }
       }, []);
 
     const fetchUserData = async () => {
         try {
-            if (accessToken) {
+            if (accessToken !== "") {
                 const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/getUser`, { withCredentials: true });
 
                 setUser(response.data);
