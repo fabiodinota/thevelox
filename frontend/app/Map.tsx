@@ -66,46 +66,48 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 
     const { path, lines } = searchReqData;
 
-    if(searching && path?.length > 0 && lines?.length > 0) {
-        const edges = document.querySelectorAll(".edge")
-        const stations = document.querySelectorAll(".station")
-        const numberTags = document.querySelectorAll(".number-tag")
-        edges.forEach((edge) => {
-            edge?.classList.add("saturate-[0.3]");
-            edge?.classList.add("stroke-gray-300");
-            edge?.classList.add("dark:stroke-gray-700");
+    useEffect(() => {
+        if(searching && path?.length > 0 && lines?.length > 0) {
+            const edges = document.querySelectorAll(".edge")
+            const stations = document.querySelectorAll(".station")
+            const numberTags = document.querySelectorAll(".number-tag")
+            edges.forEach((edge) => {
+                edge?.classList.add("saturate-[0.3]");
+                edge?.classList.add("stroke-gray-300");
+                edge?.classList.add("dark:stroke-gray-700");
 
-            for (let i = 0; i < path?.length; i++) {
-                if (edge?.id === `${path[i]}-${path[i + 1]} ${lines[i]}` || edge?.id === `${path[i + 1]}-${path[i]} ${lines[i]}`) {
-                    edge?.classList.remove("saturate-[0.3]");
-                    edge?.classList.remove("stroke-gray-300");
-                    edge?.classList.remove("dark:stroke-gray-700");
+                for (let i = 0; i < path?.length; i++) {
+                    if (edge?.id === `${path[i]}-${path[i + 1]} ${lines[i]}` || edge?.id === `${path[i + 1]}-${path[i]} ${lines[i]}`) {
+                        edge?.classList.remove("saturate-[0.3]");
+                        edge?.classList.remove("stroke-gray-300");
+                        edge?.classList.remove("dark:stroke-gray-700");
 
+                    }
                 }
-            }
-        })
-        stations.forEach((station) => {
-            station?.classList.add("saturate-[0]");
-            station?.id === searchReqData.startStation && station?.classList.remove("saturate-[0]");
-            station?.id === searchReqData.endStation && station?.classList.remove("saturate-[0]");
-            for (let i = 0; i < path?.length; i++) {
-                station?.id === path[i] && station?.classList.remove("saturate-[0]");
-            }
-        })
-    }
+            })
+            stations.forEach((station) => {
+                station?.classList.add("saturate-[0]");
+                station?.id === searchReqData.startStation && station?.classList.remove("saturate-[0]");
+                station?.id === searchReqData.endStation && station?.classList.remove("saturate-[0]");
+                for (let i = 0; i < path?.length; i++) {
+                    station?.id === path[i] && station?.classList.remove("saturate-[0]");
+                }
+            })
+        }
 
-    if(!searching) {
-        const edges = document.querySelectorAll(".edge")
-        const stations = document.querySelectorAll(".station")
-        const numberTags = document.querySelectorAll(".number-tag")
+        if(!searching) {
+            const edges = document.querySelectorAll(".edge")
+            const stations = document.querySelectorAll(".station")
+            const numberTags = document.querySelectorAll(".number-tag")
 
-        edges.forEach((edge) => {
-            edge?.classList.remove("saturate-0");
-        })
-        stations.forEach((station) => {
-            station?.classList.remove("saturate-0");
-        })
-    }
+            edges.forEach((edge) => {
+                edge?.classList.remove("saturate-0");
+            })
+            stations.forEach((station) => {
+                station?.classList.remove("saturate-0");
+            })
+        }
+    }, [searching, path, lines])
     
         
 
