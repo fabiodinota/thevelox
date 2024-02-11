@@ -71,8 +71,11 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
       
       // Trigger token refresh at regular intervals or before making an API call
       useEffect(() => {
-        const tokenRefreshInterval = setInterval(refreshAccessToken, 10 * 60 * 1000); // e.g., every 15 minutes
-    
+        const tokenRefreshInterval = setInterval(refreshAccessToken, 60 * 1000); // e.g., every 15 minutes
+        if(!user){
+            fetchUserData();
+        }
+
         return () => clearInterval(tokenRefreshInterval);
       }, []);
 

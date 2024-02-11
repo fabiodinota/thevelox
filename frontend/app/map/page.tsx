@@ -96,7 +96,7 @@ const page = () => {
 
   return (
     <div className="w-screen h-screen overflow-hidden relative">
-        <div style={{ backdropFilter: "blur(16px)"}} className="absolute left-1/2 -translate-x-1/2 bottom-10 z-[9999] backdrop-bl bg-white/20 flex justify-center items-center border border-gray-100 w-full max-w-[900px] h-[80px] rounded-xl">
+        <div style={{ backdropFilter: "blur(16px)"}} className="absolute left-1/2 -translate-x-1/2 bottom-5 z-[9999] backdrop-bl bg-white/20 flex justify-center items-center border border-gray-100 px-[10px] w-[90%] max-w-[900px] h-[80px] rounded-xl">
             <input
                 onChange={(e) => setStartStation(e.target.value)}
                 value={startStation}

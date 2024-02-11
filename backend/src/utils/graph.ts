@@ -178,13 +178,18 @@ class Graph {
 
     // Input node name and return ID
 	getNodeIdByName(name: string): string {
-		let nodeId: string = "";
-		this.nodes.forEach((node) => {
-			if (node.name === name) {
-				nodeId = node.id;
-			}
-		});
-		return nodeId;
+        let nodeId: string = "";
+        this.nodes.forEach((node) => {
+            if (node.name === name) {
+                nodeId = node.id;
+            }
+        });
+    
+        if (nodeId === "") {
+            throw new Error(`Node ID not found for name: ${name}`);
+        }
+    
+        return nodeId;
 	}
 
     // Find the optimal path using a modified Dijkstra's algorithm.
