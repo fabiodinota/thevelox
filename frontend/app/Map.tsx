@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { SVGProps, useEffect, useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -66,21 +66,27 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 
     const { path, lines } = searchReqData;
 
+    const [drawingEdges, setDrawingEdges] = useState<Element[]>([]);
+
     useEffect(() => {
         if(searching && path?.length > 0 && lines?.length > 0) {
             const edges = document.querySelectorAll(".edge")
             const stations = document.querySelectorAll(".station")
             const numberTags = document.querySelectorAll(".number-tag")
+
             edges.forEach((edge) => {
                 edge?.classList.add("saturate-[0.3]");
                 edge?.classList.add("stroke-gray-300");
                 edge?.classList.add("dark:stroke-gray-700");
+                edge?.classList.add("brightness-50");
 
                 for (let i = 0; i < path?.length; i++) {
                     if (edge?.id === `${path[i]}-${path[i + 1]} ${lines[i]}` || edge?.id === `${path[i + 1]}-${path[i]} ${lines[i]}`) {
+                        setDrawingEdges((prev) => [...prev, edge]);
                         edge?.classList.remove("saturate-[0.3]");
                         edge?.classList.remove("stroke-gray-300");
                         edge?.classList.remove("dark:stroke-gray-700");
+                        edge?.classList.remove("brightness-50");
 
                     }
                 }
@@ -93,7 +99,15 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
                     station?.id === path[i] && station?.classList.remove("saturate-[0]");
                 }
             })
+            numberTags.forEach((numberTag) => {
+                numberTag?.classList.add("saturate-[0]");
+                for (let i = 0; i < path?.length; i++) {
+                    numberTag?.id === path[i] && numberTag?.classList.remove("saturate-[0]  dark:fill-gray-700");
+
+                }
+            })
         }
+        console.log(searching)
 
         if(!searching) {
             const edges = document.querySelectorAll(".edge")
@@ -101,15 +115,46 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
             const numberTags = document.querySelectorAll(".number-tag")
 
             edges.forEach((edge) => {
-                edge?.classList.remove("saturate-0");
+                edge?.classList.remove("saturate-[0.3]");
+                        edge?.classList.remove("stroke-gray-300");
+                        edge?.classList.remove("dark:stroke-gray-700");
+                        edge?.classList.remove("brightness-50");
             })
             stations.forEach((station) => {
-                station?.classList.remove("saturate-0");
+                station?.classList.remove("saturate-[0]");
             })
+            
+            numberTags.forEach((numberTag) => {
+                numberTag?.classList.remove("saturate-[0]");
+            })
+            setDrawingEdges([]);
         }
-    }, [searching, path, lines])
+    }, [searching, path, lines, level])
     
-        
+    /* const draw = (edge: Element, index: number, edgeLength: number ) => {
+        if(searching && path?.length > 0 && lines?.length > 0) {
+            const nextIndex = index + 1 < path?.length ? index + 1 : index;
+            const isReverse = edge?.id === `${path[index + 1]}-${path[index]} ${lines[index]}`;
+
+            return {
+                hidden: {
+                    opacity: 0,
+                    pathLength: 0,
+                    pathOffset: isReverse ? 0 : 1,
+                },
+                visible: {
+                    pathOffset: 0,
+                    pathLength: 1,
+                    opacity: 1,
+                    transition: {
+                        pathLength: { delay: index * 0.3, type: "spring", duration: 1.5, bounce: 0 },
+                        pathOffset: { delay: index * 0.3, duration: 1.5, type: "spring", bounce: 0 },
+                        opacity: { delay: index * 0.3, duration: 0.01 }
+                    }
+                }
+            };
+        }
+    }; */
 
 	return (
 		<div id="map">
@@ -131,7 +176,6 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 				wheel={{ step: 0.001, smoothStep: 0.001 }}
 			>
 				<TransformComponent
-					contentClass="wFull hFull"
 					wrapperStyle={{
 						width: "100vw",
 						height: "100vh",
@@ -156,7 +200,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 									id="Level 1"
 									className="scale-[0.90] origin-center"
 								>
-									<g id="Main">
+									<motion.g id="Main" initial="hidden" animate="visible">
 										<rect
 											id="Rectangle 11"
 											x="862"
@@ -223,6 +267,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeDasharray="8 3"
 											/>
 										</g>
+                                        
 										<g id="1-16">
 											<path
 												id="Harbor Heights-Lagoon Lane 1-16"
@@ -648,6 +693,23 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												className="edge duration-500"
 											/>
 										</g>
+                                        {/* {drawingEdges.map((edge, index) => { 
+                                            const svgEdge = edge as SVGPathElement;
+                                            const edgeLength = svgEdge.getTotalLength();
+
+                                            return (
+                                                <motion.path
+                                                    key={index}
+                                                    custom={index}
+                                                    id={edge.id}
+                                                    variants={draw(edge, index, edgeLength)}
+                                                    d={edge.getAttribute("d") || ""}
+                                                    stroke={edge.getAttribute("stroke") || "#A1A2A1"}
+                                                    strokeWidth={edge.getAttribute("strokeWidth") || 32}
+                                                    className="drewEdge"
+                                                />
+                                            )
+                                        })} */}
 										<circle
 											id="Seagate Central"
 											cx="1875"
@@ -2371,7 +2433,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												Aquaplay
 											</tspan>
 										</text>
-									</g>
+									</motion.g>
 								</motion.g>
 							)}
 							{level === 1 && (
@@ -2477,350 +2539,406 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 										</g>
 										<g id="2-16">
 											<path
-												id="Coastal Corner-Plaza Central"
+												id="Coastal Corner-Plaza Central 2-16"
 												d="M3054.27 1231.45L2812.38 1232.41"
 												stroke="#A1A2A1"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Junction Juncture-Coastal Corner"
+												id="Junction Juncture-Coastal Corner 2-16"
 												d="M2570.5 1233.38L2812.38 1232.41"
 												stroke="#A1A2A1"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Citadel Center-Junction Juncture"
+												id="Citadel Center-Junction Juncture 2-16"
 												d="M2386.31 1035.5L2549.69 1229.51C2551.79 1232.01 2554.88 1233.44 2558.14 1233.43L2570.5 1233.38"
 												stroke="#A1A2A1"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Axis Alley-Citadel Center"
+												id="Axis Alley-Citadel Center 2-16"
 												d="M2093.5 957.948H2283.32C2307.21 957.948 2329.88 968.497 2345.27 986.773L2386.31 1035.5"
 												stroke="#A1A2A1"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Spire Site-Axis Alley"
+												id="Spire Site-Axis Alley 2-16"
 												d="M2093.5 957.948H1819"
 												stroke="#A1A2A1"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Core Crossing-Spire Site"
+												id="Core Crossing-Spire Site 2-16"
 												d="M1625.27 1111V1022.95C1625.27 987.05 1654.37 957.948 1690.27 957.948H1819"
 												stroke="#A1A2A1"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Vertex Valley-Core Crossing"
+												id="Vertex Valley-Core Crossing 2-16"
 												d="M1390 1208.45H1560.27C1596.17 1208.45 1625.27 1179.35 1625.27 1143.45V1111"
 												stroke="#A1A2A1"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Apex Tower-Vertex Valley"
+												id="Apex Tower-Vertex Valley 2-16"
 												d="M1035 1208.45H1390"
 												stroke="#A1A2A1"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 										</g>
 										<g id="2-15">
 											<path
-												id="Coastal Corner-Plaza Central_2"
+												id="Coastal Corner-Plaza Central 2-15"
 												d="M3053.77 1268.95H2810.13"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Junction Juncture-Coastal Corner_2"
+												id="Junction Juncture-Coastal Corner 2-15"
 												d="M2566.5 1268.95H2810.13"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Citadel Center-Junction Juncture_2"
+												id="Citadel Center-Junction Juncture 2-15"
 												d="M2389.75 1094.7L2522.51 1252.88C2531.06 1263.07 2543.68 1268.95 2556.98 1268.95H2566.5"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Axis Alley-Citadel Center_2"
+												id="Axis Alley-Citadel Center 2-15"
 												d="M2097 994.448H2284.54C2297.83 994.448 2310.44 1000.32 2318.99 1010.5L2389.75 1094.7"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Spire Site-Axis Alley_2"
+												id="Spire Site-Axis Alley 2-15"
 												d="M2097 994.448H1821"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Core Crossing-Spire Site_2"
+												id="Core Crossing-Spire Site 2-15"
 												d="M1660.77 1114.5L1661.52 1024.2C1661.66 1007.73 1675.05 994.448 1691.52 994.448H1821"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Fusion Form-Core Crossing"
+												id="Fusion Form-Core Crossing 2-15"
 												d="M1613.94 1477L1648.28 1442.66C1656.9 1434.04 1661.66 1422.29 1661.46 1410.11L1659.77 1306.45L1660.77 1114.5"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Crossroad CrescentFusion Form"
+												id="Crossroad Crescent-Fusion Form 2-15"
 												d="M1613.94 1477L1525.62 1565.32C1517.18 1573.76 1505.74 1578.5 1493.8 1578.5H1388.3C1385.44 1578.5 1382.58 1578.73 1379.81 1579.48C1369.54 1582.25 1353.83 1589.02 1350 1600.5"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Venture Vista-Crossroad Crescent"
+												id="Venture Vista-Crossroad Crescent 2-15"
 												d="M1341.5 1862V1720.25V1621.5C1342.67 1611.67 1347.6 1592 1358 1592"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Capital Court-Venture Vista"
+												id="Capital Court-Venture Vista 2-15"
 												d="M1188 2032.5L1329.48 1891.02C1337.18 1883.32 1341.5 1872.88 1341.5 1862V1862"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 										</g>
 										<g id="2-12">
 											<path
-												id="Network NookForum Fields"
+												id="Network Nook-Forum Fields 2-12"
 												d="M2560 695L2738 517"
 												stroke="#F7941D"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Terrace Turn-Network Nook"
+												id="Terrace Turn-Network Nook 2-12"
 												d="M2560 695L2464.29 790.713C2458.66 796.339 2451.03 799.5 2443.07 799.5H2319.5"
 												stroke="#F7941D"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Exchange Enclave-Terrace Turn"
+												id="Exchange Enclave-Terrace Turn 2-12"
 												d="M2319.5 799.5H2096"
 												stroke="#F7941D"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Spire Site-Exchange Enclave"
+												id="Spire Site-Exchange Enclave 2-12"
 												d="M2096 799.5H2047.5C2028.17 799.5 2012.5 815.17 2012.5 834.5V894.5C2012.5 909.412 2000.41 921.5 1985.5 921.5H1819"
 												stroke="#F7941D"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Core Crossing-Spire Site_3"
+												id="Core Crossing-Spire Site 2-12"
 												d="M1819 921.5H1689.77C1634.54 921.5 1589.77 966.272 1589.77 1021.5V1112.5"
 												stroke="#F7941D"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Vertex Valley-Core Crossing_2"
+												id="Vertex Valley-Core Crossing 2-12"
 												d="M1589.77 1112.5V1141.95C1589.77 1159.07 1575.89 1172.95 1558.77 1172.95H1390"
 												stroke="#F7941D"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Apex Tower-Vertex Valley_2"
+												id="Apex Tower-Vertex Valley 2-12"
 												d="M1034.27 1172.95H1390"
 												stroke="#F7941D"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 										</g>
 										<g id="2-14">
 											<path
-												id="Network NookForum Fields_2"
+												id="Network Nook-Forum Fields 2-14"
 												d="M2787 519.5L2586.5 720"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Terrace Turn-Network Nook_2"
+												id="Terrace Turn-Network Nook 2-14"
 												d="M2354.5 835.5H2452.36C2464.3 835.5 2475.74 830.759 2484.18 822.32L2586.5 720"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Exchange Enclave-Terrace Turn_2"
+												id="Exchange Enclave-Terrace Turn 2-14"
 												d="M2096 835.5H2354.5"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Gateway Gardens-Exchange Enclave"
+												id="Gateway Gardens-Exchange Enclave 2-14"
 												d="M1677 835.5H2096"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Concourse Corner-Gateway Gardens"
+												id="Concourse Corner-Gateway Gardens 2-14"
 												d="M1544 970.5L1677 835.5"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Serenity Station-Concourse Corner"
+												id="Serenity Station-Concourse Corner 2-14"
 												d="M1544 970.5V1301"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Concourse CornerFusion Forum"
+												id="Concourse Corner-Fusion Forum 2-14"
 												d="M1544 1301V1347.77C1544 1359.44 1548.64 1370.64 1556.89 1378.89L1635.5 1457.5"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Fusion Forum-Enclave Edge"
+												id="Fusion Forum-Enclave Edge 2-14"
 												d="M1827.5 1649.5L1635.5 1457.5"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Enclave Edge-Landmark Lane"
+												id="Enclave Edge-Landmark Lane 2-14"
 												d="M1827.5 1649.5H2148.75"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Harmony Heights-Landmark Lane"
+												id="Harmony Heights-Landmark Lane 2-14"
 												d="M2470 1649.5H2148.75"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Monolith Mews-Harmony Heights"
+												id="Monolith Mews-Harmony Heights 2-14"
 												d="M2470 1649.5H2651.1C2659.86 1649.5 2668.24 1653.09 2674.28 1659.44L2704 1690.68"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Summit Point-Monolith Mews"
+												id="Summit Point-Monolith Mews 2-14"
 												d="M2872.82 1861.5L2704 1690.68"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 										</g>
 										<g id="2-13">
 											<path
-												id="Network NookForum Fields_3"
+												id="Network Nook-Forum Fields 2-13"
 												d="M2797.5 562.231L2611.73 748"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Infinity Island-Network Nook"
+												id="Infinity Island-Network Nook 2-13"
 												d="M2569.05 1027.5V809.523C2569.05 797.642 2573.75 786.243 2582.12 777.813L2611.73 748"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Junction Juncture-Infinity Island"
+												id="Junction Juncture-Infinity Island 2-13"
 												d="M2569.05 1027.5V1255.75"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Terminal Terrace-Junction Juncture"
+												id="Terminal Terrace-Junction Juncture 2-13"
 												d="M2569.05 1404V1255.75"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Harmony Heights-Terminal Terrace"
+												id="Harmony Heights-Terminal Terrace 2-13"
 												d="M2569.05 1404V1550.32C2569.05 1562.51 2564.1 1574.18 2555.34 1582.66L2477.45 1658"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Landmark Lane-Harmony Heights"
+												id="Landmark Lane-Harmony Heights 2-13"
 												d="M2477.45 1658L2420.11 1712.71C2414.91 1717.68 2407.98 1720.45 2400.78 1720.45H2154.5"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Prosperity Point-Landmark Lane"
+												id="Prosperity Point-Landmark Lane 2-13"
 												d="M2010.77 1905V1785.45C2010.77 1749.55 2039.87 1720.45 2075.77 1720.45H2154.5"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Union Terminal-Prosperity Point"
+												id="Union Terminal-Prosperity Point 2-13"
 												d="M2010.77 2155.95V1905"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 										</g>
 										<g id="2-11">
 											<path
-												id="District Dock-Civic Square"
+												id="District Dock-Civic Square 2-11"
 												d="M2083.77 226.448L2082.97 494.5"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Terrace Turn-District Dock"
+												id="Terrace Turn-District Dock 2-11"
 												d="M2082.97 494.5L2082.82 545.796C2082.79 557.739 2087.5 569.205 2095.92 577.67L2329.5 812.409"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Citadel Center-Terrace Turn"
+												id="Citadel Center-Terrace Turn 2-11"
 												d="M2329.5 812.409L2371.17 854.282C2379.56 862.715 2384.27 874.127 2384.27 886.023V1058"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Boulevard Base-Citadel Center"
+												id="Boulevard Base-Citadel Center 2-11"
 												d="M2384.27 1058V1139.45V1303.84C2384.27 1315.78 2389.01 1327.22 2397.45 1335.66L2423.5 1361.72"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Landmark Lane-Boulevard Base"
+												id="Landmark Lane-Boulevard Base 2-11"
 												d="M2423.5 1361.72L2472.46 1410.68C2490.04 1428.25 2490.04 1456.75 2472.46 1474.32L2275.18 1671.6C2266.74 1680.04 2255.3 1684.78 2243.36 1684.78H2154"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Enclave Edge-Landmark Lane_2"
+												id="Enclave Edge-Landmark Lane 2-11"
 												d="M1811.5 1684.78H2154"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Fusion Forum-Enclave Edge_2"
+												id="Fusion Forum-Enclave Edge 2-11"
 												d="M1811.5 1684.78L1609.22 1482.5"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Concourse CornerFusion Forum_2"
+												id="Concourse Corner-Fusion Forum 2-11"
 												d="M1507.72 1296.5V1349.11C1507.72 1369.53 1515.83 1389.11 1530.27 1403.55L1609.72 1483"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Serenity Station-Concourse Corner_2"
+												id="Serenity Station-Concourse Corner 2-11"
 												d="M1507.72 992.5V1296.5"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Vision Venue-Serenity Station"
+												id="Vision Venue-Serenity Station 2-11"
 												d="M1507.72 992.5V713"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Metro Hub-Vision Venue"
+												id="Metro Hub-Vision Venue 2-11"
 												d="M1373.32 457L1495.66 588.44C1503.41 596.767 1507.72 607.722 1507.72 619.098V713"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 										</g>
 										<g id="number tags">
@@ -3329,7 +3447,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="2083"
 											cy="225"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#E31937"
 											strokeWidth="10"
 										/>
@@ -3338,7 +3456,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="1373"
 											cy="462"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#E31937"
 											strokeWidth="10"
 										/>
@@ -3347,7 +3465,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="1508"
 											cy="713"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#E31937"
 											strokeWidth="10"
 										/>
@@ -3356,7 +3474,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="2420"
 											cy="1362"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#E31937"
 											strokeWidth="10"
 										/>
@@ -3365,20 +3483,20 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="2083"
 											cy="493"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#E31937"
 											strokeWidth="10"
 										/>
 										<circle
-											id="Terminal Terrace "
+											id="Terminal Terrace"
 											cx="2568"
 											cy="1402"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#FFD200"
 											strokeWidth="10"
 										/>
-										<g id="Vertex Valley">
+										<g id="Vertex Valley" className="station">
 											<circle
 												id="Ellipse 9"
 												cx="1392"
@@ -3411,7 +3529,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Apex Tower">
+										<g id="Apex Tower" className="station">
 											<circle
 												id="Ellipse 9_2"
 												cx="1054"
@@ -3444,7 +3562,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Forum Fields">
+										<g id="Forum Fields" className="station">
 											<rect
 												id="Rectangle 4"
 												x="2752.21"
@@ -3458,7 +3576,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Serenity Station">
+										<g id="Serenity Station" className="station">
 											<circle
 												id="Ellipse 9_3"
 												cx="1522"
@@ -3491,7 +3609,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Network Nook">
+										<g id="Network Nook" className="station">
 											<rect
 												id="Rectangle 4_2"
 												x="2559.21"
@@ -3505,7 +3623,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Landmark Lane">
+										<g id="Landmark Lane" className="station">
 											<rect
 												id="Rectangle 4_3"
 												x="2172.96"
@@ -3519,7 +3637,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Citadel Center">
+										<g id="Citadel Center" className="station">
 											<rect
 												id="Rectangle 4_4"
 												x="2405"
@@ -3547,7 +3665,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Terrace Turn">
+										<g id="Terrace Turn" className="station">
 											<rect
 												id="Rectangle 4_6"
 												x="2309.21"
@@ -3561,7 +3679,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Junction Juncture">
+										<g id="Junction Juncture" className="station">
 											<rect
 												id="Rectangle 4_7"
 												x="2588"
@@ -3575,7 +3693,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Spire Site">
+										<g id="Spire Site" className="station">
 											<rect
 												id="Rectangle 4_8"
 												x="1839"
@@ -3589,7 +3707,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Core Crossing">
+										<g id="Core Crossing" className="station">
 											<rect
 												id="Rectangle 4_9"
 												x="1573"
@@ -3602,7 +3720,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Plaza Central">
+										<g id="Plaza Central" className="station">
 											<circle
 												id="Ellipse 9_4"
 												cx="3054"
@@ -3635,7 +3753,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Coastal Corner">
+										<g id="Coastal Corner" className="station">
 											<circle
 												id="Ellipse 9_5"
 												cx="2811"
@@ -3668,7 +3786,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Harmony Heights">
+										<g id="Harmony Heights" className="station">
 											<circle
 												id="Ellipse 9_6"
 												cx="2472"
@@ -3701,7 +3819,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Axis Alley">
+										<g id="Axis Alley" className="station">
 											<circle
 												id="Ellipse 9_7"
 												cx="2095"
@@ -3734,7 +3852,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Exchange Enclave">
+										<g id="Exchange Enclave" className="station">
 											<circle
 												id="Ellipse 9_8"
 												cx="2095"
@@ -3767,7 +3885,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Enclave Edge">
+										<g id="Enclave Edge" className="station">
 											<circle
 												id="Ellipse 9_9"
 												cx="1825"
@@ -3800,7 +3918,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Concourse Corner">
+										<g id="Concourse Corner" className="station">
 											<circle
 												id="Ellipse 9_10"
 												cx="1528"
@@ -3838,7 +3956,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="2857"
 											cy="1857"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#00A94F"
 											strokeWidth="10"
 										/>
@@ -3847,7 +3965,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="2702"
 											cy="1685"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#00A94F"
 											strokeWidth="10"
 										/>
@@ -3856,7 +3974,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="1686"
 											cy="839"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#00A94F"
 											strokeWidth="10"
 										/>
@@ -3865,7 +3983,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="1183"
 											cy="2031"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#0076C0"
 											strokeWidth="10"
 										/>
@@ -3874,7 +3992,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="1337"
 											cy="1862"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#0076C0"
 											strokeWidth="10"
 										/>
@@ -3883,7 +4001,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="1357"
 											cy="1593"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#0076C0"
 											strokeWidth="10"
 										/>
@@ -3892,7 +4010,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="2011"
 											cy="2136"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#FFD200"
 											strokeWidth="10"
 										/>
@@ -3901,7 +4019,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="2011"
 											cy="1903"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#FFD200"
 											strokeWidth="10"
 										/>
@@ -3910,7 +4028,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											cx="2568"
 											cy="1026"
 											r="25"
-											className="fill-white dark:fill-background"
+											className="fill-white dark:fill-background station"
 											stroke="#FFD200"
 											strokeWidth="10"
 										/>
@@ -4696,242 +4814,280 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 										</g>
 										<g id="3-13">
 											<path
-												id="Visionary Vale-Progress Pointe"
+												id="Visionary Vale-Progress Pointe 3-13"
 												d="M2790 569.5L2588.89 772"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Marvel Mile-Visionary Vale"
+												id="Marvel Mile-Visionary Vale 3-13"
 												d="M2569.05 1039V810.523C2569.05 798.642 2573.75 787.243 2582.12 778.813L2588.89 772"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Central Station-Marvel Mile"
+												id="Central Station-Marvel Mile 3-13"
 												d="M2569.05 1039V1200.5C2569.05 1225.35 2548.9 1245.5 2524.05 1245.5H2197H2055"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Magnate Mall-Central Station"
+												id="Magnate Mall-Central Station 3-13"
 												d="M2055 1245.5H1942.5H1668C1643.15 1245.5 1623 1265.65 1623 1290.5V1462.5"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Harmony Hub-Magnate Mall"
+												id="Harmony Hub-Magnate Mall 3-13"
 												d="M1623 1462.5V1676.45C1623 1701.3 1643.15 1721.45 1668 1721.45H1677"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Radiant Row-Harmony Hub"
+												id="Radiant Row-Harmony Hub 3-13"
 												d="M1677 1721.45H1945.77C1981.67 1721.45 2010.77 1750.55 2010.77 1786.45V1802.5"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Circuit City-Radiant Row"
+												id="Circuit City-Radiant Row 3-13"
 												d="M2010.77 2156.95V1802.5"
 												stroke="#FFD200"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 										</g>
 										<g id="3-16">
 											<path
-												id="Paragon Place-Epoch End"
+												id="Paragon Place-Epoch End 3-16"
 												d="M3054.27 1234.45H2717.5"
 												stroke="#A1A2A1"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Central Station-Paragon Place"
+												id="Central Station-Paragon Place 3-16"
 												d="M2717.5 1234.45H2560.56C2557.64 1234.45 2554.84 1233.29 2552.78 1231.23L2510.23 1188.68C2501.79 1180.24 2490.35 1175.5 2478.41 1175.5H2202H2057.5"
 												stroke="#A1A2A1"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Culture Cross-Central Station"
+												id="Culture Cross-Central Station 3-16"
 												d="M1362 1209.45H1605.21C1616.29 1209.45 1625.27 1200.47 1625.27 1189.39V1189.39C1625.27 1181.72 1631.49 1175.5 1639.16 1175.5L1942.5 1175.5L2057.5 1175.5"
 												stroke="#A1A2A1"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Iconic Isle-Culture Cross"
+												id="Iconic Isle-Culture Cross 3-16"
 												d="M1035 1209.45H1362"
 												stroke="#A1A2A1"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 										</g>
 										<g id="3-12">
 											<path
-												id="Visionary Vale-Progress Pointe_2"
+												id="Visionary Vale-Progress Pointe 3-12"
 												d="M2537.5 718.5L2738 518"
 												stroke="#F7941D"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Infinity Inlet-Visionary Vale"
+												id="Infinity Inlet-Visionary Vale 3-12"
 												d="M2537.5 718.5L2444.29 811.713C2438.66 817.339 2435.5 824.97 2435.5 832.927V1016"
 												stroke="#F7941D"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Central Station-Infinity Inlet"
+												id="Central Station-Infinity Inlet 3-12"
 												d="M2435.5 1016V1176.5C2435.5 1195.83 2419.83 1211.5 2400.5 1211.5H2199H2056"
 												stroke="#F7941D"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Culture Cross-Central Station_2"
+												id="Culture Cross-Central Station 3-12"
 												d="M1363 1173.95H1578.58C1585.74 1173.95 1592.61 1176.79 1597.68 1181.86L1614.72 1198.91C1622.79 1206.97 1633.73 1211.5 1645.13 1211.5H1942.5H2056"
 												stroke="#F7941D"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Iconic Isle-Culture Cross_2"
+												id="Iconic Isle-Culture Cross 3-12"
 												d="M1034.27 1173.95H1363"
 												stroke="#F7941D"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 										</g>
 										<g id="3-14">
 											<path
-												id="Visionary Vale-Progress Pointe_3"
+												id="Visionary Vale-Progress Pointe 3-14"
 												d="M2761 546.5L2616 691.5L2560.5 747"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Infinity Inlet-Visionary Vale_2"
+												id="Infinity Inlet-Visionary Vale 3-14"
 												d="M2560.5 747L2484.18 823.32C2475.74 831.759 2471 843.205 2471 855.14V1014.5"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Central Station-Infinity Inlet_2"
+												id="Central Station-Infinity Inlet 3-14"
 												d="M2471 1014.5V1309C2471 1333.85 2450.85 1354 2426 1354H2190.5H2056"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Urban Uplink-Central Station"
+												id="Urban Uplink-Central Station 3-14"
 												d="M2056 1354H1942.5H1731C1711.67 1354 1696 1369.67 1696 1389V1444.36C1696 1456.3 1700.74 1467.74 1709.18 1476.18L1759 1526"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Quantum Quay-Urban Uplink"
+												id="Quantum Quay-Urban Uplink 3-14"
 												d="M1759 1526L1874.32 1641.32C1882.76 1649.76 1894.2 1654.5 1906.14 1654.5H2064"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Beacon Boulevard-Quantum Quay"
+												id="Beacon Boulevard-Quantum Quay 3-14"
 												d="M2426.82 1654.5H2064H1887.5"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Triumph Terrace-Beacon Boulevard"
+												id="Triumph Terrace-Beacon Boulevard 3-14"
 												d="M2664.82 1654.5V1523.79C2664.82 1483.6 2616.16 1463.57 2587.87 1492.1L2426.82 1654.5"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Meridian Market-Triumph Terrace"
+												id="Meridian Market-Triumph Terrace 3-14"
 												d="M2664.82 1654.5L2872.82 1862.5"
 												stroke="#00A94F"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 										</g>
 										<g id="3-11">
 											<path
-												id="Heritage Hall-Venture View"
+												id="Heritage Hall-Venture View 3-11"
 												d="M2083.77 227.448L2083.46 331.932C2083.42 343.82 2078.68 355.212 2070.28 363.619L1957.45 476.445"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Paramount Park-Heritage Hall"
+												id="Paramount Park-Heritage Hall 3-11"
 												d="M1957.45 476.445L1844.68 589.217C1836.24 597.656 1831.5 609.102 1831.5 621.037V727.673"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Emblem Estates-Paramount Park"
+												id="Emblem Estates-Paramount Park 3-11"
 												d="M1831.5 727.672V807.948C1831.5 832.801 1851.65 852.948 1876.5 852.948H2143.5"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Infinity Inlet-Emblem Estates"
+												id="Infinity Inlet-Emblem Estates 3-11"
 												d="M2143.5 852.948H2355.27C2380.12 852.948 2400.27 873.095 2400.27 897.948V1018.5"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Central Station-Infinity Inlet_3"
+												id="Central Station-Infinity Inlet 3-11"
 												d="M2400.27 1018.5V1140.45V1237.22C2400.27 1262.07 2380.12 1282.22 2355.27 1282.22H2192H2053.5"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Monarch Meadows-Central Station"
+												id="Monarch Meadows-Central Station 3-11"
 												d="M1507.72 1039V1154V1237.22C1507.72 1262.07 1527.86 1282.22 1552.72 1282.22H1943.5H2053.5"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Echo Esplanade-Monarch Meadows"
+												id="Echo Esplanade-Monarch Meadows 3-11"
 												d="M1507.72 779.448V956.5V1039"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Pioneer Plaza-Echo Esplanade"
+												id="Pioneer Plaza-Echo Esplanade 3-11"
 												d="M1373.32 458L1495.66 589.44C1503.41 597.767 1507.72 608.722 1507.72 620.098V779.448"
 												stroke="#E31937"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 										</g>
 										<g id="3-15">
 											<path
-												id="Paragon Place-Epoch End_2"
+												id="Paragon Place-Epoch End 3-15"
 												d="M3053.77 1269.95H2719"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Central Station-Paragon Place_2"
+												id="Central Station-Paragon Place 3-15"
 												d="M2057.5 1319.5H2187.5H2467.81C2479.74 1319.5 2491.19 1314.76 2499.63 1306.32L2522.82 1283.13C2531.26 1274.69 2542.7 1269.95 2554.64 1269.95H2719"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Magnate Mall-Central Station_2"
+												id="Magnate Mall-Central Station 3-15"
 												d="M1625.44 1466.5L1648.25 1443.69C1656.89 1435.05 1661.64 1423.27 1661.42 1411.06L1661.04 1389.75C1660.34 1351.16 1691.43 1319.5 1730.03 1319.5H1942.5H2057.5"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Synergy Street-Magnate Mall"
+												id="Synergy Street-Magnate Mall 3-15"
 												d="M1442.5 1579.5H1493.8C1505.74 1579.5 1517.18 1574.76 1525.62 1566.32L1625.44 1466.5"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Catalyst Court-Synergy Street"
+												id="Catalyst Court-Synergy Street 3-15"
 												d="M1341.5 1745V1624.5C1341.5 1599.65 1361.65 1579.5 1386.5 1579.5H1442.5"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 											<path
-												id="Chronicle Corner-Catalyst Court"
+												id="Chronicle Corner-Catalyst Court 3-15"
 												d="M1188 2033.5L1322.46 1899.04C1334.65 1886.85 1341.5 1870.31 1341.5 1853.08V1745"
 												stroke="#0076C0"
 												strokeWidth="32"
+                                                className="edge duration-500"
 											/>
 										</g>
 										<text
@@ -4967,7 +5123,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											height="40"
 											rx="20"
 											transform="rotate(90 2076 1145)"
-                                            className="fill-white dark:fill-background stroke-background dark:stroke-white"
+                                            className="fill-white dark:fill-background stroke-background dark:stroke-white station"
 											strokeWidth="10"
 										/>
 										<circle
@@ -5141,7 +5297,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											stroke="#E31937"
 											strokeWidth="10"
 										/>
-										<g id="Magnate Mall">
+										<g id="Magnate Mall" className="station">
 											<circle
 												id="Ellipse 9"
 												cx="1623"
@@ -5174,7 +5330,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Epoch End">
+										<g id="Epoch End" className="station">
 											<circle
 												id="Ellipse 9_2"
 												cx="3054"
@@ -5207,7 +5363,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Paragon Place">
+										<g id="Paragon Place" className="station">
 											<circle
 												id="Ellipse 9_3"
 												cx="2718"
@@ -5240,7 +5396,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Iconic Isle">
+										<g id="Iconic Isle" className="station">
 											<circle
 												id="Ellipse 9_4"
 												cx="1054"
@@ -5273,7 +5429,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Culture Cross">
+										<g id="Culture Cross" className="station">
 											<circle
 												id="Ellipse 9_5"
 												cx="1365"
@@ -5306,7 +5462,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Progress Pointe">
+										<g id="Progress Pointe" className="station">
 											<rect
 												id="Rectangle 4"
 												x="2752.21"
@@ -5320,7 +5476,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Visionary Vale">
+										<g id="Visionary Vale" className="station">
 											<rect
 												id="Rectangle 4_2"
 												x="2538.21"
@@ -5334,7 +5490,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Infinity Inlet">
+										<g id="Infinity Inlet" className="station">
 											<rect
 												id="Rectangle 4_3"
 												x="2379"

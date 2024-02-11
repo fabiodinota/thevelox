@@ -57,6 +57,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	// Function to refresh the access token
     const refreshAccessToken = async () => {
         try {
+            console.log("Refreshing access token...");
           const response = await axios.post(
             `${process.env.NEXT_PUBLIC_API_URL}/jwt/refresh`,
             { encryptedRefreshToken: refreshToken } // Assuming refreshToken is already stored securely
@@ -70,11 +71,9 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
       
       // Trigger token refresh at regular intervals or before making an API call
       useEffect(() => {
-        if(user){
-            const tokenRefreshInterval = setInterval(refreshAccessToken, 10 * 60 * 1000); // e.g., every 15 minutes
-        
-            return () => clearInterval(tokenRefreshInterval);
-        }
+        const tokenRefreshInterval = setInterval(refreshAccessToken, 10 * 60 * 1000); // e.g., every 15 minutes
+    
+        return () => clearInterval(tokenRefreshInterval);
       }, []);
 
     const fetchUserData = async () => {
