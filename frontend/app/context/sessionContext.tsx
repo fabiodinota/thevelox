@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import React, { createContext, useContext, useState, useEffect } from "react";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 // Create a context to manage the session
 export const SessionContext = createContext({
@@ -35,62 +35,79 @@ type User = {
 
 export const SessionProvider = ({ children }: SessionProviderProps) => {
 	const [user, setUser] = useState<User | null>(null);
-	const [accessToken, setAccessToken] = useState<string>(() => Cookies.get('accessToken') || '');
-	const [refreshToken, setRefreshToken] = useState<string>(() => Cookies.get('refreshToken') || '');
+	const [accessToken, setAccessToken] = useState<string>(
+		() => Cookies.get("accessToken") || ""
+	);
+	const [refreshToken, setRefreshToken] = useState<string>(
+		() => Cookies.get("refreshToken") || ""
+	);
 
 	console.log("User: ", user);
 
 	// Store the access token in localStorage
 	useEffect(() => {
-        if(accessToken !== ""){
-		    Cookies.set('accessToken', accessToken, { expires: 1, secure: true, sameSite: 'Lax', domain: process.env.NEXT_PUBLIC_ORIGIN });
-        }
+		if (accessToken !== "") {
+			Cookies.set("accessToken", accessToken, {
+				expires: 1,
+				secure: true,
+				sameSite: "Lax",
+				domain: process.env.NEXT_PUBLIC_ORIGIN,
+			});
+		}
 	}, [accessToken]);
 
 	// Store the refresh token in a cookie
 	useEffect(() => {
-        if(refreshToken !== ""){
-		    Cookies.set('refreshToken', refreshToken, { expires: 7, secure: true, sameSite: 'Lax', domain: process.env.NEXT_PUBLIC_ORIGIN });
-        }
+		if (refreshToken !== "") {
+			Cookies.set("refreshToken", refreshToken, {
+				expires: 7,
+				secure: true,
+				sameSite: "Lax",
+				domain: process.env.NEXT_PUBLIC_ORIGIN,
+			});
+		}
 	}, [refreshToken]);
 
 	// Function to refresh the access token
-    const refreshAccessToken = async () => {
-        try {
-            console.log("Refreshing access token...");
-          const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/jwt/refresh`,
-            { encryptedRefreshToken: refreshToken } // Assuming refreshToken is already stored securely
-          );
-          // Assuming the server will return a new access token directly without encryption
-          setAccessToken(response.data.encryptedAccessToken);
-        } catch (error) {
-          console.error("Error refreshing access token:", error);
-        }
-      };
-      
-      // Trigger token refresh at regular intervals or before making an API call
-      useEffect(() => {
-        const tokenRefreshInterval = setInterval(refreshAccessToken, 60 * 1000); // e.g., every 15 minutes
-        if(!user){
-            fetchUserData();
-        }
+	const refreshAccessToken = async () => {
+		try {
+			console.log("Refreshing access token...");
+			const response = await axios.post(
+				`${process.env.NEXT_PUBLIC_API_URL}/jwt/refresh`,
+				{ encryptedRefreshToken: refreshToken } // Assuming refreshToken is already stored securely
+			);
+			// Assuming the server will return a new access token directly without encryption
+			setAccessToken(response.data.encryptedAccessToken);
+		} catch (error) {
+			console.error("Error refreshing access token:", error);
+		}
+	};
 
-        return () => clearInterval(tokenRefreshInterval);
-      }, []);
+	// Trigger token refresh at regular intervals or before making an API call
+	useEffect(() => {
+		const tokenRefreshInterval = setInterval(refreshAccessToken, 60 * 1000); // e.g., every 15 minutes
+		if (!user) {
+			fetchUserData();
+		}
 
-    const fetchUserData = async () => {
-        try {
-            if (accessToken !== "") {
-                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/getUser`, { withCredentials: true });
+		return () => clearInterval(tokenRefreshInterval);
+	}, []);
 
-                setUser(response.data);
-            }
-        } catch (error) {
-            // Handle any errors (e.g., token expiration, unauthorized access)
-            console.error("Error fetching user data:", error);
-        }
-    };
+	const fetchUserData = async () => {
+		try {
+			if (accessToken !== "") {
+				const response = await axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/user/getUser`,
+					{ withCredentials: true }
+				);
+
+				setUser(response.data);
+			}
+		} catch (error) {
+			// Handle any errors (e.g., token expiration, unauthorized access)
+			console.error("Error fetching user data:", error);
+		}
+	};
 
 	useEffect(() => {
 		// Check if there is an access token available
@@ -135,14 +152,14 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 
 	// Sign-out function
 	const signOut = () => {
-		  // Remove the cookies
-          Cookies.remove('accessToken');
-          Cookies.remove('refreshToken');
-      
-          // Clear the user data and tokens in the state
-          setUser(null);
-          setAccessToken("");
-          setRefreshToken("");
+		// Remove the cookies
+		Cookies.remove("accessToken");
+		Cookies.remove("refreshToken");
+
+		// Clear the user data and tokens in the state
+		setUser(null);
+		setAccessToken("");
+		setRefreshToken("");
 	};
 
 	return (

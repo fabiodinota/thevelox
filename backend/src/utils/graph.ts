@@ -375,3 +375,23 @@ export function loadGraphFromJson(filePath: string): Graph {
 	console.log("Graph loaded from JSON file");
 	return graph;
 }
+
+export function getStationsWithLevels(filePath: string): { name: string, level: number }[] {
+    const absolutePath = path.resolve(filePath);
+    const jsonString = fs.readFileSync(absolutePath, "utf8");
+    const jsonData = JSON.parse(jsonString);
+    const stationsWithLevels: { name: string, level: number }[] = [];
+
+    jsonData.lines.forEach((lineData: { id: string, name: string, stations: string[] }) => {
+        const level = parseInt(lineData.id.split('-')[0]);
+        lineData.stations.forEach(stationName => {
+            // Check if the station with the same name and level already exists
+            if (!stationsWithLevels.some(station => station.name === stationName && station.level === level)) {
+                stationsWithLevels.push({ name: stationName, level: level });
+            }
+        });
+    });
+
+    console.log(stationsWithLevels);
+    return stationsWithLevels;
+}

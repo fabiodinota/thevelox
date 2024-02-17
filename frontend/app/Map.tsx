@@ -1,11 +1,23 @@
 "use client";
 import { SVGProps, useEffect, useRef, useState } from "react";
-import { TransformWrapper, TransformComponent, ReactZoomPanPinchContentRef } from "react-zoom-pan-pinch";
+import {
+	TransformWrapper,
+	TransformComponent,
+	ReactZoomPanPinchContentRef,
+	MiniMap,
+} from "react-zoom-pan-pinch";
 import { motion, AnimatePresence } from "framer-motion";
 import useWindowDimensions from "./utils/useWindowDimensions";
 import { useMediaQuery } from "react-responsive";
+import useQuickBookStore from "./state/state";
 
-export const Map = ({ searchRequestData, searching }: { searchRequestData: Object, searching: boolean }) => {
+export const Map = ({
+	searchRequestData,
+	searching,
+}: {
+	searchRequestData: Object;
+	searching: boolean;
+}) => {
 	const minMax = {
 		min: 0,
 		max: 2,
@@ -59,81 +71,87 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 		},
 	};
 
-    const searchReqData = searchRequestData as {
-        startStation: string;
-        endStation: string;
-        lines: string[];
-        path: string[];
-    } // Provide a default object structure
+	const searchReqData = searchRequestData as {
+		startStation: string;
+		endStation: string;
+		lines: string[];
+		path: string[];
+	}; // Provide a default object structure
 
-    const { path, lines } = searchReqData;
+	const { path, lines } = searchReqData;
 
-    const [drawingEdges, setDrawingEdges] = useState<Element[]>([]);
+	const [drawingEdges, setDrawingEdges] = useState<Element[]>([]);
 
-    useEffect(() => {
-        if(searching && path?.length > 0 && lines?.length > 0) {
-            const edges = document.querySelectorAll(".edge")
-            const stations = document.querySelectorAll(".station")
-            const numberTags = document.querySelectorAll(".number-tag")
+	useEffect(() => {
+		if (searching && path?.length > 0 && lines?.length > 0) {
+			const edges = document.querySelectorAll(".edge");
+			const stations = document.querySelectorAll(".station");
+			const numberTags = document.querySelectorAll(".number-tag");
 
-            edges.forEach((edge) => {
-                edge?.classList.add("saturate-[0.3]");
-                edge?.classList.add("stroke-gray-300");
-                edge?.classList.add("dark:stroke-gray-700");
-                edge?.classList.add("brightness-50");
+			edges.forEach((edge) => {
+				edge?.classList.add("saturate-[0.3]");
+				edge?.classList.add("stroke-gray-300");
+				edge?.classList.add("dark:stroke-gray-700");
+				edge?.classList.add("brightness-50");
 
-                for (let i = 0; i < path?.length; i++) {
-                    if (edge?.id === `${path[i]}-${path[i + 1]} ${lines[i]}` || edge?.id === `${path[i + 1]}-${path[i]} ${lines[i]}`) {
-                        setDrawingEdges((prev) => [...prev, edge]);
-                        edge?.classList.remove("saturate-[0.3]");
-                        edge?.classList.remove("stroke-gray-300");
-                        edge?.classList.remove("dark:stroke-gray-700");
-                        edge?.classList.remove("brightness-50");
+				for (let i = 0; i < path?.length; i++) {
+					if (
+						edge?.id === `${path[i]}-${path[i + 1]} ${lines[i]}` ||
+						edge?.id === `${path[i + 1]}-${path[i]} ${lines[i]}`
+					) {
+						setDrawingEdges((prev) => [...prev, edge]);
+						edge?.classList.remove("saturate-[0.3]");
+						edge?.classList.remove("stroke-gray-300");
+						edge?.classList.remove("dark:stroke-gray-700");
+						edge?.classList.remove("brightness-50");
+					}
+				}
+			});
+			stations.forEach((station) => {
+				station?.classList.add("saturate-[0]");
+				station?.id === searchReqData.startStation &&
+					station?.classList.remove("saturate-[0]");
+				station?.id === searchReqData.endStation &&
+					station?.classList.remove("saturate-[0]");
+				for (let i = 0; i < path?.length; i++) {
+					station?.id === path[i] &&
+						station?.classList.remove("saturate-[0]");
+				}
+			});
+			numberTags.forEach((numberTag) => {
+				numberTag?.classList.add("saturate-[0]");
+				for (let i = 0; i < path?.length; i++) {
+					numberTag?.id === path[i] &&
+						numberTag?.classList.remove(
+							"saturate-[0]  dark:fill-gray-700"
+						);
+				}
+			});
+		}
 
-                    }
-                }
-            })
-            stations.forEach((station) => {
-                station?.classList.add("saturate-[0]");
-                station?.id === searchReqData.startStation && station?.classList.remove("saturate-[0]");
-                station?.id === searchReqData.endStation && station?.classList.remove("saturate-[0]");
-                for (let i = 0; i < path?.length; i++) {
-                    station?.id === path[i] && station?.classList.remove("saturate-[0]");
-                }
-            })
-            numberTags.forEach((numberTag) => {
-                numberTag?.classList.add("saturate-[0]");
-                for (let i = 0; i < path?.length; i++) {
-                    numberTag?.id === path[i] && numberTag?.classList.remove("saturate-[0]  dark:fill-gray-700");
+		if (!searching) {
+			const edges = document.querySelectorAll(".edge");
+			const stations = document.querySelectorAll(".station");
+			const numberTags = document.querySelectorAll(".number-tag");
 
-                }
-            })
-        }
-        console.log(searching)
+			edges.forEach((edge) => {
+				edge?.classList.remove("saturate-[0.3]");
+				edge?.classList.remove("stroke-gray-300");
+				edge?.classList.remove("dark:stroke-gray-700");
+				edge?.classList.remove("brightness-50");
+			});
+			stations.forEach((station) => {
+				station?.classList.remove("saturate-[0]");
+			});
 
-        if(!searching) {
-            const edges = document.querySelectorAll(".edge")
-            const stations = document.querySelectorAll(".station")
-            const numberTags = document.querySelectorAll(".number-tag")
+			numberTags.forEach((numberTag) => {
+				numberTag?.classList.remove("saturate-[0]");
+			});
+			setDrawingEdges([]);
+		}
+	}, [searching, path, lines, level]);
 
-            edges.forEach((edge) => {
-                edge?.classList.remove("saturate-[0.3]");
-                        edge?.classList.remove("stroke-gray-300");
-                        edge?.classList.remove("dark:stroke-gray-700");
-                        edge?.classList.remove("brightness-50");
-            })
-            stations.forEach((station) => {
-                station?.classList.remove("saturate-[0]");
-            })
-            
-            numberTags.forEach((numberTag) => {
-                numberTag?.classList.remove("saturate-[0]");
-            })
-            setDrawingEdges([]);
-        }
-    }, [searching, path, lines, level])
-    
-    /* const draw = (edge: Element, index: number, edgeLength: number ) => {
+	/* const draw = (edge: Element, index: number, edgeLength: number ) => {
         if(searching && path?.length > 0 && lines?.length > 0) {
             const nextIndex = index + 1 < path?.length ? index + 1 : index;
             const isReverse = edge?.id === `${path[index + 1]}-${path[index]} ${lines[index]}`;
@@ -158,29 +176,26 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
         }
     }; */
 
-    const { width } = useWindowDimensions();
-    const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
-    
-    const wrapperRef = useRef<ReactZoomPanPinchContentRef>(null);
+	const { width } = useWindowDimensions();
+	const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
-    useEffect(() => {
-        wrapperRef.current?.centerView(isMobile ? 0.3 : 0.5);
-    }, [searching, width])
+	const wrapperRef = useRef<ReactZoomPanPinchContentRef>(null);
 
+	useEffect(() => {
+		if (wrapperRef.current) {
+			const { centerView } = wrapperRef.current;
+			centerView(isMobile ? 0.3 : 0.5);
+		}
+	}, [searching, width]);
 
 	return (
 		<div id="map">
-            <div className="absolute z-50 top-0 left-0">
-                
-                <button onClick={Decrease}>
-                    Go to previous level.
-                </button>
-                <button onClick={Increase}>
-                    Go to next level.
-                </button>
-            </div>
+			<div className="absolute z-50 top-0 left-0">
+				<button onClick={Decrease}>Go to previous level.</button>
+				<button onClick={Increase}>Go to next level.</button>
+			</div>
 			<TransformWrapper
-                ref={wrapperRef}
+				ref={wrapperRef}
 				initialScale={0.5}
 				maxScale={1.5}
 				minScale={0.2}
@@ -197,9 +212,9 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 						height: "100dvh",
 						overflow: "hidden",
 					}}
-                    contentStyle={{
-                        padding: "100px",
-                    }}
+					contentStyle={{
+						padding: "100px",
+					}}
 				>
 					<svg
 						width={"4112"}
@@ -219,7 +234,11 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 									id="Level 1"
 									className="scale-[0.90] origin-center"
 								>
-									<motion.g id="Main" initial="hidden" animate="visible">
+									<motion.g
+										id="Main"
+										initial="hidden"
+										animate="visible"
+									>
 										<rect
 											id="Rectangle 11"
 											x="862"
@@ -286,7 +305,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeDasharray="8 3"
 											/>
 										</g>
-                                        
+
 										<g id="1-16">
 											<path
 												id="Harbor Heights-Lagoon Lane 1-16"
@@ -712,23 +731,23 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												className="edge duration-500"
 											/>
 										</g>
-                                        {/* {drawingEdges.map((edge, index) => { 
-                                            const svgEdge = edge as SVGPathElement;
-                                            const edgeLength = svgEdge.getTotalLength();
+										{/* {drawingEdges.map((edge, index) => { 
+                                                const svgEdge = edge as SVGPathElement;
+                                                const edgeLength = svgEdge.getTotalLength();
 
-                                            return (
-                                                <motion.path
-                                                    key={index}
-                                                    custom={index}
-                                                    id={edge.id}
-                                                    variants={draw(edge, index, edgeLength)}
-                                                    d={edge.getAttribute("d") || ""}
-                                                    stroke={edge.getAttribute("stroke") || "#A1A2A1"}
-                                                    strokeWidth={edge.getAttribute("strokeWidth") || 32}
-                                                    className="drewEdge"
-                                                />
-                                            )
-                                        })} */}
+                                                return (
+                                                    <motion.path
+                                                        key={index}
+                                                        custom={index}
+                                                        id={edge.id}
+                                                        variants={draw(edge, index, edgeLength)}
+                                                        d={edge.getAttribute("d") || ""}
+                                                        stroke={edge.getAttribute("stroke") || "#A1A2A1"}
+                                                        strokeWidth={edge.getAttribute("strokeWidth") || 32}
+                                                        className="drewEdge"
+                                                    />
+                                                )
+                                            })} */}
 										<circle
 											id="Seagate Central"
 											cx="1875"
@@ -967,7 +986,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Harbor Heights" className="station">
+										<g
+											id="Harbor Heights"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9_2"
 												cx="2695"
@@ -1000,7 +1022,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Seagrass Grove" className="station">
+										<g
+											id="Seagrass Grove"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9_3"
 												cx="1855"
@@ -1033,7 +1058,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Plankton Place" className="station">
+										<g
+											id="Plankton Place"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9_4"
 												cx="1992"
@@ -1066,7 +1094,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Driftwood Domain" className="station">
+										<g
+											id="Driftwood Domain"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9_5"
 												cx="2218"
@@ -1165,7 +1196,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Brine Bridge" className="station">
+										<g
+											id="Brine Bridge"
+											className="station"
+										>
 											<rect
 												id="Brine Bridge_2"
 												x="2745.21"
@@ -2030,7 +2064,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="5"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_10">
+										<g
+											className="number-tag"
+											id="Vector_10"
+										>
 											<path
 												d="M1984 1954C1984 1949.58 1987.58 1946 1992 1946H2016C2020.42 1946 2024 1949.58 2024 1954V1978C2024 1982.42 2020.42 1986 2016 1986H1992C1987.58 1986 1984 1982.42 1984 1978V1954Z"
 												fill="#FFD200"
@@ -2049,7 +2086,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="5"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_11">
+										<g
+											className="number-tag"
+											id="Vector_11"
+										>
 											<path
 												d="M2888.25 1904.05C2888.25 1896.99 2893.99 1891.25 2901.05 1891.25H2939.45C2946.52 1891.25 2952.25 1896.99 2952.25 1904.05V1942.45C2952.25 1949.52 2946.52 1955.25 2939.45 1955.25H2901.05C2893.99 1955.25 2888.25 1949.52 2888.25 1942.45V1904.05Z"
 												fill="#00A94F"
@@ -2063,7 +2103,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												className="fill-white dark:fill-background"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_12">
+										<g
+											className="number-tag"
+											id="Vector_12"
+										>
 											<path
 												d="M2791.51 464.31C2791.51 457.24 2797.24 451.51 2804.31 451.51H2842.71C2849.78 451.51 2855.51 457.24 2855.51 464.31V502.71C2855.51 509.779 2849.78 515.51 2842.71 515.51H2804.31C2797.24 515.51 2791.51 509.779 2791.51 502.71V464.31Z"
 												fill="#00A94F"
@@ -2082,7 +2125,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_13">
+										<g
+											className="number-tag"
+											id="Vector_13"
+										>
 											<path
 												d="M2415 1533C2415 1528.58 2418.58 1525 2423 1525H2447C2451.42 1525 2455 1528.58 2455 1533V1557C2455 1561.42 2451.42 1565 2447 1565H2423C2418.58 1565 2415 1561.42 2415 1557V1533Z"
 												fill="#00A94F"
@@ -2101,7 +2147,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="5"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_14">
+										<g
+											className="number-tag"
+											id="Vector_14"
+										>
 											<path
 												d="M2232 1061C2232 1056.58 2235.58 1053 2240 1053H2264C2268.42 1053 2272 1056.58 2272 1061V1085C2272 1089.42 2268.42 1093 2264 1093H2240C2235.58 1093 2232 1089.42 2232 1085V1061Z"
 												fill="#00A94F"
@@ -2120,7 +2169,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="5"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_15">
+										<g
+											className="number-tag"
+											id="Vector_15"
+										>
 											<path
 												d="M2490 782C2490 777.582 2493.58 774 2498 774H2522C2526.42 774 2530 777.582 2530 782V806C2530 810.418 2526.42 814 2522 814H2498C2493.58 814 2490 810.418 2490 806V782Z"
 												fill="#00A94F"
@@ -2139,7 +2191,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="5"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_16">
+										<g
+											className="number-tag"
+											id="Vector_16"
+										>
 											<path
 												d="M3111 1268.8C3111 1261.73 3116.73 1256 3123.8 1256H3162.2C3169.27 1256 3175 1261.73 3175 1268.8V1307.2C3175 1314.27 3169.27 1320 3162.2 1320H3123.8C3116.73 1320 3111 1314.27 3111 1307.2V1268.8Z"
 												fill="#0076C0"
@@ -2153,7 +2208,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												className="fill-white dark:fill-background"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_17">
+										<g
+											className="number-tag"
+											id="Vector_17"
+										>
 											<path
 												d="M1087.25 2074.05C1087.25 2066.99 1092.99 2061.25 1100.05 2061.25H1138.45C1145.52 2061.25 1151.25 2066.99 1151.25 2074.05V2112.45C1151.25 2119.52 1145.52 2125.25 1138.45 2125.25H1100.05C1092.99 2125.25 1087.25 2119.52 1087.25 2112.45V2074.05Z"
 												fill="#0076C0"
@@ -2167,7 +2225,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												className="fill-white dark:fill-background"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_18">
+										<g
+											className="number-tag"
+											id="Vector_18"
+										>
 											<path
 												d="M2539 1256C2539 1251.58 2542.58 1248 2547 1248H2571C2575.42 1248 2579 1251.58 2579 1256V1280C2579 1284.42 2575.42 1288 2571 1288H2547C2542.58 1288 2539 1284.42 2539 1280V1256Z"
 												fill="#0076C0"
@@ -2186,7 +2247,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="5"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_19">
+										<g
+											className="number-tag"
+											id="Vector_19"
+										>
 											<path
 												d="M1975 1037C1975 1032.58 1978.58 1029 1983 1029H2007C2011.42 1029 2015 1032.58 2015 1037V1061C2015 1065.42 2011.42 1069 2007 1069H1983C1978.58 1069 1975 1065.42 1975 1061V1037Z"
 												fill="#0076C0"
@@ -2205,7 +2269,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="5"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_20">
+										<g
+											className="number-tag"
+											id="Vector_20"
+										>
 											<path
 												d="M1755 1425C1755 1420.58 1758.58 1417 1763 1417H1787C1791.42 1417 1795 1420.58 1795 1425V1449C1795 1453.42 1791.42 1457 1787 1457H1763C1758.58 1457 1755 1453.42 1755 1449V1425Z"
 												fill="#0076C0"
@@ -2224,7 +2291,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="5"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_21">
+										<g
+											className="number-tag"
+											id="Vector_21"
+										>
 											<path
 												d="M1434 1866C1434 1861.58 1437.58 1858 1442 1858H1466C1470.42 1858 1474 1861.58 1474 1866V1890C1474 1894.42 1470.42 1898 1466 1898H1442C1437.58 1898 1434 1894.42 1434 1890V1866Z"
 												fill="#0076C0"
@@ -2243,7 +2313,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="5"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_22">
+										<g
+											className="number-tag"
+											id="Vector_22"
+										>
 											<path
 												d="M3111 1194.8C3111 1187.73 3116.73 1182 3123.8 1182H3162.2C3169.27 1182 3175 1187.73 3175 1194.8V1233.2C3175 1240.27 3169.27 1246 3162.2 1246H3123.8C3116.73 1246 3111 1240.27 3111 1233.2V1194.8Z"
 												fill="#A1A2A1"
@@ -2257,7 +2330,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												className="fill-white dark:fill-background"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_23">
+										<g
+											className="number-tag"
+											id="Vector_23"
+										>
 											<path
 												d="M927 1211.8C927 1204.73 932.731 1199 939.8 1199H978.2C985.269 1199 991 1204.73 991 1211.8V1250.2C991 1257.27 985.269 1263 978.2 1263H939.8C932.731 1263 927 1257.27 927 1250.2V1211.8Z"
 												fill="#A1A2A1"
@@ -2271,7 +2347,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												className="fill-white dark:fill-background"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_24">
+										<g
+											className="number-tag"
+											id="Vector_24"
+										>
 											<path
 												d="M2158 1299C2158 1294.58 2161.58 1291 2166 1291H2190C2194.42 1291 2198 1294.58 2198 1299V1323C2198 1327.42 2194.42 1331 2190 1331H2166C2161.58 1331 2158 1327.42 2158 1323V1299Z"
 												fill="#A1A2A1"
@@ -2290,7 +2369,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="5"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_25">
+										<g
+											className="number-tag"
+											id="Vector_25"
+										>
 											<path
 												d="M1621 1006C1621 1001.58 1624.58 998 1629 998H1653C1657.42 998 1661 1001.58 1661 1006V1030C1661 1034.42 1657.42 1038 1653 1038H1629C1624.58 1038 1621 1034.42 1621 1030V1006Z"
 												fill="#A1A2A1"
@@ -2309,7 +2391,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="5"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_26">
+										<g
+											className="number-tag"
+											id="Vector_26"
+										>
 											<path
 												d="M2843.51 516.31C2843.51 509.241 2849.24 503.51 2856.31 503.51H2894.71C2901.78 503.51 2907.51 509.241 2907.51 516.31V554.71C2907.51 561.779 2901.78 567.51 2894.71 567.51H2856.31C2849.24 567.51 2843.51 561.779 2843.51 554.71V516.31Z"
 												fill="#F7941D"
@@ -2328,7 +2413,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_27">
+										<g
+											className="number-tag"
+											id="Vector_27"
+										>
 											<path
 												d="M927 1137.8C927 1130.73 932.731 1125 939.8 1125H978.2C985.269 1125 991 1130.73 991 1137.8V1176.2C991 1183.27 985.269 1189 978.2 1189H939.8C932.731 1189 927 1183.27 927 1176.2V1137.8Z"
 												fill="#F7941D"
@@ -2342,7 +2430,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												className="fill-white dark:fill-background"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_28">
+										<g
+											className="number-tag"
+											id="Vector_28"
+										>
 											<path
 												d="M2447 874C2447 869.582 2450.58 866 2455 866H2479C2483.42 866 2487 869.582 2487 874V898C2487 902.418 2483.42 906 2479 906H2455C2450.58 906 2447 902.418 2447 898V874Z"
 												fill="#F7941D"
@@ -2361,7 +2452,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="5"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_29">
+										<g
+											className="number-tag"
+											id="Vector_29"
+										>
 											<path
 												d="M2038 989C2038 984.582 2041.58 981 2046 981H2070C2074.42 981 2078 984.582 2078 989V1013C2078 1017.42 2074.42 1021 2070 1021H2046C2041.58 1021 2038 1017.42 2038 1013V989Z"
 												fill="#F7941D"
@@ -2380,7 +2474,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="5"
 											/>
 										</g>
-										<g className="number-tag" id="Vector_30">
+										<g
+											className="number-tag"
+											id="Vector_30"
+										>
 											<path
 												d="M1460 1161C1460 1156.58 1463.58 1153 1468 1153H1492C1496.42 1153 1500 1156.58 1500 1161V1185C1500 1189.42 1496.42 1193 1492 1193H1468C1463.58 1193 1460 1189.42 1460 1185V1161Z"
 												fill="#F7941D"
@@ -2562,56 +2659,56 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												d="M3054.27 1231.45L2812.38 1232.41"
 												stroke="#A1A2A1"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Junction Juncture-Coastal Corner 2-16"
 												d="M2570.5 1233.38L2812.38 1232.41"
 												stroke="#A1A2A1"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Citadel Center-Junction Juncture 2-16"
 												d="M2386.31 1035.5L2549.69 1229.51C2551.79 1232.01 2554.88 1233.44 2558.14 1233.43L2570.5 1233.38"
 												stroke="#A1A2A1"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Axis Alley-Citadel Center 2-16"
 												d="M2093.5 957.948H2283.32C2307.21 957.948 2329.88 968.497 2345.27 986.773L2386.31 1035.5"
 												stroke="#A1A2A1"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Spire Site-Axis Alley 2-16"
 												d="M2093.5 957.948H1819"
 												stroke="#A1A2A1"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Core Crossing-Spire Site 2-16"
 												d="M1625.27 1111V1022.95C1625.27 987.05 1654.37 957.948 1690.27 957.948H1819"
 												stroke="#A1A2A1"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Vertex Valley-Core Crossing 2-16"
 												d="M1390 1208.45H1560.27C1596.17 1208.45 1625.27 1179.35 1625.27 1143.45V1111"
 												stroke="#A1A2A1"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Apex Tower-Vertex Valley 2-16"
 												d="M1035 1208.45H1390"
 												stroke="#A1A2A1"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 										</g>
 										<g id="2-15">
@@ -2620,70 +2717,70 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												d="M3053.77 1268.95H2810.13"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Junction Juncture-Coastal Corner 2-15"
 												d="M2566.5 1268.95H2810.13"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Citadel Center-Junction Juncture 2-15"
 												d="M2389.75 1094.7L2522.51 1252.88C2531.06 1263.07 2543.68 1268.95 2556.98 1268.95H2566.5"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Axis Alley-Citadel Center 2-15"
 												d="M2097 994.448H2284.54C2297.83 994.448 2310.44 1000.32 2318.99 1010.5L2389.75 1094.7"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Spire Site-Axis Alley 2-15"
 												d="M2097 994.448H1821"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Core Crossing-Spire Site 2-15"
 												d="M1660.77 1114.5L1661.52 1024.2C1661.66 1007.73 1675.05 994.448 1691.52 994.448H1821"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Fusion Form-Core Crossing 2-15"
 												d="M1613.94 1477L1648.28 1442.66C1656.9 1434.04 1661.66 1422.29 1661.46 1410.11L1659.77 1306.45L1660.77 1114.5"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Crossroad Crescent-Fusion Form 2-15"
 												d="M1613.94 1477L1525.62 1565.32C1517.18 1573.76 1505.74 1578.5 1493.8 1578.5H1388.3C1385.44 1578.5 1382.58 1578.73 1379.81 1579.48C1369.54 1582.25 1353.83 1589.02 1350 1600.5"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Venture Vista-Crossroad Crescent 2-15"
 												d="M1341.5 1862V1720.25V1621.5C1342.67 1611.67 1347.6 1592 1358 1592"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Capital Court-Venture Vista 2-15"
 												d="M1188 2032.5L1329.48 1891.02C1337.18 1883.32 1341.5 1872.88 1341.5 1862V1862"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 										</g>
 										<g id="2-12">
@@ -2692,49 +2789,49 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												d="M2560 695L2738 517"
 												stroke="#F7941D"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Terrace Turn-Network Nook 2-12"
 												d="M2560 695L2464.29 790.713C2458.66 796.339 2451.03 799.5 2443.07 799.5H2319.5"
 												stroke="#F7941D"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Exchange Enclave-Terrace Turn 2-12"
 												d="M2319.5 799.5H2096"
 												stroke="#F7941D"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Spire Site-Exchange Enclave 2-12"
 												d="M2096 799.5H2047.5C2028.17 799.5 2012.5 815.17 2012.5 834.5V894.5C2012.5 909.412 2000.41 921.5 1985.5 921.5H1819"
 												stroke="#F7941D"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Core Crossing-Spire Site 2-12"
 												d="M1819 921.5H1689.77C1634.54 921.5 1589.77 966.272 1589.77 1021.5V1112.5"
 												stroke="#F7941D"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Vertex Valley-Core Crossing 2-12"
 												d="M1589.77 1112.5V1141.95C1589.77 1159.07 1575.89 1172.95 1558.77 1172.95H1390"
 												stroke="#F7941D"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Apex Tower-Vertex Valley 2-12"
 												d="M1034.27 1172.95H1390"
 												stroke="#F7941D"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 										</g>
 										<g id="2-14">
@@ -2743,84 +2840,84 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												d="M2787 519.5L2586.5 720"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Terrace Turn-Network Nook 2-14"
 												d="M2354.5 835.5H2452.36C2464.3 835.5 2475.74 830.759 2484.18 822.32L2586.5 720"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Exchange Enclave-Terrace Turn 2-14"
 												d="M2096 835.5H2354.5"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Gateway Gardens-Exchange Enclave 2-14"
 												d="M1677 835.5H2096"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Concourse Corner-Gateway Gardens 2-14"
 												d="M1544 970.5L1677 835.5"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Serenity Station-Concourse Corner 2-14"
 												d="M1544 970.5V1301"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Concourse Corner-Fusion Forum 2-14"
 												d="M1544 1301V1347.77C1544 1359.44 1548.64 1370.64 1556.89 1378.89L1635.5 1457.5"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Fusion Forum-Enclave Edge 2-14"
 												d="M1827.5 1649.5L1635.5 1457.5"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Enclave Edge-Landmark Lane 2-14"
 												d="M1827.5 1649.5H2148.75"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Harmony Heights-Landmark Lane 2-14"
 												d="M2470 1649.5H2148.75"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Monolith Mews-Harmony Heights 2-14"
 												d="M2470 1649.5H2651.1C2659.86 1649.5 2668.24 1653.09 2674.28 1659.44L2704 1690.68"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Summit Point-Monolith Mews 2-14"
 												d="M2872.82 1861.5L2704 1690.68"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 										</g>
 										<g id="2-13">
@@ -2829,56 +2926,56 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												d="M2797.5 562.231L2611.73 748"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Infinity Island-Network Nook 2-13"
 												d="M2569.05 1027.5V809.523C2569.05 797.642 2573.75 786.243 2582.12 777.813L2611.73 748"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Junction Juncture-Infinity Island 2-13"
 												d="M2569.05 1027.5V1255.75"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Terminal Terrace-Junction Juncture 2-13"
 												d="M2569.05 1404V1255.75"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Harmony Heights-Terminal Terrace 2-13"
 												d="M2569.05 1404V1550.32C2569.05 1562.51 2564.1 1574.18 2555.34 1582.66L2477.45 1658"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Landmark Lane-Harmony Heights 2-13"
 												d="M2477.45 1658L2420.11 1712.71C2414.91 1717.68 2407.98 1720.45 2400.78 1720.45H2154.5"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Prosperity Point-Landmark Lane 2-13"
 												d="M2010.77 1905V1785.45C2010.77 1749.55 2039.87 1720.45 2075.77 1720.45H2154.5"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Union Terminal-Prosperity Point 2-13"
 												d="M2010.77 2155.95V1905"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 										</g>
 										<g id="2-11">
@@ -2887,81 +2984,84 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												d="M2083.77 226.448L2082.97 494.5"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Terrace Turn-District Dock 2-11"
 												d="M2082.97 494.5L2082.82 545.796C2082.79 557.739 2087.5 569.205 2095.92 577.67L2329.5 812.409"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Citadel Center-Terrace Turn 2-11"
 												d="M2329.5 812.409L2371.17 854.282C2379.56 862.715 2384.27 874.127 2384.27 886.023V1058"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Boulevard Base-Citadel Center 2-11"
 												d="M2384.27 1058V1139.45V1303.84C2384.27 1315.78 2389.01 1327.22 2397.45 1335.66L2423.5 1361.72"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Landmark Lane-Boulevard Base 2-11"
 												d="M2423.5 1361.72L2472.46 1410.68C2490.04 1428.25 2490.04 1456.75 2472.46 1474.32L2275.18 1671.6C2266.74 1680.04 2255.3 1684.78 2243.36 1684.78H2154"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Enclave Edge-Landmark Lane 2-11"
 												d="M1811.5 1684.78H2154"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Fusion Forum-Enclave Edge 2-11"
 												d="M1811.5 1684.78L1609.22 1482.5"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Concourse Corner-Fusion Forum 2-11"
 												d="M1507.72 1296.5V1349.11C1507.72 1369.53 1515.83 1389.11 1530.27 1403.55L1609.72 1483"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Serenity Station-Concourse Corner 2-11"
 												d="M1507.72 992.5V1296.5"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Vision Venue-Serenity Station 2-11"
 												d="M1507.72 992.5V713"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Metro Hub-Vision Venue 2-11"
 												d="M1373.32 457L1495.66 588.44C1503.41 596.767 1507.72 607.722 1507.72 619.098V713"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 										</g>
 										<g id="number tags">
-											<g className="number-tag" id="Vector">
+											<g
+												className="number-tag"
+												id="Vector"
+											>
 												<path
 													d="M1979 2195.8C1979 2188.73 1984.73 2183 1991.8 2183H2030.2C2037.27 2183 2043 2188.73 2043 2195.8V2234.2C2043 2241.27 2037.27 2247 2030.2 2247H1991.8C1984.73 2247 1979 2241.27 1979 2234.2V2195.8Z"
 													fill="#FFD200"
@@ -2975,7 +3075,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_2">
+											<g
+												className="number-tag"
+												id="Vector_2"
+											>
 												<path
 													d="M2895.25 1904.05C2895.25 1896.99 2900.99 1891.25 2908.05 1891.25H2946.45C2953.52 1891.25 2959.25 1896.99 2959.25 1904.05V1942.45C2959.25 1949.52 2953.52 1955.25 2946.45 1955.25H2908.05C2900.99 1955.25 2895.25 1949.52 2895.25 1942.45V1904.05Z"
 													fill="#00A94F"
@@ -2989,7 +3092,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_3">
+											<g
+												className="number-tag"
+												id="Vector_3"
+											>
 												<path
 													d="M3118 1268.8C3118 1261.73 3123.73 1256 3130.8 1256H3169.2C3176.27 1256 3182 1261.73 3182 1268.8V1307.2C3182 1314.27 3176.27 1320 3169.2 1320H3130.8C3123.73 1320 3118 1314.27 3118 1307.2V1268.8Z"
 													fill="#0076C0"
@@ -3003,7 +3109,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_4">
+											<g
+												className="number-tag"
+												id="Vector_4"
+											>
 												<path
 													d="M1094.25 2074.05C1094.25 2066.99 1099.99 2061.25 1107.05 2061.25H1145.45C1152.52 2061.25 1158.25 2066.99 1158.25 2074.05V2112.45C1158.25 2119.52 1152.52 2125.25 1145.45 2125.25H1107.05C1099.99 2125.25 1094.25 2119.52 1094.25 2112.45V2074.05Z"
 													fill="#0076C0"
@@ -3017,7 +3126,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_5">
+											<g
+												className="number-tag"
+												id="Vector_5"
+											>
 												<path
 													d="M3118 1194.8C3118 1187.73 3123.73 1182 3130.8 1182H3169.2C3176.27 1182 3182 1187.73 3182 1194.8V1233.2C3182 1240.27 3176.27 1246 3169.2 1246H3130.8C3123.73 1246 3118 1240.27 3118 1233.2V1194.8Z"
 													fill="#A1A2A1"
@@ -3031,7 +3143,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_6">
+											<g
+												className="number-tag"
+												id="Vector_6"
+											>
 												<path
 													d="M934 1211.8C934 1204.73 939.731 1199 946.8 1199H985.2C992.269 1199 998 1204.73 998 1211.8V1250.2C998 1257.27 992.269 1263 985.2 1263H946.8C939.731 1263 934 1257.27 934 1250.2V1211.8Z"
 													fill="#A1A2A1"
@@ -3045,7 +3160,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_7">
+											<g
+												className="number-tag"
+												id="Vector_7"
+											>
 												<path
 													d="M934 1137.8C934 1130.73 939.731 1125 946.8 1125H985.2C992.269 1125 998 1130.73 998 1137.8V1176.2C998 1183.27 992.269 1189 985.2 1189H946.8C939.731 1189 934 1183.27 934 1176.2V1137.8Z"
 													fill="#F7941D"
@@ -3059,7 +3177,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_8">
+											<g
+												className="number-tag"
+												id="Vector_8"
+											>
 												<path
 													d="M2051 127.8C2051 120.731 2056.73 115 2063.8 115H2102.2C2109.27 115 2115 120.731 2115 127.8V166.2C2115 173.269 2109.27 179 2102.2 179H2063.8C2056.73 179 2051 173.269 2051 166.2V127.8Z"
 													fill="#E31937"
@@ -3073,7 +3194,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_9">
+											<g
+												className="number-tag"
+												id="Vector_9"
+											>
 												<path
 													d="M1280 371.8C1280 364.731 1285.73 359 1292.8 359H1331.2C1338.27 359 1344 364.731 1344 371.8V410.2C1344 417.269 1338.27 423 1331.2 423H1292.8C1285.73 423 1280 417.269 1280 410.2V371.8Z"
 													fill="#E31937"
@@ -3087,7 +3211,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_10">
+											<g
+												className="number-tag"
+												id="Vector_10"
+											>
 												<path
 													d="M2159 649C2159 644.582 2162.58 641 2167 641H2191C2195.42 641 2199 644.582 2199 649V673C2199 677.418 2195.42 681 2191 681H2167C2162.58 681 2159 677.418 2159 673V649Z"
 													fill="#E31937"
@@ -3106,7 +3233,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_11">
+											<g
+												className="number-tag"
+												id="Vector_11"
+											>
 												<path
 													d="M2370 1541C2370 1536.58 2373.58 1533 2378 1533H2402C2406.42 1533 2410 1536.58 2410 1541V1565C2410 1569.42 2406.42 1573 2402 1573H2378C2373.58 1573 2370 1569.42 2370 1565V1541Z"
 													fill="#E31937"
@@ -3125,7 +3255,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_12">
+											<g
+												className="number-tag"
+												id="Vector_12"
+											>
 												<path
 													d="M1678 1561C1678 1556.58 1681.58 1553 1686 1553H1710C1714.42 1553 1718 1556.58 1718 1561V1585C1718 1589.42 1714.42 1593 1710 1593H1686C1681.58 1593 1678 1589.42 1678 1585V1561Z"
 													fill="#E31937"
@@ -3144,7 +3277,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_13">
+											<g
+												className="number-tag"
+												id="Vector_13"
+											>
 												<path
 													d="M1488 888C1488 883.582 1491.58 880 1496 880H1520C1524.42 880 1528 883.582 1528 888V912C1528 916.418 1524.42 920 1520 920H1496C1491.58 920 1488 916.418 1488 912V888Z"
 													fill="#E31937"
@@ -3163,7 +3299,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_14">
+											<g
+												className="number-tag"
+												id="Vector_14"
+											>
 												<path
 													d="M2548 908C2548 903.582 2551.58 900 2556 900H2580C2584.42 900 2588 903.582 2588 908V932C2588 936.418 2584.42 940 2580 940H2556C2551.58 940 2548 936.418 2548 932V908Z"
 													fill="#FFD200"
@@ -3182,7 +3321,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_15">
+											<g
+												className="number-tag"
+												id="Vector_15"
+											>
 												<path
 													d="M2548 1481C2548 1476.58 2551.58 1473 2556 1473H2580C2584.42 1473 2588 1476.58 2588 1481V1505C2588 1509.42 2584.42 1513 2580 1513H2556C2551.58 1513 2548 1509.42 2548 1505V1481Z"
 													fill="#FFD200"
@@ -3201,7 +3343,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_16">
+											<g
+												className="number-tag"
+												id="Vector_16"
+											>
 												<path
 													d="M2011 1733C2011 1728.58 2014.58 1725 2019 1725H2043C2047.42 1725 2051 1728.58 2051 1733V1757C2051 1761.42 2047.42 1765 2043 1765H2019C2014.58 1765 2011 1761.42 2011 1757V1733Z"
 													fill="#FFD200"
@@ -3220,7 +3365,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_17">
+											<g
+												className="number-tag"
+												id="Vector_17"
+											>
 												<path
 													d="M2447 823C2447 818.582 2450.58 815 2455 815H2479C2483.42 815 2487 818.582 2487 823V847C2487 851.418 2483.42 855 2479 855H2455C2450.58 855 2447 851.418 2447 847V823Z"
 													fill="#00A94F"
@@ -3239,7 +3387,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_18">
+											<g
+												className="number-tag"
+												id="Vector_18"
+											>
 												<path
 													d="M1588 892C1588 887.582 1591.58 884 1596 884H1620C1624.42 884 1628 887.582 1628 892V916C1628 920.418 1624.42 924 1620 924H1596C1591.58 924 1588 920.418 1588 916V892Z"
 													fill="#00A94F"
@@ -3258,7 +3409,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_19">
+											<g
+												className="number-tag"
+												id="Vector_19"
+											>
 												<path
 													d="M1886 1637C1886 1632.58 1889.58 1629 1894 1629H1918C1922.42 1629 1926 1632.58 1926 1637V1661C1926 1665.42 1922.42 1669 1918 1669H1894C1889.58 1669 1886 1665.42 1886 1661V1637Z"
 													fill="#00A94F"
@@ -3277,7 +3431,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_20">
+											<g
+												className="number-tag"
+												id="Vector_20"
+											>
 												<path
 													d="M2427 1150C2427 1145.58 2430.58 1142 2435 1142H2459C2463.42 1142 2467 1145.58 2467 1150V1174C2467 1178.42 2463.42 1182 2459 1182H2435C2430.58 1182 2427 1178.42 2427 1174V1150Z"
 													fill="#0076C0"
@@ -3296,7 +3453,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_21">
+											<g
+												className="number-tag"
+												id="Vector_21"
+											>
 												<path
 													d="M1646 986C1646 981.582 1649.58 978 1654 978H1678C1682.42 978 1686 981.582 1686 986V1010C1686 1014.42 1682.42 1018 1678 1018H1654C1649.58 1018 1646 1014.42 1646 1010V986Z"
 													fill="#0076C0"
@@ -3315,7 +3475,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_22">
+											<g
+												className="number-tag"
+												id="Vector_22"
+											>
 												<path
 													d="M1414 1568C1414 1563.58 1417.58 1560 1422 1560H1446C1450.42 1560 1454 1563.58 1454 1568V1592C1454 1596.42 1450.42 1600 1446 1600H1422C1417.58 1600 1414 1596.42 1414 1592V1568Z"
 													fill="#0076C0"
@@ -3334,7 +3497,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_23">
+											<g
+												className="number-tag"
+												id="Vector_23"
+											>
 												<path
 													d="M2227 948C2227 943.582 2230.58 940 2235 940H2259C2263.42 940 2267 943.582 2267 948V972C2267 976.418 2263.42 980 2259 980H2235C2230.58 980 2227 976.418 2227 972V948Z"
 													fill="#A1A2A1"
@@ -3353,7 +3519,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_24">
+											<g
+												className="number-tag"
+												id="Vector_24"
+											>
 												<path
 													d="M2504 1179C2504 1174.58 2507.58 1171 2512 1171H2536C2540.42 1171 2544 1174.58 2544 1179V1203C2544 1207.42 2540.42 1211 2536 1211H2512C2507.58 1211 2504 1207.42 2504 1203V1179Z"
 													fill="#A1A2A1"
@@ -3372,7 +3541,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_25">
+											<g
+												className="number-tag"
+												id="Vector_25"
+											>
 												<path
 													d="M1272 1199C1272 1194.58 1275.58 1191 1280 1191H1304C1308.42 1191 1312 1194.58 1312 1199V1223C1312 1227.42 1308.42 1231 1304 1231H1280C1275.58 1231 1272 1227.42 1272 1223V1199Z"
 													fill="#A1A2A1"
@@ -3391,19 +3563,54 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_26">
-                                                <path d="M1568 1026C1568 1021.58 1571.58 1018 1576 1018H1600C1604.42 1018 1608 1021.58 1608 1026V1050C1608 1054.42 1604.42 1058 1600 1058H1576C1571.58 1058 1568 1054.42 1568 1050V1026Z" fill="#F7941D"/>
-                                                <path d="M1578.3 1047.2V1033.7H1578.2L1573.77 1036.62V1032.19L1578.3 1029.16H1583.6V1047.2H1578.3Z" className="fill-white dark:fill-background"/>
-                                                <path d="M1587.11 1047.2V1043.59L1593.51 1038.29C1594.25 1037.68 1594.81 1037.17 1595.17 1036.76C1595.55 1036.35 1595.8 1035.98 1595.93 1035.66C1596.06 1035.34 1596.12 1035.01 1596.12 1034.68V1034.65C1596.12 1034.27 1596.03 1033.95 1595.85 1033.66C1595.67 1033.38 1595.43 1033.16 1595.11 1033C1594.8 1032.83 1594.43 1032.75 1594.01 1032.75C1593.54 1032.75 1593.12 1032.84 1592.77 1033.02C1592.43 1033.21 1592.17 1033.47 1591.98 1033.8C1591.78 1034.12 1591.67 1034.5 1591.64 1034.94L1591.62 1035.1H1586.8V1034.97C1586.8 1033.75 1587.1 1032.68 1587.71 1031.76C1588.32 1030.84 1589.17 1030.12 1590.25 1029.61C1591.33 1029.1 1592.59 1028.84 1594.01 1028.84C1595.47 1028.84 1596.74 1029.07 1597.81 1029.53C1598.9 1029.98 1599.73 1030.61 1600.32 1031.44C1600.92 1032.25 1601.22 1033.22 1601.22 1034.32V1034.35C1601.22 1035.15 1601.09 1035.86 1600.81 1036.49C1600.54 1037.11 1600.1 1037.73 1599.5 1038.35C1598.91 1038.97 1598.13 1039.67 1597.16 1040.45L1593.51 1043.2H1591.67H1601.44V1047.2H1587.11Z" className="fill-white dark:fill-background"/>
-                                                <path d="M1600 1015.5H1576C1570.2 1015.5 1565.5 1020.2 1565.5 1026V1050C1565.5 1055.8 1570.2 1060.5 1576 1060.5H1600C1605.8 1060.5 1610.5 1055.8 1610.5 1050V1026C1610.5 1020.2 1605.8 1015.5 1600 1015.5Z" className="stroke-white dark:stroke-background" strokeWidth="5"/>
-                                            </g>
-                                            <g className="number-tag" id="Vector_27">
-                                                <path d="M2187 787C2187 782.582 2190.58 779 2195 779H2219C2223.42 779 2227 782.582 2227 787V811C2227 815.418 2223.42 819 2219 819H2195C2190.58 819 2187 815.418 2187 811V787Z" fill="#F7941D"/>
-                                                <path d="M2197.3 808.2V794.7H2197.2L2192.77 797.625V793.187L2197.3 790.162H2202.6V808.2H2197.3Z" className="fill-white dark:fill-background"/>
-                                                <path d="M2206.11 808.2V804.587L2212.51 799.287C2213.25 798.679 2213.81 798.171 2214.17 797.762C2214.55 797.346 2214.8 796.979 2214.93 796.663C2215.06 796.338 2215.12 796.008 2215.12 795.675V795.65C2215.12 795.275 2215.03 794.946 2214.85 794.662C2214.67 794.379 2214.43 794.158 2214.11 794C2213.8 793.833 2213.43 793.75 2213.01 793.75C2212.54 793.75 2212.12 793.842 2211.77 794.025C2211.43 794.208 2211.17 794.467 2210.98 794.8C2210.78 795.125 2210.67 795.504 2210.64 795.937L2210.62 796.1H2205.8V795.975C2205.8 794.75 2206.1 793.679 2206.71 792.763C2207.32 791.838 2208.17 791.121 2209.25 790.612C2210.33 790.096 2211.59 789.838 2213.01 789.838C2214.47 789.838 2215.74 790.067 2216.81 790.525C2217.9 790.975 2218.73 791.613 2219.32 792.438C2219.92 793.254 2220.22 794.217 2220.22 795.325V795.35C2220.22 796.15 2220.09 796.862 2219.81 797.487C2219.54 798.112 2219.1 798.733 2218.5 799.35C2217.91 799.967 2217.13 800.667 2216.16 801.45L2212.51 804.2H2210.67H2220.44V808.2H2206.11Z" className="fill-white dark:fill-background"/>
-                                                <path d="M2219 776.5H2195C2189.2 776.5 2184.5 781.201 2184.5 787V811C2184.5 816.799 2189.2 821.5 2195 821.5H2219C2224.8 821.5 2229.5 816.799 2229.5 811V787C2229.5 781.201 2224.8 776.5 2219 776.5Z" className="stroke-white dark:stroke-background" strokeWidth="5"/>
-                                            </g>
-											<g className="number-tag" id="Vector_28">
+											<g
+												className="number-tag"
+												id="Vector_26"
+											>
+												<path
+													d="M1568 1026C1568 1021.58 1571.58 1018 1576 1018H1600C1604.42 1018 1608 1021.58 1608 1026V1050C1608 1054.42 1604.42 1058 1600 1058H1576C1571.58 1058 1568 1054.42 1568 1050V1026Z"
+													fill="#F7941D"
+												/>
+												<path
+													d="M1578.3 1047.2V1033.7H1578.2L1573.77 1036.62V1032.19L1578.3 1029.16H1583.6V1047.2H1578.3Z"
+													className="fill-white dark:fill-background"
+												/>
+												<path
+													d="M1587.11 1047.2V1043.59L1593.51 1038.29C1594.25 1037.68 1594.81 1037.17 1595.17 1036.76C1595.55 1036.35 1595.8 1035.98 1595.93 1035.66C1596.06 1035.34 1596.12 1035.01 1596.12 1034.68V1034.65C1596.12 1034.27 1596.03 1033.95 1595.85 1033.66C1595.67 1033.38 1595.43 1033.16 1595.11 1033C1594.8 1032.83 1594.43 1032.75 1594.01 1032.75C1593.54 1032.75 1593.12 1032.84 1592.77 1033.02C1592.43 1033.21 1592.17 1033.47 1591.98 1033.8C1591.78 1034.12 1591.67 1034.5 1591.64 1034.94L1591.62 1035.1H1586.8V1034.97C1586.8 1033.75 1587.1 1032.68 1587.71 1031.76C1588.32 1030.84 1589.17 1030.12 1590.25 1029.61C1591.33 1029.1 1592.59 1028.84 1594.01 1028.84C1595.47 1028.84 1596.74 1029.07 1597.81 1029.53C1598.9 1029.98 1599.73 1030.61 1600.32 1031.44C1600.92 1032.25 1601.22 1033.22 1601.22 1034.32V1034.35C1601.22 1035.15 1601.09 1035.86 1600.81 1036.49C1600.54 1037.11 1600.1 1037.73 1599.5 1038.35C1598.91 1038.97 1598.13 1039.67 1597.16 1040.45L1593.51 1043.2H1591.67H1601.44V1047.2H1587.11Z"
+													className="fill-white dark:fill-background"
+												/>
+												<path
+													d="M1600 1015.5H1576C1570.2 1015.5 1565.5 1020.2 1565.5 1026V1050C1565.5 1055.8 1570.2 1060.5 1576 1060.5H1600C1605.8 1060.5 1610.5 1055.8 1610.5 1050V1026C1610.5 1020.2 1605.8 1015.5 1600 1015.5Z"
+													className="stroke-white dark:stroke-background"
+													strokeWidth="5"
+												/>
+											</g>
+											<g
+												className="number-tag"
+												id="Vector_27"
+											>
+												<path
+													d="M2187 787C2187 782.582 2190.58 779 2195 779H2219C2223.42 779 2227 782.582 2227 787V811C2227 815.418 2223.42 819 2219 819H2195C2190.58 819 2187 815.418 2187 811V787Z"
+													fill="#F7941D"
+												/>
+												<path
+													d="M2197.3 808.2V794.7H2197.2L2192.77 797.625V793.187L2197.3 790.162H2202.6V808.2H2197.3Z"
+													className="fill-white dark:fill-background"
+												/>
+												<path
+													d="M2206.11 808.2V804.587L2212.51 799.287C2213.25 798.679 2213.81 798.171 2214.17 797.762C2214.55 797.346 2214.8 796.979 2214.93 796.663C2215.06 796.338 2215.12 796.008 2215.12 795.675V795.65C2215.12 795.275 2215.03 794.946 2214.85 794.662C2214.67 794.379 2214.43 794.158 2214.11 794C2213.8 793.833 2213.43 793.75 2213.01 793.75C2212.54 793.75 2212.12 793.842 2211.77 794.025C2211.43 794.208 2211.17 794.467 2210.98 794.8C2210.78 795.125 2210.67 795.504 2210.64 795.937L2210.62 796.1H2205.8V795.975C2205.8 794.75 2206.1 793.679 2206.71 792.763C2207.32 791.838 2208.17 791.121 2209.25 790.612C2210.33 790.096 2211.59 789.838 2213.01 789.838C2214.47 789.838 2215.74 790.067 2216.81 790.525C2217.9 790.975 2218.73 791.613 2219.32 792.438C2219.92 793.254 2220.22 794.217 2220.22 795.325V795.35C2220.22 796.15 2220.09 796.862 2219.81 797.487C2219.54 798.112 2219.1 798.733 2218.5 799.35C2217.91 799.967 2217.13 800.667 2216.16 801.45L2212.51 804.2H2210.67H2220.44V808.2H2206.11Z"
+													className="fill-white dark:fill-background"
+												/>
+												<path
+													d="M2219 776.5H2195C2189.2 776.5 2184.5 781.201 2184.5 787V811C2184.5 816.799 2189.2 821.5 2195 821.5H2219C2224.8 821.5 2229.5 816.799 2229.5 811V787C2229.5 781.201 2224.8 776.5 2219 776.5Z"
+													className="stroke-white dark:stroke-background"
+													strokeWidth="5"
+												/>
+											</g>
+											<g
+												className="number-tag"
+												id="Vector_28"
+											>
 												<path
 													d="M2750 408.8C2750 401.731 2755.73 396 2762.8 396H2801.2C2808.27 396 2814 401.731 2814 408.8V447.2C2814 454.269 2808.27 460 2801.2 460H2762.8C2755.73 460 2750 454.269 2750 447.2V408.8Z"
 													fill="#F7941D"
@@ -3422,7 +3629,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="10"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_29">
+											<g
+												className="number-tag"
+												id="Vector_29"
+											>
 												<path
 													d="M2801.25 461.055C2801.25 453.986 2806.99 448.255 2814.05 448.255H2852.45C2859.52 448.255 2865.25 453.986 2865.25 461.055V499.455C2865.25 506.524 2859.52 512.255 2852.45 512.255H2814.05C2806.99 512.255 2801.25 506.524 2801.25 499.455V461.055Z"
 													fill="#00A94F"
@@ -3441,7 +3651,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="10"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_30">
+											<g
+												className="number-tag"
+												id="Vector_30"
+											>
 												<path
 													d="M2853 512.8C2853 505.731 2858.73 500 2865.8 500H2904.2C2911.27 500 2917 505.731 2917 512.8V551.2C2917 558.269 2911.27 564 2904.2 564H2865.8C2858.73 564 2853 558.269 2853 551.2V512.8Z"
 													fill="#FFD200"
@@ -3515,7 +3728,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											stroke="#FFD200"
 											strokeWidth="10"
 										/>
-										<g id="Vertex Valley" className="station">
+										<g
+											id="Vertex Valley"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9"
 												cx="1392"
@@ -3581,7 +3797,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Forum Fields" className="station">
+										<g
+											id="Forum Fields"
+											className="station"
+										>
 											<rect
 												id="Rectangle 4"
 												x="2752.21"
@@ -3595,7 +3814,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Serenity Station" className="station">
+										<g
+											id="Serenity Station"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9_3"
 												cx="1522"
@@ -3628,7 +3850,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Network Nook" className="station">
+										<g
+											id="Network Nook"
+											className="station"
+										>
 											<rect
 												id="Rectangle 4_2"
 												x="2559.21"
@@ -3642,7 +3867,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Landmark Lane" className="station">
+										<g
+											id="Landmark Lane"
+											className="station"
+										>
 											<rect
 												id="Rectangle 4_3"
 												x="2172.96"
@@ -3656,7 +3884,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Citadel Center" className="station">
+										<g
+											id="Citadel Center"
+											className="station"
+										>
 											<rect
 												id="Rectangle 4_4"
 												x="2405"
@@ -3670,7 +3901,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Fusion Forum" className="station">
+										<g
+											id="Fusion Forum"
+											className="station"
+										>
 											<rect
 												id="Rectangle 4_5"
 												x="1676.99"
@@ -3684,7 +3918,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Terrace Turn" className="station">
+										<g
+											id="Terrace Turn"
+											className="station"
+										>
 											<rect
 												id="Rectangle 4_6"
 												x="2309.21"
@@ -3698,7 +3935,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Junction Juncture" className="station">
+										<g
+											id="Junction Juncture"
+											className="station"
+										>
 											<rect
 												id="Rectangle 4_7"
 												x="2588"
@@ -3726,7 +3966,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Core Crossing" className="station">
+										<g
+											id="Core Crossing"
+											className="station"
+										>
 											<rect
 												id="Rectangle 4_9"
 												x="1573"
@@ -3739,7 +3982,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Plaza Central" className="station">
+										<g
+											id="Plaza Central"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9_4"
 												cx="3054"
@@ -3772,7 +4018,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Coastal Corner" className="station">
+										<g
+											id="Coastal Corner"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9_5"
 												cx="2811"
@@ -3805,7 +4054,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Harmony Heights" className="station">
+										<g
+											id="Harmony Heights"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9_6"
 												cx="2472"
@@ -3871,7 +4123,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Exchange Enclave" className="station">
+										<g
+											id="Exchange Enclave"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9_8"
 												cx="2095"
@@ -3904,7 +4159,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Enclave Edge" className="station">
+										<g
+											id="Enclave Edge"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9_9"
 												cx="1825"
@@ -3937,7 +4195,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Concourse Corner" className="station">
+										<g
+											id="Concourse Corner"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9_10"
 												cx="1528"
@@ -4769,14 +5030,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 								</motion.g>
 							)}
 							{level === 2 && (
-								<motion.g 
-                                    key={level}
+								<motion.g
+									key={level}
 									variants={levelVariant}
 									initial="initial"
 									animate="animate"
 									exit="exit"
 									id="Level 3"
-                                >
+								>
 									<g id="Main">
 										<rect
 											id="Rectangle 11"
@@ -4837,49 +5098,49 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												d="M2790 569.5L2588.89 772"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Marvel Mile-Visionary Vale 3-13"
 												d="M2569.05 1039V810.523C2569.05 798.642 2573.75 787.243 2582.12 778.813L2588.89 772"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Central Station-Marvel Mile 3-13"
 												d="M2569.05 1039V1200.5C2569.05 1225.35 2548.9 1245.5 2524.05 1245.5H2197H2055"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Magnate Mall-Central Station 3-13"
 												d="M2055 1245.5H1942.5H1668C1643.15 1245.5 1623 1265.65 1623 1290.5V1462.5"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Harmony Hub-Magnate Mall 3-13"
 												d="M1623 1462.5V1676.45C1623 1701.3 1643.15 1721.45 1668 1721.45H1677"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Radiant Row-Harmony Hub 3-13"
 												d="M1677 1721.45H1945.77C1981.67 1721.45 2010.77 1750.55 2010.77 1786.45V1802.5"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Circuit City-Radiant Row 3-13"
 												d="M2010.77 2156.95V1802.5"
 												stroke="#FFD200"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 										</g>
 										<g id="3-16">
@@ -4888,28 +5149,28 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												d="M3054.27 1234.45H2717.5"
 												stroke="#A1A2A1"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Central Station-Paragon Place 3-16"
 												d="M2717.5 1234.45H2560.56C2557.64 1234.45 2554.84 1233.29 2552.78 1231.23L2510.23 1188.68C2501.79 1180.24 2490.35 1175.5 2478.41 1175.5H2202H2057.5"
 												stroke="#A1A2A1"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Culture Cross-Central Station 3-16"
 												d="M1362 1209.45H1605.21C1616.29 1209.45 1625.27 1200.47 1625.27 1189.39V1189.39C1625.27 1181.72 1631.49 1175.5 1639.16 1175.5L1942.5 1175.5L2057.5 1175.5"
 												stroke="#A1A2A1"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Iconic Isle-Culture Cross 3-16"
 												d="M1035 1209.45H1362"
 												stroke="#A1A2A1"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 										</g>
 										<g id="3-12">
@@ -4918,35 +5179,35 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												d="M2537.5 718.5L2738 518"
 												stroke="#F7941D"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Infinity Inlet-Visionary Vale 3-12"
 												d="M2537.5 718.5L2444.29 811.713C2438.66 817.339 2435.5 824.97 2435.5 832.927V1016"
 												stroke="#F7941D"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Central Station-Infinity Inlet 3-12"
 												d="M2435.5 1016V1176.5C2435.5 1195.83 2419.83 1211.5 2400.5 1211.5H2199H2056"
 												stroke="#F7941D"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Culture Cross-Central Station 3-12"
 												d="M1363 1173.95H1578.58C1585.74 1173.95 1592.61 1176.79 1597.68 1181.86L1614.72 1198.91C1622.79 1206.97 1633.73 1211.5 1645.13 1211.5H1942.5H2056"
 												stroke="#F7941D"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Iconic Isle-Culture Cross 3-12"
 												d="M1034.27 1173.95H1363"
 												stroke="#F7941D"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 										</g>
 										<g id="3-14">
@@ -4955,56 +5216,56 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												d="M2761 546.5L2616 691.5L2560.5 747"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Infinity Inlet-Visionary Vale 3-14"
 												d="M2560.5 747L2484.18 823.32C2475.74 831.759 2471 843.205 2471 855.14V1014.5"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Central Station-Infinity Inlet 3-14"
 												d="M2471 1014.5V1309C2471 1333.85 2450.85 1354 2426 1354H2190.5H2056"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Urban Uplink-Central Station 3-14"
 												d="M2056 1354H1942.5H1731C1711.67 1354 1696 1369.67 1696 1389V1444.36C1696 1456.3 1700.74 1467.74 1709.18 1476.18L1759 1526"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Quantum Quay-Urban Uplink 3-14"
 												d="M1759 1526L1874.32 1641.32C1882.76 1649.76 1894.2 1654.5 1906.14 1654.5H2064"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Beacon Boulevard-Quantum Quay 3-14"
 												d="M2426.82 1654.5H2064H1887.5"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Triumph Terrace-Beacon Boulevard 3-14"
 												d="M2664.82 1654.5V1523.79C2664.82 1483.6 2616.16 1463.57 2587.87 1492.1L2426.82 1654.5"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Meridian Market-Triumph Terrace 3-14"
 												d="M2664.82 1654.5L2872.82 1862.5"
 												stroke="#00A94F"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 										</g>
 										<g id="3-11">
@@ -5013,56 +5274,56 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												d="M2083.77 227.448L2083.46 331.932C2083.42 343.82 2078.68 355.212 2070.28 363.619L1957.45 476.445"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Paramount Park-Heritage Hall 3-11"
 												d="M1957.45 476.445L1844.68 589.217C1836.24 597.656 1831.5 609.102 1831.5 621.037V727.673"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Emblem Estates-Paramount Park 3-11"
 												d="M1831.5 727.672V807.948C1831.5 832.801 1851.65 852.948 1876.5 852.948H2143.5"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Infinity Inlet-Emblem Estates 3-11"
 												d="M2143.5 852.948H2355.27C2380.12 852.948 2400.27 873.095 2400.27 897.948V1018.5"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Central Station-Infinity Inlet 3-11"
 												d="M2400.27 1018.5V1140.45V1237.22C2400.27 1262.07 2380.12 1282.22 2355.27 1282.22H2192H2053.5"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Monarch Meadows-Central Station 3-11"
 												d="M1507.72 1039V1154V1237.22C1507.72 1262.07 1527.86 1282.22 1552.72 1282.22H1943.5H2053.5"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Echo Esplanade-Monarch Meadows 3-11"
 												d="M1507.72 779.448V956.5V1039"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Pioneer Plaza-Echo Esplanade 3-11"
 												d="M1373.32 458L1495.66 589.44C1503.41 597.767 1507.72 608.722 1507.72 620.098V779.448"
 												stroke="#E31937"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 										</g>
 										<g id="3-15">
@@ -5071,42 +5332,42 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												d="M3053.77 1269.95H2719"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Central Station-Paragon Place 3-15"
 												d="M2057.5 1319.5H2187.5H2467.81C2479.74 1319.5 2491.19 1314.76 2499.63 1306.32L2522.82 1283.13C2531.26 1274.69 2542.7 1269.95 2554.64 1269.95H2719"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Magnate Mall-Central Station 3-15"
 												d="M1625.44 1466.5L1648.25 1443.69C1656.89 1435.05 1661.64 1423.27 1661.42 1411.06L1661.04 1389.75C1660.34 1351.16 1691.43 1319.5 1730.03 1319.5H1942.5H2057.5"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Synergy Street-Magnate Mall 3-15"
 												d="M1442.5 1579.5H1493.8C1505.74 1579.5 1517.18 1574.76 1525.62 1566.32L1625.44 1466.5"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Catalyst Court-Synergy Street 3-15"
 												d="M1341.5 1745V1624.5C1341.5 1599.65 1361.65 1579.5 1386.5 1579.5H1442.5"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 											<path
 												id="Chronicle Corner-Catalyst Court 3-15"
 												d="M1188 2033.5L1322.46 1899.04C1334.65 1886.85 1341.5 1870.31 1341.5 1853.08V1745"
 												stroke="#0076C0"
 												strokeWidth="32"
-                                                className="edge duration-500"
+												className="edge duration-500"
 											/>
 										</g>
 										<text
@@ -5142,7 +5403,7 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											height="40"
 											rx="20"
 											transform="rotate(90 2076 1145)"
-                                            className="fill-white dark:fill-background stroke-background dark:stroke-white station"
+											className="fill-white dark:fill-background stroke-background dark:stroke-white station"
 											strokeWidth="10"
 										/>
 										<circle
@@ -5316,7 +5577,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											stroke="#E31937"
 											strokeWidth="10"
 										/>
-										<g id="Magnate Mall" className="station">
+										<g
+											id="Magnate Mall"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9"
 												cx="1623"
@@ -5382,7 +5646,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Paragon Place" className="station">
+										<g
+											id="Paragon Place"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9_3"
 												cx="2718"
@@ -5448,7 +5715,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Culture Cross" className="station">
+										<g
+											id="Culture Cross"
+											className="station"
+										>
 											<circle
 												id="Ellipse 9_5"
 												cx="1365"
@@ -5481,7 +5751,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 											</g>
 										</g>
-										<g id="Progress Pointe" className="station">
+										<g
+											id="Progress Pointe"
+											className="station"
+										>
 											<rect
 												id="Rectangle 4"
 												x="2752.21"
@@ -5495,7 +5768,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Visionary Vale" className="station">
+										<g
+											id="Visionary Vale"
+											className="station"
+										>
 											<rect
 												id="Rectangle 4_2"
 												x="2538.21"
@@ -5509,7 +5785,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												strokeWidth="10"
 											/>
 										</g>
-										<g id="Infinity Inlet" className="station">
+										<g
+											id="Infinity Inlet"
+											className="station"
+										>
 											<rect
 												id="Rectangle 4_3"
 												x="2379"
@@ -6111,7 +6390,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 											</text>
 										</g>
 										<g id="number tags">
-											<g className="number-tag" id="Vector">
+											<g
+												className="number-tag"
+												id="Vector"
+											>
 												<path
 													d="M1812 601C1812 596.582 1815.58 593 1820 593H1844C1848.42 593 1852 596.582 1852 601V625C1852 629.418 1848.42 633 1844 633H1820C1815.58 633 1812 629.418 1812 625V601Z"
 													fill="#E31937"
@@ -6126,11 +6408,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M1820 590.5C1814.2 590.5 1809.5 595.201 1809.5 601V625C1809.5 630.799 1814.2 635.5 1820 635.5H1844C1849.8 635.5 1854.5 630.799 1854.5 625V601C1854.5 595.201 1849.8 590.5 1844 590.5H1820Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_2">
+											<g
+												className="number-tag"
+												id="Vector_2"
+											>
 												<path
 													d="M2315 838C2315 833.582 2318.58 830 2323 830H2347C2351.42 830 2355 833.582 2355 838V862C2355 866.418 2351.42 870 2347 870H2323C2318.58 870 2315 866.418 2315 862V838Z"
 													fill="#E31937"
@@ -6145,11 +6430,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M2323 827.5C2317.2 827.5 2312.5 832.201 2312.5 838V862C2312.5 867.799 2317.2 872.5 2323 872.5H2347C2352.8 872.5 2357.5 867.799 2357.5 862V838C2357.5 832.201 2352.8 827.5 2347 827.5H2323Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_3">
+											<g
+												className="number-tag"
+												id="Vector_3"
+											>
 												<path
 													d="M1490 899C1490 894.582 1493.58 891 1498 891H1522C1526.42 891 1530 894.582 1530 899V923C1530 927.418 1526.42 931 1522 931H1498C1493.58 931 1490 927.418 1490 923V899Z"
 													fill="#E31937"
@@ -6168,7 +6456,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_4">
+											<g
+												className="number-tag"
+												id="Vector_4"
+											>
 												<path
 													d="M1925 1270C1925 1265.58 1928.58 1262 1933 1262H1957C1961.42 1262 1965 1265.58 1965 1270V1294C1965 1298.42 1961.42 1302 1957 1302H1933C1928.58 1302 1925 1298.42 1925 1294V1270Z"
 													fill="#E31937"
@@ -6183,29 +6474,80 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M1933 1259.5C1927.2 1259.5 1922.5 1264.2 1922.5 1270V1294C1922.5 1299.8 1927.2 1304.5 1933 1304.5H1957C1962.8 1304.5 1967.5 1299.8 1967.5 1294V1270C1967.5 1264.2 1962.8 1259.5 1957 1259.5H1933Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_5">
-                                                <path d="M2414 919C2414 914.582 2417.58 911 2422 911H2446C2450.42 911 2454 914.582 2454 919V943C2454 947.418 2450.42 951 2446 951H2422C2417.58 951 2414 947.418 2414 943V919Z" fill="#F7941D"/>
-                                                <path d="M2424.3 940.2V926.7H2424.2L2419.77 929.625V925.187L2424.3 922.162H2429.6V940.2H2424.3Z" className="fill-white dark:fill-background"/>
-                                                <path d="M2433.11 940.2V936.587L2439.51 931.287C2440.25 930.679 2440.81 930.171 2441.17 929.762C2441.55 929.346 2441.8 928.979 2441.93 928.663C2442.06 928.338 2442.12 928.008 2442.12 927.675V927.65C2442.12 927.275 2442.03 926.946 2441.85 926.662C2441.67 926.379 2441.43 926.158 2441.11 926C2440.8 925.833 2440.43 925.75 2440.01 925.75C2439.54 925.75 2439.12 925.842 2438.77 926.025C2438.43 926.208 2438.17 926.467 2437.98 926.8C2437.78 927.125 2437.67 927.504 2437.64 927.937L2437.62 928.1H2432.8V927.975C2432.8 926.75 2433.1 925.679 2433.71 924.763C2434.32 923.838 2435.17 923.121 2436.25 922.612C2437.33 922.096 2438.59 921.838 2440.01 921.838C2441.47 921.838 2442.74 922.067 2443.81 922.525C2444.9 922.975 2445.73 923.613 2446.32 924.438C2446.92 925.254 2447.22 926.217 2447.22 927.325V927.35C2447.22 928.15 2447.09 928.862 2446.81 929.487C2446.54 930.112 2446.1 930.733 2445.5 931.35C2444.91 931.967 2444.13 932.667 2443.16 933.45L2439.51 936.2H2437.67H2447.44V940.2H2433.11Z" className="fill-white dark:fill-background"/>
-                                                <path d="M2446 908.5H2422C2416.2 908.5 2411.5 913.201 2411.5 919V943C2411.5 948.799 2416.2 953.5 2422 953.5H2446C2451.8 953.5 2456.5 948.799 2456.5 943V919C2456.5 913.201 2451.8 908.5 2446 908.5Z" className="stroke-white dark:stroke-background" strokeWidth="5"/>
-                                            </g>
-                                            <g className="number-tag" id="Vector_6">
-                                                <path d="M2264 1200C2264 1195.58 2267.58 1192 2272 1192H2296C2300.42 1192 2304 1195.58 2304 1200V1224C2304 1228.42 2300.42 1232 2296 1232H2272C2267.58 1232 2264 1228.42 2264 1224V1200Z" fill="#F7941D"/>
-                                                <path d="M2274.3 1221.2V1207.7H2274.2L2269.77 1210.62V1206.19L2274.3 1203.16H2279.6V1221.2H2274.3Z" className="fill-white dark:fill-background"/>
-                                                <path d="M2283.11 1221.2V1217.59L2289.51 1212.29C2290.25 1211.68 2290.81 1211.17 2291.17 1210.76C2291.55 1210.35 2291.8 1209.98 2291.93 1209.66C2292.06 1209.34 2292.12 1209.01 2292.12 1208.68V1208.65C2292.12 1208.27 2292.03 1207.95 2291.85 1207.66C2291.67 1207.38 2291.43 1207.16 2291.11 1207C2290.8 1206.83 2290.43 1206.75 2290.01 1206.75C2289.54 1206.75 2289.12 1206.84 2288.77 1207.02C2288.43 1207.21 2288.17 1207.47 2287.98 1207.8C2287.78 1208.12 2287.67 1208.5 2287.64 1208.94L2287.62 1209.1H2282.8V1208.97C2282.8 1207.75 2283.1 1206.68 2283.71 1205.76C2284.32 1204.84 2285.17 1204.12 2286.25 1203.61C2287.33 1203.1 2288.59 1202.84 2290.01 1202.84C2291.47 1202.84 2292.74 1203.07 2293.81 1203.53C2294.9 1203.98 2295.73 1204.61 2296.32 1205.44C2296.92 1206.25 2297.22 1207.22 2297.22 1208.32V1208.35C2297.22 1209.15 2297.09 1209.86 2296.81 1210.49C2296.54 1211.11 2296.1 1211.73 2295.5 1212.35C2294.91 1212.97 2294.13 1213.67 2293.16 1214.45L2289.51 1217.2H2287.67H2297.44V1221.2H2283.11Z" className="fill-white dark:fill-background"/>
-                                                <path d="M2296 1189.5H2272C2266.2 1189.5 2261.5 1194.2 2261.5 1200V1224C2261.5 1229.8 2266.2 1234.5 2272 1234.5H2296C2301.8 1234.5 2306.5 1229.8 2306.5 1224V1200C2306.5 1194.2 2301.8 1189.5 2296 1189.5Z" className="stroke-white dark:stroke-background" strokeWidth="5"/>
-                                            </g>
-                                            <g className="number-tag" id="Vector_7">
-                                                <path d="M1431 1164C1431 1159.58 1434.58 1156 1439 1156H1463C1467.42 1156 1471 1159.58 1471 1164V1188C1471 1192.42 1467.42 1196 1463 1196H1439C1434.58 1196 1431 1192.42 1431 1188V1164Z" fill="#F7941D"/>
-                                                <path d="M1441.3 1185.2V1171.7H1441.2L1436.77 1174.62V1170.19L1441.3 1167.16H1446.6V1185.2H1441.3Z" className="fill-white dark:fill-background"/>
-                                                <path d="M1450.11 1185.2V1181.59L1456.51 1176.29C1457.25 1175.68 1457.81 1175.17 1458.17 1174.76C1458.55 1174.35 1458.8 1173.98 1458.93 1173.66C1459.06 1173.34 1459.12 1173.01 1459.12 1172.68V1172.65C1459.12 1172.27 1459.03 1171.95 1458.85 1171.66C1458.67 1171.38 1458.43 1171.16 1458.11 1171C1457.8 1170.83 1457.43 1170.75 1457.01 1170.75C1456.54 1170.75 1456.12 1170.84 1455.77 1171.02C1455.43 1171.21 1455.17 1171.47 1454.98 1171.8C1454.78 1172.12 1454.67 1172.5 1454.64 1172.94L1454.62 1173.1H1449.8V1172.97C1449.8 1171.75 1450.1 1170.68 1450.71 1169.76C1451.32 1168.84 1452.17 1168.12 1453.25 1167.61C1454.33 1167.1 1455.59 1166.84 1457.01 1166.84C1458.47 1166.84 1459.74 1167.07 1460.81 1167.53C1461.9 1167.98 1462.73 1168.61 1463.32 1169.44C1463.92 1170.25 1464.22 1171.22 1464.22 1172.32V1172.35C1464.22 1173.15 1464.09 1173.86 1463.81 1174.49C1463.54 1175.11 1463.1 1175.73 1462.5 1176.35C1461.91 1176.97 1461.13 1177.67 1460.16 1178.45L1456.51 1181.2H1454.67H1464.44V1185.2H1450.11Z" className="fill-white dark:fill-background"/>
-                                                <path d="M1463 1153.5H1439C1433.2 1153.5 1428.5 1158.2 1428.5 1164V1188C1428.5 1193.8 1433.2 1198.5 1439 1198.5H1463C1468.8 1198.5 1473.5 1193.8 1473.5 1188V1164C1473.5 1158.2 1468.8 1153.5 1463 1153.5Z" className="stroke-white dark:stroke-background" strokeWidth="5"/>
-                                            </g>
-											<g className="number-tag" id="Vector_8">
+											<g
+												className="number-tag"
+												id="Vector_5"
+											>
+												<path
+													d="M2414 919C2414 914.582 2417.58 911 2422 911H2446C2450.42 911 2454 914.582 2454 919V943C2454 947.418 2450.42 951 2446 951H2422C2417.58 951 2414 947.418 2414 943V919Z"
+													fill="#F7941D"
+												/>
+												<path
+													d="M2424.3 940.2V926.7H2424.2L2419.77 929.625V925.187L2424.3 922.162H2429.6V940.2H2424.3Z"
+													className="fill-white dark:fill-background"
+												/>
+												<path
+													d="M2433.11 940.2V936.587L2439.51 931.287C2440.25 930.679 2440.81 930.171 2441.17 929.762C2441.55 929.346 2441.8 928.979 2441.93 928.663C2442.06 928.338 2442.12 928.008 2442.12 927.675V927.65C2442.12 927.275 2442.03 926.946 2441.85 926.662C2441.67 926.379 2441.43 926.158 2441.11 926C2440.8 925.833 2440.43 925.75 2440.01 925.75C2439.54 925.75 2439.12 925.842 2438.77 926.025C2438.43 926.208 2438.17 926.467 2437.98 926.8C2437.78 927.125 2437.67 927.504 2437.64 927.937L2437.62 928.1H2432.8V927.975C2432.8 926.75 2433.1 925.679 2433.71 924.763C2434.32 923.838 2435.17 923.121 2436.25 922.612C2437.33 922.096 2438.59 921.838 2440.01 921.838C2441.47 921.838 2442.74 922.067 2443.81 922.525C2444.9 922.975 2445.73 923.613 2446.32 924.438C2446.92 925.254 2447.22 926.217 2447.22 927.325V927.35C2447.22 928.15 2447.09 928.862 2446.81 929.487C2446.54 930.112 2446.1 930.733 2445.5 931.35C2444.91 931.967 2444.13 932.667 2443.16 933.45L2439.51 936.2H2437.67H2447.44V940.2H2433.11Z"
+													className="fill-white dark:fill-background"
+												/>
+												<path
+													d="M2446 908.5H2422C2416.2 908.5 2411.5 913.201 2411.5 919V943C2411.5 948.799 2416.2 953.5 2422 953.5H2446C2451.8 953.5 2456.5 948.799 2456.5 943V919C2456.5 913.201 2451.8 908.5 2446 908.5Z"
+													className="stroke-white dark:stroke-background"
+													strokeWidth="5"
+												/>
+											</g>
+											<g
+												className="number-tag"
+												id="Vector_6"
+											>
+												<path
+													d="M2264 1200C2264 1195.58 2267.58 1192 2272 1192H2296C2300.42 1192 2304 1195.58 2304 1200V1224C2304 1228.42 2300.42 1232 2296 1232H2272C2267.58 1232 2264 1228.42 2264 1224V1200Z"
+													fill="#F7941D"
+												/>
+												<path
+													d="M2274.3 1221.2V1207.7H2274.2L2269.77 1210.62V1206.19L2274.3 1203.16H2279.6V1221.2H2274.3Z"
+													className="fill-white dark:fill-background"
+												/>
+												<path
+													d="M2283.11 1221.2V1217.59L2289.51 1212.29C2290.25 1211.68 2290.81 1211.17 2291.17 1210.76C2291.55 1210.35 2291.8 1209.98 2291.93 1209.66C2292.06 1209.34 2292.12 1209.01 2292.12 1208.68V1208.65C2292.12 1208.27 2292.03 1207.95 2291.85 1207.66C2291.67 1207.38 2291.43 1207.16 2291.11 1207C2290.8 1206.83 2290.43 1206.75 2290.01 1206.75C2289.54 1206.75 2289.12 1206.84 2288.77 1207.02C2288.43 1207.21 2288.17 1207.47 2287.98 1207.8C2287.78 1208.12 2287.67 1208.5 2287.64 1208.94L2287.62 1209.1H2282.8V1208.97C2282.8 1207.75 2283.1 1206.68 2283.71 1205.76C2284.32 1204.84 2285.17 1204.12 2286.25 1203.61C2287.33 1203.1 2288.59 1202.84 2290.01 1202.84C2291.47 1202.84 2292.74 1203.07 2293.81 1203.53C2294.9 1203.98 2295.73 1204.61 2296.32 1205.44C2296.92 1206.25 2297.22 1207.22 2297.22 1208.32V1208.35C2297.22 1209.15 2297.09 1209.86 2296.81 1210.49C2296.54 1211.11 2296.1 1211.73 2295.5 1212.35C2294.91 1212.97 2294.13 1213.67 2293.16 1214.45L2289.51 1217.2H2287.67H2297.44V1221.2H2283.11Z"
+													className="fill-white dark:fill-background"
+												/>
+												<path
+													d="M2296 1189.5H2272C2266.2 1189.5 2261.5 1194.2 2261.5 1200V1224C2261.5 1229.8 2266.2 1234.5 2272 1234.5H2296C2301.8 1234.5 2306.5 1229.8 2306.5 1224V1200C2306.5 1194.2 2301.8 1189.5 2296 1189.5Z"
+													className="stroke-white dark:stroke-background"
+													strokeWidth="5"
+												/>
+											</g>
+											<g
+												className="number-tag"
+												id="Vector_7"
+											>
+												<path
+													d="M1431 1164C1431 1159.58 1434.58 1156 1439 1156H1463C1467.42 1156 1471 1159.58 1471 1164V1188C1471 1192.42 1467.42 1196 1463 1196H1439C1434.58 1196 1431 1192.42 1431 1188V1164Z"
+													fill="#F7941D"
+												/>
+												<path
+													d="M1441.3 1185.2V1171.7H1441.2L1436.77 1174.62V1170.19L1441.3 1167.16H1446.6V1185.2H1441.3Z"
+													className="fill-white dark:fill-background"
+												/>
+												<path
+													d="M1450.11 1185.2V1181.59L1456.51 1176.29C1457.25 1175.68 1457.81 1175.17 1458.17 1174.76C1458.55 1174.35 1458.8 1173.98 1458.93 1173.66C1459.06 1173.34 1459.12 1173.01 1459.12 1172.68V1172.65C1459.12 1172.27 1459.03 1171.95 1458.85 1171.66C1458.67 1171.38 1458.43 1171.16 1458.11 1171C1457.8 1170.83 1457.43 1170.75 1457.01 1170.75C1456.54 1170.75 1456.12 1170.84 1455.77 1171.02C1455.43 1171.21 1455.17 1171.47 1454.98 1171.8C1454.78 1172.12 1454.67 1172.5 1454.64 1172.94L1454.62 1173.1H1449.8V1172.97C1449.8 1171.75 1450.1 1170.68 1450.71 1169.76C1451.32 1168.84 1452.17 1168.12 1453.25 1167.61C1454.33 1167.1 1455.59 1166.84 1457.01 1166.84C1458.47 1166.84 1459.74 1167.07 1460.81 1167.53C1461.9 1167.98 1462.73 1168.61 1463.32 1169.44C1463.92 1170.25 1464.22 1171.22 1464.22 1172.32V1172.35C1464.22 1173.15 1464.09 1173.86 1463.81 1174.49C1463.54 1175.11 1463.1 1175.73 1462.5 1176.35C1461.91 1176.97 1461.13 1177.67 1460.16 1178.45L1456.51 1181.2H1454.67H1464.44V1185.2H1450.11Z"
+													className="fill-white dark:fill-background"
+												/>
+												<path
+													d="M1463 1153.5H1439C1433.2 1153.5 1428.5 1158.2 1428.5 1164V1188C1428.5 1193.8 1433.2 1198.5 1439 1198.5H1463C1468.8 1198.5 1473.5 1193.8 1473.5 1188V1164C1473.5 1158.2 1468.8 1153.5 1463 1153.5Z"
+													className="stroke-white dark:stroke-background"
+													strokeWidth="5"
+												/>
+											</g>
+											<g
+												className="number-tag"
+												id="Vector_8"
+											>
 												<path
 													d="M1603 1590C1603 1585.58 1606.58 1582 1611 1582H1635C1639.42 1582 1643 1585.58 1643 1590V1614C1643 1618.42 1639.42 1622 1635 1622H1611C1606.58 1622 1603 1618.42 1603 1614V1590Z"
 													fill="#FFD200"
@@ -6220,11 +6562,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M1611 1579.5C1605.2 1579.5 1600.5 1584.2 1600.5 1590V1614C1600.5 1619.8 1605.2 1624.5 1611 1624.5H1635C1640.8 1624.5 1645.5 1619.8 1645.5 1614V1590C1645.5 1584.2 1640.8 1579.5 1635 1579.5H1611Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_9">
+											<g
+												className="number-tag"
+												id="Vector_9"
+											>
 												<path
 													d="M1702 1235C1702 1230.58 1705.58 1227 1710 1227H1734C1738.42 1227 1742 1230.58 1742 1235V1259C1742 1263.42 1738.42 1267 1734 1267H1710C1705.58 1267 1702 1263.42 1702 1259V1235Z"
 													fill="#FFD200"
@@ -6239,11 +6584,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M1710 1224.5C1704.2 1224.5 1699.5 1229.2 1699.5 1235V1259C1699.5 1264.8 1704.2 1269.5 1710 1269.5H1734C1739.8 1269.5 1744.5 1264.8 1744.5 1259V1235C1744.5 1229.2 1739.8 1224.5 1734 1224.5H1710Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_10">
+											<g
+												className="number-tag"
+												id="Vector_10"
+											>
 												<path
 													d="M2549 899C2549 894.582 2552.58 891 2557 891H2581C2585.42 891 2589 894.582 2589 899V923C2589 927.418 2585.42 931 2581 931H2557C2552.58 931 2549 927.418 2549 923V899Z"
 													fill="#FFD200"
@@ -6258,11 +6606,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M2557 888.5C2551.2 888.5 2546.5 893.201 2546.5 899V923C2546.5 928.799 2551.2 933.5 2557 933.5H2581C2586.8 933.5 2591.5 928.799 2591.5 923V899C2591.5 893.201 2586.8 888.5 2581 888.5H2557Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_11">
+											<g
+												className="number-tag"
+												id="Vector_11"
+											>
 												<path
 													d="M2506 1547C2506 1542.58 2509.58 1539 2514 1539H2538C2542.42 1539 2546 1542.58 2546 1547V1571C2546 1575.42 2542.42 1579 2538 1579H2514C2509.58 1579 2506 1575.42 2506 1571V1547Z"
 													fill="#00A94F"
@@ -6277,11 +6628,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M2514 1536.5C2508.2 1536.5 2503.5 1541.2 2503.5 1547V1571C2503.5 1576.8 2508.2 1581.5 2514 1581.5H2538C2543.8 1581.5 2548.5 1576.8 2548.5 1571V1547C2548.5 1541.2 2543.8 1536.5 2538 1536.5H2514Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_12">
+											<g
+												className="number-tag"
+												id="Vector_12"
+											>
 												<path
 													d="M1866 1640C1866 1635.58 1869.58 1632 1874 1632H1898C1902.42 1632 1906 1635.58 1906 1640V1664C1906 1668.42 1902.42 1672 1898 1672H1874C1869.58 1672 1866 1668.42 1866 1664V1640Z"
 													fill="#00A94F"
@@ -6296,11 +6650,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M1874 1629.5C1868.2 1629.5 1863.5 1634.2 1863.5 1640V1664C1863.5 1669.8 1868.2 1674.5 1874 1674.5H1898C1903.8 1674.5 1908.5 1669.8 1908.5 1664V1640C1908.5 1634.2 1903.8 1629.5 1898 1629.5H1874Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_13">
+											<g
+												className="number-tag"
+												id="Vector_13"
+											>
 												<path
 													d="M1826 1342C1826 1337.58 1829.58 1334 1834 1334H1858C1862.42 1334 1866 1337.58 1866 1342V1366C1866 1370.42 1862.42 1374 1858 1374H1834C1829.58 1374 1826 1370.42 1826 1366V1342Z"
 													fill="#00A94F"
@@ -6315,11 +6672,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M1834 1331.5C1828.2 1331.5 1823.5 1336.2 1823.5 1342V1366C1823.5 1371.8 1828.2 1376.5 1834 1376.5H1858C1863.8 1376.5 1868.5 1371.8 1868.5 1366V1342C1868.5 1336.2 1863.8 1331.5 1858 1331.5H1834Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_14">
+											<g
+												className="number-tag"
+												id="Vector_14"
+											>
 												<path
 													d="M2453 1094C2453 1089.58 2456.58 1086 2461 1086H2485C2489.42 1086 2493 1089.58 2493 1094V1118C2493 1122.42 2489.42 1126 2485 1126H2461C2456.58 1126 2453 1122.42 2453 1118V1094Z"
 													fill="#00A94F"
@@ -6334,11 +6694,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M2461 1083.5C2455.2 1083.5 2450.5 1088.2 2450.5 1094V1118C2450.5 1123.8 2455.2 1128.5 2461 1128.5H2485C2490.8 1128.5 2495.5 1123.8 2495.5 1118V1094C2495.5 1088.2 2490.8 1083.5 2485 1083.5H2461Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_15">
+											<g
+												className="number-tag"
+												id="Vector_15"
+											>
 												<path
 													d="M1333 1587C1333 1582.58 1336.58 1579 1341 1579H1365C1369.42 1579 1373 1582.58 1373 1587V1611C1373 1615.42 1369.42 1619 1365 1619H1341C1336.58 1619 1333 1615.42 1333 1611V1587Z"
 													fill="#0076C0"
@@ -6353,11 +6716,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M1341 1576.5C1335.2 1576.5 1330.5 1581.2 1330.5 1587V1611C1330.5 1616.8 1335.2 1621.5 1341 1621.5H1365C1370.8 1621.5 1375.5 1616.8 1375.5 1611V1587C1375.5 1581.2 1370.8 1576.5 1365 1576.5H1341Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_16">
+											<g
+												className="number-tag"
+												id="Vector_16"
+											>
 												<path
 													d="M1662 1322C1662 1317.58 1665.58 1314 1670 1314H1694C1698.42 1314 1702 1317.58 1702 1322V1346C1702 1350.42 1698.42 1354 1694 1354H1670C1665.58 1354 1662 1350.42 1662 1346V1322Z"
 													fill="#0076C0"
@@ -6372,11 +6738,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M1670 1311.5C1664.2 1311.5 1659.5 1316.2 1659.5 1322V1346C1659.5 1351.8 1664.2 1356.5 1670 1356.5H1694C1699.8 1356.5 1704.5 1351.8 1704.5 1346V1322C1704.5 1316.2 1699.8 1311.5 1694 1311.5H1670Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_17">
+											<g
+												className="number-tag"
+												id="Vector_17"
+											>
 												<path
 													d="M2509 1272C2509 1267.58 2512.58 1264 2517 1264H2541C2545.42 1264 2549 1267.58 2549 1272V1296C2549 1300.42 2545.42 1304 2541 1304H2517C2512.58 1304 2509 1300.42 2509 1296V1272Z"
 													fill="#0076C0"
@@ -6391,11 +6760,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M2517 1261.5C2511.2 1261.5 2506.5 1266.2 2506.5 1272V1296C2506.5 1301.8 2511.2 1306.5 2517 1306.5H2541C2546.8 1306.5 2551.5 1301.8 2551.5 1296V1272C2551.5 1266.2 2546.8 1261.5 2541 1261.5H2517Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_18">
+											<g
+												className="number-tag"
+												id="Vector_18"
+											>
 												<path
 													d="M2506 1183C2506 1178.58 2509.58 1175 2514 1175H2538C2542.42 1175 2546 1178.58 2546 1183V1207C2546 1211.42 2542.42 1215 2538 1215H2514C2509.58 1215 2506 1211.42 2506 1207V1183Z"
 													fill="#A1A2A1"
@@ -6410,11 +6782,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M2514 1172.5C2508.2 1172.5 2503.5 1177.2 2503.5 1183V1207C2503.5 1212.8 2508.2 1217.5 2514 1217.5H2538C2543.8 1217.5 2548.5 1212.8 2548.5 1207V1183C2548.5 1177.2 2543.8 1172.5 2538 1172.5H2514Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_19">
+											<g
+												className="number-tag"
+												id="Vector_19"
+											>
 												<path
 													d="M1846 1165C1846 1160.58 1849.58 1157 1854 1157H1878C1882.42 1157 1886 1160.58 1886 1165V1189C1886 1193.42 1882.42 1197 1878 1197H1854C1849.58 1197 1846 1193.42 1846 1189V1165Z"
 													fill="#A1A2A1"
@@ -6429,11 +6804,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M1854 1154.5C1848.2 1154.5 1843.5 1159.2 1843.5 1165V1189C1843.5 1194.8 1848.2 1199.5 1854 1199.5H1878C1883.8 1199.5 1888.5 1194.8 1888.5 1189V1165C1888.5 1159.2 1883.8 1154.5 1878 1154.5H1854Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="5"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_20">
+											<g
+												className="number-tag"
+												id="Vector_20"
+											>
 												<path
 													d="M2750 408.8C2750 401.731 2755.73 396 2762.8 396H2801.2C2808.27 396 2814 401.731 2814 408.8V447.2C2814 454.269 2808.27 460 2801.2 460H2762.8C2755.73 460 2750 454.269 2750 447.2V408.8Z"
 													fill="#F7941D"
@@ -6448,11 +6826,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M2762.8 391C2752.97 391 2745 398.969 2745 408.8V447.2C2745 457.031 2752.97 465 2762.8 465H2801.2C2811.03 465 2819 457.031 2819 447.2V408.8C2819 398.969 2811.03 391 2801.2 391H2762.8Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="10"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_21">
+											<g
+												className="number-tag"
+												id="Vector_21"
+											>
 												<path
 													d="M2801.25 461.055C2801.25 453.986 2806.99 448.255 2814.05 448.255H2852.45C2859.52 448.255 2865.25 453.986 2865.25 461.055V499.455C2865.25 506.524 2859.52 512.255 2852.45 512.255H2814.05C2806.99 512.255 2801.25 506.524 2801.25 499.455V461.055Z"
 													fill="#00A94F"
@@ -6467,11 +6848,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M2814.05 443.255C2804.22 443.255 2796.25 451.224 2796.25 461.055V499.455C2796.25 509.286 2804.22 517.255 2814.05 517.255H2852.45C2862.29 517.255 2870.25 509.286 2870.25 499.455V461.055C2870.25 451.224 2862.29 443.255 2852.45 443.255H2814.05Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="10"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_22">
+											<g
+												className="number-tag"
+												id="Vector_22"
+											>
 												<path
 													d="M2853 512.8C2853 505.731 2858.73 500 2865.8 500H2904.2C2911.27 500 2917 505.731 2917 512.8V551.2C2917 558.269 2911.27 564 2904.2 564H2865.8C2858.73 564 2853 558.269 2853 551.2V512.8Z"
 													fill="#FFD200"
@@ -6486,11 +6870,14 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 												/>
 												<path
 													d="M2865.8 495C2855.97 495 2848 502.969 2848 512.8V551.2C2848 561.031 2855.97 569 2865.8 569H2904.2C2914.03 569 2922 561.031 2922 551.2V512.8C2922 502.969 2914.03 495 2904.2 495H2865.8Z"
-                                                    className="stroke-white dark:stroke-background"
+													className="stroke-white dark:stroke-background"
 													strokeWidth="10"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_23">
+											<g
+												className="number-tag"
+												id="Vector_23"
+											>
 												<path
 													d="M1979 2196.8C1979 2189.73 1984.73 2184 1991.8 2184H2030.2C2037.27 2184 2043 2189.73 2043 2196.8V2235.2C2043 2242.27 2037.27 2248 2030.2 2248H1991.8C1984.73 2248 1979 2242.27 1979 2235.2V2196.8Z"
 													fill="#FFD200"
@@ -6504,7 +6891,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_24">
+											<g
+												className="number-tag"
+												id="Vector_24"
+											>
 												<path
 													d="M2895.25 1905.05C2895.25 1897.99 2900.99 1892.25 2908.05 1892.25H2946.45C2953.52 1892.25 2959.25 1897.99 2959.25 1905.05V1943.45C2959.25 1950.52 2953.52 1956.25 2946.45 1956.25H2908.05C2900.99 1956.25 2895.25 1950.52 2895.25 1943.45V1905.05Z"
 													fill="#00A94F"
@@ -6518,7 +6908,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_25">
+											<g
+												className="number-tag"
+												id="Vector_25"
+											>
 												<path
 													d="M3118 1269.8C3118 1262.73 3123.73 1257 3130.8 1257H3169.2C3176.27 1257 3182 1262.73 3182 1269.8V1308.2C3182 1315.27 3176.27 1321 3169.2 1321H3130.8C3123.73 1321 3118 1315.27 3118 1308.2V1269.8Z"
 													fill="#0076C0"
@@ -6532,7 +6925,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_26">
+											<g
+												className="number-tag"
+												id="Vector_26"
+											>
 												<path
 													d="M1094.25 2075.05C1094.25 2067.99 1099.99 2062.25 1107.05 2062.25H1145.45C1152.52 2062.25 1158.25 2067.99 1158.25 2075.05V2113.45C1158.25 2120.52 1152.52 2126.25 1145.45 2126.25H1107.05C1099.99 2126.25 1094.25 2120.52 1094.25 2113.45V2075.05Z"
 													fill="#0076C0"
@@ -6546,7 +6942,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_27">
+											<g
+												className="number-tag"
+												id="Vector_27"
+											>
 												<path
 													d="M3118 1195.8C3118 1188.73 3123.73 1183 3130.8 1183H3169.2C3176.27 1183 3182 1188.73 3182 1195.8V1234.2C3182 1241.27 3176.27 1247 3169.2 1247H3130.8C3123.73 1247 3118 1241.27 3118 1234.2V1195.8Z"
 													fill="#A1A2A1"
@@ -6560,7 +6959,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_28">
+											<g
+												className="number-tag"
+												id="Vector_28"
+											>
 												<path
 													d="M934 1212.8C934 1205.73 939.731 1200 946.8 1200H985.2C992.269 1200 998 1205.73 998 1212.8V1251.2C998 1258.27 992.269 1264 985.2 1264H946.8C939.731 1264 934 1258.27 934 1251.2V1212.8Z"
 													fill="#A1A2A1"
@@ -6574,7 +6976,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_29">
+											<g
+												className="number-tag"
+												id="Vector_29"
+											>
 												<path
 													d="M934 1138.8C934 1131.73 939.731 1126 946.8 1126H985.2C992.269 1126 998 1131.73 998 1138.8V1177.2C998 1184.27 992.269 1190 985.2 1190H946.8C939.731 1190 934 1184.27 934 1177.2V1138.8Z"
 													fill="#F7941D"
@@ -6588,7 +6993,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_30">
+											<g
+												className="number-tag"
+												id="Vector_30"
+											>
 												<path
 													d="M2051 128.8C2051 121.731 2056.73 116 2063.8 116H2102.2C2109.27 116 2115 121.731 2115 128.8V167.2C2115 174.269 2109.27 180 2102.2 180H2063.8C2056.73 180 2051 174.269 2051 167.2V128.8Z"
 													fill="#E31937"
@@ -6602,7 +7010,10 @@ export const Map = ({ searchRequestData, searching }: { searchRequestData: Objec
 													className="fill-white dark:fill-background"
 												/>
 											</g>
-											<g className="number-tag" id="Vector_31">
+											<g
+												className="number-tag"
+												id="Vector_31"
+											>
 												<path
 													d="M1280 372.8C1280 365.731 1285.73 360 1292.8 360H1331.2C1338.27 360 1344 365.731 1344 372.8V411.2C1344 418.269 1338.27 424 1331.2 424H1292.8C1285.73 424 1280 418.269 1280 411.2V372.8Z"
 													fill="#E31937"

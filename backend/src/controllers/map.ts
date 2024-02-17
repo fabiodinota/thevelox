@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { loadGraphFromJson } from "../utils/graph";
+import { getStationsWithLevels, loadGraphFromJson } from "../utils/graph";
 import { Request, Response } from "express";
 
 const prisma = new PrismaClient();
@@ -49,3 +49,21 @@ export const search = async (req: CustomRequest, res: Response) => {
 		res.status(500).send({ error: "Internal server error" });
 	}
 };
+
+export const getDestinations = async (req: CustomRequest, res: Response) => {
+    const user_id = req.user?.user_id;
+
+    const user = await prisma.users.findUnique({
+        where: {
+            user_id
+        },
+    });
+
+    console.log("User:", user);
+
+    const destinations = getStationsWithLevels("./src/data/routes.json");
+
+    res.json({ destinations });
+
+
+}

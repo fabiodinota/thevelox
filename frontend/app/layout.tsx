@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import dotenv from "dotenv";
 import Head from "next/head";
@@ -9,7 +9,7 @@ import { SessionProvider } from "./context/sessionContext";
 // Load environment variables from .env
 dotenv.config();
 
-const inter = Inter({ subsets: ["latin"] });
+const space_grotesk = Space_Grotesk();
 
 export const metadata: Metadata = {
 	title: "The Velox - Home",
@@ -32,19 +32,18 @@ export default function RootLayout({
 	return (
 		<ThemeProvider>
 			<SessionProvider>
-				<html lang="en">
-                    <head>
-                        {/* themecolor meta tag */}
-                        <meta name="theme-color" content={"#E42B2B"} />
-                        {/* viewport meta tag */}
-                        <meta
-                            name="viewport"
-                            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
-                        />
-                    </head>
+				<html lang="en" className={space_grotesk.className}>
+					<head>
+						{/* themecolor meta tag */}
+						<meta name="theme-color" content={"#E42B2B"} />
+						{/* viewport meta tag */}
+						<meta
+							name="viewport"
+							content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
+						/>
+					</head>
 					<body
 						className={
-							inter.className +
 							"bg-white dark:bg-background text-black dark:text-white overflow-x-hidden"
 						}
 					>

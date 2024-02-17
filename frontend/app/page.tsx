@@ -1,15 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import React, { useContext, useRef, useEffect, useState } from "react";
+import React, { useRef, useState, FormEvent } from "react";
 import axios from "axios";
 import { useTheme } from "./context/themeContext";
 import { Canvas, useFrame, ThreeElements } from "@react-three/fiber";
 import * as THREE from "three";
 import { useSession } from "./context/sessionContext";
-import { Map } from "./Map";
-import Autocomplete from "react-autocomplete";
 import Link from "next/link";
+import { HeroQuickBook } from "./components/HeroQuickBook";
 
 function Box(props: ThreeElements["mesh"]) {
 	const meshRef = useRef<THREE.Mesh>(null!);
@@ -43,24 +42,26 @@ export default function Home() {
 	const [password, setPassword] = useState<string>("");
 
 	const { theme, toggleTheme } = useTheme();
-
 	const { user, signUp, signIn, signOut, isAuthenticated } = useSession();
 
 	const handleTest = async () => {
-        if(isAuthenticated){
-            await axios(`${process.env.NEXT_PUBLIC_API_URL}`, { withCredentials: true })
-                .then((res) => {
-                    setData(res?.data);
-                })
-                .catch((err) => {
-                    console.log("Err: ", err);
-                });
-        }
+		if (isAuthenticated) {
+			await axios(`${process.env.NEXT_PUBLIC_API_URL}`, {
+				withCredentials: true,
+			})
+				.then((res) => {
+					setData(res?.data);
+				})
+				.catch((err) => {
+					console.log("Err: ", err);
+				});
+		}
 
 		toggleTheme();
 	};
 
-	const handleSignUp = async () => {
+	const handleSignUp = async (e: FormEvent) => {
+		e.preventDefault();
 		await signUp({
 			username,
 			email,
@@ -68,17 +69,18 @@ export default function Home() {
 		});
 	};
 
-	const handleSignIn = async () => {
+	const handleSignIn = async (e: FormEvent) => {
+		e.preventDefault();
 		await signIn({
 			username,
 			password,
 		});
 	};
 
-	const handleSignOut = async () => {
+	const handleSignOut = async (e: FormEvent) => {
+		e.preventDefault();
 		await signOut();
 	};
-
 
 	return (
 		<main className="flex h-full flex-col items-center justify-between p-24 gap-10">
@@ -105,7 +107,11 @@ export default function Home() {
 					<p>{user.email}</p>
 				</div>
 			)}
-			<div className="flex flex-col w-full max-w-[800px] gap-5">
+			<HeroQuickBook />
+			<form
+				onSubmit={handleSignUp}
+				className="flex flex-col w-full max-w-[800px] gap-5"
+			>
 				<h1>Sign Up</h1>
 				<input
 					onChange={(e) => setUsername(e.target.value)}
@@ -126,14 +132,17 @@ export default function Home() {
 					className="w-full h-[50px] border border-gray-500 bg-white dark:bg-background rounded-xl px-5"
 				/>
 				<button
-					onClick={handleSignUp}
-                    disabled={isAuthenticated}
+					disabled={isAuthenticated}
+					type="submit"
 					className="rounded-lg bg-red-500 py-3 disabled:opacity-50"
 				>
 					Submit
 				</button>
-			</div>
-			<div className="flex flex-col w-full max-w-[800px] gap-5">
+			</form>
+			<form
+				onSubmit={handleSignIn}
+				className="flex flex-col w-full max-w-[800px] gap-5"
+			>
 				<h1>Sign In</h1>
 				<input
 					onChange={(e) => setUsername(e.target.value)}
@@ -148,22 +157,22 @@ export default function Home() {
 					className="w-full h-[50px] border border-gray-500 bg-white dark:bg-background rounded-xl px-5"
 				/>
 				<button
-					onClick={handleSignIn}
-                    disabled={isAuthenticated}
+					disabled={isAuthenticated}
+					type="submit"
 					className="rounded-lg bg-red-500 py-3 disabled:opacity-50"
 				>
 					Submit
 				</button>
-			</div>
-			<div className="flex flex-col w-full max-w-[800px] gap-5">
+			</form>
+			<form
+				onSubmit={handleSignOut}
+				className="flex flex-col w-full max-w-[800px] gap-5"
+			>
 				<h1>Sign Out</h1>
-				<button
-					onClick={handleSignOut}
-					className="rounded-lg bg-red-500 py-3 "
-				>
+				<button type="submit" className="rounded-lg bg-red-500 py-3 ">
 					Submit
 				</button>
-			</div>
+			</form>
 			<button onClick={handleTest}>Test</button>
 			<Canvas>
 				<ambientLight intensity={Math.PI / 2} />
@@ -182,13 +191,9 @@ export default function Home() {
 				<Box position={[-1.2, 0, 0]} />
 				<Box position={[1.2, 0, 0]} />
 			</Canvas>
-
-            {/* start station input */}
-
-            {/* start station input */}
-
-            <Link href={isAuthenticated ? "/map" : "/signin"}>Go to Map</Link>
+			{/* start station input */}
+			{/* start station input */}
+			<Link href={isAuthenticated ? "/map" : "/signin"}>Go to Map</Link>
 		</main>
 	);
 }
-

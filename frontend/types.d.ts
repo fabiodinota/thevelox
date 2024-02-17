@@ -4,4 +4,4 @@ declare namespace NodeJS {
 	}
 }
 
-declare module 'react-autocomplete';
+declare module "react-autocomplete";
