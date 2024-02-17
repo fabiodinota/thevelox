@@ -9,7 +9,7 @@ import { SessionProvider } from "./context/sessionContext";
 // Load environment variables from .env
 dotenv.config();
 
-const space_grotesk = Space_Grotesk();
+const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "The Velox - Home",
