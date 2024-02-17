@@ -51,7 +51,7 @@ export function HeroQuickBook() {
             .refine((value) => stations.some(station => `${station.name}, Level ${station.level}` === value), {
             message: "Enter a valid station",
         }),
-        departureDate: z.string().min(1, { message: "Set a departure station" }),
+        departureDate: z.string().min(1, { message: "Set a departure station" }).default(format(new Date(), "yyyy-MM-dd'T'HH:mm")),
         passengers: z.number().min(1, { message: "Set the number of passengers" }).default(1),
 	});
 
