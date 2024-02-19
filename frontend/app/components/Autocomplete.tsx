@@ -38,11 +38,12 @@ const CustomAutocomplete: React.FC<Props> = ({
       );
     
       const filteredSuggestions = useMemo(() => {
-        if (!inputValue) return suggestions; // Show all if no input value
+        const lowerInputValue = inputValue.toString().toLowerCase(); // Ensure inputValue is treated as a string
+        if (!lowerInputValue) return suggestions; // Show all if no input value
         return suggestions.filter((suggestion) =>
           isObjectSuggestion
-            ? suggestion.label.toLowerCase().includes(inputValue.toLowerCase())
-            : suggestion.toLowerCase().includes(inputValue.toLowerCase())
+            ? suggestion.label.toLowerCase().includes(lowerInputValue)
+            : suggestion.toString().toLowerCase().includes(lowerInputValue)
         );
       }, [inputValue, suggestions, isObjectSuggestion]);
     
@@ -54,15 +55,19 @@ const CustomAutocomplete: React.FC<Props> = ({
         setInputValue(newValue);
         onSelectionChange(newValue);
       
-        const lastSuggestion = filteredSuggestions[filteredSuggestions.length - 1];
-        const lastSuggestionValue = isObjectSuggestion ? lastSuggestion.value : lastSuggestion;
-        
-        if (newValue === lastSuggestionValue) {
-          setShowSuggestions(false);
-        } else {
-          setShowSuggestions(true);
+        if (filteredSuggestions.length > 0) {
+          const lastSuggestion = filteredSuggestions[filteredSuggestions.length - 1];
+          // Ensure lastSuggestion is not undefined before accessing its properties
+          const lastSuggestionValue = isObjectSuggestion && lastSuggestion ? lastSuggestion.value.toString() : lastSuggestion;
+      
+          if (newValue === lastSuggestionValue) {
+            setShowSuggestions(false);
+          } else {
+            setShowSuggestions(true);
+          }
         }
-      }, [onSelectionChange, filteredSuggestions, isObjectSuggestion]);
+      }, [onSelectionChange, filteredSuggestions, isObjectSuggestion, setShowSuggestions]);
+      
 
 	const handleFocus = useCallback(() => {
         setShowSuggestions(true);
@@ -77,7 +82,6 @@ const CustomAutocomplete: React.FC<Props> = ({
 	}, []);
 
 	const handleBlur = useCallback(() => {
-		// Only hide suggestions if the mouse is not over the suggestion list
 		if (!isMouseInside) {
 			setShowSuggestions(false);
 		}
@@ -96,46 +100,49 @@ const CustomAutocomplete: React.FC<Props> = ({
       }, [onSelectionChange, isObjectSuggestion]);
 
       const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-        // Check for Cmd (Meta) + Backspace combination on macOS
         if (e.key === 'Backspace' && e.metaKey) {
-          // Prevent the default action to avoid navigating back in browser history
           e.preventDefault();
-          // Clear the input field
           setInputValue('');
-          // Optionally, reset the active suggestion index
           setActiveSuggestionIndex(0);
-          // Notify parent component or form about the change
           onSelectionChange('');
-          // Since the input is cleared, you might want to hide suggestions or handle as needed
           setShowSuggestions(true);
         } else switch (e.key) {
           case 'ArrowDown':
-            e.preventDefault(); // Prevent cursor movement in input
+            e.preventDefault();
             setActiveSuggestionIndex(prevIndex => 
               prevIndex < filteredSuggestions.length - 1 ? prevIndex + 1 : prevIndex);
             break;
           case 'ArrowUp':
-            e.preventDefault(); // Prevent cursor movement in input
+            e.preventDefault();
             setActiveSuggestionIndex(prevIndex => 
               prevIndex > 0 ? prevIndex - 1 : 0);
             break;
           case 'Enter':
-            e.preventDefault(); // Prevent form submission or losing focus
-            const selectedSuggestion = filteredSuggestions[activeSuggestionIndex];
-            if (selectedSuggestion !== undefined) {
-              setInputValue(selectedSuggestion);
-              onSelectionChange(selectedSuggestion);
-              setShowSuggestions(false);
-              setActiveSuggestionIndex(0);
-              inputRef.current?.focus();
+            e.preventDefault();
+            if (filteredSuggestions.length > 0) {
+              const selectedSuggestion = filteredSuggestions[activeSuggestionIndex];
+              if (selectedSuggestion !== undefined) {
+                if (isObjectSuggestion && typeof selectedSuggestion === 'object' && 'label' in selectedSuggestion && 'value' in selectedSuggestion) {
+                  setInputValue(selectedSuggestion.label); // Use the label for display
+                  onSelectionChange(selectedSuggestion.value.toString()); // Pass the value for further processing
+                } else if (typeof selectedSuggestion === 'string') {
+                  setInputValue(selectedSuggestion);
+                  onSelectionChange(selectedSuggestion);
+                }
+                setShowSuggestions(false);
+                setActiveSuggestionIndex(0);
+                inputRef.current?.focus();
+              }
             }
             break;
           case 'Backspace':
+            // No additional logic needed here
             break;
           default:
             break;
         }
-      }, [activeSuggestionIndex, filteredSuggestions, onSelectionChange]);
+      }, [activeSuggestionIndex, filteredSuggestions, onSelectionChange, isObjectSuggestion]);
+      
       
       const popoverVariant = {
         initial: { opacity: 0, scale: 0.9 },

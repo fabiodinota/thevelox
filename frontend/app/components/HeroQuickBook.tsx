@@ -58,7 +58,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
             message: "Enter a valid station",
         }),
         departureDate: z.string().min(1, { message: "Set a departure station" }).default(format(new Date(), "yyyy-MM-dd'T'HH:mm")),
-        passengers: z.number().min(1, { message: "Set the number of passengers" }).default(1),
+        passengers: z.number({ description: "This input only allows numbers, please select one of the suggested values."}).min(1, { message: "Set the number of passengers" }).default(1),
 	});
 
 	const { register, handleSubmit, setValue, formState: { errors } } = useForm<z.infer<typeof FormSchema>>({
