@@ -6,6 +6,8 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 export const ThemeContext = createContext({
 	theme: "light",
 	toggleTheme: () => {},
+    setLight: () => {},
+    setDark: () => {},
 });
 
 // Custom hook to access the theme and toggle function
@@ -52,8 +54,22 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 		}
 	}, [theme]);
 
+    const setLight = () => {
+        if (theme === "light") return;
+        setTheme("light");
+        localStorage.setItem("theme", "light");
+        document.documentElement.classList.remove("dark");
+    };
+
+    const setDark = () => {
+        if (theme === "dark") return;
+        setTheme("dark");
+        localStorage.setItem("theme", "dark");
+        document.documentElement.classList.add("dark");
+    };
+
 	return (
-		<ThemeContext.Provider value={{ theme, toggleTheme }}>
+		<ThemeContext.Provider value={{ theme, toggleTheme, setLight, setDark }}>
 			{children}
 		</ThemeContext.Provider>
 	);

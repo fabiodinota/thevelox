@@ -71,13 +71,15 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	// Function to refresh the access token
 	const refreshAccessToken = async () => {
 		try {
-			console.log("Refreshing access token...");
-			const response = await axios.post(
+			await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/jwt/refresh`,
 				{ encryptedRefreshToken: refreshToken } // Assuming refreshToken is already stored securely
-			);
-			// Assuming the server will return a new access token directly without encryption
-			setAccessToken(response.data.encryptedAccessToken);
+			).then((res) => {
+                setAccessToken(res.data.encryptedAccessToken);
+                if (res.data.encryptedAccessToken !== "") {
+                    fetchUserData();
+                }
+            });
 		} catch (error) {
 			console.error("Error refreshing access token:", error);
 		}
@@ -94,15 +96,13 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	}, []);
 
 	const fetchUserData = async () => {
-		try {
-			if (accessToken !== "") {
-				const response = await axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/user/getUser`,
-					{ withCredentials: true }
-				);
+        try {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_API_URL}/user/getUser`,
+                { withCredentials: true }
+            );
 
-				setUser(response.data);
-			}
+            setUser(response.data);
 		} catch (error) {
 			// Handle any errors (e.g., token expiration, unauthorized access)
 			console.error("Error fetching user data:", error);
@@ -110,11 +110,16 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	};
 
 	useEffect(() => {
-		// Check if there is an access token available
-		if (accessToken) {
-			fetchUserData(); // Call the function to fetch user data
-		}
-	}, []);
+        if (accessToken !== "") {
+            fetchUserData();
+        } else if (refreshToken !== "") {
+            refreshAccessToken().then(() => {
+                setTimeout(() => {
+                    fetchUserData();
+                }, 200);
+            });
+        }
+    }, []);
 
 	// Sign-in function
 	const signIn = async (credentials: object) => {
