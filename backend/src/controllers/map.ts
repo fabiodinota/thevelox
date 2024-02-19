@@ -50,17 +50,7 @@ export const search = async (req: CustomRequest, res: Response) => {
 	}
 };
 
-export const getDestinations = async (req: CustomRequest, res: Response) => {
-    const user_id = req.user?.user_id;
-
-    const user = await prisma.users.findUnique({
-        where: {
-            user_id
-        },
-    });
-
-    console.log("User:", user);
-
+export const getDestinations = async (req: Request, res: Response) => {
     const destinations = getStationsWithLevels("./src/data/routes.json");
 
     res.json({ destinations });

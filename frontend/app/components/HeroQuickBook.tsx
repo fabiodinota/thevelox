@@ -18,6 +18,7 @@ import axios from "axios";
 import { useSession } from "../context/sessionContext";
 import { AnimatePresence, motion } from "framer-motion";
 import AnimatePresenceProvider from "../context/AnimatePresenceProvider";
+import { useAutocomplete } from "../context/AutocompleteContext";
 
 type Station = {
 	name: string;
@@ -40,8 +41,13 @@ export function HeroQuickBook({ className }: { className?: string }) {
 	);
     const [calendarOpen, setCalendarOpen] = useState(false);
 
-    const [passengers, setPassengers] = useState(1);
-    const [isPassengerInputFocused, setIsPassengerInputFocused] = useState(false);
+    const { releaseFocus } = useAutocomplete();
+
+    useEffect(() => {
+        if(calendarOpen) {
+            releaseFocus();
+        }
+    }, [calendarOpen]);
 
 	const {
         setQuickBook,
@@ -58,7 +64,9 @@ export function HeroQuickBook({ className }: { className?: string }) {
             message: "Enter a valid station",
         }),
         departureDate: z.string().min(1, { message: "Set a departure station" }).default(format(new Date(), "yyyy-MM-dd'T'HH:mm")),
-        passengers: z.number({ description: "This input only allows numbers, please select one of the suggested values."}).min(1, { message: "Set the number of passengers" }).default(1),
+        passengers: z.number({ description: "This input only allows numbers, please select one of the suggested values."}).min(1, { message: "Set the number of passengers" }).default(1).refine((value) => value >= 1 && value <=4, {
+            message: "The number of passengers must be in between 1 and 4.",
+        })
 	});
 
 	const { register, handleSubmit, setValue, formState: { errors } } = useForm<z.infer<typeof FormSchema>>({
@@ -80,9 +88,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
 	const handleGetStations = async () => {
 		if (stations.length === 0) {
 			await axios
-				.get(`${process.env.NEXT_PUBLIC_API_URL}/map/getDestinations`, {
-					withCredentials: true,
-				})
+				.get(`${process.env.NEXT_PUBLIC_API_URL}/map/getDestinations`)
 				.then((res) => {
 					setStations(res.data.destinations);
 				})
@@ -96,10 +102,8 @@ export function HeroQuickBook({ className }: { className?: string }) {
 	};
 
 	useEffect(() => {
-        if (isAuthenticated){
-            handleGetStations();
-        }
-	}, [isAuthenticated]);
+        handleGetStations();
+	}, []);
 
     const onSubmit = handleSubmit(async (data) => {
         // Your submission logic, using data from the form
@@ -142,21 +146,6 @@ export function HeroQuickBook({ className }: { className?: string }) {
         // Update React Hook Form state
         setValue('departureDate', formattedDate, { shouldValidate: true });
     };
-
-    const handlePassengerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = parseInt(e.target.value);
-        setValue('passengers', value, { shouldValidate: true });
-        setPassengers(value);
-    };
-
-    const handlePassengerFocus = () => {
-        setIsPassengerInputFocused(true);
-    };
-    
-    const handlePassengerBlur = () => {
-        setIsPassengerInputFocused(false);
-    };
-    
     
     const handleCalendarClick = () => {
         setCalendarOpen(!calendarOpen);
@@ -167,6 +156,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
         animate: { opacity: 1, scale: 1, transition: { duration: 0.2, ease: "easeOut" }},
         exit: { opacity: 0, scale: 0.9, transition: { duration: 0.2, ease: "easeIn" }},
     };
+
 	return (
 		<>
             <form onSubmit={onSubmit} className={"w-full max-w-[1400px] flex flex-col gap-2.5 p-5 rounded-[20px] bg-background " + className}>
@@ -194,7 +184,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
                     <div className="relative w-full">
                         <button
                             onClick={handleCalendarClick}
-                            className={"flex items-center flex-row w-full h-[80px] bg-secondary rounded-xl px-5 text-left font-normal text-[16px] justify-start"}
+                            className={"flex items-center flex-row w-full h-[70px] md:h-[80px] bg-secondary rounded-xl px-5 text-left font-normal text-[16px] justify-start"}
                         >   
                         <div className="w-12 flex-shrink-0 h-12 grid place-content-center relative">
                             <svg className="relative z-10" width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -204,10 +194,10 @@ export function HeroQuickBook({ className }: { className?: string }) {
                         </div>
 
                         <div className="flex items-center flex-row w-full relative">
-                            <p className={`absolute cursor-pointer left-3 text-foreground/50 transition-all duration-200 ease-in-out top-1/2 -translate-y-1/2 ${date ? 'transform -translate-y-6 text-[15px]' : 'text-lg'}`}>
+                            <p className={`absolute cursor-pointer left-3 text-foreground/50 transition-all duration-200 ease-in-out top-1/2 -translate-y-1/2 ${date ? 'transform -translate-y-5 md:-translate-y-6 text-[13px] md:text-[15px]' : 'text-[16px] md:text-lg'}`}>
                                 Date
                             </p>     
-                            <div className="pt-4 pl-3 text-[18px] font-medium">
+                            <div className="pt-4 pl-3 text-[16px] md:text-[18px] font-medium">
                                 {date ? (
                                     format(date, "PP HH:mm")
                                 ) : (
@@ -218,14 +208,14 @@ export function HeroQuickBook({ className }: { className?: string }) {
                         </button>
                         <AnimatePresenceProvider>
                             {calendarOpen && (
-                                <> 
+                                <div className="relative"> 
                                     <motion.div 
                                         variants={popoverVariant} 
                                         initial="initial" 
                                         animate="animate" 
                                         exit="exit" 
                                         key={"calendar"}
-                                        className="absolute z-10 mt-1 w-auto p-0 bg-white dark:bg-background border border-muted rounded-lg"
+                                        className="absolute z-[100] mt-1 w-auto p-0 bg-white dark:bg-background border border-muted rounded-lg"
                                     >
                                         <Calendar
                                             mode="single"
@@ -237,8 +227,8 @@ export function HeroQuickBook({ className }: { className?: string }) {
                                             <TimePickerDemo setDate={handleTimeChange} date={date} />
                                         </div>
                                     </motion.div>
-                                    <div className="top-0 left-0 fixed w-screen h-screen" onClick={() => setCalendarOpen(false)} />
-                                </>
+                                    <div className="top-0 left-0 fixed w-screen h-screen z-50" onClick={() => setCalendarOpen(false)} />
+                                </div>
                             )}    
                         </AnimatePresenceProvider>
                     </div>
@@ -263,7 +253,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
                 )}
 				<button
 					type="submit"
-					className="rounded-lg bg-gradient h-[60px] disabled:opacity-50 text-white font-medium text-[18px] flex gap-3 items-center justify-center transition-all duration-200 ease-in-out"
+					className="rounded-lg bg-gradient h-[50px] md:h-[60px] disabled:opacity-50 text-white font-medium text-[16px] md:text-[18px] flex gap-3 items-center justify-center transition-all duration-200 ease-in-out"
 				>
                     <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M16.1 17L10.8 11.7C10.3 12.1 9.725 12.4167 9.075 12.65C8.425 12.8833 7.73333 13 7 13C5.18333 13 3.64583 12.3708 2.3875 11.1125C1.12917 9.85417 0.5 8.31667 0.5 6.5C0.5 4.68333 1.12917 3.14583 2.3875 1.8875C3.64583 0.629167 5.18333 0 7 0C8.81667 0 10.3542 0.629167 11.6125 1.8875C12.8708 3.14583 13.5 4.68333 13.5 6.5C13.5 7.23333 13.3833 7.925 13.15 8.575C12.9167 9.225 12.6 9.8 12.2 10.3L17.5 15.6L16.1 17ZM7 11C8.25 11 9.3125 10.5625 10.1875 9.6875C11.0625 8.8125 11.5 7.75 11.5 6.5C11.5 5.25 11.0625 4.1875 10.1875 3.3125C9.3125 2.4375 8.25 2 7 2C5.75 2 4.6875 2.4375 3.8125 3.3125C2.9375 4.1875 2.5 5.25 2.5 6.5C2.5 7.75 2.9375 8.8125 3.8125 9.6875C4.6875 10.5625 5.75 11 7 11Z" fill="white"/>

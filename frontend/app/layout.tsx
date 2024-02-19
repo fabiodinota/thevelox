@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import AnimatePresenceProvider from "./context/AnimatePresenceProvider";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { AutocompleteProvider } from "./context/AutocompleteContext";
 
 // Load environment variables from .env
 dotenv.config();
@@ -36,6 +37,7 @@ export default function RootLayout({
 	return (
 		<ThemeProvider>
 			<SessionProvider>
+                <AutocompleteProvider>
                     <html lang="en" className={space_grotesk.className}>
                         <head>
                             {/* themecolor meta tag */}
@@ -58,6 +60,7 @@ export default function RootLayout({
                             <Footer />
                         </body>     
                     </html>
+                </AutocompleteProvider>
 			</SessionProvider>
 		</ThemeProvider>
 	);

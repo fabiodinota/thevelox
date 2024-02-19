@@ -85,15 +85,15 @@ export default function Home() {
 
 	return (
 		<div>
-            <div className="w-full h-[70vh] xl:h-[60vh] relative flex justify-end items-center flex-col px-5">
-                <h1 className='relative top-[180px] text-[9vw] md:text-[70px] text-left max-w-[1400px] w-full font-bold text-white leading-snug'>Book the best & <br />cheapest tickets around!</h1>
-                <HeroQuickBook className="relative top-[200px] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]" />
-                <div className="w-full h-[70vh] xl:h-[60vh] xl:rounded-b-[75px] overflow-hidden absolute top-0 left-0 -z-10">
+            <div className="w-full min-h-[700px] h-[700px] md:h-[70vh] xl:h-[60vh] max-h-[900px] relative flex justify-center items-center flex-col px-5">
+                <h1 className='relative top-[270px] md:top-[320px] xl:top-[270px] text-[10vw] sm:text-[60px] md:text-[70px] text-left max-w-[1400px] w-full font-bold text-white leading-snug whitespace-pre-wrap'>Book the <br className="md:hidden block" />best & <br className="hidden md:block" />cheapest <br className="md:hidden block" />tickets around!</h1>
+                <HeroQuickBook className="relative top-[300px] md:top-[350px] xl:top-[300px] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]" />
+                <div className="w-full min-h-[700px] h-[700px] md:h-[70vh] xl:h-[60vh] max-h-[900px] xl:rounded-b-[75px] overflow-hidden absolute top-0 left-0 -z-10">
                     <div className="w-full h-full bg-hero-gradient relative top-0 left-0 z-50"></div>
                     <Image src={HeroBackground} layout="fill" className="object-cover object-bottom" alt="background_hero" />
                 </div>
             </div>
-            <div className="w-full h-[200px]"></div>
+            <div className="w-full h-[300px]"></div>
 
             <div className="flex flex-col gap-5 justify-center items-center py-10 px-5">
                 {data && (

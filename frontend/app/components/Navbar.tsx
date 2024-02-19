@@ -11,6 +11,7 @@ import Logo_White from '@/public/Logo_thevelox_white.png'
 import Logo_Black from '@/public/Logo_thevelox_black.png'
 import { useTheme } from '../context/themeContext'
 import Image from 'next/image'
+import Logo_animation from '@/public/Logo_Animation.gif'
 
 const Navbar = () => {
     const [openMobileNav, setOpenMobileNav] = useState<boolean>(false)
@@ -56,9 +57,9 @@ const Navbar = () => {
   return (
     <>
         <nav className={'w-full fixed top-5 px-5 xl:px-0 xl:top-0 xl:left-0 flex justify-center items-center z-[999]  '}>
-            <div className='w-full flex justify-center items-center h-[80px] xl:h-[100px] rounded-[20px] xl:rounded-none bg-background/70 dark:bg-background back backdrop-blur-2xl xl:bg-background shadow-[0_0_35px_0_#00000010] dark:shadow-[0_0_35px_0_#FFFFFF06]  xl:shadow-[0_0_35px_0_#84848420] xl:dark:shadow-[0_0_35px_0_#FFFFFF06]'>
+            <div className='w-full flex justify-center items-center h-[80px] xl:h-[100px] rounded-[20px] xl:rounded-none bg-background/70 dark:bg-background back backdrop-blur-2xl xl:bg-background shadow-[0_0_35px_0_#00000010] dark:shadow-[0_0_35px_0_#FFFFFF10]  xl:shadow-[0_0_35px_0_#84848420] xl:dark:shadow-[0_0_35px_0_#FFFFFF06]'>
                 <div className='w-full max-w-[1400px] flex flex-row justify-between px-5 xl:px-10 items-center'>
-                    <div className='relative h-[35px] w-[120px] xl:h-[40px]'>
+                    <div className='relative h-[35px] w-[120px] xl:h-[100px]'>
                         <Image
                             src={theme === "dark" ? Logo_White : Logo_Black}
                             alt="TheVelox"
@@ -67,16 +68,16 @@ const Navbar = () => {
                         />
                     </div>
                     <div className='flex-row list-none gap-10 items-center hidden xl:flex'>
-                        <Link className={`nav-item`} data-text="Home" href='/'>
+                        <Link onClick={() => setOpenMobileNav(false)} className={`nav-item`} data-text="Home" href='/'>
                             <span>Home</span>
                         </Link>
-                        <Link className='nav-item' data-text="About Us" href='/about'>
+                        <Link onClick={() => setOpenMobileNav(false)} className='nav-item' data-text="About Us" href='/about'>
                             <span>About Us</span>
                         </Link>
-                        <Link className='nav-item' data-text="Contact Us" href='/contact'>
+                        <Link onClick={() => setOpenMobileNav(false)} className='nav-item' data-text="Contact Us" href='/contact'>
                             <span>Contact Us</span>
                         </Link>
-                        <Link className='bg-gradient text-white hover:text-white/70 duration-150 rounded-xl w-[220px] h-[50px] grid place-content-center ' href='/'>
+                        <Link onClick={() => setOpenMobileNav(false)} className='bg-gradient text-white hover:text-white/70 duration-150 rounded-xl w-[220px] h-[50px] grid place-content-center ' href='/'>
                             <span>Launch App</span>
                         </Link>
                         <ThemeSwitcher size='small' className="hidden xl:flex" />

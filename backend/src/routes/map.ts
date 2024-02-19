@@ -5,6 +5,6 @@ import { authenticateToken } from "../middleware/authenticateToken";
 const router = express.Router();
 
 router.get("/search", authenticateToken, search);
-router.get("/getDestinations", authenticateToken, getDestinations);
+router.get("/getDestinations", getDestinations);
 
 export default router;
