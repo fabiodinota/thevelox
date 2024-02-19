@@ -85,10 +85,18 @@ export default function Home() {
 
 	return (
 		<div>
-            <div className="w-full min-h-[700px] h-[700px] md:h-[70vh] xl:h-[60vh] max-h-[900px] relative flex justify-center items-center flex-col px-5">
-                <h1 className='relative top-[270px] md:top-[320px] xl:top-[270px] text-[10vw] sm:text-[60px] md:text-[70px] text-left max-w-[1400px] w-full font-bold text-white leading-snug whitespace-pre-wrap'>Book the <br className="md:hidden block" />best & <br className="hidden md:block" />cheapest <br className="md:hidden block" />tickets around!</h1>
-                <HeroQuickBook className="relative top-[300px] md:top-[350px] xl:top-[300px] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]" />
-                <div className="w-full min-h-[700px] h-[700px] md:h-[70vh] xl:h-[60vh] max-h-[900px] xl:rounded-b-[75px] overflow-hidden absolute top-0 left-0 -z-10">
+            <div className="w-full min-h-[600px] h-[600px] sm:h-[650px] md:h-[50vh] xl:h-[60vh] max-h-[700px] relative flex justify-center items-center flex-col px-5">
+                <h1 
+                    className='relative top-[230px] sm:top-[200px] md:top-[250px] xl:top-[280px] text-[10vw] sm:text-[60px] md:text-[70px] text-left max-w-[1400px] w-full font-bold text-white leading-snug whitespace-pre-wrap'
+                >
+                    Book the{" "}
+                    <br className="md:hidden block" /> 
+                    best & <br className="hidden md:block" />
+                    cheapest <br className="md:hidden block" />
+                    tickets around!
+                </h1>
+                <HeroQuickBook className="relative top-[250px] sm:top-[220px] md:top-[270px] xl:top-[300px] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]" />
+                <div className="w-full min-h-[600px] h-[600px] sm:h-[650px] md:h-[50vh] xl:h-[60vh] max-h-[700px] xl:rounded-b-[75px] overflow-hidden absolute top-0 left-0 -z-10">
                     <div className="w-full h-full bg-hero-gradient relative top-0 left-0 z-50"></div>
                     <Image src={HeroBackground} layout="fill" className="object-cover object-bottom" alt="background_hero" />
                 </div>

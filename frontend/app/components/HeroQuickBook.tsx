@@ -199,7 +199,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
                             </p>     
                             <div className="pt-4 pl-3 text-[16px] md:text-[18px] font-medium">
                                 {date ? (
-                                    format(date, "PP HH:mm")
+                                    format(date, "PP | HH:mm")
                                 ) : (
                                     <span>Pick a date</span>
                                 )}
