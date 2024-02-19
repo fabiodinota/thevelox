@@ -82,7 +82,7 @@ const Navbar = () => {
                         <ThemeSwitcher size='small' className="hidden xl:flex" />
                     </div>
                     <div className='block xl:hidden'>
-                        <Hamburger label="Show menu" rounded size={30} toggled={openMobileNav} toggle={setOpenMobileNav} />
+                        <Hamburger color={theme === "dark" ? "white" : "#121212"} label="Show menu" rounded size={30} toggled={openMobileNav} toggle={setOpenMobileNav} />
                     </div>
                 </div>
             </div>
