@@ -88,9 +88,9 @@ export default function Home() {
 
 	return (
 		<div>
-            <div className="w-full min-h-[600px] h-[600px] sm:h-[650px] md:h-[50vh] xl:h-[60vh] max-h-[700px] relative flex justify-center items-center flex-col px-5">
+            <div className="w-full min-h-[600px] h-[600px] sm:h-[650px] md:h-[50vh] max-h-[700px] relative flex justify-center items-center flex-col px-5 xl:px-10">
                 <h1 
-                    className='relative top-[230px] sm:top-[200px] md:top-[250px] xl:top-[280px] text-[10vw] sm:text-[60px] md:text-[70px] text-left max-w-[1400px] w-full font-bold text-white leading-snug whitespace-pre-wrap'
+                    className='relative top-[230px] sm:top-[200px] md:top-[250px] xl:top-[230px] text-[10vw] sm:text-[60px] md:text-[70px] text-left max-w-[1400px] w-full font-bold text-white leading-snug whitespace-pre-wrap'
                 >
                     Book the{" "}
                     <br className="md:hidden block" /> 
@@ -98,8 +98,8 @@ export default function Home() {
                     cheapest <br className="md:hidden block" />
                     tickets around!
                 </h1>
-                <HeroQuickBook className="relative top-[250px] sm:top-[220px] md:top-[270px] xl:top-[300px] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]" />
-                <div className="w-full min-h-[600px] h-[600px] sm:h-[650px] md:h-[50vh] xl:h-[60vh] max-h-[700px] xl:rounded-b-[75px] overflow-hidden absolute top-0 left-0 -z-10">
+                <HeroQuickBook className="relative top-[250px] sm:top-[220px] md:top-[270px] xl:top-[250px] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]" />
+                <div className="w-full min-h-[600px] h-[600px] sm:h-[650px] md:h-[50vh] max-h-[700px] xl:rounded-b-[75px] overflow-hidden absolute top-0 left-0 -z-10">
                     <div className="w-full h-full bg-hero-gradient relative top-0 left-0 z-50"></div>
                     <Image src={HeroBackground} layout="fill" className="object-cover object-bottom" alt="background_hero" />
                 </div>
@@ -209,7 +209,7 @@ export default function Home() {
                                 </p>
                             </div>
                         </div>
-                        <div className="relative z-10 flex flex-row gap-10 max-w-[800px] justify-center items-center pr-10 self-end mt-24">
+                        <div className="relative z-10 flex flex-row gap-10 max-w-[800px] justify-center items-center pr-20 self-end mt-24">
                             <svg className="flex-shrink-0" width="141" height="143" viewBox="0 0 141 143" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M19.375 122.542C13.3203 116.292 8.57743 109.07 5.14646 100.875C1.71549 92.6808 0 84.278 0 75.6669C0 65.528 1.77083 56.2572 5.3125 47.8544C8.85417 39.4516 14.1667 31.7085 21.25 24.6252C26.1111 19.7641 32.1528 15.6669 39.375 12.3336C46.5972 9.00022 55.1042 6.39605 64.8958 4.52105C74.6875 2.64605 85.7639 1.46549 98.125 0.979384C110.011 0.511948 123.182 0.718729 137.636 1.59973C138.633 1.66046 139.43 2.4503 139.501 3.44602C140.515 17.7693 140.855 30.9054 140.521 42.8544C140.174 55.2849 139.062 66.4481 137.187 76.344C135.312 86.2398 132.674 94.89 129.271 102.295C125.868 109.699 121.667 115.893 116.667 120.875C109.583 127.959 101.944 133.306 93.75 136.917C85.5555 140.528 76.8056 142.334 67.5 142.334C57.9167 142.334 49.1319 140.702 41.1458 137.438C33.1597 134.174 25.9028 129.209 19.375 122.542ZM41.1475 121.21C40.9543 122.012 41.28 122.852 41.9802 123.289C45.1838 125.287 48.8293 126.844 52.9167 127.959C57.5 129.209 62.3558 129.834 67.484 129.834C74.8558 129.834 82.0139 128.306 88.9583 125.25C95.9028 122.195 102.222 117.75 107.917 111.917C111.667 108.167 114.861 103.271 117.5 97.2294C120.139 91.1877 122.292 84.0349 123.958 75.771C125.625 67.5072 126.736 58.1669 127.292 47.7502C127.819 37.8557 127.846 27.0213 127.371 15.247C127.329 14.1943 126.472 13.3574 125.418 13.3383C113.114 13.1152 102.037 13.3011 92.1875 13.8961C81.8403 14.5211 72.7083 15.6669 64.7917 17.3335C56.875 19.0002 50.0694 21.1183 44.375 23.6877C38.6806 26.2572 34.0278 29.4169 30.4167 33.1669C24.5833 39.1391 20.1389 45.4586 17.0833 52.1252C14.0278 58.7919 12.5 65.5974 12.5 72.5419C12.5 79.2085 13.9236 86.1877 16.7708 93.4794C19.1923 99.6806 22.0908 104.852 25.4666 108.994C26.3291 110.052 27.9628 109.843 28.6303 108.652C35.7147 96.0131 44.0879 84.6012 53.75 74.4169C59.2887 68.5788 65.0088 63.4063 70.9105 58.8993C72.8137 57.4458 74.722 59.9064 73.0976 61.666C66.931 68.3455 61.5929 75.3389 57.0833 82.646C49.8145 94.4242 44.5026 107.279 41.1475 121.21Z" fill="white"/>
                             <path d="M19.375 122.542C13.3203 116.292 8.57743 109.07 5.14646 100.875C1.71549 92.6808 0 84.278 0 75.6669C0 65.528 1.77083 56.2572 5.3125 47.8544C8.85417 39.4516 14.1667 31.7085 21.25 24.6252C26.1111 19.7641 32.1528 15.6669 39.375 12.3336C46.5972 9.00022 55.1042 6.39605 64.8958 4.52105C74.6875 2.64605 85.7639 1.46549 98.125 0.979384C110.011 0.511948 123.182 0.718729 137.636 1.59973C138.633 1.66046 139.43 2.4503 139.501 3.44602C140.515 17.7693 140.855 30.9054 140.521 42.8544C140.174 55.2849 139.062 66.4481 137.187 76.344C135.312 86.2398 132.674 94.89 129.271 102.295C125.868 109.699 121.667 115.893 116.667 120.875C109.583 127.959 101.944 133.306 93.75 136.917C85.5555 140.528 76.8056 142.334 67.5 142.334C57.9167 142.334 49.1319 140.702 41.1458 137.438C33.1597 134.174 25.9028 129.209 19.375 122.542ZM41.1475 121.21C40.9543 122.012 41.28 122.852 41.9802 123.289C45.1838 125.287 48.8293 126.844 52.9167 127.959C57.5 129.209 62.3558 129.834 67.484 129.834C74.8558 129.834 82.0139 128.306 88.9583 125.25C95.9028 122.195 102.222 117.75 107.917 111.917C111.667 108.167 114.861 103.271 117.5 97.2294C120.139 91.1877 122.292 84.0349 123.958 75.771C125.625 67.5072 126.736 58.1669 127.292 47.7502C127.819 37.8557 127.846 27.0213 127.371 15.247C127.329 14.1943 126.472 13.3574 125.418 13.3383C113.114 13.1152 102.037 13.3011 92.1875 13.8961C81.8403 14.5211 72.7083 15.6669 64.7917 17.3335C56.875 19.0002 50.0694 21.1183 44.375 23.6877C38.6806 26.2572 34.0278 29.4169 30.4167 33.1669C24.5833 39.1391 20.1389 45.4586 17.0833 52.1252C14.0278 58.7919 12.5 65.5974 12.5 72.5419C12.5 79.2085 13.9236 86.1877 16.7708 93.4794C19.1923 99.6806 22.0908 104.852 25.4666 108.994C26.3291 110.052 27.9628 109.843 28.6303 108.652C35.7147 96.0131 44.0879 84.6012 53.75 74.4169C59.2887 68.5788 65.0088 63.4063 70.9105 58.8993C72.8137 57.4458 74.722 59.9064 73.0976 61.666C66.931 68.3455 61.5929 75.3389 57.0833 82.646C49.8145 94.4242 44.5026 107.279 41.1475 121.21Z" fill="url(#paint0_linear_239_508)"/>
@@ -246,26 +246,26 @@ export default function Home() {
                     <h1 className="text-foreground text-[28px] sm:text-[32px] md:text-[40px] font-bold w-full text-left">Frequently Asked Questions</h1>
                     <Accordion defaultValue="item-1" className="w-full gap-10" type="single">
                         <AccordionItem className="py-2" value="item-1">
-                            <AccordionTrigger className="text-[18px] md:text-[20px] font-medium leading-relaxed">How do I download your app?</AccordionTrigger>
-                            <AccordionContent className="text-[16px] md:text-[18px] font-normal leading-relaxed">
+                            <AccordionTrigger className="text-[18px] md:text-[20px] font-medium leading-relaxed text-left">How do I download your app?</AccordionTrigger>
+                            <AccordionContent className="text-[16px] md:text-[18px] font-normal leading-relaxed text-left">
                                 Click on the three dots in the top right corner of your screen. Scroll down and somewhere at the bottom it should say either “Install App” or “Add to Home”, click that and the install will begin.
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem className="py-2" value="item-2">
-                            <AccordionTrigger className="text-[18px] md:text-[20px] font-medium leading-relaxed">Can I refund my ticket?</AccordionTrigger>
-                            <AccordionContent className="text-[16px] md:text-[18px] font-normal leading-relaxed">
+                            <AccordionTrigger className="text-[18px] md:text-[20px] font-medium leading-relaxed text-left">Can I refund my ticket?</AccordionTrigger>
+                            <AccordionContent className="text-[16px] md:text-[18px] font-normal leading-relaxed text-left">
                                 Lorem ipsum dolor sit amet consectetur. Habitasse rhoncus quam augue a nam odio massa turpis. Ultrices eleifend sapien turpis auctor augue ut.
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem className="py-2" value="item-3">
-                            <AccordionTrigger className="text-[18px] md:text-[20px] font-medium leading-relaxed">Do you require any identification?</AccordionTrigger>
-                            <AccordionContent className="text-[16px] md:text-[18px] font-normal leading-relaxed">
+                            <AccordionTrigger className="text-[18px] md:text-[20px] font-medium leading-relaxed text-left">Do you require any identification?</AccordionTrigger>
+                            <AccordionContent className="text-[16px] md:text-[18px] font-normal leading-relaxed text-left">
                                 Lorem ipsum dolor sit amet consectetur. Habitasse rhoncus quam augue a nam odio massa turpis. Ultrices eleifend sapien turpis auctor augue ut.
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem className="py-2" value="item-4">
-                            <AccordionTrigger className="text-[18px] md:text-[20px] font-medium leading-relaxed">Do you store any payment information?</AccordionTrigger>
-                            <AccordionContent className="text-[16px] md:text-[18px] font-normal leading-relaxed">
+                            <AccordionTrigger className="text-[18px] md:text-[20px] font-medium leading-relaxed text-left">Do you store any payment information?</AccordionTrigger>
+                            <AccordionContent className="text-[16px] md:text-[18px] font-normal leading-relaxed text-left">
                                 Lorem ipsum dolor sit amet consectetur. Habitasse rhoncus quam augue a nam odio massa turpis. Ultrices eleifend sapien turpis auctor augue ut.
                             </AccordionContent>
                         </AccordionItem>

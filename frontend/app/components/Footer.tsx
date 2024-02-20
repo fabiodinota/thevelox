@@ -13,7 +13,7 @@ const Footer = () => {
             <Link className='bg-white text-white hover:text-white/70 duration-150 rounded-xl w-full max-w-[400px] h-[60px] grid place-content-center ' href='/'>
                 <span className='text-gradient font-bold text-[18px]'>Launch App</span>
             </Link>
-            <hr className='h-[2px] w-full bg-white/50' />
+            <hr className='h-[2px] w-full bg-white/50 border-none' />
             <div className='flex flex-col gap-2 justify-center items-center'>
                 <div className='relative h-[50px] w-[200px]'>
                     <Image quality={100} priority={false} src={Logo} alt='logo' fill className="object-contain" />
