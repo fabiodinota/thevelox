@@ -56,7 +56,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
             .refine((value) => stations.some(station => `${station.name}, Level ${station.level}` === value), {
             message: "Enter a valid station",
         }),
-        departureDate: z.string().min(1, { message: "Set a departure station" }).refine((value) => new Date(value) >= new Date(), {
+        departureDate: z.string().min(1, { message: "Set a departure station" }).refine((value) => new Date(value) > new Date(), {
             message: "Departure date must be in the future",
         }).default(format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")),
         passengers: z.number({ invalid_type_error: 'This input only accepts numbers.' }).default(1).refine((value) => value >= 1 && value <=4, {
@@ -178,7 +178,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
                 {errors.to && <span className="text-red-500">{errors.to.message}</span>}
                 <div className="flex flex-col md:flex-row space-y-2.5 md:space-y-0 md:gap-2.5">
 
-                    {/* <div className="relative w-full">
+                    <div className="relative w-full">
                         <button
                             onClick={handleCalendarClick}
                             className={"flex items-center flex-row w-full h-[70px] md:h-[80px] bg-secondary rounded-xl px-5 text-left font-normal text-[16px] justify-start"}
@@ -228,7 +228,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
                                 </div>
                             )}    
                         </AnimatePresenceProvider>
-                    </div> */}
+                    </div>
                     {/* <CustomAutocomplete
                         id="passengers"
                         placeholder="Passengers"
