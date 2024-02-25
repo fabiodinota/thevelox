@@ -65,7 +65,10 @@ export function HeroQuickBook({ className }: { className?: string }) {
 	});
 
     useEffect(() => {
-        setDate(new Date(new Date()));
+        const currentDate = new Date();
+        const halfHourLater = new Date(currentDate.getTime() + 30 * 60000); // Adding 30 minutes in milliseconds
+
+        setDate(halfHourLater);
     }, [])
 
 	const { handleSubmit, setValue, formState: { errors } } = useForm<z.infer<typeof FormSchema>>({
