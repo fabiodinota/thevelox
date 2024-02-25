@@ -56,7 +56,9 @@ export function HeroQuickBook({ className }: { className?: string }) {
             .refine((value) => stations.some(station => `${station.name}, Level ${station.level}` === value), {
             message: "Enter a valid station",
         }),
-        departureDate: z.string().min(1, { message: "Set a departure station" }).default(format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")),
+        departureDate: z.date().min(new Date(), { message: "Set a departure date." }).default(new Date(new Date())).refine((value) => value >= new Date(new Date()), {
+            message: "The departure date must be in the future.",
+        }),
         passengers: z.number({ invalid_type_error: 'This input only accepts numbers.' }).default(1).refine((value) => value >= 1 && value <=4, {
             message: "The number of passengers must be in between 1 and 4.",
         })
@@ -113,12 +115,9 @@ export function HeroQuickBook({ className }: { className?: string }) {
         }
 
         setDate(newDate); // Set the new date
-    
-        // Format the date as needed, e.g., to ISO string or custom format
-        const formattedDate = format(newDate, "yyyy-MM-dd'T'HH:mm:ss");
-        
+            
         // Update React Hook Form state
-        setValue('departureDate', formattedDate, { shouldValidate: true });
+        setValue('departureDate', newDate, { shouldValidate: true });
     };
     
 
@@ -129,12 +128,9 @@ export function HeroQuickBook({ className }: { className?: string }) {
         updatedDate.setHours(time.getHours(), time.getMinutes());
     
         setDate(updatedDate); // Set the new date with the updated time
-    
-        // Format the updated date with the new time for the form
-        const formattedDate = format(updatedDate, "yyyy-MM-dd'T'HH:mm:ss");
-    
+        
         // Update React Hook Form state
-        setValue('departureDate', formattedDate, { shouldValidate: true });
+        setValue('departureDate', updatedDate, { shouldValidate: true });
     };
     
     const handleCalendarClick = () => {
@@ -190,11 +186,11 @@ export function HeroQuickBook({ className }: { className?: string }) {
                                 Date
                             </p>     
                             <div className="pt-4 pl-3 text-[16px] md:text-[18px] font-medium">
-                               {/*  {date ? (
+                                 {date ? (
                                     format(date, "PP | HH:mm")
                                 ) : (
-                                    )} */}
                                     <span>Pick a date</span>
+                                )}
                             </div>
                         </div>
                         </button>
