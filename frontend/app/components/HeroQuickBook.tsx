@@ -16,7 +16,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useSession } from "../context/sessionContext";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, easeOut, motion } from "framer-motion";
 import AnimatePresenceProvider from "../context/AnimatePresenceProvider";
 import { useAutocomplete } from "../context/AutocompleteContext";
 
@@ -64,12 +64,12 @@ export function HeroQuickBook({ className }: { className?: string }) {
             message: "Enter a valid station",
         }),
         departureDate: z.string().min(1, { message: "Set a departure station" }).default(format(new Date(), "yyyy-MM-dd'T'HH:mm")),
-        passengers: z.number({ description: "This input only allows numbers, please select one of the suggested values."}).min(1, { message: "Set the number of passengers" }).default(1).refine((value) => value >= 1 && value <=4, {
+        passengers: z.number({ description: "This input only allows numbers, please select one of the suggested values."}).default(1).refine((value) => value >= 1 && value <=4, {
             message: "The number of passengers must be in between 1 and 4.",
         })
 	});
 
-	const { register, handleSubmit, setValue, formState: { errors } } = useForm<z.infer<typeof FormSchema>>({
+	const { handleSubmit, setValue, formState: { errors } } = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
     });
 
@@ -157,9 +157,11 @@ export function HeroQuickBook({ className }: { className?: string }) {
         exit: { opacity: 0, scale: 0.9, transition: { duration: 0.2, ease: "easeIn" }},
     };
 
+    const customease = [0.05, 0.58, 0.57, 0.96]
+
 	return (
 		<>
-            <form onSubmit={onSubmit} className={"w-full max-w-[1400px] flex flex-col gap-2.5 p-5 rounded-[20px] bg-background " + className}>
+            <motion.form initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.4, ease: customease, delay: 0.2 }} onSubmit={onSubmit} className={"w-full max-w-[1400px] flex flex-col gap-2.5 p-5 rounded-[20px] bg-background " + className}>
                 <CustomAutocomplete
                     id="from"
                     placeholder="From"
@@ -215,7 +217,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
                                         animate="animate" 
                                         exit="exit" 
                                         key={"calendar"}
-                                        className="absolute z-[100] mt-1 w-auto p-0 bg-white dark:bg-background border border-muted rounded-lg"
+                                        className="absolute z-[100] mt-1 w-auto p-0 bg-white dark:bg-background border border-muted rounded-lg shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]"
                                     >
                                         <Calendar
                                             mode="single"
@@ -245,12 +247,9 @@ export function HeroQuickBook({ className }: { className?: string }) {
                         onSelectionChange={(value) => setValue("passengers", parseInt(value), { shouldValidate: true })}
                     />
                 </div>
-                {(errors.departureDate || errors.passengers) && (
-                    <div className="flex flex-row gap-2.5">
-                        {errors.departureDate && <span className="text-red-500 w-full">{errors.departureDate.message}</span>}
-                        {errors.passengers && <span className="text-red-500 w-full">{errors.passengers.message}</span>}
-                    </div>
-                )}
+                {errors.departureDate && <span className="text-red-500">{errors.departureDate.message}</span>}
+                {errors.passengers && <span className="text-red-500">{errors.passengers.message}</span>}
+                
 				<button
 					type="submit"
 					className="rounded-lg bg-gradient h-[50px] md:h-[60px] disabled:opacity-50 text-white font-medium text-[16px] md:text-[18px] flex gap-3 items-center justify-center transition-all duration-200 ease-in-out"
@@ -260,7 +259,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
                     </svg>
 					Search
 				</button>
-			</form>
+			</motion.form>
 		</>
 	);
 }

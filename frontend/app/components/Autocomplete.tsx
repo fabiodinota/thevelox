@@ -42,8 +42,10 @@ const CustomAutocomplete: React.FC<Props> = ({
       );
     
       const filteredSuggestions = useMemo(() => {
-        const lowerInputValue = inputValue.toString().toLowerCase(); // Ensure inputValue is treated as a string
-        if (!lowerInputValue) return suggestions; // Show all if no input value
+        const lowerInputValue = inputValue.toString().toLowerCase();
+
+        if (!lowerInputValue) return suggestions;
+
         return suggestions.filter((suggestion) =>
           isObjectSuggestion
             ? suggestion.label.toLowerCase().includes(lowerInputValue)
@@ -61,7 +63,6 @@ const CustomAutocomplete: React.FC<Props> = ({
       
         if (filteredSuggestions.length > 0) {
           const lastSuggestion = filteredSuggestions[filteredSuggestions.length - 1];
-          // Ensure lastSuggestion is not undefined before accessing its properties
           const lastSuggestionValue = isObjectSuggestion && lastSuggestion ? lastSuggestion.value.toString() : lastSuggestion;
       
           if (newValue === lastSuggestionValue) {
@@ -77,20 +78,13 @@ const CustomAutocomplete: React.FC<Props> = ({
         setShowSuggestions(true);
         requestFocus(id);
         setShowSuggestions(true);
-/*         const lastSuggestion = filteredSuggestions[filteredSuggestions.length - 1];
-        const lastSuggestionValue = isObjectSuggestion ? lastSuggestion.value : lastSuggestion;
-        
-        if (inputValue === lastSuggestionValue) {
-          setShowSuggestions(false);
-        } else {
-          setShowSuggestions(true);
-        } */
 	}, [id, requestFocus]);
 
 	const handleBlur = useCallback(() => {
 		if (!isMouseInside) {
 			setShowSuggestions(false);
             releaseFocus();
+
             if (!inputRef.current?.contains(document.activeElement)) {
                 setShowSuggestions(false);
             }
@@ -105,6 +99,7 @@ const CustomAutocomplete: React.FC<Props> = ({
     }, [activeId, id]);
 
     const handleSuggestionClick = useCallback((suggestion: any) => {
+
         if (isObjectSuggestion && typeof suggestion === 'object' && 'label' in suggestion && 'value' in suggestion) {
           setInputValue(suggestion.label); // Assuming label is of type string
           onSelectionChange(suggestion.value); // Assuming value is the type you need for onSelectionChange
@@ -112,8 +107,10 @@ const CustomAutocomplete: React.FC<Props> = ({
           setInputValue(suggestion);
           onSelectionChange(suggestion);
         }
+
         setShowSuggestions(false);
         setActiveSuggestionIndex(0);
+        
       }, [onSelectionChange, isObjectSuggestion]);
 
       const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -208,7 +205,7 @@ const CustomAutocomplete: React.FC<Props> = ({
                         showSuggestions && inputValue && (
                             <button
                                 onClick={() => handleClear()}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-foreground/50 transition-all duration-200 ease-in-out"
+                                className="absolute top-1/2 right-0 -translate-y-1/2 w-10 h-20 grid place-content-center cursor-pointer text-foreground/50 transition-all duration-200 ease-in-out"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -238,7 +235,7 @@ const CustomAutocomplete: React.FC<Props> = ({
                             animate="animate" 
                             exit="exit" 
                             key={id}
-                            className="absolute z-50 w-full max-h-80 overflow-auto noscrollbar p-0 border bg-background border-muted rounded-lg"
+                            className="absolute z-50 w-full max-h-80 mt-1 overflow-auto noscrollbar p-0 border bg-background border-muted rounded-lg shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]"
                         >
                             {filteredSuggestions.map((suggestion, index) => {
                                 const displayValue = isObjectSuggestion ? suggestion.label : suggestion

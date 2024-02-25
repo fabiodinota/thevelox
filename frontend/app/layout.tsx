@@ -10,6 +10,8 @@ import AnimatePresenceProvider from "./context/AnimatePresenceProvider";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { AutocompleteProvider } from "./context/AutocompleteContext";
+import { useEffect } from "react";
+import "aos/dist/aos.css";
 
 // Load environment variables from .env
 dotenv.config();
@@ -34,6 +36,8 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+    
+
 	return (
 		<ThemeProvider>
 			<SessionProvider>
@@ -50,7 +54,7 @@ export default function RootLayout({
                         </head>
                         <body
                             className={
-                                "bg-white dark:bg-background text-black dark:text-white overflow-x-hidden"
+                                "bg-background text-foreground overflow-x-hidden"
                             }
                         >
                             <Navbar />

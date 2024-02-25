@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
+import AOS from "aos";
 
 // Create a context to manage the theme
 export const ThemeContext = createContext({
@@ -67,6 +68,10 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
         localStorage.setItem("theme", "dark");
         document.documentElement.classList.add("dark");
     };
+
+    useEffect(() => {
+        AOS.init();
+    }, []);
 
 	return (
 		<ThemeContext.Provider value={{ theme, toggleTheme, setLight, setDark }}>

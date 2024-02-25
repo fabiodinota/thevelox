@@ -8,8 +8,79 @@ datasource db {
 }
 
 model users {
-  user_id  Int    @id @default(autoincrement())
-  username String @db.VarChar(255)
-  email    String @db.VarChar(255)
-  password String @db.VarChar(255)
+  user_id         BigInt            @id @default(autoincrement()) @db.UnsignedBigInt
+  first_name      String?           @db.VarChar(50)
+  last_name       String?           @db.VarChar(255)
+  username        String            @db.VarChar(255)
+  email           String            @db.VarChar(100)
+  password        String            @db.VarChar(255)
+  birth_date      DateTime?         @db.Date
+  phone_number    String?           @db.VarChar(255)
+  country_code    String?           @db.VarChar(255)
+  created_on      DateTime          @db.DateTime(0)
+  favorites       favorites[]
+  payment_methods payment_methods[]
+  tickets         tickets[]
+}
+
+model favorites {
+  favorite_id BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  user_id     BigInt   @db.UnsignedBigInt
+  journey_id  BigInt   @db.UnsignedBigInt
+  added_on    DateTime @db.DateTime(0)
+  journeys    journeys @relation(fields: [journey_id], references: [journey_id], onDelete: NoAction, onUpdate: NoAction, map: "favorites_journey_id_foreign")
+  users       users    @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "favorites_user_id_foreign")
+
+  @@index([journey_id], map: "favorites_journey_id_foreign")
+  @@index([user_id], map: "favorites_user_id_foreign")
+}
+
+model journeys {
+  journey_id        BigInt      @id @default(autoincrement()) @db.UnsignedBigInt
+  line_id_start     BigInt
+  line_id_end       BigInt
+  departure_station String      @db.VarChar(255)
+  arrival_station   String      @db.VarChar(255)
+  departure_time    DateTime    @db.DateTime(0)
+  arrival_time      DateTime    @db.DateTime(0)
+  favorites         favorites[]
+  tickets           tickets[]
+}
+
+model payment_methods {
+  payment_method_id BigInt                @id @default(autoincrement()) @db.UnsignedBigInt
+  user_id           BigInt                @db.UnsignedBigInt
+  type              payment_methods_type?
+  card_holder_name  String?               @db.VarChar(255)
+  card_number       String?               @db.VarChar(16)
+  expiration_date   String?               @db.VarChar(5)
+  paypal_email      String?               @db.VarChar(255)
+  created_on        DateTime              @db.DateTime(0)
+  last_updated      DateTime              @db.DateTime(0)
+  users             users                 @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "payment_methods_user_id_foreign")
+  tickets           tickets[]
+
+  @@index([user_id], map: "payment_methods_user_id_foreign")
+}
+
+model tickets {
+  ticket_id         BigInt          @id @default(autoincrement()) @db.UnsignedBigInt
+  user_id           BigInt          @db.UnsignedBigInt
+  journey_id        BigInt          @db.UnsignedBigInt
+  payment_method_id BigInt          @db.UnsignedBigInt
+  journey_date      DateTime        @db.DateTime(0)
+  booking_date      DateTime        @db.DateTime(0)
+  price             BigInt
+  journeys          journeys        @relation(fields: [journey_id], references: [journey_id], onDelete: NoAction, onUpdate: NoAction, map: "tickets_journey_id_foreign")
+  payment_methods   payment_methods @relation(fields: [payment_method_id], references: [payment_method_id], onDelete: NoAction, onUpdate: NoAction, map: "tickets_payment_method_id_foreign")
+  users             users           @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "tickets_user_id_foreign")
+
+  @@index([journey_id], map: "tickets_journey_id_foreign")
+  @@index([payment_method_id], map: "tickets_payment_method_id_foreign")
+  @@index([user_id], map: "tickets_user_id_foreign")
+}
+
+enum payment_methods_type {
+  Credit_Card @map("Credit Card")
+  PayPal
 }

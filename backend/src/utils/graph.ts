@@ -392,6 +392,5 @@ export function getStationsWithLevels(filePath: string): { name: string, level: 
         });
     });
 
-    console.log(stationsWithLevels);
     return stationsWithLevels;
 }

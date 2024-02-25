@@ -18,6 +18,7 @@
 		"@react-three/drei": "^9.97.1",
 		"@react-three/fiber": "^8.15.14",
 		"@types/three": "^0.160.0",
+		"aos": "^2.3.4",
 		"axios": "^1.6.5",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.0",
@@ -43,6 +44,7 @@
 		"zustand": "^4.5.1"
 	},
 	"devDependencies": {
+		"@types/aos": "^3.0.7",
 		"@types/crypto-js": "^4.2.1",
 		"@types/dotenv": "^8.2.0",
 		"@types/js-cookie": "^3.0.6",

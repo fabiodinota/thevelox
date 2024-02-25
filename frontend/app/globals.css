@@ -66,6 +66,11 @@
 	}
 }
 
+::selection {
+    background: #E94336;
+    color: var(--foreground);
+}
+
 @layer base {
 	* {
 		@apply border-border;
@@ -77,6 +82,16 @@
     input::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
+    }
+
+    html::-webkit-scrollbar {
+        background-color: var(--destructive);
+        width: 0.5rem;
+
+    }
+    html::-webkit-scrollbar-thumb {
+        background-color: #7d7d7d3e;
+        border-radius: 0.5rem;
     }
 
     input[type=number] {
@@ -151,6 +166,14 @@
 
       .nav-item:hover {
         color: transparent; /* Hide the text on hover */
+      }
+      .mask{
+        mask-image: url('@/public/mask.svg');
+        mask-repeat: no-repeat;
+        mask-size: 40px;
+        background: #ec4e39;
+        position: absolute;
+        color: black;
       }
 }
 
