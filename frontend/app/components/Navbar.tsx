@@ -73,7 +73,7 @@ const Navbar = () => {
                         <Link onClick={() => setOpenMobileNav(false)} className={`nav-item`} data-text="Home" href='/'>
                             <span>Home</span>
                         </Link>
-                        <Link onClick={() => setOpenMobileNav(false)} className='nav-item' data-text="About Us" href='/about'>
+                        <Link prefetch={false} onClick={() => setOpenMobileNav(false)} className='nav-item' data-text="About Us" href='/about'>
                             <span>About Us</span>
                         </Link>
                         <Link onClick={() => setOpenMobileNav(false)} className='nav-item' data-text="Contact Us" href='/contact'>
