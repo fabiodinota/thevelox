@@ -12,7 +12,7 @@ import { TimePickerDemo } from "./package/time-picker-demo";
 import CustomAutocomplete from "./Autocomplete";
 import useQuickBookStore from "../state/state";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { string, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useSession } from "../context/sessionContext";
@@ -23,13 +23,6 @@ import { useAutocomplete } from "../context/AutocompleteContext";
 type Station = {
 	name: string;
 	level: number;
-};
-
-type QuickBookState = {
-	from: string;
-	to: string;
-	departureDate: string;
-	passengers: number;
 };
 
 export function HeroQuickBook({ className }: { className?: string }) {
@@ -63,8 +56,10 @@ export function HeroQuickBook({ className }: { className?: string }) {
             .refine((value) => stations.some(station => `${station.name}, Level ${station.level}` === value), {
             message: "Enter a valid station",
         }),
-        departureDate: z.string().min(1, { message: "Set a departure station" }).default(format(new Date(), "yyyy-MM-dd'T'HH:mm")),
-        passengers: z.number({ description: "This input only allows numbers, please select one of the suggested values."}).default(1).refine((value) => value >= 1 && value <=4, {
+        departureDate: z.string().min(1, { message: "Set a departure station" }).refine((value) => new Date(value) > new Date(), {
+            message: "Departure date must be in the future",
+        }).default(format(new Date(), "yyyy-MM-dd'T'HH:mm")),
+        passengers: z.number({ invalid_type_error: 'This input only accepts numbers.' }).default(1).refine((value) => value >= 1 && value <=4, {
             message: "The number of passengers must be in between 1 and 4.",
         })
 	});
@@ -121,11 +116,14 @@ export function HeroQuickBook({ className }: { className?: string }) {
             const minutes = date.getMinutes();
             newDate.setHours(hours, minutes);
         }
+
     
-        setDate(newDate); // Set the new date with preserved time
+        if(newDate >= new Date()) {
+            setDate(newDate); // Set the new date with preserved time
+        }
     
         // Format the date as needed, e.g., to ISO string or custom format
-        const formattedDate = format(newDate, "yyyy-MM-dd'T'HH:mm:ss");
+        const formattedDate = format(newDate, "yyyy-MM-dd'T'HH:mm");
         
         // Update React Hook Form state
         setValue('departureDate', formattedDate, { shouldValidate: true });
@@ -141,7 +139,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
         setDate(updatedDate); // Set the new date with the updated time
     
         // Format the updated date with the new time for the form
-        const formattedDate = format(updatedDate, "yyyy-MM-dd'T'HH:mm:ss");
+        const formattedDate = format(updatedDate, "yyyy-MM-dd'T'HH:mm");
     
         // Update React Hook Form state
         setValue('departureDate', formattedDate, { shouldValidate: true });

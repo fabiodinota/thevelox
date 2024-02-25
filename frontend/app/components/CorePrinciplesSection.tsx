@@ -92,7 +92,7 @@ const CorePrinciplesSection = () => {
                 </div>
             </div>
             <div className="relative xl:hidden h-32 w-[100px] sm:w-[184px] grid place-content-center">
-                <motion.div style={{ scaleY: first.scrollYProgress, originY: "top" }} className="absolute top-0 left-[50%] w-[2px] h-full bg-gradient rotate-180 opacity-100 z-10 block xl:hidden"></motion.div>
+                <motion.div style={{ scaleY: first.scrollYProgress, originY: "top" }} className="absolute top-0 left-[50%] w-[2px] h-full bg-[#E94537] rotate-180 opacity-100 z-10 block xl:hidden"></motion.div>
                 <div className="absolute top-0 left-[50%] w-[2px] h-full bg-foreground opacity-30 z-0 block xl:hidden"></div>
             </div>
             <div 
@@ -125,7 +125,7 @@ const CorePrinciplesSection = () => {
                 </div>
             </div>
             <div className="relative xl:hidden h-32 w-[100px] sm:w-[184px] grid place-content-center">
-                <motion.div style={{ scaleY: second.scrollYProgress, originY: "top" }} className="absolute top-0 left-[50%] w-[2px] h-full bg-gradient rotate-180 opacity-100 z-10 block xl:hidden"></motion.div>
+                <motion.div style={{ scaleY: second.scrollYProgress, originY: "top" }} className="absolute top-0 left-[50%] w-[2px] h-full bg-[#E94537] rotate-180 opacity-100 z-10 block xl:hidden"></motion.div>
                 <div className="absolute top-0 left-[50%] w-[2px] h-full bg-foreground opacity-30 z-0 block xl:hidden"></div>
             </div>
             <div
@@ -158,7 +158,7 @@ const CorePrinciplesSection = () => {
                 </div>
             </div>
             <div className="relative xl:hidden h-32 w-[100px] sm:w-[184px] grid place-content-center">
-                <motion.div style={{ scaleY: third.scrollYProgress, originY: "top" }} className="absolute top-0 left-[50%] w-[2px] h-full bg-gradient rotate-180 opacity-100 z-10 block xl:hidden"></motion.div>
+                <motion.div style={{ scaleY: third.scrollYProgress, originY: "top" }} className="absolute top-0 left-[50%] w-[2px] h-full bg-[#E94537] rotate-180 opacity-100 z-10 block xl:hidden"></motion.div>
                 <div className="absolute top-0 left-[50%] w-[2px] h-full bg-foreground opacity-30 z-0 block xl:hidden"></div>
             </div>
             <div 
@@ -200,14 +200,12 @@ const CorePrinciplesSection = () => {
                 transition={{ duration: 1.5, ease: "easeInOut" }}
                 className="absolute z-[1] hidden xl:block top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-[1400px] h-[2000px]"
             >
-                <Image quality={100} priority src={theme === "dark" ? Background_Dark_Mask : Background_Light_Mask} layout="fill" className="object-contain object-center" alt="background_hero" />
+                <Image quality={100} priority src={theme === "dark" ? Background_Dark_Mask : Background_Light_Mask} fill className="object-contain object-center" alt="background_hero" />
             </motion.div>
             <motion.div 
-                style={{ clipPath: clipPathHide }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
                 className="absolute hidden xl:block top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-[1400px] h-[2000px]"
             >
-                <Image quality={100} priority src={theme === "dark" ? Background_Dark : Background_Light} layout="fill" className="object-contain object-center" alt="background_hero" />
+                <Image quality={100} priority src={theme === "dark" ? Background_Dark : Background_Light} fill className="object-contain object-center" alt="background_hero" />
             </motion.div>
         </div>
     </section>
