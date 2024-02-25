@@ -50,10 +50,9 @@ export const search = async (req: CustomRequest, res: Response) => {
 	}
 };
 
-export const getDestinations = async (req: Request, res: Response) => {
+export const getDestinations = async (res: Response) => {
     const destinations = getStationsWithLevels("./src/data/routes.json");
 
     res.json({ destinations });
-
 
 }

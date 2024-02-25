@@ -16,7 +16,7 @@ export default function Home() {
 	return (
 		<div>
             <div className="w-full min-h-[600px] h-[600px] sm:h-[650px] md:h-[50vh] max-h-[700px] relative flex justify-center items-center flex-col px-5 xl:px-10">
-                <motion.h1
+                {/* <motion.h1
                      initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.4, ease: customease, delay: 0.1 }} 
                     className='relative top-[230px] sm:top-[200px] md:top-[250px] xl:top-[230px] text-[10vw] sm:text-[60px] md:text-[70px] text-left max-w-[1400px] w-full font-bold text-white leading-snug whitespace-pre-wrap'
                 >
@@ -25,11 +25,18 @@ export default function Home() {
                     best & <br className="hidden md:block" />
                     cheapest <br className="md:hidden block" />
                     tickets around!
-                </motion.h1>
+                </motion.h1> */}
                 <HeroQuickBook className="relative top-[250px] sm:top-[220px] md:top-[270px] xl:top-[250px] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]" />
                 <motion.div initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.4, ease: customease, delay: 0 }}  className="w-full min-h-[600px] h-[600px] sm:h-[650px] md:h-[50vh] max-h-[700px] xl:rounded-b-[75px] overflow-hidden absolute top-0 left-0 -z-10">
                     <div className="w-full h-full bg-hero-gradient relative top-0 left-0 z-50"></div>
-                    <Image src={HeroBackground} priority fill className="object-cover object-bottom" alt="background_hero" />
+                    <Image 
+                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 90vw, (max-width: 1024px) 80vw, 60vw" 
+                        src={HeroBackground} 
+                        priority 
+                        fill 
+                        className="object-cover object-bottom" 
+                        alt="background_hero" 
+                    />
                 </motion.div>
             </div>
             <div className="w-full h-[300px]"></div>
@@ -40,7 +47,7 @@ export default function Home() {
                     initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.4, ease: customease, delay: 0.3 }} 
                     className="text-foreground text-[28px] sm:text-[32px] md:text-[40px] font-bold w-full text-left">The Velox, Electricity In Its Veins.</motion.h1>
                     <motion.div initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.4, ease: customease, delay: 0.4 }} className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center">
-                        <span className="text-[24px] font-bold opacity-20">Video</span>
+                        <span className="text-[24px] font-bold opacity-50">Video</span>
                     </motion.div>
                     <Link className='bg-gradient text-white hover:text-white/70 duration-150 rounded-xl max-w-[400px] w-full h-[60px] grid place-content-center ' href='/app'>
                         <span className="text-[16px] md:text-[18px] font-medium">Launch App</span>
@@ -68,7 +75,7 @@ export default function Home() {
                             data-ease="ease-out" 
                             className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center"
                         >
-                            <span className="text-[24px] font-bold opacity-20">Placeholder Image</span>
+                            <span className="text-[24px] font-bold opacity-50">Placeholder Image</span>
                         </div>
                     </div>
                     <div className="w-full flex flex-col-reverse lg:flex-row justify-center items-center gap-5 lg:gap-10">
@@ -79,7 +86,7 @@ export default function Home() {
                             data-ease="ease-out" 
                             className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center"
                         >
-                            <span className="text-[24px] font-bold opacity-20">Placeholder Image</span>
+                            <span className="text-[24px] font-bold opacity-50">Placeholder Image</span>
                         </div>
                         <div 
                             data-aos="fade-left"
