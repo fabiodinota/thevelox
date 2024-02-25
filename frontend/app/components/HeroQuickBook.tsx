@@ -56,7 +56,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
             .refine((value) => stations.some(station => `${station.name}, Level ${station.level}` === value), {
             message: "Enter a valid station",
         }),
-        departureDate: z.date().default(new Date(new Date())).refine((value) => value >= new Date(new Date()), {
+        departureDate: z.date().default(() => new Date()).refine((value) => value >= new Date(new Date()), {
             message: "The departure date must be in the future.",
         }),
         passengers: z.number({ invalid_type_error: 'This input only accepts numbers.' }).default(1).refine((value) => value >= 1 && value <=4, {
@@ -105,18 +105,19 @@ export function HeroQuickBook({ className }: { className?: string }) {
       });
 
       const handleDateChange = (newDate: Date | undefined) => {
-        if (!newDate) return; // Exit if no date is selected
+        if (!newDate) return; 
     
         if (date) {
-            // Preserve the time part from the existing date state
             const hours = date.getHours();
             const minutes = date.getMinutes();
             newDate.setHours(hours, minutes);
         }
 
-        setDate(newDate); // Set the new date
-            
-        // Update React Hook Form state
+        // If the new date is in the past, don't update the state
+        if (newDate > new Date(new Date())) {
+            setDate(newDate);
+        }
+
         setValue('departureDate', newDate, { shouldValidate: true });
     };
     
@@ -127,6 +128,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
         const updatedDate = date ? new Date(date) : new Date();
         updatedDate.setHours(time.getHours(), time.getMinutes());
     
+        if (updatedDate < new Date(new Date())) return; // Don't update the state if the new date is in the past
         setDate(updatedDate); // Set the new date with the updated time
         
         // Update React Hook Form state
