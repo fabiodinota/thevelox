@@ -30,7 +30,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
 
 	const [stations, setStations] = useState<Station[]>([]);
 	const [date, setDate] = useState<Date | undefined>(
-		new Date(new Date())
+		new Date(format(new Date(), "yyyy-MM-dd'T'HH:mm:ss"))
 	);
     const [calendarOpen, setCalendarOpen] = useState(false);
 
@@ -110,11 +110,6 @@ export function HeroQuickBook({ className }: { className?: string }) {
             const hours = date.getHours();
             const minutes = date.getMinutes();
             newDate.setHours(hours, minutes);
-        }
-
-    
-        if(newDate >= new Date()) {
-            setDate(newDate); // Set the new date with preserved time
         }
     
         // Format the date as needed, e.g., to ISO string or custom format
