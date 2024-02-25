@@ -56,9 +56,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
             .refine((value) => stations.some(station => `${station.name}, Level ${station.level}` === value), {
             message: "Enter a valid station",
         }),
-        departureDate: z.string().min(1, { message: "Set a departure station" }).refine((value) => new Date(value) > new Date(), {
-            message: "Departure date must be in the future",
-        }).default(format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")),
+        departureDate: z.string().min(1, { message: "Set a departure station" }).default(format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")),
         passengers: z.number({ invalid_type_error: 'This input only accepts numbers.' }).default(1).refine((value) => value >= 1 && value <=4, {
             message: "The number of passengers must be in between 1 and 4.",
         })
