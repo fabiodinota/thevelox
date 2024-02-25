@@ -26,8 +26,8 @@ export default function Home() {
                     cheapest <br className="md:hidden block" />
                     tickets around!
                 </motion.h1> */}
-{/*                 <HeroQuickBook className="relative top-[250px] sm:top-[220px] md:top-[270px] xl:top-[250px] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]" />
- */}                <motion.div initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.4, ease: customease, delay: 0 }}  className="w-full min-h-[600px] h-[600px] sm:h-[650px] md:h-[50vh] max-h-[700px] xl:rounded-b-[75px] overflow-hidden absolute top-0 left-0 -z-10">
+                <HeroQuickBook className="relative top-[250px] sm:top-[220px] md:top-[270px] xl:top-[250px] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]" />
+                <motion.div initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.4, ease: customease, delay: 0 }}  className="w-full min-h-[600px] h-[600px] sm:h-[650px] md:h-[50vh] max-h-[700px] xl:rounded-b-[75px] overflow-hidden absolute top-0 left-0 -z-10">
                     <div className="w-full h-full bg-hero-gradient relative top-0 left-0 z-50"></div>
                     <Image 
                         sizes="(max-width: 640px) 100vw, (max-width: 768px) 90vw, (max-width: 1024px) 80vw, 60vw" 

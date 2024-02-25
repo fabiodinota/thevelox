@@ -120,7 +120,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
         }
     
         // Format the date as needed, e.g., to ISO string or custom format
-        const formattedDate = format(newDate, "yyyy-MM-dd'T'HH:mm");
+        const formattedDate = format(newDate, "yyyy-MM-dd'T'HH:mm:ss");
         
         // Update React Hook Form state
         setValue('departureDate', formattedDate, { shouldValidate: true });
@@ -136,7 +136,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
         setDate(updatedDate); // Set the new date with the updated time
     
         // Format the updated date with the new time for the form
-        const formattedDate = format(updatedDate, "yyyy-MM-dd'T'HH:mm");
+        const formattedDate = format(updatedDate, "yyyy-MM-dd'T'HH:mm:ss");
     
         // Update React Hook Form state
         setValue('departureDate', formattedDate, { shouldValidate: true });
