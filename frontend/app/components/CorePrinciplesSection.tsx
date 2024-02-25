@@ -4,7 +4,7 @@
 
 import Background_Light from "@/public/Background_light.png";
 import Background_Dark from "@/public/Background_dark.png";
-import Background_Light_Mask from "@/public/Background_light_mask.png";
+import Background_Light_Mask from "@/public/Background_light_mask.webp";
 import Background_Dark_Mask from "@/public/Background_dark_mask.png";
 import { useMotionValueEvent, useScroll, motion, useTransform } from "framer-motion";
 import Image from 'next/image';
