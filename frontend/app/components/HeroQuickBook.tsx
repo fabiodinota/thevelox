@@ -30,7 +30,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
 
 	const [stations, setStations] = useState<Station[]>([]);
 	const [date, setDate] = useState<Date | undefined>(
-		new Date(new Date())
+		undefined
 	);
     const [calendarOpen, setCalendarOpen] = useState(false);
 
@@ -56,13 +56,17 @@ export function HeroQuickBook({ className }: { className?: string }) {
             .refine((value) => stations.some(station => `${station.name}, Level ${station.level}` === value), {
             message: "Enter a valid station",
         }),
-        departureDate: z.date().default(() => new Date()).refine((value) => value >= new Date(new Date()), {
-            message: "The departure date must be in the future.",
+        departureDate: z.string().min(1, { message: "Set a departure date" }).refine((value) => new Date(value) > new Date(new Date()), {
+            message: "The departure date must be in the future",
         }),
         passengers: z.number({ invalid_type_error: 'This input only accepts numbers.' }).default(1).refine((value) => value >= 1 && value <=4, {
             message: "The number of passengers must be in between 1 and 4.",
         })
 	});
+
+    useEffect(() => {
+        setDate(new Date(new Date()));
+    }, [])
 
 	const { handleSubmit, setValue, formState: { errors } } = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -118,7 +122,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
             setDate(newDate);
         }
 
-        setValue('departureDate', newDate, { shouldValidate: true });
+        setValue('departureDate', format(newDate, "PP HH:mm"), { shouldValidate: true });
     };
     
 
@@ -132,7 +136,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
         setDate(updatedDate); // Set the new date with the updated time
         
         // Update React Hook Form state
-        setValue('departureDate', updatedDate, { shouldValidate: true });
+        setValue('departureDate', format(updatedDate, "PP HH:mm"), { shouldValidate: true });
     };
     
     const handleCalendarClick = () => {
@@ -189,7 +193,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
                             </p>     
                             <div className="pt-4 pl-3 text-[16px] md:text-[18px] font-medium">
                                  {date ? (
-                                    format(date, "PP HH:mm")
+                                    format(date, "PP | HH:mm")
                                 ) : (
                                     <span>Pick a date</span>
                                 )}
