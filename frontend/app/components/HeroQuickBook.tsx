@@ -89,9 +89,6 @@ export function HeroQuickBook({ className }: { className?: string }) {
 				})
 				.catch((err) => {
 					console.log("Err: ", err);
-					if (err.response && err.response.status === 401) {
-						console.log("Unauthorized");
-					}
 				});
 		}
 	};
