@@ -16,7 +16,7 @@ const Footer = () => {
             <hr className='h-[2px] w-full bg-white/50 border-none' />
             <div className='flex flex-col gap-2 justify-center items-center'>
                 <div className='relative h-[50px] w-[200px]'>
-                    <Image quality={100} priority={false} src={Logo} alt='logo' fill className="object-contain" />
+                    <Image sizes='200px' quality={100} priority={false} src={Logo} alt='logo' fill className="object-contain" />
                 </div>
                 <span className='text-white/50'>By Fabio Di Nota</span>
             </div>

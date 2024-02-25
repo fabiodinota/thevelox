@@ -200,12 +200,12 @@ const CorePrinciplesSection = () => {
                 transition={{ duration: 1.5, ease: "easeInOut" }}
                 className="absolute z-[1] hidden xl:block top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-[1400px] h-[2000px]"
             >
-                <Image quality={100} priority src={theme === "dark" ? Background_Dark_Mask : Background_Light_Mask} fill className="object-contain object-center" alt="background_hero" />
+                <Image sizes="1400px" quality={100} priority src={theme === "dark" ? Background_Dark_Mask : Background_Light_Mask} fill className="object-contain object-center" alt="background_hero" />
             </motion.div>
             <motion.div 
                 className="absolute hidden xl:block top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-[1400px] h-[2000px]"
             >
-                <Image quality={100} priority src={theme === "dark" ? Background_Dark : Background_Light} fill className="object-contain object-center" alt="background_hero" />
+                <Image sizes="1400px" quality={100} priority src={theme === "dark" ? Background_Dark : Background_Light} fill className="object-contain object-center" alt="background_hero" />
             </motion.div>
         </div>
     </section>

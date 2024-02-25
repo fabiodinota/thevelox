@@ -61,10 +61,12 @@ const Navbar = () => {
                 <div className='w-full max-w-[1400px] flex flex-row justify-between px-5 xl:px-10 items-center'>
                     <div className='relative h-[35px] w-[120px] xl:h-[100px]'>
                         <Image
+                            sizes='120px'
                             src={theme === "dark" ? Logo_White : Logo_Black}
                             alt="TheVelox"
                             className={"object-contain"}
                             fill
+                            priority
                         />
                     </div>
                     <div className='flex-row list-none gap-10 items-center hidden xl:flex'>
