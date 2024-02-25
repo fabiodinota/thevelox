@@ -13,8 +13,8 @@ const page = () => {
                 <br />
                 We will always try to reply in a timely manner but please be patient as our customer support staff might be busy.
             </p>
-            <HeroQuickBook className="relative mt-5 shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]" />
-        </section>
+{/*             <HeroQuickBook className="relative mt-5 shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]" />
+ */}        </section>
     </div>
   )
 }
