@@ -14,7 +14,7 @@ import HeroBackground from "@/public/hero_background.webp";
 export default function Home() {
     const customease = [0.05, 0.58, 0.57, 0.96]
 	return (
-		<div>
+		<div className="overflow-hidden">
             <div className="w-full min-h-[600px] h-[600px] sm:h-[650px] md:h-[50vh] max-h-[700px] relative flex justify-center items-center flex-col px-5 xl:px-10">
                 <motion.h1
                     initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.4, ease: customease, delay: 0.1 }} 
@@ -39,7 +39,7 @@ export default function Home() {
                     />
                 </motion.div>
             </div>
-            <div className="w-full h-[300px]"></div>
+            <div className="w-full h-[250px] md:h-[300px]"></div>
             <div className="flex flex-col justify-center items-center py-10 px-5 md:px-10">
 
                 <section className="max-w-[1400px] w-full flex flex-col justify-center items-center gap-5">

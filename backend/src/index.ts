@@ -6,6 +6,7 @@ import authRouter from "./routes/auth";
 import jwtRouter from "./routes/jwt";
 import userRouter from "./routes/user";
 import mapRouter from "./routes/map";
+import contactRouter from "./routes/contact";
 import bodyParser from "body-parser";
 import cookieParser from 'cookie-parser';
 import { authenticateToken } from "./middleware/authenticateToken";
@@ -44,6 +45,7 @@ app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/jwt", jwtRouter);
 app.use("/map", mapRouter);
+app.use("/contact", contactRouter);
 
 // start the Express server
 app.listen(port, () => {

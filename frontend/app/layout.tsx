@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import { AutocompleteProvider } from "./context/AutocompleteContext";
 import { useEffect } from "react";
 import "aos/dist/aos.css";
+import Loading from "./loading";
 
 // Load environment variables from .env
 dotenv.config();
@@ -57,7 +58,8 @@ export default function RootLayout({
                             className={
                                 "bg-background text-foreground overflow-x-hidden"
                             }
-                        >
+                        >   
+                            <Loading />
                             <Navbar />
                             <main className="mt-0 xl:mt-[100px]">
                                 {children}
