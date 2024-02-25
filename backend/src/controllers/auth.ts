@@ -37,6 +37,7 @@ export const signUp = async (req: Request, res: Response) => {
 			username,
 			email,
 			password: hashedPassword,
+            created_on: new Date(),
 		},
 	});
 
