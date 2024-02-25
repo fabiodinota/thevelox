@@ -56,7 +56,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
             .refine((value) => stations.some(station => `${station.name}, Level ${station.level}` === value), {
             message: "Enter a valid station",
         }),
-        departureDate: z.date().min(new Date(), { message: "Set a departure date." }).default(new Date(new Date())).refine((value) => value >= new Date(new Date()), {
+        departureDate: z.date().default(new Date(new Date())).refine((value) => value >= new Date(new Date()), {
             message: "The departure date must be in the future.",
         }),
         passengers: z.number({ invalid_type_error: 'This input only accepts numbers.' }).default(1).refine((value) => value >= 1 && value <=4, {
@@ -187,7 +187,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
                             </p>     
                             <div className="pt-4 pl-3 text-[16px] md:text-[18px] font-medium">
                                  {date ? (
-                                    format(date, "PP | HH:mm")
+                                    format(date, "PP HH:mm")
                                 ) : (
                                     <span>Pick a date</span>
                                 )}
