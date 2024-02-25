@@ -1,24 +1,24 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 
-import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
+import { format } from "date-fns";
 import { Calendar } from "./ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { TimePickerDemo } from "./package/time-picker-demo";
+
 import CustomAutocomplete from "./Autocomplete";
+import { useAutocomplete } from "../context/AutocompleteContext";
+
 import useQuickBookStore from "../state/state";
+import { useSession } from "../context/sessionContext";
+
 import { useForm } from "react-hook-form";
-import { string, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useSession } from "../context/sessionContext";
-import { AnimatePresence, easeOut, motion } from "framer-motion";
+
+import { motion } from "framer-motion";
 import AnimatePresenceProvider from "../context/AnimatePresenceProvider";
-import { useAutocomplete } from "../context/AutocompleteContext";
 
 type Station = {
 	name: string;
@@ -89,7 +89,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
 				})
 				.catch((err) => {
 					console.log("Err: ", err);
-					if (err.response?.status === 401) {
+					if (err.response && err.response.status === 401) {
 						console.log("Unauthorized");
 					}
 				});
