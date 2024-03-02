@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import AOS from "aos";
 
-// Create a context to manage the theme
 export const ThemeContext = createContext({
 	theme: "light",
 	toggleTheme: () => {},
@@ -11,7 +10,6 @@ export const ThemeContext = createContext({
     setDark: () => {},
 });
 
-// Custom hook to access the theme and toggle function
 export const useTheme = () => {
 	const context = useContext(ThemeContext);
 	if (!context) {
