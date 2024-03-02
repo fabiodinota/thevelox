@@ -42,7 +42,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 		() => Cookies.get("refreshToken") || ""
 	);
 
-	/* console.log("User: ", user); */
+	console.log("User: ", user);
 
 	// Store the access token in localStorage
 	useEffect(() => {
