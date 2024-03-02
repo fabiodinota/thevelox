@@ -97,8 +97,8 @@ const Navbar = () => {
         </nav>
         <AnimatePresence mode='wait'>
             {openMobileNav && (
-                <motion.nav variants={navVariant} initial="initial" animate="animate" exit="exit" className='fixed top-0 left-0 w-screen h-screen bg-background z-[998] flex flex-col justify-between items-center'>
-                    <ul className='flex flex-col w-full gap-10 px-5 mt-[130px]'>
+                <motion.nav variants={navVariant} initial="initial" animate="animate" exit="exit" className='fixed top-0 left-0 w-screen h-screen overflow-scroll pb-[100px] bg-background z-[998] flex flex-col justify-between items-center'>
+                    <ul className={'flex flex-col w-full gap-10 px-5 mt-[130px] relative z-30'}>
                         <motion.li onClick={handleClose} variants={liVariant} transition={{ duration: 0.3, delay: openMobileNav ? 0.3 : 0.3, ease: customease }} className='flex items-center w-full flex-col gap-10'>
                             <Link className={`nav-item-mobile hover:text-foreground/80 duration-100 text-[42px] xs:text-[50px] sm:text-[60px] w-full text-left`} href='/'>
                                 <motion.span className='pl-5'>1. Home</motion.span>
@@ -125,8 +125,8 @@ const Navbar = () => {
                             </Link>
                         </motion.li>
                     </ul>
-                    <ThemeSwitcher size='big' className="px-5 fixed bottom-5" />
-
+                    <ThemeSwitcher size='big' className="px-5 fixed bottom-5 z-50 " />
+                    <div className='fixed bottom-0 w-full h-[100px] left-0 z-40 bg-gradient-to-t from-background to-[#12121200]'></div>
                 </motion.nav>
             )}
         </AnimatePresence>
