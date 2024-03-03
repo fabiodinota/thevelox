@@ -4,6 +4,14 @@
 const nextConfig = {
 	reactStrictMode: true, // Enable React strict mode for improved error handling
 	swcMinify: true, // Enable SWC minification for improved performance
+    images: {
+        remotePatterns: [
+          {
+            protocol: 'https',
+            hostname: 'storage.thevelox.co',
+          },
+        ],
+      },
 };
 
 // Configuration object tells the next-pwa plugin

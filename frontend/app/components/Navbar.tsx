@@ -61,7 +61,7 @@ const Navbar = () => {
     console.log(openMobileNav)
   return (
     <>
-        <nav className={'w-full fixed top-5 px-5 xl:px-0 xl:top-0 xl:left-0 flex justify-center items-center z-[999]'}>
+        <nav className={'w-screen fixed top-5 px-5 xl:px-0 xl:top-0 xl:left-0 flex justify-center items-center z-[999]'}>
             <div className='w-full flex justify-center items-center h-[80px] xl:h-[100px] rounded-[20px] xl:rounded-none bg-background/70 dark:bg-background back backdrop-blur-2xl xl:bg-background shadow-[0_0_35px_0_#00000010] dark:shadow-[0_0_35px_0_#FFFFFF10]  xl:shadow-[0_0_35px_0_#84848420] xl:dark:shadow-[0_0_35px_0_#FFFFFF06]'>
                 <div className='w-full max-w-[1400px] flex flex-row justify-between px-5 xl:px-10 items-center'>
                     <div className='relative h-[35px] w-[120px] xl:h-[100px]'>
@@ -97,7 +97,7 @@ const Navbar = () => {
         </nav>
         <AnimatePresence mode='wait'>
             {openMobileNav && (
-                <motion.nav variants={navVariant} initial="initial" animate="animate" exit="exit" className='fixed top-0 left-0 w-screen h-screen overflow-scroll pb-[100px] bg-background z-[998] flex flex-col justify-between items-center'>
+                <motion.nav variants={navVariant} initial="initial" animate="animate" exit="exit" className='fixed inset-0 w-screen h-screen overflow-y-auto no-scrollbar pb-[100px] bg-background z-[998] flex flex-col justify-between items-center'>
                     <ul className={'flex flex-col w-full gap-10 px-5 mt-[130px] relative z-30'}>
                         <motion.li onClick={handleClose} variants={liVariant} transition={{ duration: 0.3, delay: openMobileNav ? 0.3 : 0.3, ease: customease }} className='flex items-center w-full flex-col gap-10'>
                             <Link className={`nav-item-mobile hover:text-foreground/80 duration-100 text-[42px] xs:text-[50px] sm:text-[60px] w-full text-left`} href='/'>
@@ -126,8 +126,8 @@ const Navbar = () => {
                         </motion.li>
                     </ul>
                     <ThemeSwitcher size='big' className="px-5 fixed bottom-5 z-50 " />
-                    <div className='fixed bottom-0 w-full h-[100px] left-0 z-40 bg-gradient-to-t from-background to-[#12121200]'></div>
-                </motion.nav>
+{/*                     <div className='fixed bottom-0 w-full h-[100px] left-0 z-40 bg-gradient-to-t from-background to-[#12121200]'></div>
+ */}                </motion.nav>
             )}
         </AnimatePresence>
     </>

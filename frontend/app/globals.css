@@ -97,6 +97,11 @@
     input[type=number] {
         -moz-appearance: textfield;
     }
+
+    .no-scrollbar::-webkit-scrollbar{
+        display: none;
+        width: 0;
+    }
     .h-screen{
         height: 100lvh;
     }
@@ -107,7 +112,7 @@
 
     .bg-hero-gradient{
         background: rgb(228,43,43);
-        background: linear-gradient(27deg, rgba(228,43,43,0.50) 0%, rgba(244,126,82,0) 83%);
+        background: linear-gradient(27deg, rgba(228,43,43,0.50) 0%, rgba(244,126,82,0.5) 81%);
     }
 
     .hero-input[type="text"]:focus + .hero-label,

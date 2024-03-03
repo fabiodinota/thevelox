@@ -43,7 +43,7 @@ export default function RootLayout({
 		<ThemeProvider>
 			<SessionProvider>
                 <AutocompleteProvider>
-                    <html lang="en" className={space_grotesk.className}>
+                    <html lang="en" className={`${space_grotesk.className} bg-background`}>
                         <head>
                             {/* themecolor meta tag */}
                             <meta name="theme-color" content={"#E42B2B"} />

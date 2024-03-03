@@ -36,6 +36,7 @@
 		"react-day-picker": "^8.10.0",
 		"react-dom": "^18",
 		"react-hook-form": "^7.50.1",
+		"react-player": "^2.15.1",
 		"react-responsive": "^9.0.2",
 		"react-zoom-pan-pinch": "^3.3.0",
 		"tailwind-merge": "^2.2.1",
