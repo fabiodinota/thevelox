@@ -25,7 +25,7 @@ const decryptToken = (encryptedToken: string) => {
       }
       return decryptedToken;
     } catch (error) {
-      console.error('Error decrypting token:', error);
+      console.error('Error decrypting token');
       return false; // Or handle the error as appropriate for your application
     }
   };

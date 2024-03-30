@@ -1,19 +1,10 @@
 "use client";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import { boolean } from "zod";
 
-// Create a context to manage the session
-export const SessionContext = createContext({
-	user: null as User | null,
-	isAuthenticated: false,
-	signIn: (credentials: object) => Promise.resolve(),
-	signUp: (userData: object) => Promise.resolve(),
-	signOut: () => {},
-});
-
-// Custom hook to access the theme and toggle function
 export const useSession = () => {
 	const context = useContext(SessionContext);
 	if (!context) {
@@ -32,6 +23,28 @@ type User = {
 	email: string;
 	password: string;
 };
+
+// Define a type for the context value
+type SessionContextType = {
+	user: User | null;
+	isAuthenticated: boolean;
+	signIn: (credentials: object) => Promise<void>;
+	signUp: (
+		userData: object
+	) => Promise<{ success: boolean; message?: string }>;
+	signOut: () => void;
+};
+
+// Define the initial context value based on the type
+const initialContextValue: SessionContextType = {
+	user: null,
+	isAuthenticated: false,
+	signIn: async () => {},
+	signUp: async () => ({ success: true }), // Dummy implementation
+	signOut: () => {},
+};
+
+export const SessionContext = createContext(initialContextValue);
 
 export const SessionProvider = ({ children }: SessionProviderProps) => {
 	const [user, setUser] = useState<User | null>(null);
@@ -71,15 +84,17 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	// Function to refresh the access token
 	const refreshAccessToken = async () => {
 		try {
-			await axios.post(
-				`${process.env.NEXT_PUBLIC_API_URL}/jwt/refresh`,
-				{ encryptedRefreshToken: refreshToken } // Assuming refreshToken is already stored securely
-			).then((res) => {
-                setAccessToken(res.data.encryptedAccessToken);
-                if (res.data.encryptedAccessToken !== "") {
-                    fetchUserData();
-                }
-            });
+			await axios
+				.post(
+					`${process.env.NEXT_PUBLIC_API_URL}/jwt/refresh`,
+					{ encryptedRefreshToken: refreshToken } // Assuming refreshToken is already stored securely
+				)
+				.then((res) => {
+					setAccessToken(res.data.encryptedAccessToken);
+					if (res.data.encryptedAccessToken !== "") {
+						fetchUserData();
+					}
+				});
 		} catch (error) {
 			console.error("Error refreshing access token:", error);
 		}
@@ -87,7 +102,10 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 
 	// Trigger token refresh at regular intervals or before making an API call
 	useEffect(() => {
-		const tokenRefreshInterval = setInterval(refreshAccessToken, 5 * 60 * 1000); // e.g., every 15 minutes
+		const tokenRefreshInterval = setInterval(
+			refreshAccessToken,
+			5 * 60 * 1000
+		); // e.g., every 15 minutes
 		if (!user) {
 			fetchUserData();
 		}
@@ -96,13 +114,13 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	}, []);
 
 	const fetchUserData = async () => {
-        try {
-            const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/user/getUser`,
-                { withCredentials: true }
-            );
+		try {
+			const response = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/user/getUser`,
+				{ withCredentials: true }
+			);
 
-            setUser(response.data);
+			setUser(response.data);
 		} catch (error) {
 			// Handle any errors (e.g., token expiration, unauthorized access)
 			console.error("Error fetching user data:", error);
@@ -110,16 +128,16 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	};
 
 	useEffect(() => {
-        if (accessToken !== "") {
-            fetchUserData();
-        } else if (refreshToken !== "") {
-            refreshAccessToken().then(() => {
-                setTimeout(() => {
-                    fetchUserData();
-                }, 200);
-            });
-        }
-    }, []);
+		if (accessToken !== "") {
+			fetchUserData();
+		} else if (refreshToken !== "") {
+			refreshAccessToken().then(() => {
+				setTimeout(() => {
+					fetchUserData();
+				}, 200);
+			});
+		}
+	}, []);
 
 	// Sign-in function
 	const signIn = async (credentials: object) => {
@@ -139,7 +157,9 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	};
 
 	// Sign-up function
-	const signUp = async (userData: object) => {
+	const signUp = async (
+		userData: object
+	): Promise<{ success: boolean; message?: string }> => {
 		try {
 			const response = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
@@ -149,9 +169,24 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 			setAccessToken(response.data.encryptedAccessToken);
 			setRefreshToken(response.data.encryptedRefreshToken);
 			setUser(response.data.user); // Update the user data in the session context
+
+			return { success: true, message: "Sign-up successful." };
 		} catch (error) {
-			// Handle sign-up errors
-			console.error("Error during sign-up:", error);
+			let errorMessage = "An unexpected error occurred during sign-up.";
+
+			const axiosError = error as AxiosError;
+
+			if (axiosError.response) {
+				errorMessage =
+					(axiosError.response.data as { message?: string })
+						?.message || errorMessage;
+			} else if (axiosError.request) {
+				errorMessage = "No response was received from the server.";
+			} else {
+				errorMessage = axiosError.message || errorMessage;
+			}
+			console.log(errorMessage);
+			return { success: false, message: errorMessage };
 		}
 	};
 

@@ -1,8 +1,8 @@
 "use client"
 
 import React from 'react'
-import { HeroQuickBook } from '../components/HeroQuickBook'
-import { ContactForm } from '../components/ContactForm'
+import { HeroQuickBook } from '../../components/HeroQuickBook'
+import { ContactForm } from '../../components/ContactForm'
 import { motion } from 'framer-motion'
 
 const page = () => {

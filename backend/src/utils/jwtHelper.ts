@@ -44,8 +44,6 @@ export const verifyRefreshToken = (token: string) => {
 				console.log(
 					"Refresh token verification failed: ",
 					error.message,
-					token,
-					refreshSecretKey
 				);
 				reject(error); // Token verification failed
 			} else {

@@ -5,10 +5,10 @@ import Link from "next/link";
 
 import { easeOut, motion } from "framer-motion";
 
-import { HeroQuickBook } from "./components/HeroQuickBook";
-import CorePrinciplesSection from "./components/CorePrinciplesSection";
+import { HeroQuickBook } from "../components/HeroQuickBook";
+import CorePrinciplesSection from "../components/CorePrinciplesSection";
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../components/ui/accordion";
 import HeroBackground from "@/public/hero_background.webp";
 
 import dynamic from 'next/dynamic'

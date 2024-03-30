@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Map } from "../Map";
 import axios from "axios";
-import useQuickBookStore from "../state/state";
+import useQuickBookStore from "../../state/state";
 
 type ISearchReqData = {
 	startStation: string;
@@ -28,10 +28,6 @@ const page = () => {
         passengers: state.passengers,
         searching: state.searching,
     }));
-
-    
-
-
 
 	// Custom function to validate and set searchReqData
 	const updateSearchReqData = (data: ISearchReqData | {}) => {

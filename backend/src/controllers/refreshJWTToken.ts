@@ -36,7 +36,7 @@ export const refreshJWTToken = async (req: Request, res: Response) => {
 		console.log("New access token generated");
 		res.json({ encryptedAccessToken });
 	} catch (error) {
-		console.error("Error:", error);
+		console.error("Error refreshing access token");
 		console.log("Invalid refresh token");
 		res.status(401).json({ message: "Invalid refresh token" });
 	}

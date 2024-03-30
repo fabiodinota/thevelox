@@ -2,15 +2,11 @@ import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import dotenv from "dotenv";
-import Head from "next/head";
 import { ThemeProvider } from "./context/themeContext";
 import { SessionProvider } from "./context/sessionContext";
-import { AnimatePresence } from "framer-motion";
-import AnimatePresenceProvider from "./context/AnimatePresenceProvider";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { AutocompleteProvider } from "./context/AutocompleteContext";
-import { useEffect } from "react";
 import "aos/dist/aos.css";
 import Loading from "./loading";
 
@@ -59,12 +55,7 @@ export default function RootLayout({
                                 "bg-background text-foreground overflow-x-hidden"
                             }
                         >   
-                            <Loading />
-                            <Navbar />
-                            <main className="mt-0 xl:mt-[100px]">
-                                {children}
-                            </main>
-                            <Footer />
+                           {children}
                         </body>     
                     </html>
                 </AutocompleteProvider>

@@ -46,7 +46,7 @@ class Edge {
 class Graph {
 	nodes: Map<string, Node>;
 	edges: Edge[];
-
+    
 	constructor() {
 		this.nodes = new Map();
 		this.edges = [];

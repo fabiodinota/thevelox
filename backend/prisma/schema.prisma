@@ -9,14 +9,12 @@ datasource db {
 
 model users {
   user_id         Int               @id @default(autoincrement()) @db.UnsignedInt
-  first_name      String?           @db.VarChar(50)
-  last_name       String?           @db.VarChar(255)
-  username        String            @db.VarChar(255)
+  full_name       String            @db.VarChar(100)
+  birth_date      DateTime          @db.Date
+  country_code    String            @db.VarChar(255)
+  phone_number    String            @db.VarChar(255)
   email           String            @db.VarChar(100)
   password        String            @db.VarChar(255)
-  birth_date      DateTime?         @db.Date
-  phone_number    String?           @db.VarChar(255)
-  country_code    String?           @db.VarChar(255)
   created_on      DateTime          @db.DateTime(0)
   favorites       favorites[]
   payment_methods payment_methods[]

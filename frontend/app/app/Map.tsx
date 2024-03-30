@@ -7,9 +7,9 @@ import {
 	MiniMap,
 } from "react-zoom-pan-pinch";
 import { motion, AnimatePresence } from "framer-motion";
-import useWindowDimensions from "./utils/useWindowDimensions";
+import useWindowDimensions from "../utils/useWindowDimensions";
 import { useMediaQuery } from "react-responsive";
-import useQuickBookStore from "./state/state";
+import useQuickBookStore from "../state/state";
 
 export const Map = ({
 	searchRequestData,
