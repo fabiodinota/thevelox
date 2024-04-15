@@ -107,15 +107,18 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 
 	// Trigger token refresh at regular intervals or before making an API call
 	useEffect(() => {
-		const tokenRefreshInterval = setInterval(
-			refreshAccessToken,
-			5 * 60 * 1000
-		); // e.g., every 15 minutes
-		if (!user) {
-			fetchUserData();
-		}
+		if (refreshToken) {
+			const tokenRefreshInterval = setInterval(
+				refreshAccessToken,
+				5 * 60 * 1000
+			); // every 5 minutes
 
-		return () => clearInterval(tokenRefreshInterval);
+			if (accessToken.startsWith("U2FsdG")) {
+				fetchUserData();
+			}
+
+			return () => clearInterval(tokenRefreshInterval);
+		}
 	}, []);
 
 	const fetchUserData = async () => {
@@ -133,14 +136,16 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	};
 
 	useEffect(() => {
-		if (accessToken !== "") {
+		if (accessToken.startsWith("U2FsdG")) {
 			fetchUserData();
-		} else if (refreshToken !== "") {
+		} else if (refreshToken.startsWith("U2FsdG")) {
 			refreshAccessToken().then(() => {
 				setTimeout(() => {
 					fetchUserData();
-				}, 200);
+				}, 500);
 			});
+		} else {
+			setUser(null);
 		}
 	}, []);
 
