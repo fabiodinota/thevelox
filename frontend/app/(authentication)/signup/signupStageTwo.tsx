@@ -53,15 +53,12 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 	const phoneNumberRef = useRef<HTMLInputElement>(null);
 
 	const [countryCode, setCountryCode] = useState<string>("");
-	const [countryCodeActive, setCountryCodeActive] = useState<boolean>(false);
 
 	const [disabled, setDisabled] = useState<boolean>(true);
 
 	const [calendarOpen, setCalendarOpen] = useState(false);
 
-	const { releaseFocus, activeId, requestFocus } = useAutocomplete();
-
-	console.log("calendarOpen", calendarOpen);
+	const { releaseFocus } = useAutocomplete();
 
 	useEffect(() => {
 		if (calendarOpen) {
@@ -139,7 +136,6 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 	});
 
 	const onSubmit = handleSubmit(async (data) => {
-		console.log("submitted");
 		setStage(3);
 		setStageData((prev) => ({
 			...prev,

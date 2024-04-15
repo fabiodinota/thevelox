@@ -10,7 +10,7 @@ import SignUpStageOne from "./signupStageOne";
 import { countriesMap } from "@/app/utils/phoneNumberUtils";
 import SignUpStageTwo from "./signupStageTwo";
 import { useSession } from "@/app/context/sessionContext";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const page = () => {
 	const [stageData, setStageData] = useState({
@@ -33,6 +33,8 @@ const page = () => {
 
 	const { signUp } = useSession();
 
+	const router = useRouter();
+
 	useEffect(() => {
 		if (stage === 3) {
 			signUp({
@@ -45,7 +47,7 @@ const page = () => {
 			}).then(({ success, message }) => {
 				if (success) {
 					console.log("Sign-up successful!");
-					redirect("app");
+					router.push("/app");
 				} else {
 					console.error("Sign-up failed:", message);
 					setErrorMessage(message || "");

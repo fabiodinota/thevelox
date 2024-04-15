@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { boolean } from "zod";
+import { useRouter } from "next/navigation";
 
 export const useSession = () => {
 	const context = useContext(SessionContext);
@@ -28,7 +29,9 @@ type User = {
 type SessionContextType = {
 	user: User | null;
 	isAuthenticated: boolean;
-	signIn: (credentials: object) => Promise<void>;
+	signIn: (
+		credentials: object
+	) => Promise<{ success: boolean; message?: string }>;
 	signUp: (
 		userData: object
 	) => Promise<{ success: boolean; message?: string }>;
@@ -39,8 +42,8 @@ type SessionContextType = {
 const initialContextValue: SessionContextType = {
 	user: null,
 	isAuthenticated: false,
-	signIn: async () => {},
-	signUp: async () => ({ success: true }), // Dummy implementation
+	signIn: async () => ({ success: true }),
+	signUp: async () => ({ success: true }),
 	signOut: () => {},
 };
 
@@ -54,6 +57,8 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	const [refreshToken, setRefreshToken] = useState<string>(
 		() => Cookies.get("refreshToken") || ""
 	);
+
+	const router = useRouter();
 
 	/* console.log("User: ", user); */
 
@@ -140,7 +145,9 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	}, []);
 
 	// Sign-in function
-	const signIn = async (credentials: object) => {
+	const signIn = async (
+		credentials: object
+	): Promise<{ success: boolean; message?: string }> => {
 		try {
 			const response = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/auth/signin`,
@@ -150,9 +157,24 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 			setAccessToken(response.data.encryptedAccessToken);
 			setRefreshToken(response.data.encryptedRefreshToken);
 			setUser(response.data.user); // Update the user data in the session context
+
+			return { success: true, message: "Sign-in successful." };
 		} catch (error) {
-			// Handle sign-in errors
-			console.error("Error during sign-in:", error);
+			let errorMessage = "An unexpected error occurred during sign-in.";
+
+			const axiosError = error as AxiosError;
+			if (axiosError.response) {
+				errorMessage =
+					(axiosError.response.data as { message?: string })
+						?.message || errorMessage;
+			} else if (axiosError.request) {
+				errorMessage = "No response was received from the server.";
+			} else {
+				errorMessage = axiosError.message || errorMessage;
+			}
+
+			console.error("Error during sign-in:", errorMessage);
+			return { success: false, message: errorMessage };
 		}
 	};
 
@@ -200,6 +222,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 		setUser(null);
 		setAccessToken("");
 		setRefreshToken("");
+		router.push("/");
 	};
 
 	return (
