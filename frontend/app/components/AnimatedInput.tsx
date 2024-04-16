@@ -82,18 +82,6 @@ const AnimatedInput = ({
 						autoCapitalize="off"
 						autoCorrect="off"
 						role="presentation"
-						onPaste={(e) => {
-							if (type === "password") {
-								e.preventDefault();
-								return false;
-							}
-						}}
-						onCopy={(e) => {
-							if (type === "password") {
-								e.preventDefault();
-								return false;
-							}
-						}}
 						className={`w-full bg-secondary pt-4 pl-3 text-[16px] md:text-[18px] font-medium border-none outline-none ${
 							type === "email" ? "lowercase" : ""
 						}`}

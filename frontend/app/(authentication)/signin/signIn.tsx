@@ -22,6 +22,7 @@ interface SignInProps {
 		password: string;
 	};
 	errorMessage: string;
+	setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SignIn = ({
@@ -29,6 +30,7 @@ const SignIn = ({
 	setSignInData,
 	signInData,
 	errorMessage,
+	setErrorMessage,
 }: SignInProps) => {
 	const [email, setEmail] = useState<string>("");
 	const [emailActive, setEmailActive] = useState<boolean>(false);
@@ -82,6 +84,26 @@ const SignIn = ({
 		}));
 	});
 
+	useEffect(() => {
+		if (errorMessage !== "") {
+			// Focus on the password input field if there's an error
+			passwordRef.current?.focus();
+
+			// Clear the password field and its validation state
+			setPassword("");
+			setPasswordValidation({
+				uppercase: false,
+				number: false,
+				special: false,
+			});
+
+			// Reset the password field in the form to trigger revalidation
+			setValue("password", "", {
+				shouldValidate: true,
+			});
+		}
+	}, [errorMessage, setPassword, setValue, setPasswordValidation]);
+
 	const handleEmailChange = (value: string) => {
 		setEmail(value.toLowerCase().toString());
 		setValue("email", value.toLowerCase().toString(), {
@@ -90,12 +112,16 @@ const SignIn = ({
 	};
 
 	const handlePasswordChange = (value: string) => {
+		if (errorMessage !== "") {
+			// This assumes setErrorMessage exists or you manage error state similarly
+			setErrorMessage("");
+		}
 		setPassword(value);
 		setValue("password", value, { shouldValidate: true });
 		setPasswordValidation({
 			uppercase: /^(?=.*[A-Z])/.test(value),
 			number: /^(?=.*\d{3})/.test(value),
-			special: /^(?=.*[!@#$%^&*()-_+])/.test(value),
+			special: /(?=.*[\W_])/.test(value),
 		});
 	};
 
@@ -152,6 +178,7 @@ const SignIn = ({
 				type="password"
 				tabIndex={2}
 				inputRef={passwordRef}
+				inputValue={password}
 				active={password || passwordActive ? true : false}
 				handleChange={(e) => handlePasswordChange(e.target.value)}
 				handleFocus={() => setPasswordActive(true)}
@@ -179,13 +206,6 @@ const SignIn = ({
 					</div>
 				)}
 			</div>
-			{errorMessage && (
-				<div className="flex flex-row gap-3 items-center w-full">
-					<p className="md:text-[16px] text-[14px] text-red-500">
-						{errorMessage}
-					</p>
-				</div>
-			)}
 			<button
 				type="submit"
 				disabled={disabled}
@@ -194,6 +214,12 @@ const SignIn = ({
 			>
 				Sign In
 			</button>
+			{errorMessage && (
+				<div className="flex flex-row gap-3 items-center w-full">
+					{xIcon}
+					<p className="md:text-[16px] text-[14px]">{errorMessage}</p>
+				</div>
+			)}
 			<div className="w-full flex flex-row gap-10 h-[30px] items-center">
 				<div className="w-full h-[1px] bg-foreground"></div>
 				<p>OR</p>
@@ -204,7 +230,7 @@ const SignIn = ({
 				tabIndex={5}
 				className="rounded-xl flex-shrink-0 border border-foreground w-full h-[50px] md:h-[60px] disabled:opacity-50 text-foreground font-medium text-[16px] md:text-[18px] flex gap-3 items-center justify-center transition-all duration-200 ease-in-out"
 			>
-				Sign Up
+				Create An Account
 			</Link>
 			<p>
 				By clicking “Sign In” you agree to our Terms of Service and

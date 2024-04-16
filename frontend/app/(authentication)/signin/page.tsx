@@ -37,6 +37,7 @@ const page = () => {
 				} else {
 					console.error("Sign-in failed:", message);
 					setErrorMessage(message || "");
+					setStage(1);
 				}
 			});
 		}
@@ -107,6 +108,7 @@ const page = () => {
 					setSignInData={setSignInData}
 					signInData={signInData}
 					errorMessage={errorMessage}
+					setErrorMessage={setErrorMessage}
 				/>
 			</div>
 		</div>

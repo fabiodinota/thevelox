@@ -51,6 +51,7 @@ const page = () => {
 				} else {
 					console.error("Sign-up failed:", message);
 					setErrorMessage(message || "");
+					setStage(1);
 				}
 			});
 		}
@@ -121,6 +122,8 @@ const page = () => {
 						setStage={setStage}
 						setStageData={setStageData}
 						stageData={stageData}
+						errorMessage={errorMessage}
+						setErrorMessage={setErrorMessage}
 					/>
 				)}
 				{(stage === 2 || stage === 3) && (

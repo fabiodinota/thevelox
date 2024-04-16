@@ -39,12 +39,16 @@ interface SignUpStageOneProps {
 			phoneNumber: string;
 		};
 	};
+	errorMessage: string;
+	setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SignUpStageOne = ({
 	setStage,
 	setStageData,
 	stageData,
+	errorMessage,
+	setErrorMessage,
 }: SignUpStageOneProps) => {
 	const [email, setEmail] = useState<string>("");
 	const [emailActive, setEmailActive] = useState<boolean>(false);
@@ -64,6 +68,7 @@ const SignUpStageOne = ({
 		uppercase: false,
 		number: false,
 		special: false,
+		matching: false,
 	});
 
 	useEffect(() => {
@@ -89,9 +94,7 @@ const SignUpStageOne = ({
 			.refine((value) => !/\s/.test(value), {
 				message: "Password cannot contain spaces",
 			}),
-		repeatPassword: z.string().refine((value) => value === password, {
-			message: "Passwords do not match",
-		}),
+		repeatPassword: z.string(),
 	});
 
 	const {
@@ -116,6 +119,16 @@ const SignUpStageOne = ({
 		}));
 	});
 
+	useEffect(() => {
+		if (errorMessage !== "") {
+			// Clear input fields using refs when an error occurs
+			if (emailRef.current) emailRef.current.value = "";
+			if (passwordRef.current) passwordRef.current.value = "";
+			if (repeatPasswordRef.current) repeatPasswordRef.current.value = "";
+			// Optionally reset the error message state if needed
+		}
+	}, [errorMessage, setErrorMessage]);
+
 	const handleEmailChange = (value: string) => {
 		setEmail(value.toLowerCase().toString());
 		setValue("email", value.toLowerCase().toString(), {
@@ -129,13 +142,18 @@ const SignUpStageOne = ({
 		setPasswordValidation({
 			uppercase: /^(?=.*[A-Z])/.test(value),
 			number: /^(?=.*\d{3})/.test(value),
-			special: /^(?=.*[!@#$%^&*()-_+])/.test(value),
+			special: /(?=.*[\W_])/.test(value),
+			matching: value === repeatPassword,
 		});
 	};
 
 	const handlePasswordRepeatChange = (value: string) => {
 		setRepeatPassword(value);
 		setValue("repeatPassword", value, { shouldValidate: true });
+		setPasswordValidation({
+			...passwordValidation,
+			matching: value === password,
+		});
 	};
 
 	useEffect(() => {
@@ -231,11 +249,11 @@ const SignUpStageOne = ({
 						</p>
 					</div>
 				)}
-				{errors.repeatPassword && (
+				{!passwordValidation.matching && (
 					<div className="flex flex-row gap-3 items-center">
 						{xIcon}
 						<p className="md:text-[16px] text-[14px]">
-							{errors.repeatPassword.message}
+							Passwords do not match
 						</p>
 					</div>
 				)}
@@ -249,6 +267,12 @@ const SignUpStageOne = ({
 			>
 				Continue
 			</button>
+			{errorMessage && (
+				<div className="flex flex-row gap-3 items-center w-full">
+					{xIcon}
+					<p className="md:text-[16px] text-[14px]">{errorMessage}</p>
+				</div>
+			)}
 			<div className="w-full flex flex-row gap-10 h-[30px] items-center">
 				<div className="w-full h-[1px] bg-foreground"></div>
 				<p>OR</p>
