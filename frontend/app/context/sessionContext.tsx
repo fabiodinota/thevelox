@@ -219,9 +219,17 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 
 	// Sign-out function
 	const signOut = () => {
+		// Configuration for cookie removal
+		const cookieConfig = {
+			domain: process.env.NEXT_PUBLIC_ORIGIN,
+			path: "/",
+			secure: true,
+			sameSite: "Lax" as const,
+		};
+
 		// Remove the cookies
-		Cookies.remove("accessToken");
-		Cookies.remove("refreshToken");
+		Cookies.remove("accessToken", cookieConfig);
+		Cookies.remove("refreshToken", cookieConfig);
 
 		// Clear the user data and tokens in the state
 		setUser(null);
