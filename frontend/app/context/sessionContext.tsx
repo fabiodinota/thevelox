@@ -129,16 +129,24 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 			);
 
 			setUser(response.data);
-		} catch (error) {
+		} catch (error: any) {
 			// Handle any errors (e.g., token expiration, unauthorized access)
-			console.error("Error fetching user data:", error);
+			console.log("Error fetching user data:", error);
+			if (error.response.status === 403) {
+				refreshAccessToken().then(() => {
+					setTimeout(() => {
+						fetchUserData();
+					}, 500);
+				});
+			}
 		}
 	};
 
 	useEffect(() => {
+		console.log("Calling useEffect");
 		if (accessToken.startsWith("U2FsdG")) {
 			fetchUserData();
-		} else if (refreshToken.startsWith("U2FsdG")) {
+		} else if (refreshToken.startsWith("U2FsdG") && accessToken === "") {
 			refreshAccessToken().then(() => {
 				setTimeout(() => {
 					fetchUserData();
@@ -148,6 +156,8 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 			setUser(null);
 		}
 	}, []);
+
+	console.log("User: ", user);
 
 	// Sign-in function
 	const signIn = async (

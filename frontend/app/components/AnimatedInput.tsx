@@ -50,7 +50,7 @@ const AnimatedInput = ({
 				inputRef?.current?.focus();
 			}}
 		>
-			<div className="w-full h-[70px] md:h-[80px] relative z-[45] cursor-pointer bg-secondary rounded-xl flex flex-row justify-start items-center px-5">
+			<div className="w-full h-[70px] md:h-[80px] relative z-[45] cursor-pointer bg-secondary rounded-xl flex flex-row justify-start items-center px-2.5 lg:px-5">
 				{svgIcon && (
 					<div className="w-12 flex-shrink-0 h-12 grid place-content-center relative">
 						{svgIcon}
@@ -83,7 +83,7 @@ const AnimatedInput = ({
 						autoCorrect="off"
 						role="presentation"
 						className={`w-full bg-secondary pt-4 pl-3 text-[16px] md:text-[18px] font-medium border-none outline-none ${
-							type === "email" ? "lowercase" : ""
+							id === "email" ? "lowercase" : ""
 						}`}
 					/>
 					{type === "password" && inputValue !== "" && (

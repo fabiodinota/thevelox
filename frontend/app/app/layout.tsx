@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Loading from "../loading";
+import BottomNav from "../components/app/BottomNav";
+import Header from "../components/app/Header";
 
 export const metadata: Metadata = {
 	title: "The Velox - Home",
@@ -20,11 +22,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-        <>
-{/*             <Loading />
- */}            <main>
-                {children}
-            </main>
-        </>
+		<div className="h-screen flex flex-col">
+			<Header />
+			<main className="h-full">{children}</main>
+			<BottomNav />
+		</div>
 	);
 }

@@ -179,12 +179,12 @@ const SignUpStageOne = ({
 	return (
 		<form
 			onSubmit={onSubmit}
-			className="w-full h-full max-w-[700px] relative flex-shrink-0 flex flex-col justify-center items-center gap-2.5 md:gap-5"
+			className="w-full h-full lg:max-w-[700px] relative flex-shrink-0 flex flex-col justify-center items-start lg:items-center gap-2.5 lg:gap-5"
 		>
-			<h1 className="text-3xl font-semibold leading-none">
+			<h1 className="text-2xl lg:text-3xl font-semibold leading-none">
 				Create An Account
 			</h1>
-			<p className="md:text-[20px] text-[16px] leading-none">
+			<p className="lg:text-[20px] text-[16px] leading-none">
 				Enter the details below to create your account.
 			</p>
 			<AnimatedInput

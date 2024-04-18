@@ -277,3 +277,56 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+interface NavBarProps {
+	onClick: (() => void) | undefined;
+	href: string;
+}
+
+export const MinimalNavBar = ({ onClick, href }: NavBarProps) => {
+	const { theme } = useTheme();
+
+	return (
+		<nav
+			className={
+				"w-screen fixed block lg:hidden top-5 px-5 z-50 xl:px-0 xl:top-0 xl:left-0"
+			}
+		>
+			<div className="w-full flex justify-center items-center h-[80px] xl:h-[100px] rounded-[20px] xl:rounded-none bg-background/70 dark:bg-background back backdrop-blur-2xl xl:bg-background shadow-[0_0_35px_0_#00000010] dark:shadow-[0_0_35px_0_#FFFFFF10]  xl:shadow-[0_0_35px_0_#84848420] xl:dark:shadow-[0_0_35px_0_#FFFFFF06]">
+				<div className="w-full max-w-[1400px] flex flex-row justify-between px-5 xl:px-10 items-center">
+					<div className="relative h-[35px] w-[120px] xl:h-[100px]">
+						<Image
+							sizes="120px"
+							src={theme === "dark" ? Logo_White : Logo_Black}
+							alt="TheVelox"
+							className={"object-contain"}
+							fill
+							priority
+						/>
+					</div>
+					<Link
+						href={href}
+						onClick={onClick}
+						className="flex-row gap-3 flex"
+					>
+						<svg
+							width="14"
+							height="22"
+							viewBox="0 0 14 22"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								d="M12 1.5L2.76316 10.275C2.34816 10.6693 2.34816 11.3307 2.76316 11.725L12 20.5"
+								className="stroke-foreground"
+								strokeWidth="3"
+								strokeLinecap="round"
+							/>
+						</svg>
+						Go Back
+					</Link>
+				</div>
+			</div>
+		</nav>
+	);
+};

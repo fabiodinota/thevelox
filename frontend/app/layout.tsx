@@ -4,11 +4,7 @@ import "./globals.css";
 import dotenv from "dotenv";
 import { ThemeProvider } from "./context/themeContext";
 import { SessionProvider } from "./context/sessionContext";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import { AutocompleteProvider } from "./context/AutocompleteContext";
-import "aos/dist/aos.css";
-import Loading from "./loading";
 
 // Load environment variables from .env
 dotenv.config();
@@ -33,32 +29,36 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-    
-
 	return (
 		<ThemeProvider>
 			<SessionProvider>
-                <AutocompleteProvider>
-                    <html lang="en" className={`${space_grotesk.className} bg-background`}>
-                        <head>
-                            {/* themecolor meta tag */}
-                            <meta name="theme-color" content={"#E42B2B"} />
-                            {/* viewport meta tag */}
-                            <meta
-                                name="viewport"
-                                content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
-                                />
-                            <link rel="preconnect" href="https://api.thevelox.co" />
-                        </head>
-                        <body
-                            className={
-                                "bg-background text-foreground overflow-x-hidden"
-                            }
-                        >   
-                           {children}
-                        </body>     
-                    </html>
-                </AutocompleteProvider>
+				<AutocompleteProvider>
+					<html
+						lang="en"
+						className={`${space_grotesk.className} bg-background`}
+					>
+						<head>
+							{/* themecolor meta tag */}
+							<meta name="theme-color" content={"#E42B2B"} />
+							{/* viewport meta tag */}
+							<meta
+								name="viewport"
+								content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
+							/>
+							<link
+								rel="preconnect"
+								href="https://api.thevelox.co"
+							/>
+						</head>
+						<body
+							className={
+								"bg-background text-foreground overflow-x-hidden"
+							}
+						>
+							{children}
+						</body>
+					</html>
+				</AutocompleteProvider>
 			</SessionProvider>
 		</ThemeProvider>
 	);

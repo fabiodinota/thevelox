@@ -240,7 +240,7 @@ const CustomAutocomplete: React.FC<Props> = ({
 			onMouseEnter={() => setIsMouseInside(true)}
 			onMouseLeave={() => setIsMouseInside(false)}
 		>
-			<div className="w-full h-[70px] md:h-[80px] relative z-[45] cursor-pointer bg-secondary rounded-xl flex flex-row justify-start items-center px-5">
+			<div className="w-full h-[70px] md:h-[80px] relative z-[45] cursor-pointer bg-secondary rounded-xl flex flex-row justify-start items-center px-2.5 lg:px-5">
 				{svgIcon && (
 					<div className="w-12 flex-shrink-0 h-12 grid place-content-center relative">
 						{svgIcon}

@@ -225,12 +225,12 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 		<>
 			<form
 				onSubmit={onSubmit}
-				className="w-full h-full max-w-[700px] relative flex-shrink-0 flex flex-col justify-center items-center gap-2.5 md:gap-5"
+				className="w-full lg:h-full lg:max-w-[700px] relative flex-shrink-0 flex flex-col justify-end lg:justify-center items-center gap-2.5 lg:gap-5"
 			>
-				<h1 className="text-3xl font-semibold leading-none text-center">
+				<h1 className="text-2xl lg:text-3xl font-semibold leading-none text-left w-full lg:text-center">
 					Welcome, tell us a bit more about yourself
 				</h1>
-				<p className="md:text-[20px] text-[16px] leading-none text-center">
+				<p className="lg:text-[20px] text-[16px] leading-none text-left w-full lg:text-center">
 					We need a bit more information to create your account,
 					please fill in the following fields to continue.
 				</p>
@@ -260,7 +260,7 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 						id="calendarDOB"
 						tabIndex={7}
 						className={
-							"flex items-center flex-row w-full h-[70px] md:h-[80px] bg-secondary rounded-xl px-5 text-left font-normal text-[16px] justify-start"
+							"flex items-center flex-row w-full h-[70px] md:h-[80px] bg-secondary rounded-xl px-2.5 lg:px-5 text-left font-normal text-[16px] justify-start"
 						}
 					>
 						<div className="flex items-center flex-row w-full relative">
@@ -315,7 +315,7 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 						</p>
 					</div>
 				)}
-				<div className="flex flex-row gap-5 w-full">
+				<div className="flex flex-row gap-2.5 lg:gap-5 w-full">
 					<div className="w-[200px]">
 						<CustomAutocomplete
 							id="countryCode"

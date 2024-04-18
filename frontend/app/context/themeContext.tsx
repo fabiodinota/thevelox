@@ -2,12 +2,13 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import AOS from "aos";
+import "aos/dist/aos.css";
 
 export const ThemeContext = createContext({
 	theme: "light",
 	toggleTheme: () => {},
-    setLight: () => {},
-    setDark: () => {},
+	setLight: () => {},
+	setDark: () => {},
 });
 
 export const useTheme = () => {
@@ -53,26 +54,28 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 		}
 	}, [theme]);
 
-    const setLight = () => {
-        if (theme === "light") return;
-        setTheme("light");
-        localStorage.setItem("theme", "light");
-        document.documentElement.classList.remove("dark");
-    };
+	const setLight = () => {
+		if (theme === "light") return;
+		setTheme("light");
+		localStorage.setItem("theme", "light");
+		document.documentElement.classList.remove("dark");
+	};
 
-    const setDark = () => {
-        if (theme === "dark") return;
-        setTheme("dark");
-        localStorage.setItem("theme", "dark");
-        document.documentElement.classList.add("dark");
-    };
+	const setDark = () => {
+		if (theme === "dark") return;
+		setTheme("dark");
+		localStorage.setItem("theme", "dark");
+		document.documentElement.classList.add("dark");
+	};
 
-    useEffect(() => {
-        AOS.init();
-    }, []);
+	useEffect(() => {
+		AOS.init();
+	}, []);
 
 	return (
-		<ThemeContext.Provider value={{ theme, toggleTheme, setLight, setDark }}>
+		<ThemeContext.Provider
+			value={{ theme, toggleTheme, setLight, setDark }}
+		>
 			{children}
 		</ThemeContext.Provider>
 	);
