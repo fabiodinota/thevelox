@@ -30,7 +30,7 @@ const page = () => {
 
 	const [errorMessage, setErrorMessage] = useState<string>("");
 
-	const [stage, setStage] = useState<number>(2);
+	const [stage, setStage] = useState<number>(1);
 
 	const { signUp } = useSession();
 
@@ -66,7 +66,7 @@ const page = () => {
 				}
 				href={stage === 1 ? "/" : "/signup"}
 			/>
-			<div className="bg-gradient lg:rounded-3xl relative w-full flex-grow min-h-[400px] grid place-content-center overflow-hidden">
+			<div className="bg-gradient lg:rounded-3xl relative w-full flex-grow h-[400px] grid place-content-center overflow-hidden">
 				<div className="flex flex-col justify-center items-center gap-3 pt-10 lg:pt-0">
 					<svg
 						width="48"
