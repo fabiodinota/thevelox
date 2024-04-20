@@ -19,6 +19,7 @@ import {
 	flattenedCountries,
 } from "@/app/utils/phoneNumberUtils";
 import { xIcon } from "@/app/components/Icons";
+import { useMediaQuery } from "react-responsive";
 
 interface SignUpStageOneProps {
 	setStage: React.Dispatch<React.SetStateAction<number>>;
@@ -221,11 +222,17 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 		setDisabled(!isValid);
 	}, [isValid]);
 
+	const mobileHeight = useMediaQuery({ query: "(max-height: 850px)" });
+
 	return (
 		<>
 			<form
 				onSubmit={onSubmit}
-				className="w-full lg:h-full lg:max-w-[700px] relative flex-shrink-0 flex flex-col justify-end lg:justify-center items-center gap-2.5 lg:gap-5"
+				className={`w-full h-full lg:max-w-[700px] relative flex-shrink-0 flex flex-col items-start ${
+					mobileHeight
+						? "items-start lg:py-10"
+						: "lg:items-center justify-center py-0"
+				} gap-2.5 lg:gap-5`}
 			>
 				<h1 className="text-2xl lg:text-3xl font-semibold leading-none text-left w-full lg:text-center">
 					Welcome, tell us a bit more about yourself
@@ -374,6 +381,11 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 				>
 					Sign Up
 				</button>
+				<div className="w-full flex flex-row gap-10 h-[30px] items-center">
+					<div className="w-full h-[1px] bg-foreground"></div>
+					<p>OR</p>
+					<div className="w-full h-[1px] bg-foreground"></div>
+				</div>
 				<button
 					onClick={() => setStage(1)}
 					type="submit"

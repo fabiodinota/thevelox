@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import AnimatedInput from "@/app/components/AnimatedInput";
 import { xIcon, checkIcon } from "@/app/components/Icons";
+import { useMediaQuery } from "react-responsive";
 
 interface SignInProps {
 	setStage: React.Dispatch<React.SetStateAction<number>>;
@@ -144,13 +145,21 @@ const SignIn = ({
 		setPassword(values.password);
 	}, []);
 
+	const mobileHeight = useMediaQuery({ query: "(max-height: 850px)" });
+
 	return (
 		<form
 			onSubmit={onSubmit}
-			className="w-full h-full max-w-[700px] relative flex-shrink-0 flex flex-col justify-center items-center gap-2.5 md:gap-5"
+			className={`w-full h-full lg:max-w-[700px] relative flex-shrink-0 flex flex-col items-start ${
+				mobileHeight
+					? "items-start lg:py-10"
+					: "lg:items-center justify-center py-0"
+			} gap-2.5 lg:gap-5`}
 		>
-			<h1 className="text-3xl font-semibold leading-none">Sign In</h1>
-			<p className="md:text-[20px] text-[16px] leading-none">
+			<h1 className="text-2xl lg:text-3xl font-semibold leading-none w-full text-left lg:text-center">
+				Sign In
+			</h1>
+			<p className="lg:text-[20px] text-[16px] leading-none w-full text-left lg:text-center">
 				Enter the details below to create your account.
 			</p>
 			<AnimatedInput

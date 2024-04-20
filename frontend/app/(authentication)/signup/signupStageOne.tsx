@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import AnimatedInput from "@/app/components/AnimatedInput";
 import { xIcon, checkIcon } from "@/app/components/Icons";
+import { useMediaQuery } from "react-responsive";
 
 interface SignUpStageOneProps {
 	setStage: React.Dispatch<React.SetStateAction<number>>;
@@ -176,15 +177,21 @@ const SignUpStageOne = ({
 		setRepeatPassword(values.repeatPassword);
 	}, []);
 
+	const mobileHeight = useMediaQuery({ query: "(max-height: 850px)" });
+
 	return (
 		<form
 			onSubmit={onSubmit}
-			className="w-full h-full lg:max-w-[700px] relative flex-shrink-0 flex flex-col justify-center items-start lg:items-center gap-2.5 lg:gap-5"
+			className={`w-full h-full lg:max-w-[700px] relative flex-shrink-0 flex flex-col items-start ${
+				mobileHeight
+					? "items-start lg:py-10"
+					: "lg:items-center justify-center py-0"
+			} gap-2.5 lg:gap-5`}
 		>
-			<h1 className="text-2xl lg:text-3xl font-semibold leading-none">
+			<h1 className="text-2xl lg:text-3xl font-semibold leading-none w-full text-left lg:text-center">
 				Create An Account
 			</h1>
-			<p className="lg:text-[20px] text-[16px] leading-none">
+			<p className="lg:text-[20px] text-[16px] leading-none w-full text-left lg:text-center">
 				Enter the details below to create your account.
 			</p>
 			<AnimatedInput
@@ -286,10 +293,6 @@ const SignUpStageOne = ({
 			>
 				Sign In
 			</Link>
-			<p>
-				By clicking “Sign Up” you agree to our Terms of Service and
-				Privacy Policy
-			</p>
 		</form>
 	);
 };

@@ -143,7 +143,6 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	};
 
 	useEffect(() => {
-		console.log("Calling useEffect");
 		if (accessToken.startsWith("U2FsdG")) {
 			fetchUserData();
 		} else if (refreshToken.startsWith("U2FsdG") && accessToken === "") {

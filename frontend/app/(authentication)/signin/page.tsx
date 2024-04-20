@@ -10,6 +10,7 @@ import SignIn from "./signIn";
 import { countriesMap } from "@/app/utils/phoneNumberUtils";
 import { useSession } from "@/app/context/sessionContext";
 import { useRouter } from "next/navigation";
+import { MinimalNavBar } from "@/app/components/Navbar";
 
 const page = () => {
 	const [signInData, setSignInData] = useState({
@@ -44,13 +45,20 @@ const page = () => {
 	}, [stage]);
 
 	return (
-		<div className="p-10 flex flex-row gap-10 h-screen w-full">
-			<div className="bg-gradient rounded-3xl relative w-full h-full grid place-content-center overflow-hidden">
-				<div className="flex flex-col justify-center items-center gap-3">
+		<div className="p-0 lg:p-10 flex flex-col lg:flex-row gap-5 lg:gap-10 h-screen w-full">
+			<MinimalNavBar
+				onClick={
+					stage === 2 || stage === 3 ? () => setStage(1) : undefined
+				}
+				href={stage === 1 ? "/" : "/signup"}
+			/>
+			<div className="bg-gradient lg:rounded-3xl relative w-full flex-grow min-h-[400px] grid place-content-center overflow-hidden">
+				<div className="flex flex-col justify-center items-center gap-1 lg:gap-3 pt-10 lg:pt-0">
 					<svg
 						width="48"
 						height="58"
 						viewBox="0 0 48 58"
+						className="lg:scale-100 scale-75"
 						fill="none"
 						xmlns="http://www.w3.org/2000/svg"
 					>
@@ -63,7 +71,7 @@ const page = () => {
 							fill="white"
 						/>
 					</svg>
-					<p className="md:text-[20px] text-[16px] text-white">
+					<p className="lg:text-[20px] text-[16px] text-white">
 						Electricity In Its Veins
 					</p>
 				</div>
@@ -73,9 +81,10 @@ const page = () => {
 					fill
 					className="object-cover opacity-75 rounded-2xl"
 				/>
+				<div className="w-full h-[100px] absolute block lg:hidden bottom-0 left-0 z-40 bg-gradient-to-t from-background to-black/0"></div>
 			</div>
 			<div
-				className={`w-full h-full flex flex-col justify-start items-center overflow-y-scroll no-scrollbar`}
+				className={`w-full py-10 lg:py-0 lg:flex-grow flex flex-col justify-end lg:justify-start items-start lg:items-center  p-5 lg:p-0`}
 			>
 				<Link
 					href={stage === 1 ? "/" : "/signup"}
@@ -84,7 +93,7 @@ const page = () => {
 							? () => setStage(1)
 							: undefined
 					}
-					className="w-full max-w-[700px] flex flex-row gap-3"
+					className="w-full max-w-[700px] flex-row gap-3 hidden lg:flex"
 				>
 					<svg
 						width="14"
