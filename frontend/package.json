@@ -29,6 +29,7 @@
 		"date-fns": "^3.3.1",
 		"framer-motion": "^11.0.3",
 		"hamburger-react": "^2.5.0",
+		"jose": "^5.2.4",
 		"js-cookie": "^3.0.5",
 		"jsonwebtoken": "^9.0.2",
 		"libphonenumber-js": "^1.10.59",

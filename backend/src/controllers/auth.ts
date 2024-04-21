@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { hashPassword, verifyPassword } from "../utils/hashPassword";
 import { generateAccessToken, generateRefreshToken } from "../utils/jwtHelper";
-import { decryptToken, encryptToken } from "../utils/cryptToken";
+import { encryptToken } from "../utils/cryptToken";
 
 const prisma = new PrismaClient();
 
@@ -24,7 +24,7 @@ export const signUp = async (req: Request, res: Response) => {
 	});
 
 	if (existingUser) {
-		console.log("User with that username or email already exists");
+		console.log("User with that email already exists");
 		return res.status(409).send({
 			message: "User with that email already exists",
 		});
@@ -49,7 +49,19 @@ export const signUp = async (req: Request, res: Response) => {
 	const encryptedRefreshToken = encryptToken(refreshToken);
 
 	console.log("New user created: ", newUser);
-	res.send({ user: newUser, encryptedAccessToken, encryptedRefreshToken });
+	res.cookie("accessToken", encryptedAccessToken, {
+		httpOnly: true,
+		secure: true,
+		sameSite: "strict",
+		expires: new Date(Date.now() + 1000 * 60 * 15), // 15 mins
+	});
+	res.cookie("refreshToken", encryptedRefreshToken, {
+		httpOnly: true,
+		secure: true,
+		sameSite: "strict",
+		expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
+	});
+	res.send({ user: newUser });
 };
 
 // Sign in a user based on username and password
@@ -79,7 +91,19 @@ export const signIn = async (req: Request, res: Response) => {
 
 		console.log("User authenticated: ", user);
 
-		res.send({ user, encryptedAccessToken, encryptedRefreshToken });
+		res.cookie("accessToken", encryptedAccessToken, {
+			httpOnly: true,
+			secure: true,
+			sameSite: "strict",
+			expires: new Date(Date.now() + 1000 * 60 * 15), // 15 mins
+		});
+		res.cookie("refreshToken", encryptedRefreshToken, {
+			httpOnly: true,
+			secure: true,
+			sameSite: "strict",
+			expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
+		});
+		res.send({ user });
 	} else {
 		console.log("Password is incorrect");
 		res.status(401).send({ message: "Password is incorrect" });
@@ -104,8 +128,15 @@ export const verifyToken = async (req: CustomRequest, res: Response) => {
 	});
 
 	if (user) {
-		res.send({ valid: true });
+		res.send({ isValid: true });
 	} else {
-		res.send({ valid: false });
+		res.send({ isValid: false });
 	}
+};
+
+export const signOut = async (req: Request, res: Response) => {
+	res.clearCookie("accessToken");
+	res.clearCookie("refreshToken");
+
+	res.send({ message: "User has been signed out" });
 };

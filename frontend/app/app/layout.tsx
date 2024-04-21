@@ -23,7 +23,6 @@ export default function RootLayout({
 }>) {
 	return (
 		<div className="h-screen flex flex-col">
-			<Header />
 			<main className="h-full">{children}</main>
 			<BottomNav />
 		</div>

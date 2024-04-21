@@ -7,11 +7,14 @@ const prisma = new PrismaClient();
 
 // Refresh the JWT Access Token.
 export const refreshJWTToken = async (req: Request, res: Response) => {
-	const { encryptedRefreshToken } = req.body;
+	const encryptedRefreshToken = req.cookies.refreshToken;
 
-    const refreshToken = decryptToken(encryptedRefreshToken) as string;
+	if (!encryptedRefreshToken) {
+		console.log("No refresh token found");
+		return res.status(401).json({ message: "No refresh token found" });
+	}
 
-	console.log("Refresh token:", refreshToken);
+	const refreshToken = decryptToken(encryptedRefreshToken) as string;
 
 	try {
 		// Verify the refresh token
@@ -31,13 +34,18 @@ export const refreshJWTToken = async (req: Request, res: Response) => {
 
 		const accessToken = generateAccessToken(user.user_id);
 
-        const encryptedAccessToken = encryptToken(accessToken);
+		const encryptedAccessToken = encryptToken(accessToken);
 
 		console.log("New access token generated");
-		res.json({ encryptedAccessToken });
+		res.cookie("accessToken", encryptedAccessToken, {
+			httpOnly: true,
+			secure: true,
+			sameSite: "strict",
+			expires: new Date(Date.now() + 1000 * 60 * 15), // 7 days
+		});
+		res.status(200).json({ message: "Access token refreshed" });
 	} catch (error) {
 		console.error("Error refreshing access token");
-		console.log("Invalid refresh token");
 		res.status(401).json({ message: "Invalid refresh token" });
 	}
 };

@@ -91,7 +91,7 @@ const SignIn = ({
 			passwordRef.current?.focus();
 
 			// Clear the password field and its validation state
-			setPassword("");
+			passwordRef.current?.value && (passwordRef.current.value = "");
 			setPasswordValidation({
 				uppercase: false,
 				number: false,
@@ -187,7 +187,6 @@ const SignIn = ({
 				type="password"
 				tabIndex={2}
 				inputRef={passwordRef}
-				inputValue={password}
 				active={password || passwordActive ? true : false}
 				handleChange={(e) => handlePasswordChange(e.target.value)}
 				handleFocus={() => setPasswordActive(true)}

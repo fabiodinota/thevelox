@@ -55,6 +55,9 @@ app.use("/user", userRouter);
 app.use("/jwt", jwtRouter);
 app.use("/map", mapRouter);
 app.use("/contact", contactRouter);
+app.get("/test", (req: Request, res: Response) => {
+	res.send({ message: "Test route" });
+});
 
 // start the Express server
 app.listen(port, () => {

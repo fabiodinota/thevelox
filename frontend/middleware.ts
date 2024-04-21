@@ -1,38 +1,72 @@
+import axios from "axios";
 import { NextResponse, NextRequest } from "next/server";
 
-// This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-	const userAccessToken = request.cookies.get("accessToken")?.value;
-	const userRefreshToken = request.cookies.get("refreshToken")?.value;
+async function validateToken(token: string) {
+	try {
+		const data = await fetch(
+			`${process.env.NEXT_PUBLIC_API_URL}/user/getUser`,
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + token,
+				},
+			}
+		);
+		return await data.json();
+	} catch (error: any) {
+		console.error("Error validating token:", error.message);
+	}
+}
 
-	const isAuthenticated =
-		userAccessToken?.startsWith("U2FsdG") &&
-		userRefreshToken?.startsWith("U2FsdG")
-			? true
-			: false;
+type User = {
+	user_id: number;
+	full_name: string;
+	birth_date: string;
+	country_code: string;
+	phone_number: string;
+	email: string;
+	password: string;
+	admin: boolean;
+	created_on: string;
+};
 
-	if (isAuthenticated) {
-		console.log("User is authenticated");
-		if (request.nextUrl.pathname.startsWith("/signin")) {
-			console.log("Redirecting to /app from signin");
-			return NextResponse.redirect(new URL("/app", request.url));
-		} else if (request.nextUrl.pathname.startsWith("/signup")) {
-			console.log("Redirecting to /app from signup");
-			return NextResponse.redirect(new URL("/app", request.url));
-		} else if (request.nextUrl.pathname === "/app") {
-			console.log("Redirecting to /app/home from app");
+export async function middleware(request: NextRequest) {
+	const accessToken = request.cookies.get("accessToken")?.value ?? "";
+
+	let user: User | null = null;
+	if (accessToken !== "") {
+		user = await validateToken(accessToken);
+		console.log("User is authenticated:", user?.admin);
+	}
+
+	if (user?.user_id) {
+		if (["/signin", "/signup", "/app"].includes(request.nextUrl.pathname)) {
 			return NextResponse.redirect(new URL("/app/home", request.url));
-		} else {
-			return NextResponse.next();
 		}
-	} else if (!isAuthenticated) {
-		console.log("User is not authenticated");
-		if (request.nextUrl.pathname.startsWith("/app")) {
-			console.log("Redirecting to /signin from app");
+		if (
+			request.nextUrl.pathname.startsWith("/app/admin") &&
+			user.admin === false
+		) {
+			return NextResponse.redirect(new URL("/app/home", request.url));
+		}
+
+		return NextResponse.next();
+	} else if (user && user.admin === true) {
+		console.log("User is an admin:", user);
+		if (request.nextUrl.pathname === "/app/admin") {
+			return NextResponse.next();
+		} else {
+			return NextResponse.redirect(new URL("/app/home", request.url));
+		}
+	} else if (user === null) {
+		if (request.nextUrl.pathname === "/app/admin") {
 			return NextResponse.redirect(new URL("/signin", request.url));
-		} else {
-			return NextResponse.next();
 		}
+		if (request.nextUrl.pathname.startsWith("/app")) {
+			return NextResponse.redirect(new URL("/signin", request.url));
+		}
+		return NextResponse.next();
 	}
 }
 

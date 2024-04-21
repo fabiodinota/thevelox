@@ -38,8 +38,17 @@ export default function RootLayout({
 						className={`${space_grotesk.className} bg-background`}
 					>
 						<head>
-							{/* themecolor meta tag */}
-							<meta name="theme-color" content={"#E42B2B"} />
+							<meta
+								name="theme-color"
+								media="(prefers-color-scheme: dark)"
+								content="#121212"
+							/>
+							<meta
+								name="theme-color"
+								media="(prefers-color-scheme: light)"
+								content="#ffffff"
+							/>
+
 							{/* viewport meta tag */}
 							<meta
 								name="viewport"

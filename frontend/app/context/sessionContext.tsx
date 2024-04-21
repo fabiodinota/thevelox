@@ -4,7 +4,8 @@ import axios, { AxiosError } from "axios";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { boolean } from "zod";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export const useSession = () => {
 	const context = useContext(SessionContext);
@@ -23,81 +24,64 @@ type User = {
 	username: string;
 	email: string;
 	password: string;
+	admin: boolean;
 };
 
 // Define a type for the context value
 type SessionContextType = {
 	user: User | null;
 	isAuthenticated: boolean;
+	isAdmin: boolean;
 	signIn: (
 		credentials: object
 	) => Promise<{ success: boolean; message?: string }>;
 	signUp: (
 		userData: object
 	) => Promise<{ success: boolean; message?: string }>;
-	signOut: () => void;
+	signOut: () => Promise<{ success: boolean; message?: string }>;
 };
 
 // Define the initial context value based on the type
 const initialContextValue: SessionContextType = {
 	user: null,
 	isAuthenticated: false,
+	isAdmin: false,
 	signIn: async () => ({ success: true }),
 	signUp: async () => ({ success: true }),
-	signOut: () => {},
+	signOut: async () => ({ success: true }),
 };
 
 export const SessionContext = createContext(initialContextValue);
 
 export const SessionProvider = ({ children }: SessionProviderProps) => {
 	const [user, setUser] = useState<User | null>(null);
-	const [accessToken, setAccessToken] = useState<string>(
-		() => Cookies.get("accessToken") || ""
-	);
-	const [refreshToken, setRefreshToken] = useState<string>(
-		() => Cookies.get("refreshToken") || ""
-	);
+	const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
-	const router = useRouter();
-
-	/* console.log("User: ", user); */
-
-	// Store the access token in localStorage
+	// Check if the user is an admin
 	useEffect(() => {
-		if (accessToken !== "") {
-			Cookies.set("accessToken", accessToken, {
-				expires: 1,
-				secure: true,
-				sameSite: "Lax",
-				domain: process.env.NEXT_PUBLIC_ORIGIN,
-			});
+		if (user) {
+			setIsAdmin(user.admin);
 		}
-	}, [accessToken]);
-
-	// Store the refresh token in a cookie
-	useEffect(() => {
-		if (refreshToken !== "") {
-			Cookies.set("refreshToken", refreshToken, {
-				expires: 7,
-				secure: true,
-				sameSite: "Lax",
-				domain: process.env.NEXT_PUBLIC_ORIGIN,
-			});
-		}
-	}, [refreshToken]);
+	}, [user]);
 
 	// Function to refresh the access token
 	const refreshAccessToken = async () => {
 		try {
 			await axios
-				.post(
+				.get(
 					`${process.env.NEXT_PUBLIC_API_URL}/jwt/refresh`,
-					{ encryptedRefreshToken: refreshToken } // Assuming refreshToken is already stored securely
+					{ withCredentials: true } // Assuming refreshToken is already stored securely
 				)
 				.then((res) => {
-					setAccessToken(res.data.encryptedAccessToken);
-					if (res.data.encryptedAccessToken !== "") {
+					if (res.status === 200) {
 						fetchUserData();
+					} else if (
+						res.status === 401 &&
+						res.data.message === "No refresh token found"
+					) {
+						console.log("No refresh token found");
+					} else {
+						console.log("Error refreshing access token");
 					}
 				});
 		} catch (error) {
@@ -107,18 +91,11 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 
 	// Trigger token refresh at regular intervals or before making an API call
 	useEffect(() => {
-		if (refreshToken) {
-			const tokenRefreshInterval = setInterval(
-				refreshAccessToken,
-				5 * 60 * 1000
-			); // every 5 minutes
+		const tokenRefreshInterval = setInterval(() => {
+			refreshAccessToken();
+		}, 13 * 60 * 1000);
 
-			if (accessToken.startsWith("U2FsdG")) {
-				fetchUserData();
-			}
-
-			return () => clearInterval(tokenRefreshInterval);
-		}
+		return () => clearInterval(tokenRefreshInterval);
 	}, []);
 
 	const fetchUserData = async () => {
@@ -133,30 +110,22 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 			// Handle any errors (e.g., token expiration, unauthorized access)
 			console.log("Error fetching user data:", error);
 			if (error.response.status === 403) {
-				refreshAccessToken().then(() => {
-					setTimeout(() => {
-						fetchUserData();
-					}, 500);
-				});
+				refreshAccessToken();
 			}
 		}
 	};
 
 	useEffect(() => {
-		if (accessToken.startsWith("U2FsdG")) {
+		try {
 			fetchUserData();
-		} else if (refreshToken.startsWith("U2FsdG") && accessToken === "") {
-			refreshAccessToken().then(() => {
-				setTimeout(() => {
-					fetchUserData();
-				}, 500);
-			});
-		} else {
-			setUser(null);
+		} catch (error: any) {
+			try {
+				refreshAccessToken();
+			} catch (error: any) {
+				console.error("Error fetching user data:", error);
+			}
 		}
 	}, []);
-
-	console.log("User: ", user);
 
 	// Sign-in function
 	const signIn = async (
@@ -165,11 +134,10 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 		try {
 			const response = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/auth/signin`,
-				credentials
+				credentials,
+				{ withCredentials: true }
 			);
 
-			setAccessToken(response.data.encryptedAccessToken);
-			setRefreshToken(response.data.encryptedRefreshToken);
 			setUser(response.data.user); // Update the user data in the session context
 
 			return { success: true, message: "Sign-in successful." };
@@ -199,11 +167,10 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 		try {
 			const response = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
-				userData
+				userData,
+				{ withCredentials: true }
 			);
 
-			setAccessToken(response.data.encryptedAccessToken);
-			setRefreshToken(response.data.encryptedRefreshToken);
 			setUser(response.data.user); // Update the user data in the session context
 
 			return { success: true, message: "Sign-up successful." };
@@ -227,29 +194,45 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	};
 
 	// Sign-out function
-	const signOut = () => {
-		// Configuration for cookie removal
-		const cookieConfig = {
-			domain: process.env.NEXT_PUBLIC_ORIGIN,
-			path: "/",
-			secure: true,
-			sameSite: "Lax" as const,
-		};
-
-		// Remove the cookies
-		Cookies.remove("accessToken", cookieConfig);
-		Cookies.remove("refreshToken", cookieConfig);
-
+	const signOut = async () => {
 		// Clear the user data and tokens in the state
-		setUser(null);
-		setAccessToken("");
-		setRefreshToken("");
-		router.push("/");
+		try {
+			const response = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/auth/signout`,
+				{ withCredentials: true }
+			);
+
+			setUser(null); // Update the user data in the session context
+			return { success: true, message: "Sign-Out successful." };
+		} catch (error) {
+			let errorMessage = "An unexpected error occurred during sign-out.";
+
+			const axiosError = error as AxiosError;
+
+			if (axiosError.response) {
+				errorMessage =
+					(axiosError.response.data as { message?: string })
+						?.message || errorMessage;
+			} else if (axiosError.request) {
+				errorMessage = "No response was received from the server.";
+			} else {
+				errorMessage = axiosError.message || errorMessage;
+			}
+			console.log(errorMessage);
+			return { success: false, message: errorMessage };
+		}
 	};
 
 	return (
 		<SessionContext.Provider
-			value={{ user, isAuthenticated: !!user, signIn, signUp, signOut }}
+			value={{
+				user,
+				isAuthenticated: !!user,
+				isAdmin,
+				signIn,
+				signUp,
+				signOut,
+			}}
 		>
 			{children}
 		</SessionContext.Provider>

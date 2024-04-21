@@ -14,7 +14,18 @@ export const authenticateToken = (
 	res: Response,
 	next: NextFunction
 ) => {
-	const token = req.cookies["accessToken"]; // Extract the token from cookies
+	const { authorization } = req.headers;
+	const { accessToken: cookieToken } = req.cookies;
+
+	let token = "";
+
+	// Check if the authorization header exists and extract the token.
+	if (authorization) {
+		const authHeader = authorization.split(" ");
+		token = authHeader[1];
+	} else if (cookieToken) {
+		token = cookieToken;
+	}
 
 	const decryptedToken = decryptToken(token);
 
@@ -41,11 +52,9 @@ export const authenticateToken = (
 				console.log("Decoded token:", decoded); // Log the decoded token to check its contents
 				next(); // Proceed to the next middleware/function
 			} else {
-				return res
-					.sendStatus(403)
-					.send({
-						message: "Token was not authorized, please try again",
-					}); // Handle the case where decoded is not as expected
+				return res.sendStatus(403).send({
+					message: "Token was not authorized, please try again",
+				}); // Handle the case where decoded is not as expected
 			}
 		}
 	);

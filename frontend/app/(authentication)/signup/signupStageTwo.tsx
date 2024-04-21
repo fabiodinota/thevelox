@@ -121,7 +121,7 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 			.refine((value) => value !== "", {
 				message: "Phone number cannot be empty",
 			})
-			.refine((value) => /^[0-9\s]*$/.test(value), {
+			.refine((value) => /^[0-9\s()-]*$/.test(value), {
 				message: "Phone number can only contain numbers",
 			}),
 	});
@@ -173,6 +173,8 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 		setValue("dateOfBirth", format(newDate, "PP"), {
 			shouldValidate: true,
 		});
+
+		setCalendarOpen(false);
 	};
 
 	const handleCalendarClick = () => {

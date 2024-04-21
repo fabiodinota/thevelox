@@ -59,19 +59,20 @@ const page = () => {
 	}, [stage]);
 
 	return (
-		<div className="p-0 lg:p-10 flex flex-col lg:flex-row gap-5 lg:gap-10 min-h-screen w-full">
+		<div className="p-0 lg:p-10 flex flex-col lg:flex-row gap-5 lg:gap-10 min-h-screen h-full w-full">
 			<MinimalNavBar
 				onClick={
 					stage === 2 || stage === 3 ? () => setStage(1) : undefined
 				}
 				href={stage === 1 ? "/" : "/signup"}
 			/>
-			<div className="bg-gradient lg:rounded-3xl relative w-full flex-grow h-[400px] grid place-content-center overflow-hidden">
+			<div className="bg-gradient lg:rounded-3xl relative w-full flex-grow h-[400px] lg:h-auto lg:min-h-[400px] grid place-content-center overflow-hidden">
 				<div className="flex flex-col justify-center items-center gap-3 pt-10 lg:pt-0">
 					<svg
 						width="48"
 						height="58"
 						viewBox="0 0 48 58"
+						className="lg:scale-100 scale-75"
 						fill="none"
 						xmlns="http://www.w3.org/2000/svg"
 					>

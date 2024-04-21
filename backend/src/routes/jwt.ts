@@ -3,6 +3,6 @@ import { refreshJWTToken } from "../controllers/refreshJWTToken";
 
 const router = Router();
 
-router.post("/refresh", refreshJWTToken);
+router.get("/refresh", refreshJWTToken);
 
 export default router;
