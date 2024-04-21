@@ -9,6 +9,7 @@ import Link from "next/link";
 import AnimatedInput from "@/app/components/AnimatedInput";
 import { xIcon, checkIcon } from "@/app/components/Icons";
 import { useMediaQuery } from "react-responsive";
+import RippleButton from "@/app/components/RippleButton";
 
 interface SignInProps {
 	setStage: React.Dispatch<React.SetStateAction<number>>;
@@ -214,14 +215,15 @@ const SignIn = ({
 					</div>
 				)}
 			</div>
-			<button
-				type="submit"
+			<RippleButton
 				disabled={disabled}
+				type="submit"
+				style="gradient"
 				tabIndex={4}
-				className="rounded-xl flex-shrink-0 bg-gradient w-full h-[50px] md:h-[60px] text-white font-medium text-[16px] md:text-[18px] flex gap-3 items-center justify-center transition-all duration-200 ease-in-out disabled:opacity-50"
+				className="w-full"
 			>
 				Sign In
-			</button>
+			</RippleButton>
 			{errorMessage && (
 				<div className="flex flex-row gap-3 items-center w-full">
 					{xIcon}
@@ -233,13 +235,15 @@ const SignIn = ({
 				<p>OR</p>
 				<div className="w-full h-[1px] bg-foreground"></div>
 			</div>
-			<Link
+			<RippleButton
 				href="/signup"
+				asLink={true}
 				tabIndex={5}
-				className="rounded-xl flex-shrink-0 border border-foreground w-full h-[50px] md:h-[60px] disabled:opacity-50 text-foreground font-medium text-[16px] md:text-[18px] flex gap-3 items-center justify-center transition-all duration-200 ease-in-out"
+				style="outlined"
+				className="w-[200px]"
 			>
 				Create An Account
-			</Link>
+			</RippleButton>
 			<p>
 				By clicking “Sign In” you agree to our Terms of Service and
 				Privacy Policy

@@ -18,6 +18,7 @@ import axios from "axios";
 
 import { motion } from "framer-motion";
 import AnimatePresenceProvider from "../context/AnimatePresenceProvider";
+import RippleButton from "./RippleButton";
 
 type Station = {
 	name: string;
@@ -370,11 +371,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
 						{errors.passengers.message}
 					</span>
 				)}
-
-				<button
-					type="submit"
-					className="rounded-lg bg-gradient h-[50px] md:h-[60px] disabled:opacity-50 text-white font-medium text-[16px] md:text-[18px] flex gap-3 items-center justify-center transition-all duration-200 ease-in-out"
-				>
+				<RippleButton type="submit" style="gradient" className="w-full">
 					<svg
 						width="18"
 						height="17"
@@ -388,7 +385,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
 						/>
 					</svg>
 					Search
-				</button>
+				</RippleButton>
 			</motion.form>
 		</>
 	);

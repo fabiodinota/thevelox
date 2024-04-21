@@ -5,6 +5,7 @@ import { useSession } from "../../context/sessionContext";
 import { redirect } from "next/navigation";
 import Header from "@/app/components/app/Header";
 import { useRouter } from "next/navigation";
+import RippleButton from "@/app/components/RippleButton";
 
 const AppHomePage = () => {
 	const { user, signOut } = useSession();
@@ -23,7 +24,14 @@ const AppHomePage = () => {
 			<Header />
 			<div className="w-full h-full flex justify-center items-center flex-col">
 				You've entered the app directory: {user?.email}
-				<button onClick={handleSignOut}>Sign Out</button>
+				<RippleButton
+					style="gradient"
+					className="w-[200px]"
+					onClick={handleSignOut}
+					tabIndex={0}
+				>
+					Sign out
+				</RippleButton>
 			</div>
 		</>
 	);

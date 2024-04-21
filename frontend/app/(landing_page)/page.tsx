@@ -19,6 +19,7 @@ import HeroBackground from "@/public/hero_background.webp";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { OnProgressProps } from "react-player/base";
+import RippleButton from "../components/RippleButton";
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 export default function Home() {
@@ -141,14 +142,16 @@ export default function Home() {
 							}
 						/>
 					</motion.div>
-					<Link
-						className="bg-gradient text-white hover:text-white/70 duration-150 rounded-xl max-w-[400px] w-full h-[60px] grid place-content-center "
+					<RippleButton
+						asLink
 						href="/signup"
+						style="gradient"
+						className="max-w-[400px] w-full h-[60px]"
 					>
 						<span className="text-[16px] md:text-[18px] font-medium">
 							Launch App
-						</span>
-					</Link>
+						</span>{" "}
+					</RippleButton>
 				</section>
 
 				<section className="max-w-[1400px] w-full flex flex-col justify-center items-center gap-10 lg:gap-5 mt-[100px]">

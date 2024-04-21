@@ -20,6 +20,7 @@ import {
 } from "@/app/utils/phoneNumberUtils";
 import { xIcon } from "@/app/components/Icons";
 import { useMediaQuery } from "react-responsive";
+import RippleButton from "@/app/components/RippleButton";
 
 interface SignUpStageOneProps {
 	setStage: React.Dispatch<React.SetStateAction<number>>;
@@ -375,27 +376,28 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 						)}
 					</div>
 				)}
-				<button
-					type="submit"
+				<RippleButton
 					disabled={disabled}
-					tabIndex={10}
-					className="rounded-xl flex-shrink-0 bg-gradient w-full h-[50px] md:h-[60px] text-white font-medium text-[16px] md:text-[18px] flex gap-3 items-center justify-center transition-all duration-200 ease-in-out disabled:opacity-50"
+					type="submit"
+					style="gradient"
+					tabIndex={4}
+					className="w-full"
 				>
 					Sign Up
-				</button>
+				</RippleButton>
 				<div className="w-full flex flex-row gap-10 h-[30px] items-center">
 					<div className="w-full h-[1px] bg-foreground"></div>
 					<p>OR</p>
 					<div className="w-full h-[1px] bg-foreground"></div>
 				</div>
-				<button
+				<RippleButton
 					onClick={() => setStage(1)}
-					type="submit"
-					tabIndex={11}
-					className="rounded-xl flex-shrink-0 border border-foreground w-full h-[50px] md:h-[60px] disabled:opacity-50 text-foreground font-medium text-[16px] md:text-[18px] flex gap-3 items-center justify-center transition-all duration-200 ease-in-out"
+					style="outlined"
+					tabIndex={4}
+					className="w-full"
 				>
 					Back
-				</button>
+				</RippleButton>
 				<p>
 					By clicking “Sign Up” you agree to our{" "}
 					<u>Terms of Service</u> and <u>Privacy Policy</u>

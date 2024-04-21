@@ -12,6 +12,7 @@ import Logo_Black from "@/public/Logo_thevelox_black.png";
 import { useTheme } from "../context/themeContext";
 import Image from "next/image";
 import Logo_animation from "@/public/Logo_Animation.gif";
+import RippleButton from "./RippleButton";
 
 const Navbar = () => {
 	const [openMobileNav, setOpenMobileNav] = useState<boolean>(false);
@@ -121,12 +122,14 @@ const Navbar = () => {
 							>
 								<span>Contact Us</span>
 							</Link>
-							<Link
-								className="bg-gradient text-white hover:text-white/70 duration-150 rounded-xl w-[220px] h-[50px] grid place-content-center "
+							<RippleButton
+								asLink
 								href="/signup"
+								style="gradient"
+								className="w-[220px] !h-[50px]"
 							>
-								<span>Launch App</span>
-							</Link>
+								Launch App
+							</RippleButton>
 							<ThemeSwitcher
 								size="small"
 								className="hidden xl:flex"
