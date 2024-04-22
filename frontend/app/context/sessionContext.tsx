@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { boolean } from "zod";
-import { redirect, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 export const useSession = () => {
@@ -89,11 +89,42 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 		}
 	};
 
-	// Trigger token refresh at regular intervals or before making an API call
+	const router = useRouter();
+
 	useEffect(() => {
+		const checkAuthentication = () => {
+			axios
+				.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/auth/isAuthenticated`,
+					{
+						withCredentials: true,
+					}
+				)
+				.then((response) => {
+					const { accessToken, refreshToken, isAuthenticated } =
+						response.data;
+
+					if (!accessToken && refreshToken && !isAuthenticated) {
+						refreshAccessToken(); // Refresh token if we have refresh token but no access token
+					} else if (
+						!accessToken &&
+						!refreshToken &&
+						!isAuthenticated
+					) {
+						router.push("/signin"); // Redirect to sign-in if no tokens are available
+					}
+				})
+				.catch((error) => {
+					console.error("Error:", error);
+					router.push("/error"); // Handle error or redirect if needed
+				});
+		};
+
+		checkAuthentication();
+
 		const tokenRefreshInterval = setInterval(() => {
-			refreshAccessToken();
-		}, 13 * 60 * 1000);
+			checkAuthentication();
+		}, 10 * 60 * 1000);
 
 		return () => clearInterval(tokenRefreshInterval);
 	}, []);

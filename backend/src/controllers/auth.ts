@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { hashPassword, verifyPassword } from "../utils/hashPassword";
 import { generateAccessToken, generateRefreshToken } from "../utils/jwtHelper";
-import { encryptToken } from "../utils/cryptToken";
+import { decryptToken, encryptToken } from "../utils/cryptToken";
 
 const prisma = new PrismaClient();
 

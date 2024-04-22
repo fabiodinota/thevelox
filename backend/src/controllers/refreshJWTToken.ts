@@ -43,7 +43,7 @@ export const refreshJWTToken = async (req: Request, res: Response) => {
 			sameSite: "strict",
 			expires: new Date(Date.now() + 1000 * 60 * 15), // 7 days
 		});
-		res.status(200).json({ message: "Access token refreshed" });
+		res.status(200).send({ message: "Access token refreshed" });
 	} catch (error) {
 		console.error("Error refreshing access token");
 		res.status(401).json({ message: "Invalid refresh token" });
