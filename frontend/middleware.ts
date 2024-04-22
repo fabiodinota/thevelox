@@ -37,7 +37,6 @@ export async function middleware(request: NextRequest) {
 	let user: User | null = null;
 	if (accessToken !== "") {
 		user = await validateToken(accessToken);
-		console.log("User is authenticated:", user?.admin);
 	}
 
 	if (user?.user_id) {
