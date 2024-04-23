@@ -40,7 +40,7 @@ export const refreshJWTToken = async (req: Request, res: Response) => {
 		res.cookie("accessToken", encryptedAccessToken, {
 			httpOnly: true,
 			secure: true,
-			sameSite: "none",
+			sameSite: "strict",
 			domain: process.env.COOKIE_DOMAIN,
 			expires: new Date(Date.now() + 1000 * 60 * 15), // 7 days
 		});
