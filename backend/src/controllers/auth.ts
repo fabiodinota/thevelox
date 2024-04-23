@@ -53,12 +53,14 @@ export const signUp = async (req: Request, res: Response) => {
 		httpOnly: true,
 		secure: true,
 		sameSite: "strict",
+		domain: process.env.HOST,
 		expires: new Date(Date.now() + 1000 * 60 * 15), // 15 mins
 	});
 	res.cookie("refreshToken", encryptedRefreshToken, {
 		httpOnly: true,
 		secure: true,
 		sameSite: "strict",
+		domain: process.env.HOST,
 		expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
 	});
 	res.send({ user: newUser });
@@ -95,12 +97,14 @@ export const signIn = async (req: Request, res: Response) => {
 			httpOnly: true,
 			secure: true,
 			sameSite: "strict",
+			domain: process.env.HOST,
 			expires: new Date(Date.now() + 1000 * 60 * 15), // 15 mins
 		});
 		res.cookie("refreshToken", encryptedRefreshToken, {
 			httpOnly: true,
 			secure: true,
 			sameSite: "strict",
+			domain: process.env.HOST,
 			expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
 		});
 		res.send({ user });
@@ -115,7 +119,7 @@ interface CustomRequest extends Request {
 		user_id: number;
 		iat: string;
 		exp: string;
-	}; // Adjusted to match the types that jwt.verify can return
+	};
 }
 
 export const verifyToken = async (req: CustomRequest, res: Response) => {

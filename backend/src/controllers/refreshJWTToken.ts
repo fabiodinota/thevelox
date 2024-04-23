@@ -41,6 +41,7 @@ export const refreshJWTToken = async (req: Request, res: Response) => {
 			httpOnly: true,
 			secure: true,
 			sameSite: "strict",
+			domain: process.env.HOST,
 			expires: new Date(Date.now() + 1000 * 60 * 15), // 7 days
 		});
 		res.status(200).send({ message: "Access token refreshed" });

@@ -13,11 +13,11 @@ const AppHomePage = () => {
 	const router = useRouter();
 
 	const handleSignOut = async () => {
-		/* const { success } = await signOut();
+		const { success } = await signOut();
 
 		if (success) {
 			router.push("/signin");
-		} */
+		}
 	};
 	return (
 		<>
