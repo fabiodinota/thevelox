@@ -53,14 +53,14 @@ export const signUp = async (req: Request, res: Response) => {
 		httpOnly: true,
 		secure: true,
 		sameSite: "none",
-		domain: process.env.HOST,
+		domain: process.env.COOKIE_DOMAIN,
 		expires: new Date(Date.now() + 1000 * 60 * 15), // 15 mins
 	});
 	res.cookie("refreshToken", encryptedRefreshToken, {
 		httpOnly: true,
 		secure: true,
 		sameSite: "none",
-		domain: process.env.HOST,
+		domain: process.env.COOKIE_DOMAIN,
 		expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
 	});
 	res.send({ user: newUser });
@@ -97,14 +97,14 @@ export const signIn = async (req: Request, res: Response) => {
 			httpOnly: true,
 			secure: true,
 			sameSite: "none",
-			domain: process.env.HOST,
+			domain: process.env.COOKIE_DOMAIN,
 			expires: new Date(Date.now() + 1000 * 60 * 15), // 15 mins
 		});
 		res.cookie("refreshToken", encryptedRefreshToken, {
 			httpOnly: true,
 			secure: true,
 			sameSite: "none",
-			domain: process.env.HOST,
+			domain: process.env.COOKIE_DOMAIN,
 			expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
 		});
 		res.send({ user });
