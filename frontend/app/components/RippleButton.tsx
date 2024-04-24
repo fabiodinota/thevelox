@@ -10,6 +10,7 @@ interface RippleButtonProps {
 	asLink?: boolean;
 	href?: string;
 	rippleColor?: string;
+	speed?: "fast" | "medium" | "slow";
 }
 const RippleButton = ({
 	children,
@@ -19,6 +20,7 @@ const RippleButton = ({
 	asLink = false,
 	href = "/",
 	rippleColor = "rgba(255, 255, 255, 0.15)",
+	speed = "slow",
 	...props
 }: RippleButtonProps) => {
 	function createRipple(
@@ -38,6 +40,7 @@ const RippleButton = ({
 		circle.style.left = `${event.clientX - rect.left - radius}px`;
 		circle.style.top = `${event.clientY - rect.top - radius}px`;
 		circle.classList.add("ripple");
+		circle.classList.add(speed);
 		circle.style.backgroundColor = rippleColor;
 
 		const ripple = button.getElementsByClassName("ripple")[0];

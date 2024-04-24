@@ -234,6 +234,17 @@ select:-webkit-autofill:focus {
 		position: absolute;
 		border-radius: 50%;
 		transform: scale(0);
+	}
+
+	span.ripple.fast {
+		animation: ripple 500ms linear;
+	}
+
+	span.ripple.slow {
+		animation: ripple 1500ms linear;
+	}
+
+	span.ripple.medium {
 		animation: ripple 1000ms linear;
 	}
 
