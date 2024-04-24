@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NextResponse, NextRequest } from "next/server";
 
-async function validateToken(token: string) {
+async function validateToken(accessToken: string) {
 	try {
 		const data = await fetch(
 			`${process.env.NEXT_PUBLIC_API_URL}/user/getUser`,
@@ -9,10 +9,11 @@ async function validateToken(token: string) {
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: "Bearer " + token,
+					Authorization: "Bearer " + accessToken,
 				},
 			}
 		);
+
 		return await data.json();
 	} catch (error: any) {
 		console.error("Error validating token:", error.message);

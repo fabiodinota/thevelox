@@ -18,8 +18,6 @@ const BottomNav = () => {
 
 	const [activeRoute, setActiveRoute] = useState<string>("");
 
-	console.log(activeRoute);
-
 	useEffect(() => {
 		setActiveRoute(pathname.replace("/app/", ""));
 	}, [pathname]);
@@ -32,10 +30,6 @@ const BottomNav = () => {
 
 	const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
 
-	useEffect(() => {
-		console.log("isDesktop", isDesktop);
-	}, [isDesktop]);
-
 	return (
 		<nav
 			className={
@@ -43,14 +37,14 @@ const BottomNav = () => {
 			}
 		>
 			<div className="w-full max-w-[600px] group flex justify-center items-center h-[80px] xl:h-[90px] rounded-[20px] bg-background/70 dark:bg-background back backdrop-blur-2xl xl:bg-background shadow-[0_0_35px_0_#00000010] dark:shadow-[0_0_35px_0_#FFFFFF10]  xl:shadow-[0_0_35px_0_#84848420] xl:dark:shadow-[0_0_35px_0_#FFFFFF06]">
-				<div className="w-full max-w-[600px] flex flex-row sm:px-5 gap-0 justify-evenly xl:justify-center xl:gap-10 items-center">
+				<div className="w-full flex flex-row px-2.5 py-2.5 gap-0 justify-evenly xl:justify-center xl:gap-10 items-center">
 					<RippleButton
 						onClick={() => setActiveRoute("home")}
 						asLink
 						href={"/app/home"}
 						style="nofill"
 						speed="fast"
-						className="hover:bg-secondary max-w-[100px] flex-shrink w-full !py-2 !h-full duration-100 flex flex-col gap-2 justify-center items-center"
+						className="hover:bg-secondary max-w-[100px] !flex-shrink w-full !py-2 !h-full duration-100 flex flex-col !gap-2 justify-center items-center"
 					>
 						<div
 							className={`${
@@ -77,7 +71,7 @@ const BottomNav = () => {
 						href={"/app/search"}
 						style="nofill"
 						speed="fast"
-						className="hover:bg-secondary max-w-[100px] flex-shrink w-full !py-2 !h-full duration-100 flex flex-col gap-2 justify-center items-center"
+						className="hover:bg-secondary max-w-[100px] !flex-shrink w-full !py-2 !h-full duration-100 flex flex-col !gap-2 justify-center items-center"
 					>
 						<div
 							className={`${
@@ -104,7 +98,7 @@ const BottomNav = () => {
 						href={"/app/history"}
 						style="nofill"
 						speed="fast"
-						className="hover:bg-secondary max-w-[100px] flex-shrink w-full !py-2 !h-full duration-100 flex flex-col gap-2 justify-center items-center"
+						className="hover:bg-secondary max-w-[100px] !flex-shrink w-full !py-2 !h-full duration-100 flex flex-col !gap-2 justify-center items-center"
 					>
 						<div
 							className={`${
@@ -131,7 +125,7 @@ const BottomNav = () => {
 						href={"/app/account"}
 						style="nofill"
 						speed="fast"
-						className="hover:bg-secondary max-w-[100px] flex-shrink w-full !py-2 !h-full duration-100 flex flex-col gap-2 justify-center items-center"
+						className="hover:bg-secondary max-w-[100px] !flex-shrink w-full !py-2 !h-full duration-100 flex flex-col !gap-2 justify-center items-center"
 					>
 						<div
 							className={`${

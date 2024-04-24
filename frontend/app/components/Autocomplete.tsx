@@ -19,6 +19,8 @@ interface Props {
 	defaultValue?: string;
 	tabIndex?: number;
 	svgIcon?: React.ReactNode;
+	value?: string;
+	size?: "sm" | "lg";
 }
 
 const CustomAutocomplete: React.FC<Props> = ({
@@ -29,6 +31,8 @@ const CustomAutocomplete: React.FC<Props> = ({
 	defaultValue,
 	tabIndex,
 	svgIcon,
+	value,
+	size = "lg",
 }) => {
 	const [inputValue, setInputValue] = useState("");
 	const [showSuggestions, setShowSuggestions] = useState(false);
@@ -44,8 +48,9 @@ const CustomAutocomplete: React.FC<Props> = ({
 			suggestions.some(
 				(suggestion) =>
 					typeof suggestion === "object" &&
-					"value" in suggestion &&
-					"label" in suggestion
+					"name" in suggestion &&
+					"label" in suggestion &&
+					"level" in suggestion
 			),
 		[suggestions]
 	);
@@ -81,7 +86,7 @@ const CustomAutocomplete: React.FC<Props> = ({
 					filteredSuggestions[filteredSuggestions.length - 1];
 				const lastSuggestionValue =
 					isObjectSuggestion && lastSuggestion
-						? lastSuggestion.value.toString()
+						? lastSuggestion.name.toString()
 						: lastSuggestion;
 
 				if (newValue === lastSuggestionValue) {
@@ -129,11 +134,12 @@ const CustomAutocomplete: React.FC<Props> = ({
 			if (
 				isObjectSuggestion &&
 				typeof suggestion === "object" &&
+				"name" in suggestion &&
 				"label" in suggestion &&
-				"value" in suggestion
+				"level" in suggestion
 			) {
 				setInputValue(suggestion.label); // Assuming label is of type string
-				onSelectionChange(suggestion.value); // Assuming value is the type you need for onSelectionChange
+				onSelectionChange(suggestion.name); // Assuming value is the type you need for onSelectionChange
 			} else if (typeof suggestion === "string") {
 				setInputValue(suggestion);
 				onSelectionChange(suggestion);
@@ -179,11 +185,12 @@ const CustomAutocomplete: React.FC<Props> = ({
 									isObjectSuggestion &&
 									typeof selectedSuggestion === "object" &&
 									"label" in selectedSuggestion &&
-									"value" in selectedSuggestion
+									"name" in selectedSuggestion &&
+									"level" in selectedSuggestion
 								) {
 									setInputValue(selectedSuggestion.label); // Use the label for display
 									onSelectionChange(
-										selectedSuggestion.value.toString()
+										selectedSuggestion.name.toString()
 									); // Pass the value for further processing
 								} else if (
 									typeof selectedSuggestion === "string"
@@ -240,9 +247,21 @@ const CustomAutocomplete: React.FC<Props> = ({
 			onMouseEnter={() => setIsMouseInside(true)}
 			onMouseLeave={() => setIsMouseInside(false)}
 		>
-			<div className="w-full h-[60px] md:h-[80px] relative z-[45] cursor-pointer bg-secondary rounded-xl flex flex-row justify-start items-center px-2.5 lg:px-5">
+			<div
+				className={`w-full ${
+					size === "sm"
+						? "h-[60px] md:h-[80px]"
+						: "h-[70px] md:h-[80px]"
+				} relative z-[45] cursor-pointer bg-secondary rounded-xl flex flex-row justify-start items-center px-2.5 lg:px-5`}
+			>
 				{svgIcon && (
-					<div className="w-10 md:w-12 flex-shrink-0 h-10 md:h-12 grid place-content-center relative">
+					<div
+						className={`flex-shrink-0 ${
+							size === "sm"
+								? "w-10 md:w-12 h-10 md:h-12"
+								: "w-12 h-12"
+						} grid place-content-center relative`}
+					>
 						{svgIcon}
 						<div className="w-full h-full absolute top-0 left-0 bg-accent z-0 rounded-full"></div>
 					</div>

@@ -16,8 +16,12 @@ import { motion } from "framer-motion";
 import { Calendar } from "@/app/components/ui/calendar";
 import { TimePickerDemo } from "@/app/components/package/time-picker-demo";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
+import useStationData from "@/app/utils/useStationData";
+import { popoverVariant } from "@/app/utils/animationVariants";
+import mapLevelUtil from "@/app/utils/useMapLevel";
+import useMapLevel from "@/app/utils/useMapLevel";
 
-type ISearchReqData = {
+export type ISearchReqData = {
 	startStation: string;
 	endStation: string;
 	lines: string[];
@@ -26,12 +30,32 @@ type ISearchReqData = {
 
 type Station = {
 	name: string;
-	level: number;
+	level: number | undefined;
+	label: string;
+};
+
+type SearchParams = {
+	startStation: string;
+	endStation: string;
+	departureDate: string;
 };
 
 const AppSearchPage = () => {
-	const [startStation, setStartStation] = useState<string>("");
-	const [endStation, setEndStation] = useState<string>("");
+	const [startStation, setStartStation] = useState<Station>({
+		name: "",
+		level: undefined,
+		label: "",
+	});
+	const [endStation, setEndStation] = useState<Station>({
+		name: "",
+		level: undefined,
+		label: "",
+	});
+	const [departureDate, setDepartureDate] = useState<Date | undefined>(
+		undefined
+	);
+
+	const [calendarOpen, setCalendarOpen] = useState(false);
 
 	const [searching, setSearching] = useState<boolean>(false);
 
@@ -40,18 +64,21 @@ const AppSearchPage = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
-	const [stations, setStations] = useState<Station[]>([]);
-	const [stationSuggestions, setStationSuggestions] = useState<
-		{ label: string; value: string }[]
-	>([]);
-	const [date, setDate] = useState<Date | undefined>(undefined);
-	const [calendarOpen, setCalendarOpen] = useState(false);
-
 	const { releaseFocus } = useAutocomplete();
 
+	const { stations, fetchStations, loading } = useStationData();
+
+	const { increase, decrease } = useMapLevel();
+
+	useEffect(() => {
+		if (calendarOpen) {
+			releaseFocus();
+		}
+	}, [calendarOpen]);
+
 	const FormSchema = z.object({
-		from: z
-			.string()
+		startStation: z
+			.string({ required_error: "Set a starting station" })
 			.min(1, { message: "Set a departure station" })
 			.refine(
 				(value) => stations.some((station) => station.name === value),
@@ -59,8 +86,8 @@ const AppSearchPage = () => {
 					message: "Enter a valid station",
 				}
 			),
-		to: z
-			.string()
+		endStation: z
+			.string({ required_error: "Set a destination station" })
 			.min(1, { message: "Set a destination station" })
 			.refine(
 				(value) => stations.some((station) => station.name === value),
@@ -69,7 +96,7 @@ const AppSearchPage = () => {
 				}
 			),
 		departureDate: z
-			.string()
+			.string({ required_error: "Set a departure date" })
 			.min(1, { message: "Set a departure date" })
 			.refine((value) => new Date(value) > new Date(new Date()), {
 				message: "The departure date must be in the future",
@@ -80,45 +107,32 @@ const AppSearchPage = () => {
 		handleSubmit,
 		setValue,
 		formState: { errors },
+		reset,
+		getValues,
 	} = useForm<z.infer<typeof FormSchema>>({
 		resolver: zodResolver(FormSchema),
+		mode: "onSubmit",
 	});
 
 	const onSubmit = handleSubmit(async (data) => {
-		console.log("Form Data: ", data);
-		handleSearch(data);
-	});
-
-	const handleGetStations = async () => {
-		if (stations.length === 0) {
-			await axios
-				.get(`${process.env.NEXT_PUBLIC_API_URL}/map/getDestinations`)
-				.then((res) => {
-					setStations(res.data.destinations);
-					setStationSuggestions(
-						res.data.destinations.map((station: Station) => ({
-							label: `${station.name}, Level ${station.level}`,
-							value: station.name,
-						}))
-					);
-				})
-				.catch((err) => {
-					console.log("Err: ", err);
-				});
+		if (!searching) {
+			handleSearch(data);
+		} else {
+			handleGoBackToMap();
 		}
-	};
+	});
 
 	const handleDateChange = (newDate: Date | undefined) => {
 		if (!newDate) return;
 
-		if (date) {
-			const hours = date.getHours();
-			const minutes = date.getMinutes();
+		if (departureDate) {
+			const hours = departureDate.getHours();
+			const minutes = departureDate.getMinutes();
 			newDate.setHours(hours, minutes);
 		}
 
 		if (newDate > new Date(new Date())) {
-			setDate(newDate);
+			setDepartureDate(newDate);
 		}
 
 		setValue("departureDate", format(newDate, "PP HH:mm"), {
@@ -129,11 +143,13 @@ const AppSearchPage = () => {
 	const handleTimeChange = (time: Date | undefined) => {
 		if (!time) return;
 
-		const updatedDate = date ? new Date(date) : new Date();
+		const updatedDate = departureDate
+			? new Date(departureDate)
+			: new Date();
 		updatedDate.setHours(time.getHours(), time.getMinutes());
 
 		if (updatedDate < new Date(new Date())) return;
-		setDate(updatedDate);
+		setDepartureDate(updatedDate);
 
 		setValue("departureDate", format(updatedDate, "PP HH:mm"), {
 			shouldValidate: true,
@@ -158,23 +174,20 @@ const AppSearchPage = () => {
 		}
 	};
 
-	const handleSearch = async (data: {
-		from: string;
-		to: string;
-		departureDate: string;
-	}) => {
-		setSearching(true);
+	const handleSearch = async (data: SearchParams) => {
+		// Push the search params to the URL
 		router.push(
-			`/app/search?startStation=${data.from}&endStation=${
-				data.to
+			`/app/search?startStation=${data.startStation}&endStation=${
+				data.endStation
 			}&date=${format(data.departureDate, "PP HH:mm")}`
 		);
 
-		if (data.from && data.to && data.departureDate) {
-			getRoute(data.from, data.to);
+		// Fetch the route data
+		if (data.startStation && data.endStation && data.departureDate) {
+			getRoute(data.startStation, data.endStation);
 		}
 	};
-
+	// Fetch the route data
 	const getRoute = async (startStation: string, endStation: string) => {
 		await axios
 			.get(
@@ -182,8 +195,6 @@ const AppSearchPage = () => {
 				{ withCredentials: true }
 			)
 			.then((res) => {
-				console.log("Res: ", res);
-
 				console.log("Data: ", {
 					startStation,
 					endStation,
@@ -203,91 +214,106 @@ const AppSearchPage = () => {
 	};
 
 	const handleGoBackToMap = () => {
-		setSearching(false);
-		updateSearchReqData({}); // Reset to empty object
+		clearSearch();
 		router.push("/app/search");
 	};
 
-	useEffect(() => {
-		if (calendarOpen) {
-			releaseFocus();
-		}
-	}, [calendarOpen]);
+	const clearSearch = () => {
+		reset();
+		setStartStation({
+			name: "",
+			level: undefined,
+			label: "",
+		});
+		setEndStation({
+			name: "",
+			level: undefined,
+			label: "",
+		});
+		setDepartureDate(undefined);
+		setSearchReqData({}); // Reset to empty object
+		setSearching(false);
+	};
 
 	useEffect(() => {
-		if (searchParams.has("startStation")) {
-			setStartStation(searchParams.get("startStation") || "");
-		}
-		if (searchParams.has("endStation")) {
-			setEndStation(searchParams.get("endStation") || "");
-		}
-		if (searchParams.has("date")) {
-			setDate(new Date(searchParams.get("date") || ""));
-		}
-	}, [searchParams]);
+		getSearchParams();
+	}, [searchParams, stations]);
 
 	useEffect(() => {
-		handleGetStations();
-		const currentDate = new Date();
-		const halfHourLater = new Date(currentDate.getTime() + 30 * 60000); // Adding 30 minutes in milliseconds
+		// Fetch stations on mount
+		fetchStations();
 
-		setDate(halfHourLater);
-
-		if (searchParams.has("startStation")) {
-			const startStation = searchParams.get("startStation") || "";
-			stationSuggestions.some((station) => {
-				if (station.value === startStation) {
-					setStartStation(station.label);
-				}
-			});
-		}
-		if (searchParams.has("endStation")) {
-			const endStation = searchParams.get("endStation") || "";
-			stationSuggestions.some((station) => {
-				if (station.value === endStation) {
-					setEndStation(station.label);
-				}
-			});
-		}
-		if (searchParams.has("date")) {
-			setDate(new Date(searchParams.get("date") || ""));
-		}
-
-		if (startStation && endStation && date) {
+		if (startStation && endStation && departureDate && !searching) {
 			handleSearch({
-				from: startStation,
-				to: endStation,
-				departureDate: format(date, "PP HH:mm"),
+				startStation: startStation.name,
+				endStation: endStation.name,
+				departureDate: format(departureDate, "PP HH:mm"),
 			});
 		}
+
+		// Search for routes if the search params are present in the URL and the search is not in progress on mount
 	}, []);
 
-	const popoverVariant = {
-		initial: { opacity: 0, scale: 0.9 },
-		animate: {
-			opacity: 1,
-			scale: 1,
-			transition: { duration: 0.2, ease: "easeOut" },
-		},
-		exit: {
-			opacity: 0,
-			scale: 0.9,
-			transition: { duration: 0.2, ease: "easeIn" },
-		},
+	const getSearchParams = () => {
+		// Check if the search params are present in the URL
+		if (
+			searchParams.has("startStation") &&
+			searchParams.has("endStation") &&
+			searchParams.has("date")
+		) {
+			setSearching(true);
+			// Get the search params from the URL
+			const startStationParams = searchParams.get("startStation") || "";
+			const endStationParams = searchParams.get("endStation") || "";
+			const departureDateParams = searchParams.get("date") || "";
+
+			// Check if the stations are in the list of stations
+			stations.some((station: Station) => {
+				if (station.name === startStationParams) {
+					setStartStation({
+						name: station.name,
+						level: station.level,
+						label: station.label,
+					});
+					setValue("startStation", station.name, {
+						shouldValidate: true,
+					});
+				}
+				if (station.name === endStationParams) {
+					setEndStation({
+						name: station.name,
+						level: station.level,
+						label: station.label,
+					});
+					setValue("endStation", station.name, {
+						shouldValidate: true,
+					});
+				}
+			});
+			// Set the date
+			setDepartureDate(new Date(departureDateParams));
+			setValue("departureDate", departureDateParams, {
+				shouldValidate: true,
+			});
+		} else {
+			setSearching(false);
+			router.push("/app/search");
+		}
 	};
 
 	return (
 		<div className="w-screen h-full overflow-hidden relative flex items-center justify-center">
-			<div className="absolute top-5 z-[9999] w-full px-5 flex justify-center items-center">
+			<div className="absolute top-5 z-[9999] w-full px-5 flex justify-start items-center">
 				<form
 					onSubmit={onSubmit}
 					className={
-						"w-full max-w-[1400px] flex flex-col gap-2.5 p-5 rounded-[20px] bg-background  shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07] "
+						"w-full max-w-full md:max-w-[500px] flex flex-col gap-2.5 p-5 rounded-[20px] bg-background  shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07] "
 					}
 				>
 					<CustomAutocomplete
 						id="from"
 						placeholder="From"
+						size="sm"
 						svgIcon={
 							<svg
 								className="relative z-10"
@@ -303,20 +329,23 @@ const AppSearchPage = () => {
 								/>
 							</svg>
 						}
-						defaultValue={startStation ? startStation : ""}
-						suggestions={stationSuggestions} // Assuming stations is an array of objects
+						defaultValue={searching ? startStation.label : ""}
+						suggestions={stations} // Assuming stations is an array of objects
 						onSelectionChange={(value) =>
-							setValue("from", value, { shouldValidate: true })
+							setValue("startStation", value, {
+								shouldValidate: true,
+							})
 						}
 					/>
-					{errors.from && (
+					{errors.startStation && (
 						<span className="text-red-500">
-							{errors.from.message}
+							{errors.startStation.message}
 						</span>
 					)}
 					<CustomAutocomplete
 						id="to"
 						placeholder="To"
+						size="sm"
 						svgIcon={
 							<svg
 								className="relative z-10"
@@ -332,15 +361,17 @@ const AppSearchPage = () => {
 								/>
 							</svg>
 						}
-						defaultValue={endStation ? endStation : ""}
-						suggestions={stationSuggestions} // Assuming stations is an array of object'
-						onSelectionChange={(value) =>
-							setValue("to", value, { shouldValidate: true })
-						}
+						defaultValue={searching ? endStation.label : ""}
+						suggestions={stations} // Assuming stations is an array of object'
+						onSelectionChange={(value) => {
+							setValue("endStation", value, {
+								shouldValidate: true,
+							});
+						}}
 					/>
-					{errors.to && (
+					{errors.endStation && (
 						<span className="text-red-500">
-							{errors.to.message}
+							{errors.endStation.message}
 						</span>
 					)}
 					<div className="flex flex-col md:flex-row space-y-2.5 md:space-y-0 md:gap-2.5">
@@ -370,17 +401,13 @@ const AppSearchPage = () => {
 
 								<div className="flex items-center flex-row w-full relative">
 									<p
-										className={`absolute cursor-pointer left-3 text-foreground/50 transition-all duration-200 ease-in-out top-1/2 -translate-y-1/2 ${
-											date
-												? "transform -translate-y-5 md:-translate-y-6 text-[13px] md:text-[15px]"
-												: "text-[16px] md:text-lg"
-										}`}
+										className={`absolute cursor-pointer left-3 text-foreground/50 transition-all duration-200 ease-in-out top-1/2 transform -translate-y-5 md:-translate-y-6 text-[13px] md:text-[15px]`}
 									>
 										Date
 									</p>
 									<div className="pt-4 pl-3 text-[16px] md:text-[18px] font-medium">
-										{date ? (
-											format(date, "PP | HH:mm")
+										{departureDate ? (
+											format(departureDate, "PP | HH:mm")
 										) : (
 											<span>Pick a date</span>
 										)}
@@ -400,14 +427,14 @@ const AppSearchPage = () => {
 										>
 											<Calendar
 												mode="single"
-												selected={date}
+												selected={departureDate}
 												onSelect={handleDateChange}
 												initialFocus
 											/>
 											<div className="p-3 border-t border-border">
 												<TimePickerDemo
 													setDate={handleTimeChange}
-													date={date}
+													date={departureDate}
 												/>
 											</div>
 										</motion.div>
@@ -444,8 +471,57 @@ const AppSearchPage = () => {
 								fill="white"
 							/>
 						</svg>
-						Search
+						{searching ? "Go back" : "Search"}
 					</RippleButton>
+					<div className="flex flex-row gap-2.5 w-full">
+						<RippleButton
+							onClick={increase}
+							type="button"
+							style="nofill"
+							className="w-full !flex-shrink bg-secondary"
+							speed="medium"
+						>
+							<svg
+								width="14"
+								height="22"
+								viewBox="0 0 14 22"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M12 1.5L2.76316 10.275C2.34816 10.6693 2.34816 11.3307 2.76316 11.725L12 20.5"
+									className="stroke-foreground"
+									strokeWidth="3"
+									strokeLinecap="round"
+								/>
+							</svg>
+							Previous Level
+						</RippleButton>
+						<RippleButton
+							onClick={decrease}
+							type="button"
+							style="nofill"
+							className="w-full !flex-shrink bg-secondary"
+							speed="medium"
+						>
+							Next Level
+							<svg
+								width="14"
+								height="22"
+								viewBox="0 0 14 22"
+								className="rotate-180"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M12 1.5L2.76316 10.275C2.34816 10.6693 2.34816 11.3307 2.76316 11.725L12 20.5"
+									className="stroke-foreground"
+									strokeWidth="3"
+									strokeLinecap="round"
+								/>
+							</svg>
+						</RippleButton>
+					</div>
 				</form>
 			</div>
 

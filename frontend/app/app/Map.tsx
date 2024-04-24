@@ -9,7 +9,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import useWindowDimensions from "../utils/useWindowDimensions";
 import { useMediaQuery } from "react-responsive";
-import useQuickBookStore from "../state/state";
+import useMapLevel from "../utils/useMapLevel";
 
 export const Map = ({
 	searchRequestData,
@@ -18,35 +18,9 @@ export const Map = ({
 	searchRequestData: Object;
 	searching: boolean;
 }) => {
-	const minMax = {
-		min: 0,
-		max: 2,
-	};
+	const { level, xInitial, xExit } = useMapLevel();
 
-	const [level, setLevel] = useState(0);
-	const [slideDirection, setSlideDirection] = useState<"left" | "right">(
-		"right"
-	);
-
-	const xInitial = slideDirection === "right" ? -50 : 50;
-	const xExit = slideDirection === "right" ? 50 : -50;
-
-	const Decrease = () => {
-		setSlideDirection("left");
-		if (level >= minMax.min + 1 && level <= minMax.max) {
-			setLevel(level - 1);
-		} else {
-			setLevel(minMax.max);
-		}
-	};
-	const Increase = () => {
-		setSlideDirection("right");
-		if (level >= minMax.min && level <= minMax.max - 1) {
-			setLevel(level + 1);
-		} else {
-			setLevel(minMax.min);
-		}
-	};
+	console.log(level);
 
 	const levelVariant = {
 		initial: {
@@ -74,9 +48,9 @@ export const Map = ({
 	const searchReqData = searchRequestData as {
 		startStation: string;
 		endStation: string;
-		lines: string[];
 		path: string[];
-	}; // Provide a default object structure
+		lines: string[];
+	};
 
 	const { path, lines } = searchReqData;
 
@@ -190,10 +164,6 @@ export const Map = ({
 
 	return (
 		<div id="map">
-			<div className="absolute z-50 top-0 left-0">
-				<button onClick={Decrease}>Go to previous level.</button>
-				<button onClick={Increase}>Go to next level.</button>
-			</div>
 			<TransformWrapper
 				ref={wrapperRef}
 				initialScale={0.5}
@@ -2755,14 +2725,14 @@ export const Map = ({
 												className="edge duration-500"
 											/>
 											<path
-												id="Fusion Form-Core Crossing 2-15"
+												id="Fusion Forum-Core Crossing 2-15"
 												d="M1613.94 1477L1648.28 1442.66C1656.9 1434.04 1661.66 1422.29 1661.46 1410.11L1659.77 1306.45L1660.77 1114.5"
 												stroke="#0076C0"
 												strokeWidth="32"
 												className="edge duration-500"
 											/>
 											<path
-												id="Crossroad Crescent-Fusion Form 2-15"
+												id="Crossroad Crescent-Fusion Forum 2-15"
 												d="M1613.94 1477L1525.62 1565.32C1517.18 1573.76 1505.74 1578.5 1493.8 1578.5H1388.3C1385.44 1578.5 1382.58 1578.73 1379.81 1579.48C1369.54 1582.25 1353.83 1589.02 1350 1600.5"
 												stroke="#0076C0"
 												strokeWidth="32"
@@ -2864,7 +2834,7 @@ export const Map = ({
 												className="edge duration-500"
 											/>
 											<path
-												id="Concourse Corner-Gateway Gardens 2-14"
+												id="Serenity Station-Gateway Gardens 2-14"
 												d="M1544 970.5L1677 835.5"
 												stroke="#00A94F"
 												strokeWidth="32"

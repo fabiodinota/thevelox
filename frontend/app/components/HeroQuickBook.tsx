@@ -19,6 +19,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import AnimatePresenceProvider from "../context/AnimatePresenceProvider";
 import RippleButton from "./RippleButton";
+import useStationData from "../utils/useStationData";
 
 type Station = {
 	name: string;
@@ -26,7 +27,6 @@ type Station = {
 };
 
 export function HeroQuickBook({ className }: { className?: string }) {
-	const [stations, setStations] = useState<Station[]>([]);
 	const [date, setDate] = useState<Date | undefined>(undefined);
 	const [calendarOpen, setCalendarOpen] = useState(false);
 
@@ -40,16 +40,14 @@ export function HeroQuickBook({ className }: { className?: string }) {
 
 	const { setQuickBook, clear } = useQuickBookStore();
 
+	const { stations, fetchStations } = useStationData();
+
 	const FormSchema = z.object({
 		from: z
 			.string()
 			.min(1, { message: "Set a departure station" })
 			.refine(
-				(value) =>
-					stations.some(
-						(station) =>
-							`${station.name}, Level ${station.level}` === value
-					),
+				(value) => stations.some((station) => station.name === value),
 				{
 					message: "Enter a valid station",
 				}
@@ -58,11 +56,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
 			.string()
 			.min(1, { message: "Set a destination station" })
 			.refine(
-				(value) =>
-					stations.some(
-						(station) =>
-							`${station.name}, Level ${station.level}` === value
-					),
+				(value) => stations.some((station) => station.name === value),
 				{
 					message: "Enter a valid station",
 				}
@@ -108,21 +102,8 @@ export function HeroQuickBook({ className }: { className?: string }) {
 		});
 	};
 
-	const handleGetStations = async () => {
-		if (stations.length === 0) {
-			await axios
-				.get(`${process.env.NEXT_PUBLIC_API_URL}/map/getDestinations`)
-				.then((res) => {
-					setStations(res.data.destinations);
-				})
-				.catch((err) => {
-					console.log("Err: ", err);
-				});
-		}
-	};
-
 	useEffect(() => {
-		handleGetStations();
+		fetchStations();
 	}, []);
 
 	const onSubmit = handleSubmit(async (data) => {
@@ -216,9 +197,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
 							/>
 						</svg>
 					}
-					suggestions={stations.map(
-						(station) => `${station.name}, Level ${station.level}`
-					)} // Assuming stations is an array of objects
+					suggestions={stations} // Assuming stations is an array of objects
 					onSelectionChange={(value) =>
 						setValue("from", value, { shouldValidate: true })
 					}
@@ -244,9 +223,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
 							/>
 						</svg>
 					}
-					suggestions={stations.map(
-						(station) => `${station.name}, Level ${station.level}`
-					)} // Assuming stations is an array of object'
+					suggestions={stations} // Assuming stations is an array of object'
 					onSelectionChange={(value) =>
 						setValue("to", value, { shouldValidate: true })
 					}
@@ -259,7 +236,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
 						<button
 							onClick={handleCalendarClick}
 							className={
-								"flex items-center flex-row w-full h-[70px] md:h-[80px] bg-secondary rounded-xl px-5 text-left font-normal text-[16px] justify-start"
+								"flex items-center flex-row w-full h-[70px] md:h-[80px] bg-secondary rounded-xl px-2.5 lg:px-5 text-left font-normal text-[16px] justify-start"
 							}
 						>
 							<div className="w-12 flex-shrink-0 h-12 grid place-content-center relative">
@@ -349,10 +326,10 @@ export function HeroQuickBook({ className }: { className?: string }) {
 							</svg>
 						}
 						suggestions={[
-							{ label: "1", value: 1 },
-							{ label: "2", value: 2 },
-							{ label: "3", value: 3 },
-							{ label: "4", value: 4 },
+							{ label: "1", name: 1, level: 1 },
+							{ label: "2", name: 2, level: 1 },
+							{ label: "3", name: 3, level: 1 },
+							{ label: "4", name: 4, level: 1 },
 						]} // Assuming stations is an array of object'
 						onSelectionChange={(value) =>
 							setValue("passengers", parseInt(value), {

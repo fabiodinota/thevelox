@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-type Station = {
+export type Station = {
 	name: string;
 	level: number;
+	label: string;
 };
 
 const useStationData = () => {
@@ -22,7 +23,8 @@ const useStationData = () => {
 			setStations(
 				response.data.destinations.map((station: Station) => ({
 					label: `${station.name}, Level ${station.level}`,
-					value: station.name,
+					name: station.name,
+					level: station.level,
 				}))
 			);
 			setError(null);

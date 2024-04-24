@@ -118,13 +118,14 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 					console.error("Error:", error);
 					router.push("/error"); // Handle error or redirect if needed
 				});
+			refreshAccessToken();
 		};
 
 		checkAuthentication();
 
 		const tokenRefreshInterval = setInterval(() => {
 			checkAuthentication();
-		}, 10 * 60 * 1000);
+		}, 5 * 60 * 1000);
 
 		return () => clearInterval(tokenRefreshInterval);
 	}, []);
