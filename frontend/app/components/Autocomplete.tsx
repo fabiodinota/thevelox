@@ -23,17 +23,16 @@ interface Props {
 	size?: "sm" | "lg";
 }
 
-const CustomAutocomplete: React.FC<Props> = ({
+const CustomAutocomplete = ({
 	id,
 	placeholder,
 	suggestions,
 	onSelectionChange,
 	defaultValue,
-	tabIndex,
+	tabIndex = 0,
 	svgIcon,
-	value,
 	size = "lg",
-}) => {
+}: Props) => {
 	const [inputValue, setInputValue] = useState("");
 	const [showSuggestions, setShowSuggestions] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -69,7 +68,7 @@ const CustomAutocomplete: React.FC<Props> = ({
 
 	// Handle default value
 	useEffect(() => {
-		if (defaultValue) {
+		if (defaultValue !== undefined) {
 			setInputValue(defaultValue);
 		}
 	}, [defaultValue]);
@@ -250,9 +249,9 @@ const CustomAutocomplete: React.FC<Props> = ({
 			<div
 				className={`w-full ${
 					size === "sm"
-						? "h-[60px] md:h-[80px]"
-						: "h-[70px] md:h-[80px]"
-				} relative z-[45] cursor-pointer bg-secondary rounded-xl flex flex-row justify-start items-center px-2.5 lg:px-5`}
+						? "h-[60px] md:h-[70px]"
+						: "h-[70px] md:h-[80px] lg:px-5"
+				} relative z-[45] cursor-pointer bg-secondary rounded-xl flex flex-row justify-start items-center px-2.5`}
 			>
 				{svgIcon && (
 					<div

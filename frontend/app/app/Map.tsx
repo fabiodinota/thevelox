@@ -14,14 +14,16 @@ import useMapLevel from "../utils/useMapLevel";
 export const Map = ({
 	searchRequestData,
 	searching,
+	level,
+	xInitial,
+	xExit,
 }: {
 	searchRequestData: Object;
 	searching: boolean;
+	level: number;
+	xInitial: number;
+	xExit: number;
 }) => {
-	const { level, xInitial, xExit } = useMapLevel();
-
-	console.log(level);
-
 	const levelVariant = {
 		initial: {
 			opacity: 0,
@@ -181,6 +183,7 @@ export const Map = ({
 						width: "100vw",
 						height: "100dvh",
 						overflow: "hidden",
+						margin: "200px 0 0 0",
 					}}
 					contentStyle={{
 						padding: "100px",

@@ -129,3 +129,21 @@ export const SearchIcon = (active: boolean) => (
 		/>
 	</svg>
 );
+
+export const ArrowIcon = (active: boolean, className: string) => (
+	<svg
+		width="14"
+		height="22"
+		viewBox="0 0 14 22"
+		className={className}
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path
+			d="M12 1.5L2.76316 10.275C2.34816 10.6693 2.34816 11.3307 2.76316 11.725L12 20.5"
+			className="stroke-foreground"
+			strokeWidth="3"
+			strokeLinecap="round"
+		/>
+	</svg>
+);

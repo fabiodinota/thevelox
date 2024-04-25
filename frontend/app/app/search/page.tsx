@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { Map } from "../Map";
 import axios from "axios";
-import useQuickBookStore from "../../state/state";
 import RippleButton from "@/app/components/RippleButton";
 import { format } from "date-fns";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,11 +14,12 @@ import AnimatePresenceProvider from "@/app/context/AnimatePresenceProvider";
 import { motion } from "framer-motion";
 import { Calendar } from "@/app/components/ui/calendar";
 import { TimePickerDemo } from "@/app/components/package/time-picker-demo";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import useStationData from "@/app/utils/useStationData";
 import { popoverVariant } from "@/app/utils/animationVariants";
-import mapLevelUtil from "@/app/utils/useMapLevel";
-import useMapLevel from "@/app/utils/useMapLevel";
+import { Drawer } from "vaul";
+import { useMediaQuery } from "react-responsive";
+import { ArrowIcon } from "@/app/components/Icons";
 
 export type ISearchReqData = {
 	startStation: string;
@@ -59,6 +59,9 @@ const AppSearchPage = () => {
 
 	const [searching, setSearching] = useState<boolean>(false);
 
+	const [snap, setSnap] = useState<number | string | null>(0.4);
+	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+
 	const [searchReqData, setSearchReqData] = useState<ISearchReqData | {}>({});
 
 	const router = useRouter();
@@ -67,8 +70,6 @@ const AppSearchPage = () => {
 	const { releaseFocus } = useAutocomplete();
 
 	const { stations, fetchStations, loading } = useStationData();
-
-	const { increase, decrease } = useMapLevel();
 
 	useEffect(() => {
 		if (calendarOpen) {
@@ -182,6 +183,10 @@ const AppSearchPage = () => {
 			}&date=${format(data.departureDate, "PP HH:mm")}`
 		);
 
+		setSnap(isLg ? 0.4 : "540px");
+
+		console.log("Data: ", data);
+
 		// Fetch the route data
 		if (data.startStation && data.endStation && data.departureDate) {
 			getRoute(data.startStation, data.endStation);
@@ -214,21 +219,23 @@ const AppSearchPage = () => {
 	};
 
 	const handleGoBackToMap = () => {
+		setSnap(0);
 		clearSearch();
 		router.push("/app/search");
 	};
 
 	const clearSearch = () => {
 		reset();
+
 		setStartStation({
 			name: "",
 			level: undefined,
-			label: "",
+			label: " ",
 		});
 		setEndStation({
 			name: "",
 			level: undefined,
-			label: "",
+			label: " ",
 		});
 		setDepartureDate(undefined);
 		setSearchReqData({}); // Reset to empty object
@@ -242,16 +249,6 @@ const AppSearchPage = () => {
 	useEffect(() => {
 		// Fetch stations on mount
 		fetchStations();
-
-		if (startStation && endStation && departureDate && !searching) {
-			handleSearch({
-				startStation: startStation.name,
-				endStation: endStation.name,
-				departureDate: format(departureDate, "PP HH:mm"),
-			});
-		}
-
-		// Search for routes if the search params are present in the URL and the search is not in progress on mount
 	}, []);
 
 	const getSearchParams = () => {
@@ -261,11 +258,12 @@ const AppSearchPage = () => {
 			searchParams.has("endStation") &&
 			searchParams.has("date")
 		) {
-			setSearching(true);
 			// Get the search params from the URL
 			const startStationParams = searchParams.get("startStation") || "";
 			const endStationParams = searchParams.get("endStation") || "";
 			const departureDateParams = searchParams.get("date") || "";
+
+			setSearching(true);
 
 			// Check if the stations are in the list of stations
 			stations.some((station: Station) => {
@@ -278,6 +276,7 @@ const AppSearchPage = () => {
 					setValue("startStation", station.name, {
 						shouldValidate: true,
 					});
+					console.log("startStation", station);
 				}
 				if (station.name === endStationParams) {
 					setEndStation({
@@ -288,6 +287,7 @@ const AppSearchPage = () => {
 					setValue("endStation", station.name, {
 						shouldValidate: true,
 					});
+					console.log("endStation", station);
 				}
 			});
 			// Set the date
@@ -295,19 +295,66 @@ const AppSearchPage = () => {
 			setValue("departureDate", departureDateParams, {
 				shouldValidate: true,
 			});
+
+			handleSearch({
+				startStation: startStationParams,
+				endStation: endStationParams,
+				departureDate: departureDateParams,
+			});
 		} else {
 			setSearching(false);
 			router.push("/app/search");
 		}
 	};
 
+	const minMax = {
+		min: 0,
+		max: 2,
+	};
+
+	const [level, setLevel] = useState(0);
+	const [slideDirection, setSlideDirection] = useState("right");
+
+	const xInitial = slideDirection === "right" ? -50 : 50;
+	const xExit = slideDirection === "right" ? 50 : -50;
+
+	const decrease = () => {
+		setSlideDirection("left");
+		if (level > minMax.min) {
+			setLevel((prevLevel) => prevLevel - 1);
+		} else {
+			setLevel(minMax.max);
+		}
+	};
+
+	const increase = () => {
+		setSlideDirection("right");
+		if (level < minMax.max) {
+			setLevel((prevLevel) => prevLevel + 1);
+		} else {
+			setLevel(minMax.min);
+		}
+	};
+
+	const isLg = useMediaQuery({ query: "(max-width: 1024px)" });
+
+	useEffect(() => {
+		if (isLg && searching) {
+			setSnap(0.4);
+		} else if (!isLg && searching) {
+			setSnap("540px");
+		} else {
+			setSnap(0);
+		}
+	}, [isLg, searching]);
+
 	return (
 		<div className="w-screen h-full overflow-hidden relative flex items-center justify-center">
-			<div className="absolute top-5 z-[9999] w-full px-5 flex justify-start items-center">
+			<div className="absolute top-5 z-[100] w-full px-5 flex justify-start items-center">
 				<form
 					onSubmit={onSubmit}
 					className={
-						"w-full max-w-full md:max-w-[500px] flex flex-col gap-2.5 p-5 rounded-[20px] bg-background  shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07] "
+						"w-full max-w-full lg:max-w-[500px] flex flex-col gap-2.5 p-2.5 md:p-5 rounded-[20px] bg-background  shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07] "
 					}
 				>
 					<CustomAutocomplete
@@ -379,7 +426,7 @@ const AppSearchPage = () => {
 							<button
 								onClick={handleCalendarClick}
 								className={
-									"flex items-center flex-row w-full h-[60px] md:h-[80px] bg-secondary rounded-xl px-2.5 md:px-5 text-left font-normal text-[16px] justify-start"
+									"flex items-center flex-row w-full h-[60px] md:h-[70px] bg-secondary rounded-xl px-2.5 text-left font-normal text-[16px] justify-start"
 								}
 							>
 								<div className="w-10 md:w-12 flex-shrink-0 h-10 md:h-12 grid place-content-center relative">
@@ -473,9 +520,9 @@ const AppSearchPage = () => {
 						</svg>
 						{searching ? "Go back" : "Search"}
 					</RippleButton>
-					<div className="flex flex-row gap-2.5 w-full">
+					{/* <div className="flex flex-row gap-2.5 w-full">
 						<RippleButton
-							onClick={increase}
+							onClick={decrease}
 							type="button"
 							style="nofill"
 							className="w-full !flex-shrink bg-secondary"
@@ -498,7 +545,7 @@ const AppSearchPage = () => {
 							Previous Level
 						</RippleButton>
 						<RippleButton
-							onClick={decrease}
+							onClick={increase}
 							type="button"
 							style="nofill"
 							className="w-full !flex-shrink bg-secondary"
@@ -521,11 +568,57 @@ const AppSearchPage = () => {
 								/>
 							</svg>
 						</RippleButton>
-					</div>
+					</div> */}
 				</form>
 			</div>
-
-			<Map searching={searching} searchRequestData={searchReqData} />
+			<Drawer.Root
+				open={searching || drawerOpen}
+				dismissible={false}
+				direction={isLg ? "bottom" : "left"}
+				snapPoints={isLg ? ["140px", 0.4, 1] : [0, "540px"]}
+				activeSnapPoint={snap}
+				setActiveSnapPoint={setSnap}
+				modal={false}
+				onOpenChange={(open) => {
+					setDrawerOpen(open);
+				}}
+			>
+				{searching && !isLg && (
+					<Drawer.Trigger>
+						<div
+							onClick={() => {
+								setSnap(isLg ? 0.4 : "540px");
+							}}
+							className={`relative ${
+								snap === 0
+									? "left-5 opacity-100"
+									: "left-[560px] opacity-0"
+							} duration-300  top-1/2 -translate-y-1/2  z-50 px-2.5`}
+						>
+							{ArrowIcon(false, "rotate-180")}
+						</div>
+					</Drawer.Trigger>
+				)}
+				<Drawer.Portal>
+					<Drawer.Content className="flex flex-col rounded-t-[10px] focus-visible:!outline-none h-full max-h-[100%] w-full fixed bottom-0 left-0 right-0 z-[90]  shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]">
+						<div className="p-5 bg-background rounded-t-[10px] flex-1">
+							<div className="mx-auto w-12 h-1 block lg:hidden flex-shrink-0 rounded-full bg-zinc-300 mb-8" />
+							<div className="w-full mx-auto">
+								<Drawer.Title className="font-medium mb-4">
+									Unstyled drawer for React.
+								</Drawer.Title>
+							</div>
+						</div>
+					</Drawer.Content>
+				</Drawer.Portal>
+			</Drawer.Root>
+			<Map
+				searching={searching}
+				searchRequestData={searchReqData}
+				level={level}
+				xInitial={xInitial}
+				xExit={xExit}
+			/>
 		</div>
 	);
 };
