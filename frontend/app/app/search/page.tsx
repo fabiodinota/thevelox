@@ -20,12 +20,14 @@ import { popoverVariant } from "@/app/utils/animationVariants";
 import { Drawer } from "vaul";
 import { useMediaQuery } from "react-responsive";
 import { ArrowIcon } from "@/app/components/Icons";
+import { generateTrainTimes } from "@/app/utils/useTrainTimes";
 
 export type ISearchReqData = {
 	startStation: string;
 	endStation: string;
 	lines: string[];
 	path: string[];
+	times: string[];
 };
 
 type Station = {
@@ -214,28 +216,44 @@ const AppSearchPage = () => {
 
 		// Fetch the route data
 		if (data.startStation && data.endStation && data.departureDate) {
-			getRoute(data.startStation, data.endStation);
+			getRoute(
+				data.startStation,
+				data.endStation,
+				new Date(data.departureDate)
+			);
 		}
 	};
 	// Fetch the route data
-	const getRoute = async (startStation: string, endStation: string) => {
-		await axios
-			.get(
+	const getRoute = async (
+		startStation: string,
+		endStation: string,
+		initialTime: Date
+	) => {
+		try {
+			const res = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/map/search?startStation=${startStation}&endStation=${endStation}`,
 				{ withCredentials: true }
-			)
-			.then((res) => {
-				updateSearchReqData({
-					startStation,
-					endStation,
-					lines: res.data?.lines || [],
-					path: res.data?.path || [],
-				});
-			})
-			.catch((err) => {
-				console.log("Err: ", err);
+			);
+
+			const path = generateTrainTimes({
+				initialTime: initialTime.toISOString(),
+				stations: res.data?.path || [],
+				numberOfTrains: 3,
 			});
+
+			updateSearchReqData({
+				startStation,
+				endStation,
+				lines: res.data?.lines || [],
+				path: res.data?.path || [],
+				times: path,
+			});
+		} catch (err) {
+			console.log("Err: ", err);
+		}
 	};
+
+	console.log(searchReqData);
 
 	const handleGoBackToMap = () => {
 		setSnap(0);
@@ -624,6 +642,54 @@ const AppSearchPage = () => {
 								<Drawer.Title className="font-medium mt-4">
 									Get Route info
 								</Drawer.Title>
+								<Drawer.Description>
+									<div className="flex flex-col gap-5 w-full mt-5">
+										{searchReqData &&
+											"path" in searchReqData &&
+											searchReqData.path.map(
+												(station, index) => (
+													<div
+														key={index}
+														style={{
+															marginBottom:
+																"10px",
+														}}
+													>
+														<h3>{station}</h3>
+														{searchReqData.times &&
+															searchReqData.times.map(
+																(
+																	trainTimes,
+																	trainIndex
+																) => (
+																	<p
+																		key={
+																			trainIndex
+																		}
+																	>
+																		Train{" "}
+																		{trainIndex +
+																			1}
+																		:
+																		<span>
+																			{" "}
+																			{format(
+																				new Date(
+																					trainTimes[
+																						index
+																					]
+																				),
+																				"HH:mm"
+																			)}
+																		</span>
+																	</p>
+																)
+															)}
+													</div>
+												)
+											)}
+									</div>
+								</Drawer.Description>
 							</div>
 						</div>
 					</Drawer.Content>

@@ -51,6 +51,7 @@ export const Map = ({
 		startStation: string;
 		endStation: string;
 		path: string[];
+		times: string[];
 		lines: string[];
 	};
 

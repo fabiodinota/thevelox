@@ -91,6 +91,8 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 
 	const router = useRouter();
 
+	const pathname = usePathname();
+
 	useEffect(() => {
 		const checkAuthentication = () => {
 			axios
@@ -109,7 +111,8 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 					} else if (
 						!accessToken &&
 						!refreshToken &&
-						!isAuthenticated
+						!isAuthenticated &&
+						pathname.startsWith("/app")
 					) {
 						router.push("/signin"); // Redirect to sign-in if no tokens are available
 					}
