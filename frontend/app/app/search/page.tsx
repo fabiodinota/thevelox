@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Map } from "../Map";
+import { Map } from "./Map";
 import axios from "axios";
 import RippleButton from "@/app/components/RippleButton";
 import { format } from "date-fns";
@@ -170,10 +170,35 @@ const AppSearchPage = () => {
 			)
 		) {
 			setSearchReqData(data);
+
+			/* 	if (searchReqData && "lines" in searchReqData) {
+				const lines = searchReqData.lines;
+				checkCrossLevel(lines);
+			} */
 		} else {
 			console.error("Invalid data structure for searchReqData");
 		}
 	};
+
+	/*     const [crossLevel, setCrossLevel] = useState({
+		start: 0,
+		end: 0,
+	});
+
+	console.log("crossLevel", crossLevel);
+
+	const checkCrossLevel = (lines: string[]) => {
+		if (startStation.level && endStation.level) {
+			const startLevel = startStation.level;
+			const endLevel = endStation.level;
+			
+            if(startLevel !== endLevel) {
+                setCrossLevel({
+                    startLevel,
+                    endLevel,
+                });
+		}
+	}; */
 
 	const handleSearch = async (data: SearchParams) => {
 		// Push the search params to the URL
@@ -200,12 +225,6 @@ const AppSearchPage = () => {
 				{ withCredentials: true }
 			)
 			.then((res) => {
-				console.log("Data: ", {
-					startStation,
-					endStation,
-					lines: res.data?.lines || [],
-					path: res.data?.path || [],
-				});
 				updateSearchReqData({
 					startStation,
 					endStation,
@@ -276,7 +295,6 @@ const AppSearchPage = () => {
 					setValue("startStation", station.name, {
 						shouldValidate: true,
 					});
-					console.log("startStation", station);
 				}
 				if (station.name === endStationParams) {
 					setEndStation({
@@ -287,7 +305,6 @@ const AppSearchPage = () => {
 					setValue("endStation", station.name, {
 						shouldValidate: true,
 					});
-					console.log("endStation", station);
 				}
 			});
 			// Set the date
@@ -520,55 +537,6 @@ const AppSearchPage = () => {
 						</svg>
 						{searching ? "Go back" : "Search"}
 					</RippleButton>
-					{/* <div className="flex flex-row gap-2.5 w-full">
-						<RippleButton
-							onClick={decrease}
-							type="button"
-							style="nofill"
-							className="w-full !flex-shrink bg-secondary"
-							speed="medium"
-						>
-							<svg
-								width="14"
-								height="22"
-								viewBox="0 0 14 22"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M12 1.5L2.76316 10.275C2.34816 10.6693 2.34816 11.3307 2.76316 11.725L12 20.5"
-									className="stroke-foreground"
-									strokeWidth="3"
-									strokeLinecap="round"
-								/>
-							</svg>
-							Previous Level
-						</RippleButton>
-						<RippleButton
-							onClick={increase}
-							type="button"
-							style="nofill"
-							className="w-full !flex-shrink bg-secondary"
-							speed="medium"
-						>
-							Next Level
-							<svg
-								width="14"
-								height="22"
-								viewBox="0 0 14 22"
-								className="rotate-180"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M12 1.5L2.76316 10.275C2.34816 10.6693 2.34816 11.3307 2.76316 11.725L12 20.5"
-									className="stroke-foreground"
-									strokeWidth="3"
-									strokeLinecap="round"
-								/>
-							</svg>
-						</RippleButton>
-					</div> */}
 				</form>
 			</div>
 			<Drawer.Root
@@ -600,12 +568,61 @@ const AppSearchPage = () => {
 					</Drawer.Trigger>
 				)}
 				<Drawer.Portal>
-					<Drawer.Content className="flex flex-col rounded-t-[10px] focus-visible:!outline-none h-full max-h-[100%] w-full fixed bottom-0 left-0 right-0 z-[90]  shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]">
-						<div className="p-5 bg-background rounded-t-[10px] flex-1">
-							<div className="mx-auto w-12 h-1 block lg:hidden flex-shrink-0 rounded-full bg-zinc-300 mb-8" />
+					<Drawer.Content className="flex flex-col rounded-t-[20px] focus-visible:!outline-none h-full max-h-[100%] w-full fixed bottom-0 left-0 right-0 z-[90]  shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]">
+						<div className="p-5 bg-background rounded-t-[20px] flex-1">
+							<div className="mx-auto w-12 h-1 block lg:hidden flex-shrink-0 rounded-full bg-zinc-300 mb-4" />
 							<div className="w-full mx-auto">
-								<Drawer.Title className="font-medium mb-4">
-									Unstyled drawer for React.
+								<div className="flex flex-row gap-2.5 w-full">
+									<RippleButton
+										onClick={decrease}
+										type="button"
+										style="nofill"
+										className="w-full !flex-shrink bg-secondary"
+										speed="medium"
+									>
+										<svg
+											width="14"
+											height="22"
+											viewBox="0 0 14 22"
+											fill="none"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M12 1.5L2.76316 10.275C2.34816 10.6693 2.34816 11.3307 2.76316 11.725L12 20.5"
+												className="stroke-foreground"
+												strokeWidth="3"
+												strokeLinecap="round"
+											/>
+										</svg>
+										Previous Level
+									</RippleButton>
+									<RippleButton
+										onClick={increase}
+										type="button"
+										style="nofill"
+										className="w-full !flex-shrink bg-secondary"
+										speed="medium"
+									>
+										Next Level
+										<svg
+											width="14"
+											height="22"
+											viewBox="0 0 14 22"
+											className="rotate-180"
+											fill="none"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M12 1.5L2.76316 10.275C2.34816 10.6693 2.34816 11.3307 2.76316 11.725L12 20.5"
+												className="stroke-foreground"
+												strokeWidth="3"
+												strokeLinecap="round"
+											/>
+										</svg>
+									</RippleButton>
+								</div>
+								<Drawer.Title className="font-medium mt-4">
+									Get Route info
 								</Drawer.Title>
 							</div>
 						</div>
