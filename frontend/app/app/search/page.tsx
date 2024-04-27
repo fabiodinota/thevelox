@@ -19,15 +19,37 @@ import useStationData from "@/app/utils/useStationData";
 import { popoverVariant } from "@/app/utils/animationVariants";
 import { Drawer } from "vaul";
 import { useMediaQuery } from "react-responsive";
-import { ArrowIcon } from "@/app/components/Icons";
+import { ArrowIcon, LineArrowIcon } from "@/app/components/Icons";
 import { generateTrainTimes } from "@/app/utils/useTrainTimes";
+import {
+	Line11Icon,
+	Line12Icon,
+	Line13Icon,
+	Line14Icon,
+	Line15Icon,
+	Line16Icon,
+} from "@/app/components/Icons";
+import Ticket from "@/app/components/app/Ticket";
+
+type Ticket = {
+	departureTime: string;
+	arrivalTime: string;
+	startStation: string;
+	endStation: string;
+	startLevel: number;
+	endLevel: number;
+	times: string[];
+};
 
 export type ISearchReqData = {
 	startStation: string;
 	endStation: string;
+	startLevel: number;
+	endLevel: number;
 	lines: string[];
 	path: string[];
 	times: string[];
+	tickets: Ticket[];
 };
 
 type Station = {
@@ -66,6 +88,8 @@ const AppSearchPage = () => {
 
 	const [searchReqData, setSearchReqData] = useState<ISearchReqData | {}>({});
 
+	const [showTicketLimit, setShowTicketLimit] = useState(5);
+
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
@@ -97,7 +121,10 @@ const AppSearchPage = () => {
 				{
 					message: "Enter a valid station",
 				}
-			),
+			)
+			.refine((value) => value !== startStation.name, {
+				message: "Start and end stations can't be the same",
+			}),
 		departureDate: z
 			.string({ required_error: "Set a departure date" })
 			.min(1, { message: "Set a departure date" })
@@ -219,7 +246,7 @@ const AppSearchPage = () => {
 			getRoute(
 				data.startStation,
 				data.endStation,
-				new Date(data.departureDate)
+				format(data.departureDate, "PP HH:mm")
 			);
 		}
 	};
@@ -227,33 +254,38 @@ const AppSearchPage = () => {
 	const getRoute = async (
 		startStation: string,
 		endStation: string,
-		initialTime: Date
+		departureDate: string
 	) => {
 		try {
 			const res = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/map/search?startStation=${startStation}&endStation=${endStation}`,
+				`${process.env.NEXT_PUBLIC_API_URL}/map/search?startStation=${startStation}&endStation=${endStation}&departureDate=${departureDate}`,
 				{ withCredentials: true }
 			);
 
-			const path = generateTrainTimes({
-				initialTime: initialTime.toISOString(),
-				stations: res.data?.path || [],
-				numberOfTrains: 3,
-			});
-
 			updateSearchReqData({
-				startStation,
-				endStation,
+				startStation: res.data?.startStation || "",
+				endStation: res.data?.endStation || "",
+				startLevel: res.data?.startLevel || 0,
+				endLevel: res.data?.endLevel || 0,
 				lines: res.data?.lines || [],
 				path: res.data?.path || [],
-				times: path,
+				times: res.data?.times || [],
+				tickets: res.data?.tickets || [],
 			});
 		} catch (err) {
 			console.log("Err: ", err);
 		}
 	};
 
-	console.log(searchReqData);
+	const loadMoreTickets = () => {
+		setShowTicketLimit((prevLimit) => prevLimit + 3);
+
+		if (searchReqData && "tickets" in searchReqData) {
+			if (showTicketLimit >= searchReqData.tickets.length) {
+				setShowTicketLimit(searchReqData.tickets.length);
+			}
+		}
+	};
 
 	const handleGoBackToMap = () => {
 		setSnap(0);
@@ -383,9 +415,32 @@ const AppSearchPage = () => {
 		}
 	}, [isLg, searching]);
 
+	const handleGetLevelIcon = (level: number, className: string) => {
+		switch (level) {
+			case 11:
+				return Line11Icon(className);
+			case 12:
+				return Line12Icon(className);
+			case 13:
+				return Line13Icon(className);
+			case 14:
+				return Line14Icon(className);
+			case 15:
+				return Line15Icon(className);
+			case 16:
+				return Line16Icon(className);
+			default:
+				return Line11Icon(className);
+		}
+	};
+
 	return (
 		<div className="w-screen h-full overflow-hidden relative flex items-center justify-center">
-			<div className="absolute top-5 z-[100] w-full px-5 flex justify-start items-center">
+			<div
+				className={`absolute top-5 ${
+					isLg ? "z-[80]" : "z-[100]"
+				} w-full px-5 flex justify-start items-center`}
+			>
 				<form
 					onSubmit={onSubmit}
 					className={
@@ -536,25 +591,27 @@ const AppSearchPage = () => {
 							{errors.departureDate.message}
 						</span>
 					)}
-					<RippleButton
-						type="submit"
-						style="gradient"
-						className="w-full"
-					>
-						<svg
-							width="18"
-							height="17"
-							viewBox="0 0 18 17"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
+					{!searching && (
+						<RippleButton
+							type="submit"
+							style="gradient"
+							className="w-full"
 						>
-							<path
-								d="M16.1 17L10.8 11.7C10.3 12.1 9.725 12.4167 9.075 12.65C8.425 12.8833 7.73333 13 7 13C5.18333 13 3.64583 12.3708 2.3875 11.1125C1.12917 9.85417 0.5 8.31667 0.5 6.5C0.5 4.68333 1.12917 3.14583 2.3875 1.8875C3.64583 0.629167 5.18333 0 7 0C8.81667 0 10.3542 0.629167 11.6125 1.8875C12.8708 3.14583 13.5 4.68333 13.5 6.5C13.5 7.23333 13.3833 7.925 13.15 8.575C12.9167 9.225 12.6 9.8 12.2 10.3L17.5 15.6L16.1 17ZM7 11C8.25 11 9.3125 10.5625 10.1875 9.6875C11.0625 8.8125 11.5 7.75 11.5 6.5C11.5 5.25 11.0625 4.1875 10.1875 3.3125C9.3125 2.4375 8.25 2 7 2C5.75 2 4.6875 2.4375 3.8125 3.3125C2.9375 4.1875 2.5 5.25 2.5 6.5C2.5 7.75 2.9375 8.8125 3.8125 9.6875C4.6875 10.5625 5.75 11 7 11Z"
-								fill="white"
-							/>
-						</svg>
-						{searching ? "Go back" : "Search"}
-					</RippleButton>
+							<svg
+								width="18"
+								height="17"
+								viewBox="0 0 18 17"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M16.1 17L10.8 11.7C10.3 12.1 9.725 12.4167 9.075 12.65C8.425 12.8833 7.73333 13 7 13C5.18333 13 3.64583 12.3708 2.3875 11.1125C1.12917 9.85417 0.5 8.31667 0.5 6.5C0.5 4.68333 1.12917 3.14583 2.3875 1.8875C3.64583 0.629167 5.18333 0 7 0C8.81667 0 10.3542 0.629167 11.6125 1.8875C12.8708 3.14583 13.5 4.68333 13.5 6.5C13.5 7.23333 13.3833 7.925 13.15 8.575C12.9167 9.225 12.6 9.8 12.2 10.3L17.5 15.6L16.1 17ZM7 11C8.25 11 9.3125 10.5625 10.1875 9.6875C11.0625 8.8125 11.5 7.75 11.5 6.5C11.5 5.25 11.0625 4.1875 10.1875 3.3125C9.3125 2.4375 8.25 2 7 2C5.75 2 4.6875 2.4375 3.8125 3.3125C2.9375 4.1875 2.5 5.25 2.5 6.5C2.5 7.75 2.9375 8.8125 3.8125 9.6875C4.6875 10.5625 5.75 11 7 11Z"
+									fill="white"
+								/>
+							</svg>
+							Search
+						</RippleButton>
+					)}
 				</form>
 			</div>
 			<Drawer.Root
@@ -586,110 +643,78 @@ const AppSearchPage = () => {
 					</Drawer.Trigger>
 				)}
 				<Drawer.Portal>
-					<Drawer.Content className="flex flex-col rounded-t-[20px] focus-visible:!outline-none h-full max-h-[100%] w-full fixed bottom-0 left-0 right-0 z-[90]  shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]">
-						<div className="p-5 bg-background rounded-t-[20px] flex-1">
-							<div className="mx-auto w-12 h-1 block lg:hidden flex-shrink-0 rounded-full bg-zinc-300 mb-4" />
-							<div className="w-full mx-auto">
-								<div className="flex flex-row gap-2.5 w-full">
-									<RippleButton
-										onClick={decrease}
-										type="button"
-										style="nofill"
-										className="w-full !flex-shrink bg-secondary"
-										speed="medium"
-									>
-										<svg
-											width="14"
-											height="22"
-											viewBox="0 0 14 22"
-											fill="none"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												d="M12 1.5L2.76316 10.275C2.34816 10.6693 2.34816 11.3307 2.76316 11.725L12 20.5"
-												className="stroke-foreground"
-												strokeWidth="3"
-												strokeLinecap="round"
-											/>
-										</svg>
-										Previous Level
-									</RippleButton>
-									<RippleButton
-										onClick={increase}
-										type="button"
-										style="nofill"
-										className="w-full !flex-shrink bg-secondary"
-										speed="medium"
-									>
-										Next Level
-										<svg
-											width="14"
-											height="22"
-											viewBox="0 0 14 22"
-											className="rotate-180"
-											fill="none"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												d="M12 1.5L2.76316 10.275C2.34816 10.6693 2.34816 11.3307 2.76316 11.725L12 20.5"
-												className="stroke-foreground"
-												strokeWidth="3"
-												strokeLinecap="round"
-											/>
-										</svg>
-									</RippleButton>
-								</div>
-								<Drawer.Title className="font-medium mt-4">
-									Get Route info
-								</Drawer.Title>
-								<Drawer.Description>
-									<div className="flex flex-col gap-5 w-full mt-5">
-										{searchReqData &&
-											"path" in searchReqData &&
-											searchReqData.path.map(
-												(station, index) => (
-													<div
+					<Drawer.Content
+						className={`flex flex-col rounded-t-[20px] focus-visible:!outline-none max-h-[100%] h-full ${
+							isLg
+								? snap === 1
+									? "h-full w-full"
+									: snap === 0.4
+									? "h-[40%] w-full"
+									: "h-0 w-full"
+								: "w-[540px] pt-[310px]"
+						} py-[44px] duration-300 bg-background fixed right-0 top-0 z-[90] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]`}
+					>
+						<div className="absolute left-1/2 -translate-x-1/2 top-5 w-12 h-1 block lg:hidden flex-shrink-0 rounded-full bg-zinc-300" />
+						<div className="p-5 pt-0 rounded-t-[20px] flex-1 w-full h-full overflow-scroll pb-20 noscrollbar">
+							<div className="flex flex-row gap-2.5 w-full">
+								<RippleButton
+									onClick={decrease}
+									type="button"
+									style="nofill"
+									className="w-full !flex-shrink bg-secondary !text-foreground"
+									speed="medium"
+									data-vaul-no-drag
+								>
+									{ArrowIcon(false, "w-5 h-5")}
+									Previous Level
+								</RippleButton>
+								<RippleButton
+									onClick={increase}
+									type="button"
+									style="nofill"
+									className="w-full !flex-shrink bg-secondary !text-foreground"
+									speed="medium"
+								>
+									Next Level
+									{ArrowIcon(false, "w-5 h-5 rotate-180")}
+								</RippleButton>
+							</div>
+							<div>
+								<div className="flex flex-col gap-5 w-full mt-5">
+									{searchReqData &&
+										"tickets" in searchReqData &&
+										searchReqData.tickets.map(
+											(ticket, index) => {
+												if (index > showTicketLimit)
+													return;
+												return (
+													<Ticket
 														key={index}
-														style={{
-															marginBottom:
-																"10px",
-														}}
-													>
-														<h3>{station}</h3>
-														{searchReqData.times &&
-															searchReqData.times.map(
-																(
-																	trainTimes,
-																	trainIndex
-																) => (
-																	<p
-																		key={
-																			trainIndex
-																		}
-																	>
-																		Train{" "}
-																		{trainIndex +
-																			1}
-																		:
-																		<span>
-																			{" "}
-																			{format(
-																				new Date(
-																					trainTimes[
-																						index
-																					]
-																				),
-																				"HH:mm"
-																			)}
-																		</span>
-																	</p>
-																)
-															)}
-													</div>
-												)
-											)}
-									</div>
-								</Drawer.Description>
+														ticket={ticket}
+														handleGetLevelIcon={
+															handleGetLevelIcon
+														}
+													/>
+												);
+											}
+										)}
+									{searchReqData &&
+									"tickets" in searchReqData &&
+									searchReqData.tickets.length >
+										showTicketLimit ? (
+										<RippleButton
+											onClick={loadMoreTickets}
+											type="button"
+											style="gradient"
+											className="w-full !flex-shrink"
+											speed="medium"
+										>
+											Load More
+										</RippleButton>
+									) : (
+										<p>No more tickets available</p>
+									)}
+								</div>
 							</div>
 						</div>
 					</Drawer.Content>

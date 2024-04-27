@@ -146,7 +146,15 @@ const SignIn = ({
 		setPassword(values.password);
 	}, []);
 
-	const mobileHeight = useMediaQuery({ query: "(max-height: 850px)" });
+	const [mobileHeight, setMobileHeight] = useState(false);
+
+	const isMobileHeight = useMediaQuery({
+		query: "(max-height: 850px)",
+	});
+
+	useEffect(() => {
+		setMobileHeight(isMobileHeight);
+	}, []);
 
 	return (
 		<form

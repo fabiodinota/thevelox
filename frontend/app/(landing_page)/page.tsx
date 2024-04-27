@@ -160,8 +160,8 @@ export default function Home() {
 							data-aos="fade-right"
 							data-aos-duration="600"
 							data-aos-once="true"
-							data-aos-ease="ease-out"
-							className="w-full flex flex-col gap-2"
+							data-aos-easing="ease-out"
+							className="w-full flex flex-col gap-2 aos-init"
 						>
 							<h1 className="text-foreground text-[22px] sm:text-[26px] md:text-[32px] font-bold w-full text-left">
 								The best transport solution to date.
@@ -178,8 +178,8 @@ export default function Home() {
 							data-aos="fade-left"
 							data-aos-duration="600"
 							data-aos-once="true"
-							data-ease="ease-out"
-							className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center overflow-hidden"
+							data-aos-easing="ease-out"
+							className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center overflow-hidden aos-init"
 						>
 							<img
 								src="https://storage.thevelox.co/0476.png"
@@ -193,8 +193,8 @@ export default function Home() {
 							data-aos="fade-right"
 							data-aos-duration="600"
 							data-aos-once="true"
-							data-ease="ease-out"
-							className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center overflow-hidden"
+							data-aos-easing="ease-out"
+							className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center overflow-hidden aos-init"
 						>
 							<img
 								src="https://storage.thevelox.co/0741.png"
@@ -206,8 +206,8 @@ export default function Home() {
 							data-aos="fade-left"
 							data-aos-duration="600"
 							data-aos-once="true"
-							data-aos-ease="ease-out"
-							className="w-full flex flex-col gap-2"
+							data-aos-easing="ease-out"
+							className="w-full flex flex-col gap-2 aos-init"
 						>
 							<h1 className="text-foreground text-[22px] sm:text-[26px] md:text-[32px] font-bold w-full text-left">
 								Next-Generation Public Transport Booking App
@@ -228,8 +228,8 @@ export default function Home() {
 						data-aos="fade-right"
 						data-aos-duration="600"
 						data-aos-once="true"
-						data-ease="ease-out"
-						className="text-foreground text-[28px] sm:text-[32px] md:text-[40px] font-bold w-full text-left"
+						data-aos-easing="ease-out"
+						className="text-foreground text-[28px] sm:text-[32px] md:text-[40px] font-bold w-full text-left aos-init"
 					>
 						Frequently Asked Questions
 					</h1>
@@ -242,8 +242,8 @@ export default function Home() {
 							data-aos="fade-up"
 							data-aos-duration="600"
 							data-aos-once="true"
-							data-ease="ease-out"
-							className="py-2"
+							data-aos-easing="ease-out"
+							className="py-2 aos-init"
 							value="item-1"
 						>
 							<AccordionTrigger className="text-[18px] md:text-[20px] font-medium leading-relaxed text-left">
@@ -261,8 +261,8 @@ export default function Home() {
 							data-aos="fade-up"
 							data-aos-duration="600"
 							data-aos-once="true"
-							data-ease="ease-out"
-							className="py-2"
+							data-aos-easing="ease-out"
+							className="py-2 aos-init"
 							value="item-2"
 						>
 							<AccordionTrigger className="text-[18px] md:text-[20px] font-medium leading-relaxed text-left">
@@ -279,8 +279,8 @@ export default function Home() {
 							data-aos="fade-up"
 							data-aos-duration="600"
 							data-aos-once="true"
-							data-ease="ease-out"
-							className="py-2"
+							data-aos-easing="ease-out"
+							className="py-2 aos-init"
 							value="item-3"
 						>
 							<AccordionTrigger className="text-[18px] md:text-[20px] font-medium leading-relaxed text-left">
@@ -297,8 +297,8 @@ export default function Home() {
 							data-aos="fade-up"
 							data-aos-duration="600"
 							data-aos-once="true"
-							data-ease="ease-out"
-							className="py-2"
+							data-aos-easing="ease-out"
+							className="py-2 aos-init"
 							value="item-4"
 						>
 							<AccordionTrigger className="text-[18px] md:text-[20px] font-medium leading-relaxed text-left">

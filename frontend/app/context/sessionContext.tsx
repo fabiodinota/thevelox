@@ -106,7 +106,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 					const { accessToken, refreshToken, isAuthenticated } =
 						response.data;
 
-					if (!accessToken && refreshToken && !isAuthenticated) {
+					if (refreshToken) {
 						refreshAccessToken(); // Refresh token if we have refresh token but no access token
 					} else if (
 						!accessToken &&
@@ -121,7 +121,6 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 					console.error("Error:", error);
 					router.push("/error"); // Handle error or redirect if needed
 				});
-			refreshAccessToken();
 		};
 
 		checkAuthentication();
@@ -149,18 +148,6 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 			}
 		}
 	};
-
-	useEffect(() => {
-		try {
-			fetchUserData();
-		} catch (error: any) {
-			try {
-				refreshAccessToken();
-			} catch (error: any) {
-				console.error("Error fetching user data:", error);
-			}
-		}
-	}, []);
 
 	// Sign-in function
 	const signIn = async (

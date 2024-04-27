@@ -226,7 +226,7 @@ export const Map = ({
 											/>
 											<text
 												id="Stadium"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fillOpacity="0.2"
 												fontFamily="Space Grotesk"
 												fontSize="30"
@@ -1259,7 +1259,7 @@ export const Map = ({
 											<text
 												id="Park Ave_2"
 												transform="translate(2343 1452)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1272,7 +1272,7 @@ export const Map = ({
 											<text
 												id="Ocean Boulevard_2"
 												transform="translate(1995 1488)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1285,7 +1285,7 @@ export const Map = ({
 											<text
 												id="Pacific Plaza_2"
 												transform="translate(2421 975)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1298,7 +1298,7 @@ export const Map = ({
 											<text
 												id="Seashell Sector_2"
 												transform="translate(1235 2019)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1311,7 +1311,7 @@ export const Map = ({
 											<text
 												id="Reef Road_2"
 												transform="translate(2624 779)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1324,7 +1324,7 @@ export const Map = ({
 											<text
 												id="Brine Bridge_3"
 												transform="translate(2815 590)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1337,7 +1337,7 @@ export const Map = ({
 											<text
 												id="Harbor Heights_2"
 												transform="translate(2569 1171)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1350,7 +1350,7 @@ export const Map = ({
 											<text
 												id="Abyss Alley_2"
 												transform="translate(1337 1110)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1363,7 +1363,7 @@ export const Map = ({
 											<text
 												id="Sapphire Station_2"
 												transform="translate(1693 1085)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1376,7 +1376,7 @@ export const Map = ({
 											<text
 												id="Horizon Hub_2"
 												transform="translate(1686 901)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1389,7 +1389,7 @@ export const Map = ({
 											<text
 												id="Driftwood Domain_2"
 												transform="translate(2035 886)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1402,7 +1402,7 @@ export const Map = ({
 											<text
 												id="Crystal Ave_2"
 												transform="translate(2542 1545)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1415,7 +1415,7 @@ export const Map = ({
 											<text
 												id="Riley Park_2"
 												transform="translate(2703 1636)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1428,7 +1428,7 @@ export const Map = ({
 											<text
 												id="Diamond Ave_2"
 												transform="translate(2902 1841)"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="20"
 												fontWeight="600"
@@ -1450,7 +1450,7 @@ export const Map = ({
 												<text
 													id="Manta Market_3"
 													transform="translate(2293 712.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1465,7 +1465,7 @@ export const Map = ({
 												<text
 													id="Lagoon Lane_3"
 													transform="translate(2974 1170.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1488,7 +1488,7 @@ export const Map = ({
 												<text
 													id="Lighthouse Landing_3"
 													transform="translate(1570 567.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1511,7 +1511,7 @@ export const Map = ({
 												<text
 													id="Marina Meadows_3"
 													transform="translate(1712 716.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1526,7 +1526,7 @@ export const Map = ({
 												<text
 													id="Salinity Station_3"
 													transform="translate(2055 2124.12)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1549,7 +1549,7 @@ export const Map = ({
 												<text
 													id="Plankton Place_3"
 													transform="translate(2049 1807)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1572,7 +1572,7 @@ export const Map = ({
 												<text
 													id="Seagrass Grove_3"
 													transform="translate(1650.42 1603.12)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1593,7 +1593,7 @@ export const Map = ({
 												<text
 													id="Salty Springs_3"
 													transform="translate(1469.79 1295.12)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1614,7 +1614,7 @@ export const Map = ({
 												<text
 													id="Saltwater Suite_3"
 													transform="translate(1829.21 1176.12)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1635,7 +1635,7 @@ export const Map = ({
 												<text
 													id="Dune Dock_3"
 													transform="translate(2396.94 1130.12)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1656,7 +1656,7 @@ export const Map = ({
 												<text
 													id="Starfish Street_3"
 													transform="translate(2334 1367)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1677,7 +1677,7 @@ export const Map = ({
 												<text
 													id="Crest Cove_3"
 													transform="translate(1012 1111.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1701,7 +1701,7 @@ export const Map = ({
 												<text
 													id="Aquifer Avenue_3"
 													transform="translate(1206 1813.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1722,7 +1722,7 @@ export const Map = ({
 												<text
 													id="Deep Dive Den_3"
 													transform="translate(1476 1813.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1743,7 +1743,7 @@ export const Map = ({
 												<text
 													id="Fleet Footway_3"
 													transform="translate(1734 1813.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1766,7 +1766,7 @@ export const Map = ({
 												<text
 													id="Seagate Central_3"
 													transform="translate(1874 835.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1789,7 +1789,7 @@ export const Map = ({
 												<text
 													id="Pelagic Plaza_3"
 													transform="translate(1909 1347.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1812,7 +1812,7 @@ export const Map = ({
 												<text
 													id="Oceanic Outpost_3"
 													transform="translate(2211 613.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1835,7 +1835,7 @@ export const Map = ({
 												<text
 													id="Pearl Parkway_3"
 													transform="translate(1426 443.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1858,7 +1858,7 @@ export const Map = ({
 												<text
 													id="Galleon Gate_3"
 													transform="translate(2129 213.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -1879,7 +1879,7 @@ export const Map = ({
 												<text
 													id="Foam Fold_3"
 													transform="translate(2118 486)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -2540,7 +2540,7 @@ export const Map = ({
 											</g>
 											<text
 												id="Livello 1"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fillOpacity="0.4"
 												fontFamily="Space Grotesk"
 												fontSize="64"
@@ -2553,7 +2553,7 @@ export const Map = ({
 											</text>
 											<text
 												id="Aquaplay"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="64"
 												fontWeight="600"
@@ -2588,7 +2588,7 @@ export const Map = ({
 											/>
 											<text
 												id="Piazza Centro"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fillOpacity="0.2"
 												fontFamily="Space Grotesk"
 												fontSize="64"
@@ -2601,7 +2601,7 @@ export const Map = ({
 											</text>
 											<text
 												id="Livello 2"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fillOpacity="0.4"
 												fontFamily="Space Grotesk"
 												fontSize="64"
@@ -2614,7 +2614,7 @@ export const Map = ({
 											</text>
 											<text
 												id="Metropolis"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="64"
 												fontWeight="600"
@@ -4345,7 +4345,7 @@ export const Map = ({
 												<text
 													id="Harmony Heights_3"
 													transform="translate(2463 1710)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4366,7 +4366,7 @@ export const Map = ({
 												<text
 													id="Monolith Mews_3"
 													transform="translate(2692.5 1608.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4387,7 +4387,7 @@ export const Map = ({
 												<text
 													id="District Dock_3"
 													transform="translate(2133 480)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4408,7 +4408,7 @@ export const Map = ({
 												<text
 													id="Civic Square_3"
 													transform="translate(2131 210)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4429,7 +4429,7 @@ export const Map = ({
 												<text
 													id="Terrace Turn_3"
 													transform="translate(2310 724)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4450,7 +4450,7 @@ export const Map = ({
 												<text
 													id="Network Nook_3"
 													transform="translate(2627 782)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4471,7 +4471,7 @@ export const Map = ({
 												<text
 													id="Junction Juncture_3"
 													transform="translate(2605 1306.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4492,7 +4492,7 @@ export const Map = ({
 												<text
 													id="Coastal Corner_3"
 													transform="translate(2737 1161.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4513,7 +4513,7 @@ export const Map = ({
 												<text
 													id="Boulevard Base_3"
 													transform="translate(2237.5 1363)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4534,7 +4534,7 @@ export const Map = ({
 												<text
 													id="Citadel Center_3"
 													transform="translate(2214.5 1112)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4555,7 +4555,7 @@ export const Map = ({
 												<text
 													id="Infinity Island_3"
 													transform="translate(2612.5 1013)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4576,7 +4576,7 @@ export const Map = ({
 												<text
 													id="Axis Alley_3"
 													transform="translate(2048.5 1034)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4597,7 +4597,7 @@ export const Map = ({
 												<text
 													id="Gateway Gardens_3"
 													transform="translate(1646.5 772)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4618,7 +4618,7 @@ export const Map = ({
 												<text
 													id="Vision Venue_3"
 													transform="translate(1556 697)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4639,7 +4639,7 @@ export const Map = ({
 												<text
 													id="Vertex Valley_3"
 													transform="translate(1329 1247)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4660,7 +4660,7 @@ export const Map = ({
 												<text
 													id="Concourse Corner_3"
 													transform="translate(1298 1302)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4681,7 +4681,7 @@ export const Map = ({
 												<text
 													id="Exchange Enclave_3"
 													transform="translate(2006 738)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4702,7 +4702,7 @@ export const Map = ({
 												<text
 													id="Spire Site_3"
 													transform="translate(1772.5 1034)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4723,7 +4723,7 @@ export const Map = ({
 												<text
 													id="Core Crossing_3"
 													transform="translate(1696 1097)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4744,7 +4744,7 @@ export const Map = ({
 												<text
 													id="Serenity Station_3"
 													transform="translate(1313 966)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4765,7 +4765,7 @@ export const Map = ({
 												<text
 													id="Fusion Forum_3"
 													transform="translate(1686.5 1429)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4786,7 +4786,7 @@ export const Map = ({
 												<text
 													id="Crossroad Crescent_3"
 													transform="translate(1207 1524)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4807,7 +4807,7 @@ export const Map = ({
 												<text
 													id="Venture Vista_3"
 													transform="translate(1382.5 1849)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4828,7 +4828,7 @@ export const Map = ({
 												<text
 													id="Capital Court_3"
 													transform="translate(1235 2038)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4849,7 +4849,7 @@ export const Map = ({
 												<text
 													id="Union Terminal_3"
 													transform="translate(2057.5 2123)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4870,7 +4870,7 @@ export const Map = ({
 												<text
 													id="Prosperity Point_3"
 													transform="translate(2055.5 1890)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4891,7 +4891,7 @@ export const Map = ({
 												<text
 													id="Summit Point_3"
 													transform="translate(2907 1844)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4912,7 +4912,7 @@ export const Map = ({
 												<text
 													id="Apex Tower_3"
 													transform="translate(1024.5 1243)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4933,7 +4933,7 @@ export const Map = ({
 												<text
 													id="Metro Hub_3"
 													transform="translate(1430.5 439)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4954,7 +4954,7 @@ export const Map = ({
 												<text
 													id="Enclave Edge_3"
 													transform="translate(1824.5 1587)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4975,7 +4975,7 @@ export const Map = ({
 												<text
 													id="Landmark Lane_3"
 													transform="translate(2079.5 1587)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -4996,7 +4996,7 @@ export const Map = ({
 												<text
 													id="Terminal Terrace"
 													transform="translate(2610.5 1388.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -5017,7 +5017,7 @@ export const Map = ({
 												<text
 													id="Plaza Central_3"
 													transform="translate(2980.5 1306.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -5038,7 +5038,7 @@ export const Map = ({
 												<text
 													id="Forum Fields_3"
 													transform="translate(2812 595)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -5395,7 +5395,7 @@ export const Map = ({
 											</g>
 											<text
 												id="Livello 3"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fillOpacity="0.4"
 												fontFamily="Space Grotesk"
 												fontSize="64"
@@ -5408,7 +5408,7 @@ export const Map = ({
 											</text>
 											<text
 												id="Skygarden"
-												className="fill-background dark:fill-white"
+												className="fill-foreground"
 												fontFamily="Space Grotesk"
 												fontSize="64"
 												fontWeight="600"
@@ -5840,7 +5840,7 @@ export const Map = ({
 												<text
 													id="Quantum Quay_3"
 													transform="translate(2036 1703.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -5861,7 +5861,7 @@ export const Map = ({
 												<text
 													id="Heritage Hall_3"
 													transform="translate(1777 461)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -5882,7 +5882,7 @@ export const Map = ({
 												<text
 													id="Chronicle Corner_3"
 													transform="translate(1228.5 2042)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -5903,7 +5903,7 @@ export const Map = ({
 												<text
 													id="Venture View_3"
 													transform="translate(2128 210)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -5924,7 +5924,7 @@ export const Map = ({
 												<text
 													id="Circuit City_3"
 													transform="translate(2074 2123)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -5945,7 +5945,7 @@ export const Map = ({
 												<text
 													id="Meridian Market_3"
 													transform="translate(2899.5 1844)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -5966,7 +5966,7 @@ export const Map = ({
 												<text
 													id="Iconic Isle_3"
 													transform="translate(1025 1241)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -5987,7 +5987,7 @@ export const Map = ({
 												<text
 													id="Pioneer Plaza_3"
 													transform="translate(1417 439)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6008,7 +6008,7 @@ export const Map = ({
 												<text
 													id="Epoch End_3"
 													transform="translate(2993 1306.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6029,7 +6029,7 @@ export const Map = ({
 												<text
 													id="Progress Pointe_3"
 													transform="translate(2797 595)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6050,7 +6050,7 @@ export const Map = ({
 												<text
 													id="Visionary Vale_3"
 													transform="translate(2628 791)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6071,7 +6071,7 @@ export const Map = ({
 												<text
 													id="Marvel Mile_3"
 													transform="translate(2621 1024)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6092,7 +6092,7 @@ export const Map = ({
 												<text
 													id="Paragon Place_3"
 													transform="translate(2649 1162)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6113,7 +6113,7 @@ export const Map = ({
 												<text
 													id="Triumph Terrace_3"
 													transform="translate(2685.5 1590)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6134,7 +6134,7 @@ export const Map = ({
 												<text
 													id="Beacon Boulevard_3"
 													transform="translate(2335.5 1707)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6155,7 +6155,7 @@ export const Map = ({
 												<text
 													id="Radiant Row_3"
 													transform="translate(1838.5 1788)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6176,7 +6176,7 @@ export const Map = ({
 												<text
 													id="Catalyst Court_3"
 													transform="translate(1394 1733)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6197,7 +6197,7 @@ export const Map = ({
 												<text
 													id="Harmony Hub_3"
 													transform="translate(1611 1772)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6218,7 +6218,7 @@ export const Map = ({
 												<text
 													id="Synergy Street_3"
 													transform="translate(1356 1513)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6239,7 +6239,7 @@ export const Map = ({
 												<text
 													id="Magnate Mall_3"
 													transform="translate(1438.5 1448)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6260,7 +6260,7 @@ export const Map = ({
 												<text
 													id="Urban Uplink_3"
 													transform="translate(1819.5 1500)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6281,7 +6281,7 @@ export const Map = ({
 												<text
 													id="Central Station_3"
 													transform="translate(1967.5 1093.5)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="24"
 													fontWeight="600"
@@ -6302,7 +6302,7 @@ export const Map = ({
 												<text
 													id="Culture Cross_3"
 													transform="translate(1299.5 1249)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6323,7 +6323,7 @@ export const Map = ({
 												<text
 													id="Monarch Meadows_3"
 													transform="translate(1560 1024)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6344,7 +6344,7 @@ export const Map = ({
 												<text
 													id="Echo Esplanade_3"
 													transform="translate(1313 771)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6365,7 +6365,7 @@ export const Map = ({
 												<text
 													id="Paramount Park_3"
 													transform="translate(1881 721)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6386,7 +6386,7 @@ export const Map = ({
 												<text
 													id="Emblem Estates_3"
 													transform="translate(2082 893)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"
@@ -6407,7 +6407,7 @@ export const Map = ({
 												<text
 													id="Infinity Inlet_3"
 													transform="translate(2230 1004)"
-													className="fill-background dark:fill-white"
+													className="fill-foreground"
 													fontFamily="Space Grotesk"
 													fontSize="20"
 													fontWeight="600"

@@ -225,7 +225,15 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 		setDisabled(!isValid);
 	}, [isValid]);
 
-	const mobileHeight = useMediaQuery({ query: "(max-height: 850px)" });
+	const [mobileHeight, setMobileHeight] = useState(false);
+
+	const isMobileHeight = useMediaQuery({
+		query: "(max-height: 850px)",
+	});
+
+	useEffect(() => {
+		setMobileHeight(isMobileHeight);
+	}, []);
 
 	return (
 		<>
