@@ -21,6 +21,7 @@ interface Props {
 	svgIcon?: React.ReactNode;
 	value?: string;
 	size?: "sm" | "lg";
+	disabled?: boolean;
 }
 
 const CustomAutocomplete = ({
@@ -32,6 +33,7 @@ const CustomAutocomplete = ({
 	tabIndex = 0,
 	svgIcon,
 	size = "lg",
+	disabled,
 }: Props) => {
 	const [inputValue, setInputValue] = useState("");
 	const [showSuggestions, setShowSuggestions] = useState(false);
@@ -104,6 +106,7 @@ const CustomAutocomplete = ({
 	);
 
 	const handleFocus = useCallback(() => {
+		if (disabled) return;
 		setShowSuggestions(true);
 		releaseFocus();
 		requestFocus(id);
@@ -288,10 +291,11 @@ const CustomAutocomplete = ({
 						onFocus={handleFocus}
 						onBlur={handleBlur}
 						onKeyDown={handleKeyDown}
+						disabled={disabled}
 						autoComplete="off"
 						autoCapitalize="off"
 						autoCorrect="off"
-						className="w-full bg-secondary pt-4 pl-3 text-[16px] md:text-[18px] font-medium border-none outline-none"
+						className="w-full bg-secondary pt-4 pl-3 text-[16px] md:text-[18px] font-medium border-none outline-none disabled:cursor-default "
 					/>
 					{showSuggestions && inputValue && (
 						<button

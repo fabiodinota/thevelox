@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import React from "react";
-import { LineArrowIcon } from "../Icons";
+import { LineArrowIcon } from "../../Icons";
 
 interface TicketProps {
 	ticket: {

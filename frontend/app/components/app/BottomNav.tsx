@@ -56,7 +56,7 @@ const BottomNav = () => {
 							{HomeIcon(activeRoute === "home")}
 						</div>
 						<span
-							className={`leading-none text-[14px] xl:text-[16px] delay-0 ${
+							className={`leading-none select-none text-[14px] xl:text-[16px] delay-0 ${
 								activeRoute === "home"
 									? "text-gradient"
 									: `text-foreground ${textAnimation}`
@@ -83,7 +83,7 @@ const BottomNav = () => {
 							{SearchIcon(activeRoute === "search")}
 						</div>
 						<span
-							className={`leading-none text-[14px] xl:text-[16px] delay-75 ${
+							className={`leading-none select-none text-[14px] xl:text-[16px] delay-75 ${
 								activeRoute === "search"
 									? "text-gradient"
 									: `text-foreground ${textAnimation}`
@@ -110,7 +110,7 @@ const BottomNav = () => {
 							{TicketIcon(activeRoute === "history")}
 						</div>
 						<span
-							className={`leading-none text-[14px] xl:text-[16px] delay-100 ${
+							className={`leading-none select-none text-[14px] xl:text-[16px] delay-100 ${
 								activeRoute === "history"
 									? "text-gradient"
 									: `text-foreground ${textAnimation}`
@@ -137,7 +137,7 @@ const BottomNav = () => {
 							{AccountCircleIcon(activeRoute === "account")}
 						</div>
 						<span
-							className={`leading-none text-[14px] xl:text-[16px]  delay-150 ${
+							className={`leading-none select-none text-[14px] xl:text-[16px]  delay-150 ${
 								activeRoute === "account"
 									? "text-gradient"
 									: `text-foreground ${textAnimation}`
