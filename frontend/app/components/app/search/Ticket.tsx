@@ -1,37 +1,30 @@
 import { format } from "date-fns";
 import React from "react";
 import { LineArrowIcon } from "../../Icons";
+import { Ticket } from "@/app/types/types";
 
 interface TicketProps {
-	ticket: {
-		departureTime: string;
-		arrivalTime: string;
-		startLevel: number;
-		startStation: string;
-		endLevel: number;
-		endStation: string;
-	};
+	ticket: Ticket;
 	handleGetLevelIcon: (level: number, className: string) => React.ReactNode;
+	[x: string]: any;
 }
 
-const Ticket: React.FC<TicketProps> = (
-	{ ticket, handleGetLevelIcon },
-	props
-) => {
+const Ticket: React.FC<TicketProps> = ({
+	ticket,
+	handleGetLevelIcon,
+	...props
+}) => {
 	return (
 		<div
-			onClick={() => {
-				console.log("Ticket clicked", ticket);
-			}}
 			data-vaul-no-drag
-			className="w-full px-5 py-5 bg-secondary rounded-xl text-foreground hover:bg-accent duration-100 cursor-pointer"
+			className="w-full p-2.5 md:p-5 bg-secondary rounded-xl text-foreground hover:bg-accent duration-100 cursor-pointer"
 			{...props}
 		>
 			<div className="flex flex-row justify-between items-center w-full">
-				<span className="text-[20px]">
+				<span className="text-[16px] lg:text-[20px]">
 					{format(ticket.departureTime, "HH:mm")}
 				</span>
-				<span className="text-[20px]">
+				<span className="text-[16px] lg:text-[20px]">
 					{format(ticket.arrivalTime, "HH:mm")}
 				</span>
 			</div>
@@ -41,10 +34,10 @@ const Ticket: React.FC<TicketProps> = (
 						{handleGetLevelIcon(ticket.startLevel, "w-7 h-7")}
 					</div>
 					<div className="flex flex-col items-start">
-						<span className="text-[20px] font-medium">
+						<span className="text-[16px] lg:text-[20px] font-medium">
 							{ticket.startStation}
 						</span>
-						<span className="opacity-50 font-regular">
+						<span className="opacity-50 text-[14px] lg:text-[16px] font-regular">
 							Level {ticket.startLevel}
 						</span>
 					</div>
@@ -55,11 +48,11 @@ const Ticket: React.FC<TicketProps> = (
 						{handleGetLevelIcon(ticket.endLevel, "w-7 h-7")}
 					</div>
 					<div className="flex flex-col items-end">
-						<span className="text-[20px] font-medium">
+						<span className="text-[16px] lg:text-[20px] text-end font-medium">
 							{ticket.endStation}
 						</span>
 
-						<span className="opacity-50 font-regular">
+						<span className="opacity-50 text-[14px] lg:text-[16px] font-regular">
 							Level {ticket.endLevel}
 						</span>
 					</div>

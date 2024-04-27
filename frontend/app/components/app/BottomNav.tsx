@@ -33,7 +33,7 @@ const BottomNav = () => {
 	return (
 		<nav
 			className={
-				"w-screen fixed bottom-5 px-5 flex justify-center items-center z-[999]"
+				"w-screen fixed bottom-5 px-5 flex justify-center items-center z-[999] lg:z-[80]"
 			}
 		>
 			<div className="w-full lg:max-w-[600px] group flex justify-center items-center h-[80px] xl:h-[90px] rounded-[20px] bg-background/70 dark:bg-background back backdrop-blur-2xl xl:bg-background shadow-[0_0_35px_0_#00000010] dark:shadow-[0_0_35px_0_#FFFFFF10]  xl:shadow-[0_0_35px_0_#84848420] xl:dark:shadow-[0_0_35px_0_#FFFFFF06]">

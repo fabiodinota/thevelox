@@ -107,6 +107,10 @@ const CustomAutocomplete = ({
 
 	const handleFocus = useCallback(() => {
 		if (disabled) return;
+		if (defaultValue === "") {
+			setInputValue(" ");
+			setInputValue("");
+		}
 		setShowSuggestions(true);
 		releaseFocus();
 		requestFocus(id);

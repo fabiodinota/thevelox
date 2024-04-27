@@ -1,6 +1,11 @@
-export const xIcon = (
+interface IconProps {
+	fill?: string;
+	className?: string;
+}
+
+export const xIcon = ({ fill, className }: IconProps) => (
 	<svg
-		className="scale-[1.2] flex-shrink-0"
+		className={"scale-[1.2] flex-shrink-0 " + className}
 		width="12"
 		height="12"
 		viewBox="0 0 12 12"
@@ -9,7 +14,7 @@ export const xIcon = (
 	>
 		<path
 			d="M1.2 12L0 10.8L4.8 6L0 1.2L1.2 0L6 4.8L10.8 0L12 1.2L7.2 6L12 10.8L10.8 12L6 7.2L1.2 12Z"
-			fill="#E31937"
+			className={`fill-${fill}`}
 		/>
 	</svg>
 );
