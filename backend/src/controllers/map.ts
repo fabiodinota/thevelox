@@ -12,15 +12,17 @@ interface CustomRequest extends Request {
 	}; // Adjusted to match the types that jwt.verify can return
 }
 
-interface Ticket {
+export type Ticket = {
 	departureTime: string;
 	arrivalTime: string;
 	startStation: string;
 	endStation: string;
+	startLine: number;
+	endLine: number;
 	startLevel: number;
 	endLevel: number;
 	times: string[];
-}
+};
 
 // Search for the optimal/shortest path between two stations
 export const search = async (req: CustomRequest, res: Response) => {
@@ -72,6 +74,8 @@ export const search = async (req: CustomRequest, res: Response) => {
 				endLevel: getLevelFromLine(
 					result.lines[result.lines.length - 1]
 				),
+				startLine: getLineFromLine(result.lines[0]),
+				endLine: getLineFromLine(result.lines[result.lines.length - 1]),
 				times,
 			});
 
@@ -149,6 +153,8 @@ const createTicket = ({
 	endStation,
 	startLevel,
 	endLevel,
+	startLine,
+	endLine,
 	times,
 }: Ticket) => {
 	const ticket = {
@@ -158,6 +164,8 @@ const createTicket = ({
 		endStation,
 		startLevel,
 		endLevel,
+		startLine,
+		endLine,
 		times,
 	};
 
@@ -166,4 +174,8 @@ const createTicket = ({
 
 const getLevelFromLine = (line: string) => {
 	return parseInt(line.split("-")[0]);
+};
+
+const getLineFromLine = (line: string) => {
+	return parseInt(line.split("-")[1]);
 };

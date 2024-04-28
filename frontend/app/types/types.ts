@@ -3,6 +3,8 @@ export type Ticket = {
 	arrivalTime: string;
 	startStation: string;
 	endStation: string;
+	startLine: number;
+	endLine: number;
 	startLevel: number;
 	endLevel: number;
 	times: string[];

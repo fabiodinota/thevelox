@@ -16,7 +16,7 @@ import { ArrowIcon, LineArrowIcon } from "@/app/components/Icons";
 import Ticket from "@/app/components/app/search/Ticket";
 import SearchForm from "@/app/components/app/search/SearchForm";
 import searchFormSchema from "@/app/utils/searchFormSchema";
-import useGetLevelIcon from "@/app/utils/useGetLevelIcon";
+import useGetLevelIcon from "@/app/utils/getLevelIcon";
 import {
 	FormSchemaProps,
 	ISearchReqData,

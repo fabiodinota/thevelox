@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Drawer } from "vaul";
 import { ArrowIcon } from "../../Icons";
 import RippleButton from "../../RippleButton";
-import useGetLevelIcon from "@/app/utils/useGetLevelIcon";
 import Ticket from "./Ticket";
 import { ISearchReqData } from "@/app/types/types";
 import { motion } from "framer-motion";
@@ -42,7 +41,6 @@ const DrawerComponent = ({
 	};
 
 	const decrease = () => {
-		setStage(1);
 		setSlideDirection("left");
 		if (level > minMax.min) {
 			setLevel((prevLevel) => prevLevel - 1);
@@ -52,28 +50,12 @@ const DrawerComponent = ({
 	};
 
 	const increase = () => {
-		setStage(2);
 		setSlideDirection("right");
 		if (level < minMax.max) {
 			setLevel((prevLevel) => prevLevel + 1);
 		} else {
 			setLevel(minMax.min);
 		}
-	};
-
-	const stageVariant = {
-		initial: {
-			x: "-100%",
-			opacity: 0,
-		},
-		animate: {
-			x: 0,
-			opacity: 1,
-		},
-		exit: {
-			x: "100%",
-			opacity: 0,
-		},
 	};
 
 	return (
@@ -100,9 +82,9 @@ const DrawerComponent = ({
 								? "max-h-[40%] w-full"
 								: "max-h-[140px] w-full"
 							: `w-[540px] !pt-[310px] h-full`
-					} py-[40px] lg:py-5 duration-300 bg-background fixed right-0 bottom-0 z-[90] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]`}
+					} py-[40px] lg:py-5 duration-300 bg-background fixed right-0 top-0 z-[90] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]`}
 				>
-					<div className="absolute right-1/2 translate-x-1/2 lg:translate-x-0 top-5 lg:-right-[60px] lg:rotate-90 lg:-translate-y-1/2 lg:top-1/2 px-5 py-10 cursor-pointer">
+					<div className="absolute right-1/2 translate-x-1/2 lg:translate-x-0 top-5 lg:-right-[60px] lg:rotate-90 lg:-translate-y-1/2 lg:top-1/2 px-5 lg:py-10 cursor-pointer">
 						<div className="w-12 h-1 flex-shrink-0 rounded-full bg-zinc-300" />
 					</div>
 					<div
@@ -133,7 +115,7 @@ const DrawerComponent = ({
 								{ArrowIcon(false, "w-5 h-5 rotate-180")}
 							</RippleButton>
 						</div>
-						<AnimatePresenceProvider>
+						<AnimatePresenceProvider mode="wait">
 							{stage === 1 && (
 								<motion.div
 									initial={{
@@ -143,10 +125,16 @@ const DrawerComponent = ({
 									animate={{
 										x: 0,
 										opacity: 1,
+										transition: {
+											duration: 0.5,
+										},
 									}}
 									exit={{
 										x: "100%",
 										opacity: 0,
+										transition: {
+											duration: 0.5,
+										},
 									}}
 								>
 									<div className="flex flex-col gap-2.5 md:gap-5 w-full mt-2.5 md:mt-5">
@@ -159,14 +147,7 @@ const DrawerComponent = ({
 													return (
 														<Ticket
 															key={index}
-															onClick={() => {
-																setStage(2);
-															}}
 															ticket={ticket}
-															handleGetLevelIcon={useGetLevelIcon(
-																level,
-																"w-7 h-7"
-															)}
 														/>
 													);
 												}
@@ -199,10 +180,16 @@ const DrawerComponent = ({
 									animate={{
 										x: 0,
 										opacity: 1,
+										transition: {
+											duration: 0.5,
+										},
 									}}
 									exit={{
 										x: "100%",
 										opacity: 0,
+										transition: {
+											duration: 0.5,
+										},
 									}}
 								>
 									Hello

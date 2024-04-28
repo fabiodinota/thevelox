@@ -2,18 +2,14 @@ import { format } from "date-fns";
 import React from "react";
 import { LineArrowIcon } from "../../Icons";
 import { Ticket } from "@/app/types/types";
+import getLevelIcon from "@/app/utils/getLevelIcon";
 
 interface TicketProps {
 	ticket: Ticket;
-	handleGetLevelIcon: (level: number, className: string) => React.ReactNode;
 	[x: string]: any;
 }
 
-const Ticket: React.FC<TicketProps> = ({
-	ticket,
-	handleGetLevelIcon,
-	...props
-}) => {
+const Ticket: React.FC<TicketProps> = ({ ticket, ...props }) => {
 	return (
 		<div
 			data-vaul-no-drag
@@ -31,7 +27,7 @@ const Ticket: React.FC<TicketProps> = ({
 			<div className="flex flex-row justify-between items-center">
 				<div className="flex flex-row gap-3 items-center">
 					<div className="w-7 h-7  grid place-content-center">
-						{handleGetLevelIcon(ticket.startLevel, "w-7 h-7")}
+						{getLevelIcon(ticket.startLine, "w-7 h-7")}
 					</div>
 					<div className="flex flex-col items-start">
 						<span className="text-[16px] lg:text-[20px] font-medium">
@@ -45,7 +41,7 @@ const Ticket: React.FC<TicketProps> = ({
 				{LineArrowIcon("w-6 h-6")}
 				<div className="flex flex-row-reverse gap-3 items-center">
 					<div className="w-7 h-7 grid place-content-center">
-						{handleGetLevelIcon(ticket.endLevel, "w-7 h-7")}
+						{getLevelIcon(ticket.endLine, "w-7 h-7")}
 					</div>
 					<div className="flex flex-col items-end">
 						<span className="text-[16px] lg:text-[20px] text-end font-medium">
