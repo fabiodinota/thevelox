@@ -184,8 +184,8 @@ export const Map = ({
 						width: "100vw",
 						height: "100dvh",
 						overflow: "visible",
-						margin: `${isMobile ? "200px" : 0} 0 0 0`,
 					}}
+					contentClass="mt-[200px] lg:mt-0"
 					contentStyle={{
 						padding: searching ? "600px" : "400px",
 					}}

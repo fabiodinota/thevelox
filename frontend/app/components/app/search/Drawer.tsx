@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Drawer } from "vaul";
 import { ArrowIcon } from "../../Icons";
 import RippleButton from "../../RippleButton";
-import Ticket from "./Ticket";
+import Ticket, { ExpandedTicket } from "./Ticket";
 import { ISearchReqData, Ticket as TicketType } from "@/app/types/types";
 import { motion } from "framer-motion";
 import AnimatePresenceProvider from "@/app/context/AnimatePresenceProvider";
@@ -60,6 +60,13 @@ const DrawerComponent = ({
 			setLevel(minMax.min);
 		}
 	};
+
+	useEffect(() => {
+		if (!searching) {
+			setStage("browseTicketsStage");
+			setActiveTicket(undefined);
+		}
+	}, [searching]);
 
 	return (
 		<Drawer.Root
@@ -151,6 +158,14 @@ const DrawerComponent = ({
 														<Ticket
 															key={index}
 															ticket={ticket}
+															onClick={() => {
+																setActiveTicket(
+																	ticket
+																);
+																setStage(
+																	"moreInfoTicketStage"
+																);
+															}}
 														/>
 													);
 												}
@@ -195,7 +210,49 @@ const DrawerComponent = ({
 										},
 									}}
 								>
-									Hello
+									<div className="flex flex-col gap-2.5 md:gap-5 w-full mt-2.5 md:mt-5">
+										{activeTicket && searchReqData && (
+											<ExpandedTicket
+												ticket={activeTicket}
+												onClick={() => {
+													setStage("buyTicketStage");
+												}}
+												searchReqData={searchReqData}
+											/>
+										)}
+									</div>
+								</motion.div>
+							)}
+							{stage === "buyTicketStage" && (
+								<motion.div
+									initial={{
+										x: "-100%",
+										opacity: 0,
+									}}
+									animate={{
+										x: 0,
+										opacity: 1,
+										transition: {
+											duration: 0.5,
+										},
+									}}
+									exit={{
+										x: "100%",
+										opacity: 0,
+										transition: {
+											duration: 0.5,
+										},
+									}}
+								>
+									<div className="flex flex-col gap-2.5 md:gap-5 w-full mt-2.5 md:mt-5">
+										<p
+											onClick={() =>
+												setStage("browseTicketsStage")
+											}
+										>
+											Buy Ticket
+										</p>
+									</div>
 								</motion.div>
 							)}
 						</AnimatePresenceProvider>

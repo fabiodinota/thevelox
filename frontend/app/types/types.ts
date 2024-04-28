@@ -8,6 +8,7 @@ export type Ticket = {
 	startLevel: number;
 	endLevel: number;
 	times: string[];
+	price?: number;
 };
 
 export type ISearchReqData = {
@@ -17,6 +18,7 @@ export type ISearchReqData = {
 	endLevel: number;
 	lines: string[];
 	path: string[];
+	fullPath: Station[];
 	times: string[];
 	tickets: Ticket[];
 };

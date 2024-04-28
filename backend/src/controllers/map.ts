@@ -22,6 +22,7 @@ export type Ticket = {
 	startLevel: number;
 	endLevel: number;
 	times: string[];
+	price?: number;
 };
 
 // Search for the optimal/shortest path between two stations
@@ -60,6 +61,28 @@ export const search = async (req: CustomRequest, res: Response) => {
 			numberOfTrains: 12,
 		});
 
+		const getPrice = (
+			startLevel: number,
+			endLevel: number,
+			lines: string[]
+		) => {
+			// Calculate the price based on the difference in levels and amount of stops and line changes
+			const levelDifference = Math.abs(endLevel - startLevel);
+			const stops = result.path.length - 1; // Number of stops
+
+			let price = 0;
+			if (levelDifference === 0) {
+				price = stops * 0.5;
+			} else if (levelDifference === 1) {
+				price = stops * 0.75;
+			} else if (levelDifference === 2) {
+				price = stops * 1;
+			} else {
+				price = stops * 1.5;
+			}
+			return price;
+		};
+
 		const tickets: Ticket[] = [];
 
 		trainTimes.forEach((times, index) => {
@@ -77,6 +100,11 @@ export const search = async (req: CustomRequest, res: Response) => {
 				startLine: getLineFromLine(result.lines[0]),
 				endLine: getLineFromLine(result.lines[result.lines.length - 1]),
 				times,
+				price: getPrice(
+					getLevelFromLine(result.lines[0]),
+					getLevelFromLine(result.lines[result.lines.length - 1]),
+					result.lines
+				),
 			});
 
 			tickets.push(ticket);
@@ -156,6 +184,7 @@ const createTicket = ({
 	startLine,
 	endLine,
 	times,
+	price,
 }: Ticket) => {
 	const ticket = {
 		departureTime,
@@ -167,6 +196,7 @@ const createTicket = ({
 		startLine,
 		endLine,
 		times,
+		price,
 	};
 
 	return ticket;

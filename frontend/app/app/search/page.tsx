@@ -102,6 +102,16 @@ const AppSearchPage = () => {
 				{ withCredentials: true }
 			);
 
+			let fullPath: Station[] = [];
+
+			res.data?.path.forEach((pathStation: string) => {
+				stations.some((station: Station) => {
+					if (station.name === pathStation) {
+						fullPath.push(station);
+					}
+				});
+			});
+
 			setSearchReqData({
 				startStation: res.data?.startStation || "",
 				endStation: res.data?.endStation || "",
@@ -109,6 +119,7 @@ const AppSearchPage = () => {
 				endLevel: res.data?.endLevel || 0,
 				lines: res.data?.lines || [],
 				path: res.data?.path || [],
+				fullPath: fullPath,
 				times: res.data?.times || [],
 				tickets: res.data?.tickets || [],
 			});
