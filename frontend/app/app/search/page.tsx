@@ -76,7 +76,7 @@ const AppSearchPage = () => {
 		router.push(
 			`/app/search?startStation=${data.startStation}&endStation=${
 				data.endStation
-			}&date=${format(data.departureDate, "PP HH:mm")}`
+			}&departureDate=${format(data.departureDate, "PP HH:mm")}`
 		);
 
 		setSnap(isLg ? 0.4 : "540px");

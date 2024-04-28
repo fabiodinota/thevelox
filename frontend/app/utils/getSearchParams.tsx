@@ -28,12 +28,12 @@ export const getSearchParams = ({
 	if (
 		searchParams.has("startStation") &&
 		searchParams.has("endStation") &&
-		searchParams.has("date")
+		searchParams.has("departureDate")
 	) {
 		// Get the search params from the URL
 		const startStationParams = searchParams.get("startStation") || "";
 		const endStationParams = searchParams.get("endStation") || "";
-		const departureDateParams = searchParams.get("date") || "";
+		const departureDateParams = searchParams.get("departureDate") || "";
 
 		setSearching(true);
 

@@ -3,7 +3,7 @@ import { Drawer } from "vaul";
 import { ArrowIcon } from "../../Icons";
 import RippleButton from "../../RippleButton";
 import Ticket from "./Ticket";
-import { ISearchReqData } from "@/app/types/types";
+import { ISearchReqData, Ticket as TicketType } from "@/app/types/types";
 import { motion } from "framer-motion";
 import AnimatePresenceProvider from "@/app/context/AnimatePresenceProvider";
 
@@ -33,7 +33,10 @@ const DrawerComponent = ({
 	setSlideDirection,
 }: DrawerComponentProps) => {
 	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
-	const [stage, setStage] = useState(1);
+	const [stage, setStage] = useState<
+		"browseTicketsStage" | "moreInfoTicketStage" | "buyTicketStage"
+	>("browseTicketsStage");
+	const [activeTicket, setActiveTicket] = useState<TicketType>();
 
 	const minMax = {
 		min: 0,
@@ -116,7 +119,7 @@ const DrawerComponent = ({
 							</RippleButton>
 						</div>
 						<AnimatePresenceProvider mode="wait">
-							{stage === 1 && (
+							{stage === "browseTicketsStage" && (
 								<motion.div
 									initial={{
 										x: "-100%",
@@ -171,7 +174,7 @@ const DrawerComponent = ({
 									</div>
 								</motion.div>
 							)}
-							{stage === 2 && (
+							{stage === "moreInfoTicketStage" && (
 								<motion.div
 									initial={{
 										x: "-100%",

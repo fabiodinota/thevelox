@@ -4,8 +4,8 @@ import BottomNav from "../components/app/BottomNav";
 import Header from "../components/app/Header";
 
 export const metadata: Metadata = {
-	title: "The Velox - Home",
-	description: "The Velox - Home",
+	title: "The Velox - App",
+	description: "The Velox - App",
 	generator: "Next.js",
 	manifest: "/manifest.json",
 	keywords: [],
