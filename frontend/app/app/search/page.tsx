@@ -104,12 +104,13 @@ const AppSearchPage = () => {
 		departureDate: string
 	) => {
 		try {
+			const adjustedDate = new Date(departureDate);
+			adjustedDate.setTime(
+				adjustedDate.getTime() +
+					adjustedDate.getTimezoneOffset() * 60 * 1000
+			); // Adjust for local timezone
 			const res = await axios.get(
-				`${
-					process.env.NEXT_PUBLIC_API_URL
-				}/map/search?startStation=${startStation}&endStation=${endStation}&departureDate=${departureDate}&timezone=${
-					Intl.DateTimeFormat().resolvedOptions().timeZone
-				}`,
+				`${process.env.NEXT_PUBLIC_API_URL}/map/search?startStation=${startStation}&endStation=${endStation}&departureDate=${adjustedDate}`,
 				{ withCredentials: true }
 			);
 
