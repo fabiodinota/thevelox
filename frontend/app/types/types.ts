@@ -40,3 +40,18 @@ export type FormSchemaProps = {
 	endStation: string;
 	departureDate: string;
 };
+
+export type CARD_NAMES =
+	| "american_express"
+	| "diners_club"
+	| "discover"
+	| "elo"
+	| "hipercard"
+	| "hiper"
+	| "jcb"
+	| "maestro"
+	| "mastercard"
+	| "mir"
+	| "unionpay"
+	| "visa"
+	| "bancontact";

@@ -22,9 +22,11 @@ import {
 	ISearchReqData,
 	SearchParams,
 	Station,
+	Ticket as TicketType,
 } from "@/app/types/types";
 import { getSearchParams } from "@/app/utils/getSearchParams";
 import DrawerComponent from "@/app/components/app/search/Drawer";
+import ActiveTicketHeader from "@/app/components/app/search/ActiveTicketHeader";
 
 const AppSearchPage = () => {
 	const [startStation, setStartStation] = useState<Station>({
@@ -53,6 +55,10 @@ const AppSearchPage = () => {
 	const searchParams = useSearchParams();
 
 	const { stations, fetchStations, loading } = useStationData();
+
+	const [activeTicket, setActiveTicket] = useState<TicketType | undefined>(
+		undefined
+	);
 
 	const isLg = useMediaQuery({ query: "(max-width: 1024px)" });
 
@@ -98,7 +104,11 @@ const AppSearchPage = () => {
 	) => {
 		try {
 			const res = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/map/search?startStation=${startStation}&endStation=${endStation}&departureDate=${departureDate}`,
+				`${
+					process.env.NEXT_PUBLIC_API_URL
+				}/map/search?startStation=${startStation}&endStation=${endStation}&departureDate=${departureDate}&timezone=${
+					Intl.DateTimeFormat().resolvedOptions().timeZone
+				}`,
 				{ withCredentials: true }
 			);
 
@@ -227,6 +237,8 @@ const AppSearchPage = () => {
 				level={level}
 				setLevel={setLevel}
 				setSlideDirection={setSlideDirection}
+				activeTicket={activeTicket}
+				setActiveTicket={setActiveTicket}
 			/>
 			<Map
 				searching={searching}

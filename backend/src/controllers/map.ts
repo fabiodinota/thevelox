@@ -30,6 +30,7 @@ export const search = async (req: CustomRequest, res: Response) => {
 	const startStation = req.query.startStation as string;
 	const targetStation = req.query.endStation as string;
 	const departureDate = req.query.departureDate as string;
+	const timezone = req.query.timezone as string;
 
 	const user_id = req.user?.user_id;
 
@@ -59,6 +60,7 @@ export const search = async (req: CustomRequest, res: Response) => {
 			initialTime: departureDate,
 			stations: result.path,
 			numberOfTrains: 12,
+			timeZone: timezone,
 		});
 
 		const getPrice = (
@@ -137,12 +139,13 @@ interface TrainTimeProps {
 	initialTime: string;
 	stations: string[];
 	numberOfTrains?: number;
+	timeZone?: string;
 }
-
 export const generateTrainTimes = ({
 	initialTime,
 	stations,
 	numberOfTrains = 12,
+	timeZone = "UTC", // Default to UTC if timeZone parameter is not provided
 }: TrainTimeProps) => {
 	let times = [];
 	console.log("Initial time received:", initialTime);
@@ -159,7 +162,11 @@ export const generateTrainTimes = ({
 		for (let station of stations) {
 			let travelTime = Math.floor(Math.random() * 2) + 1; // Travel time between 1 to 2 minutes
 			currentTime = new Date(currentTime.getTime() + travelTime * 60000);
-			pathTimes.push(currentTime.toISOString());
+			// Adjust the time according to the specified timeZone
+			let adjustedTime = new Date(
+				currentTime.toLocaleString("en-US", { timeZone })
+			);
+			pathTimes.push(adjustedTime.toISOString());
 		}
 
 		times.push(pathTimes); // Collect times for one complete path across all stations

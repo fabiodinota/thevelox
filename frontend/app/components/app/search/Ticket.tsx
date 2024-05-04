@@ -1,16 +1,23 @@
 import { format } from "date-fns";
 import React from "react";
 import { LineArrowIcon } from "../../Icons";
-import { Station, Ticket } from "@/app/types/types";
+import { CARD_NAMES, Station, Ticket } from "@/app/types/types";
 import getLevelIcon from "@/app/utils/getLevelIcon";
 import RippleButton from "../../RippleButton";
+import CreditCardType from "credit-card-type";
+import getIconFromCard from "@/app/utils/getIconFromCard";
 
 interface TicketProps {
 	ticket: Ticket;
+	handleBack?: () => void;
 	[x: string]: any;
 }
 
 const Ticket: React.FC<TicketProps> = ({ ticket, ...props }) => {
+	const isValid = CreditCardType("6703");
+
+	const type = isValid[0].type as CARD_NAMES;
+
 	return (
 		<div
 			data-vaul-no-drag
@@ -20,6 +27,8 @@ const Ticket: React.FC<TicketProps> = ({ ticket, ...props }) => {
 			<div className="flex flex-row justify-between items-center w-full">
 				<span className="text-[16px] lg:text-[20px]">
 					{format(ticket.departureTime, "HH:mm")}
+					{/* 					{getIconFromCard(type, "scale-75")}
+					 */}{" "}
 				</span>
 				<span className="text-[16px] lg:text-[20px]">
 					{format(ticket.arrivalTime, "HH:mm")}
@@ -64,6 +73,8 @@ export default Ticket;
 export const ExpandedTicket: React.FC<TicketProps> = ({
 	ticket,
 	searchReqData,
+	handleBuyActiveTicket,
+	handleBack,
 	...props
 }) => {
 	const getLine = (index: number) => {
@@ -128,8 +139,21 @@ export const ExpandedTicket: React.FC<TicketProps> = ({
 					</span>
 				</div>
 			)}
-			<RippleButton style="gradient" className="w-full" tabIndex={4}>
+			<RippleButton
+				style="gradient"
+				onClick={handleBuyActiveTicket}
+				className="w-full"
+				tabIndex={4}
+			>
 				Buy Ticket
+			</RippleButton>
+			<RippleButton
+				onClick={handleBack}
+				style="outlined"
+				tabIndex={4}
+				className="w-full"
+			>
+				Go Back
 			</RippleButton>
 			<div className="flex flex-col gap-16 mt-5">
 				{searchReqData &&
@@ -180,8 +204,8 @@ export const ExpandedTicket: React.FC<TicketProps> = ({
 											<path
 												d="M0.5 76.5V1"
 												className="stroke-foreground"
-												stroke-linecap="round"
-												stroke-dasharray="5 5"
+												strokeLinecap="round"
+												strokeDasharray="5 5"
 											/>
 										</svg>
 									</div>
@@ -190,6 +214,71 @@ export const ExpandedTicket: React.FC<TicketProps> = ({
 						)
 					)}
 			</div>
+		</div>
+	);
+};
+
+export const BuyTicket = async ({ ticket, ...props }: { ticket: Ticket }) => {
+	return (
+		<div
+			className="w-full p-5 bg-secondary rounded-xl flex flex-col gap-3 text-foreground"
+			{...props}
+		>
+			<div className="flex flex-row justify-between items-center w-full">
+				<span className="text-[14px] lg:text-[16px]">
+					{format(ticket.departureTime, "L LLL HH:mm")}
+				</span>
+				<span className="text-[14px] lg:text-[16px]">
+					{format(ticket.arrivalTime, "L LLL HH:mm")}
+				</span>
+			</div>
+			<div className="flex flex-row justify-between items-center">
+				<div className="flex flex-row gap-3 items-center">
+					<div className="w-7 h-7  grid place-content-center">
+						{getLevelIcon(ticket.startLine, "w-7 h-7")}
+					</div>
+					<div className="flex flex-col items-start">
+						<span className="text-[16px] lg:text-[20px] font-medium">
+							{ticket.startStation}
+						</span>
+						<span className="opacity-50 text-[14px] lg:text-[16px] font-regular">
+							Level {ticket.startLevel}
+						</span>
+					</div>
+				</div>
+				{LineArrowIcon("w-6 h-6")}
+				<div className="flex flex-row-reverse gap-3 items-center">
+					<div className="w-7 h-7 grid place-content-center">
+						{getLevelIcon(ticket.endLine, "w-7 h-7")}
+					</div>
+					<div className="flex flex-col items-end">
+						<span className="text-[16px] lg:text-[20px] text-end font-medium">
+							{ticket.endStation}
+						</span>
+
+						<span className="opacity-50 text-[14px] lg:text-[16px] font-regular">
+							Level {ticket.endLevel}
+						</span>
+					</div>
+				</div>
+			</div>
+			{ticket.price && (
+				<div className="flex flex-row justify-between items-end w-full">
+					<span className="text-[14px] lg:text-[16px] font-medium px-4 py-1 border-[1px] border-accent rounded-lg bg-secondary">
+						{ticket.price.toFixed(2)}€
+					</span>
+					{/* travel time in minutes */}
+					<span className="text-[14px] lg:text-[16px] font-medium">
+						Travel Time:{" "}
+						{Math.floor(
+							(new Date(ticket.arrivalTime).getTime() -
+								new Date(ticket.departureTime).getTime()) /
+								60000
+						)}
+						m
+					</span>
+				</div>
+			)}
 		</div>
 	);
 };
