@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { getStationsWithLevels, loadGraphFromJson } from "../utils/graph";
 import { Request, Response } from "express";
+import moment from "moment-timezone";
 
 const prisma = new PrismaClient();
 
@@ -30,7 +31,6 @@ export const search = async (req: CustomRequest, res: Response) => {
 	const startStation = req.query.startStation as string;
 	const targetStation = req.query.endStation as string;
 	const departureDate = req.query.departureDate as string;
-	const timezone = req.query.timezone as string;
 
 	const user_id = req.user?.user_id;
 
@@ -60,7 +60,6 @@ export const search = async (req: CustomRequest, res: Response) => {
 			initialTime: departureDate,
 			stations: result.path,
 			numberOfTrains: 12,
-			timeZone: timezone,
 		});
 
 		const getPrice = (
@@ -145,44 +144,36 @@ export const generateTrainTimes = ({
 	initialTime,
 	stations,
 	numberOfTrains = 12,
-	timeZone = "UTC", // Default to UTC if timeZone parameter is not provided
 }: TrainTimeProps) => {
 	let times = [];
 	console.log("Initial time received:", initialTime);
 
-	// Parse initial time directly in the specified timeZone
-	let initialDeparture = new Date(
-		new Date(initialTime).toLocaleString("en-US", { timeZone })
-	);
-
+	// Use moment-timezone to handle timezone
+	let initialDeparture = moment(initialTime); // moment automatically handles ISO strings with timezone
 	console.log(
 		"Timezone adjusted initial departure:",
-		initialDeparture.toISOString()
+		initialDeparture.format()
 	);
 
 	for (let trainIndex = 0; trainIndex < numberOfTrains; trainIndex++) {
 		let startDelay = Math.floor(Math.random() * 6) + 5; // Delay between 5 to 10 minutes
-		let currentTime = new Date(
-			initialDeparture.getTime() + startDelay * 60000
-		);
+		let currentTime = moment(initialDeparture).add(startDelay, "minutes");
 		let pathTimes = [];
 
 		for (let station of stations) {
 			let travelTime = Math.floor(Math.random() * 2) + 1; // Travel time between 1 to 2 minutes
-			currentTime = new Date(currentTime.getTime() + travelTime * 60000);
-			pathTimes.push(currentTime.toISOString());
+			currentTime.add(travelTime, "minutes");
+			pathTimes.push(currentTime.format()); // Use format to keep consistency
 		}
 
 		times.push(pathTimes); // Collect times for one complete path across all stations
 
 		// Update initial departure time for the next train based on the last station time
 		let nextTrainDelay = Math.floor(Math.random() * 11) + 5; // Delay for next train between 5 to 15 minutes
-		initialDeparture = new Date(
-			currentTime.getTime() + nextTrainDelay * 60000
-		);
+		initialDeparture.add(nextTrainDelay, "minutes");
 	}
 
-	// Return times directly in the ISO format, consider converting them in client-side or here based on need
+	// Return the times already formatted in the correct timezone
 	return times;
 };
 

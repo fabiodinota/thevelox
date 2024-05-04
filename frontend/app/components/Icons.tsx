@@ -1,9 +1,14 @@
 interface IconProps {
 	fill?: string;
 	className?: string;
+	gradient?: boolean;
 }
 
-export const xIcon = ({ fill, className }: IconProps) => (
+export const xIcon = ({
+	fill = "foreground",
+	className,
+	gradient,
+}: IconProps) => (
 	<svg
 		className={"scale-[1.2] flex-shrink-0 " + className}
 		width="12"
@@ -14,7 +19,9 @@ export const xIcon = ({ fill, className }: IconProps) => (
 	>
 		<path
 			d="M1.2 12L0 10.8L4.8 6L0 1.2L1.2 0L6 4.8L10.8 0L12 1.2L7.2 6L12 10.8L10.8 12L6 7.2L1.2 12Z"
-			className={`fill-${fill}`}
+			className={`${
+				gradient ? "fill-[url(#myGradient)]" : `fill-${fill}`
+			}`}
 		/>
 	</svg>
 );

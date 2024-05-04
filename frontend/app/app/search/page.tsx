@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Map } from "./Map";
 import axios from "axios";
 import RippleButton from "@/app/components/RippleButton";
-import { format } from "date-fns";
+import { format, formatISO } from "date-fns";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -79,21 +79,18 @@ const AppSearchPage = () => {
 
 	const handleSearch = async (data: FormSchemaProps) => {
 		// Push the search params to the URL
+		const formattedDate = formatISO(data.departureDate, {
+			representation: "complete",
+		});
 		router.push(
-			`/app/search?startStation=${data.startStation}&endStation=${
-				data.endStation
-			}&departureDate=${format(data.departureDate, "PP HH:mm")}`
+			`/app/search?startStation=${data.startStation}&endStation=${data.endStation}&departureDate=${formattedDate}`
 		);
 
 		setSnap(isLg ? 0.4 : "540px");
 
 		// Fetch the route data
 		if (data.startStation && data.endStation && data.departureDate) {
-			getRoute(
-				data.startStation,
-				data.endStation,
-				format(data.departureDate, "PP HH:mm")
-			);
+			getRoute(data.startStation, data.endStation, formattedDate);
 		}
 	};
 
@@ -104,11 +101,7 @@ const AppSearchPage = () => {
 	) => {
 		try {
 			const res = await axios.get(
-				`${
-					process.env.NEXT_PUBLIC_API_URL
-				}/map/search?startStation=${startStation}&endStation=${endStation}&departureDate=${departureDate}&timezone=${
-					Intl.DateTimeFormat().resolvedOptions().timeZone
-				}`,
+				`${process.env.NEXT_PUBLIC_API_URL}/map/search?startStation=${startStation}&endStation=${endStation}&departureDate=${departureDate}`,
 				{ withCredentials: true }
 			);
 
