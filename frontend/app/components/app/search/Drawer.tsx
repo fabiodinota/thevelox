@@ -216,7 +216,7 @@ const DrawerComponent = ({
 											</span>
 											<span
 												onClick={handleBack}
-												className="flex flex-row items-center gap-3 text-[16px] font-medium"
+												className="flex flex-row items-center gap-3 text-[16px] font-medium cursor-pointer"
 											>
 												Back
 												{xIcon({

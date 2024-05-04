@@ -161,11 +161,10 @@ export const generateTrainTimes = ({
 
 		for (let station of stations) {
 			let travelTime = Math.floor(Math.random() * 2) + 1; // Travel time between 1 to 2 minutes
-			currentTime = new Date(currentTime.getTime() + travelTime * 60000);
-			// Adjust the time according to the specified timeZone
+			currentTime.setUTCMinutes(currentTime.getUTCMinutes() + travelTime);
 			let adjustedTime = new Date(
-				currentTime.toLocaleString("en-US", { timeZone })
-			);
+				currentTime.getTime() + currentTime.getTimezoneOffset() * 60000
+			); // Adjust for local timezone
 			pathTimes.push(adjustedTime.toISOString());
 		}
 
