@@ -149,8 +149,16 @@ export const generateTrainTimes = ({
 }: TrainTimeProps) => {
 	let times = [];
 	console.log("Initial time received:", initialTime);
-	let initialDeparture = new Date(initialTime);
-	console.log("Converted Date object:", initialDeparture.toISOString());
+
+	// Parse initial time directly in the specified timeZone
+	let initialDeparture = new Date(
+		new Date(initialTime).toLocaleString("en-US", { timeZone })
+	);
+
+	console.log(
+		"Timezone adjusted initial departure:",
+		initialDeparture.toISOString()
+	);
 
 	for (let trainIndex = 0; trainIndex < numberOfTrains; trainIndex++) {
 		let startDelay = Math.floor(Math.random() * 6) + 5; // Delay between 5 to 10 minutes
@@ -162,25 +170,19 @@ export const generateTrainTimes = ({
 		for (let station of stations) {
 			let travelTime = Math.floor(Math.random() * 2) + 1; // Travel time between 1 to 2 minutes
 			currentTime = new Date(currentTime.getTime() + travelTime * 60000);
-			pathTimes.push(currentTime.toISOString()); // Push UTC time to array
+			pathTimes.push(currentTime.toISOString());
 		}
 
 		times.push(pathTimes); // Collect times for one complete path across all stations
 
-		// IMPORTANT: Update the initial departure time for the next train to be after the last station time
+		// Update initial departure time for the next train based on the last station time
 		let nextTrainDelay = Math.floor(Math.random() * 11) + 5; // Delay for next train between 5 to 15 minutes
 		initialDeparture = new Date(
 			currentTime.getTime() + nextTrainDelay * 60000
 		);
 	}
 
-	// Convert UTC times to local times based on the specified timezone
-	times = times.map((pathTimes) =>
-		pathTimes.map((time) =>
-			new Date(time).toLocaleString("en-US", { timeZone })
-		)
-	);
-
+	// Return times directly in the ISO format, consider converting them in client-side or here based on need
 	return times;
 };
 
