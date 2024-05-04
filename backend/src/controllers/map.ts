@@ -161,11 +161,8 @@ export const generateTrainTimes = ({
 
 		for (let station of stations) {
 			let travelTime = Math.floor(Math.random() * 2) + 1; // Travel time between 1 to 2 minutes
-			currentTime.setUTCMinutes(currentTime.getUTCMinutes() + travelTime);
-			let adjustedTime = new Date(
-				currentTime.getTime() + currentTime.getTimezoneOffset() * 60000
-			); // Adjust for local timezone
-			pathTimes.push(adjustedTime.toISOString());
+			currentTime = new Date(currentTime.getTime() + travelTime * 60000);
+			pathTimes.push(currentTime.toISOString()); // Push UTC time to array
 		}
 
 		times.push(pathTimes); // Collect times for one complete path across all stations
@@ -176,6 +173,13 @@ export const generateTrainTimes = ({
 			currentTime.getTime() + nextTrainDelay * 60000
 		);
 	}
+
+	// Convert UTC times to local times based on the specified timezone
+	times = times.map((pathTimes) =>
+		pathTimes.map((time) =>
+			new Date(time).toLocaleString("en-US", { timeZone })
+		)
+	);
 
 	return times;
 };
