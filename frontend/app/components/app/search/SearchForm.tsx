@@ -20,7 +20,7 @@ import searchFormSchema from "@/app/utils/searchFormSchema";
 import { format } from "date-fns";
 import { popoverVariant } from "@/app/utils/animationVariants";
 import { Station, FormSchemaProps } from "@/app/types/types";
-import { xIcon } from "../../Icons";
+import { ArrowIcon, HeartIcon, xIcon } from "../../Icons";
 
 interface SearchFormProps {
 	stations: Station[];
@@ -34,6 +34,8 @@ interface SearchFormProps {
 	handleSubmit: UseFormHandleSubmit<FormSchemaProps, FormSchemaProps>;
 	setValue: UseFormSetValue<FormSchemaProps>;
 	errors: FieldErrors<FormSchemaProps>;
+	increase: () => void;
+	decrease: () => void;
 }
 
 const SearchForm = ({
@@ -48,6 +50,8 @@ const SearchForm = ({
 	handleSubmit,
 	setValue,
 	errors,
+	increase,
+	decrease,
 }: SearchFormProps) => {
 	const [calendarOpen, setCalendarOpen] = useState(false);
 	const { releaseFocus } = useAutocomplete();
@@ -104,11 +108,17 @@ const SearchForm = ({
 		setCalendarOpen(!calendarOpen);
 	};
 
+	const [favoriteRoute, setFavoriteRoute] = useState(false);
+
+	const handleFavoriteRoute = () => {
+		setFavoriteRoute(!favoriteRoute);
+	};
+
 	return (
 		<form
 			onSubmit={onSubmit}
 			className={
-				"w-full max-w-full lg:max-w-[500px] flex flex-row gap-2 p-2.5 md:p-5 rounded-[20px] bg-background  shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07] "
+				"w-full max-w-full lg:max-w-[500px] h-full flex flex-row gap-2 p-2.5 md:p-5 rounded-[20px] bg-background  shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07] "
 			}
 		>
 			<div className=" flex flex-col gap-2.5 w-full h-full">
@@ -258,39 +268,74 @@ const SearchForm = ({
 					</span>
 				)}
 				{!searching && (
-					<RippleButton
-						type="submit"
-						style="gradient"
-						className="w-full"
-					>
-						<svg
-							width="18"
-							height="17"
-							viewBox="0 0 18 17"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
+					<>
+						<RippleButton
+							type="submit"
+							style="gradient"
+							className="w-full"
 						>
-							<path
-								d="M16.1 17L10.8 11.7C10.3 12.1 9.725 12.4167 9.075 12.65C8.425 12.8833 7.73333 13 7 13C5.18333 13 3.64583 12.3708 2.3875 11.1125C1.12917 9.85417 0.5 8.31667 0.5 6.5C0.5 4.68333 1.12917 3.14583 2.3875 1.8875C3.64583 0.629167 5.18333 0 7 0C8.81667 0 10.3542 0.629167 11.6125 1.8875C12.8708 3.14583 13.5 4.68333 13.5 6.5C13.5 7.23333 13.3833 7.925 13.15 8.575C12.9167 9.225 12.6 9.8 12.2 10.3L17.5 15.6L16.1 17ZM7 11C8.25 11 9.3125 10.5625 10.1875 9.6875C11.0625 8.8125 11.5 7.75 11.5 6.5C11.5 5.25 11.0625 4.1875 10.1875 3.3125C9.3125 2.4375 8.25 2 7 2C5.75 2 4.6875 2.4375 3.8125 3.3125C2.9375 4.1875 2.5 5.25 2.5 6.5C2.5 7.75 2.9375 8.8125 3.8125 9.6875C4.6875 10.5625 5.75 11 7 11Z"
-								fill="white"
-							/>
-						</svg>
-						Search
-					</RippleButton>
+							<svg
+								width="18"
+								height="17"
+								viewBox="0 0 18 17"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M16.1 17L10.8 11.7C10.3 12.1 9.725 12.4167 9.075 12.65C8.425 12.8833 7.73333 13 7 13C5.18333 13 3.64583 12.3708 2.3875 11.1125C1.12917 9.85417 0.5 8.31667 0.5 6.5C0.5 4.68333 1.12917 3.14583 2.3875 1.8875C3.64583 0.629167 5.18333 0 7 0C8.81667 0 10.3542 0.629167 11.6125 1.8875C12.8708 3.14583 13.5 4.68333 13.5 6.5C13.5 7.23333 13.3833 7.925 13.15 8.575C12.9167 9.225 12.6 9.8 12.2 10.3L17.5 15.6L16.1 17ZM7 11C8.25 11 9.3125 10.5625 10.1875 9.6875C11.0625 8.8125 11.5 7.75 11.5 6.5C11.5 5.25 11.0625 4.1875 10.1875 3.3125C9.3125 2.4375 8.25 2 7 2C5.75 2 4.6875 2.4375 3.8125 3.3125C2.9375 4.1875 2.5 5.25 2.5 6.5C2.5 7.75 2.9375 8.8125 3.8125 9.6875C4.6875 10.5625 5.75 11 7 11Z"
+									fill="white"
+								/>
+							</svg>
+							Search
+						</RippleButton>
+					</>
 				)}
+				<div className={`flex flex-row gap-2.5 w-full`}>
+					<RippleButton
+						onClick={decrease}
+						type="button"
+						style="nofill"
+						className="w-full !flex-shrink bg-secondary !text-foreground"
+						speed="medium"
+						data-vaul-no-drag
+					>
+						{ArrowIcon(false, "w-5 h-5")}
+						Previous Level
+					</RippleButton>
+					<RippleButton
+						onClick={increase}
+						type="button"
+						style="nofill"
+						className="w-full !flex-shrink bg-secondary !text-foreground"
+						speed="medium"
+					>
+						Next Level
+						{ArrowIcon(false, "w-5 h-5 rotate-180")}
+					</RippleButton>
+				</div>
 			</div>
+
 			{searching && (
-				<RippleButton
-					onClick={handleGoBackToMap}
-					style="nofill"
-					className="w-min !overflow-visible !h-min"
-				>
-					{xIcon({
-						fill: "foreground",
-						className:
-							"w-5 h-5 m-2 !scale-100 opacity-50 hover:opacity-100 duration-200",
-					})}
-				</RippleButton>
+				<div className="grid relative flex-1">
+					<RippleButton
+						/* 						onClick={handleGoBackToMap}
+						 */ style="nofill"
+						className="w-min !overflow-visible !h-min self-center"
+					>
+						{xIcon({
+							fill: "foreground",
+							className:
+								"w-5 h-5 m-2 !scale-100 opacity-50 hover:opacity-100 duration-200",
+						})}
+					</RippleButton>
+					<RippleButton
+						onClick={handleFavoriteRoute}
+						style="nofill"
+						className="w-min !overflow-visible !h-min place-self-end self-center"
+					>
+						{HeartIcon(favoriteRoute, "w-8 h-8 opacity-50")}
+					</RippleButton>
+				</div>
 			)}
 		</form>
 	);

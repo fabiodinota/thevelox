@@ -209,6 +209,29 @@ const AppSearchPage = () => {
 	const xInitial = slideDirection === "right" ? -50 : 50;
 	const xExit = slideDirection === "right" ? 50 : -50;
 
+	const minMax = {
+		min: 0,
+		max: 2,
+	};
+
+	const decrease = () => {
+		setSlideDirection("left");
+		if (level > minMax.min) {
+			setLevel((prevLevel) => prevLevel - 1);
+		} else {
+			setLevel(minMax.max);
+		}
+	};
+
+	const increase = () => {
+		setSlideDirection("right");
+		if (level < minMax.max) {
+			setLevel((prevLevel) => prevLevel + 1);
+		} else {
+			setLevel(minMax.min);
+		}
+	};
+
 	return (
 		<div className="w-full h-full overflow-hidden relative flex items-center justify-center">
 			<div
@@ -226,6 +249,8 @@ const AppSearchPage = () => {
 					handleSubmit={handleSubmit}
 					setValue={setValue}
 					errors={errors}
+					increase={increase}
+					decrease={decrease}
 				/>
 			</div>
 			<DrawerComponent
@@ -236,9 +261,8 @@ const AppSearchPage = () => {
 				loadMoreTickets={loadMoreTickets}
 				showTicketLimit={showTicketLimit}
 				searchReqData={searchReqData}
-				level={level}
-				setLevel={setLevel}
-				setSlideDirection={setSlideDirection}
+				increase={increase}
+				decrease={decrease}
 				activeTicket={activeTicket}
 				setActiveTicket={setActiveTicket}
 			/>

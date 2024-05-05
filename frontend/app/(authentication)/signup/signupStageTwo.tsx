@@ -317,10 +317,10 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 										toYear={2030}
 									/>
 								</motion.div>
-								<div
+								{/* <div
 									className="top-0 left-0 fixed w-screen h-screen z-10"
 									onClick={() => setCalendarOpen(false)}
-								/>
+								/> */}
 							</div>
 						)}
 					</AnimatePresenceProvider>

@@ -76,3 +76,37 @@ export type PaymentMethodResponse = {
 	formatted_card_number: string;
 	formatted_paypal_email: string;
 };
+
+export type Journey = {
+	journey_id: number;
+	line_id_start: string;
+	line_id_end: string;
+	departure_station: string;
+	arrival_station: string;
+	departure_time: string;
+	arrival_time: string;
+};
+
+export type TicketResponse = {
+	ticket_id: number;
+	user_id: number;
+	journey_id: number;
+	payment_method_id: number;
+	journey_date: string;
+	booking_date: string;
+	price: number;
+	ticket_object: string;
+	journeys: Journey;
+};
+
+export type ParsedTicketResponse = {
+	ticket_id: number;
+	user_id: number;
+	journey_id: number;
+	payment_method_id: number;
+	journey_date: string;
+	booking_date: string;
+	price: number;
+	ticket_object: Ticket;
+	journeys: Journey;
+};

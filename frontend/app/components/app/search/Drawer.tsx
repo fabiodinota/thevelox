@@ -21,9 +21,8 @@ interface DrawerComponentProps {
 	loadMoreTickets: () => void;
 	showTicketLimit: number;
 	isLg: boolean;
-	level: number;
-	setLevel: React.Dispatch<React.SetStateAction<number>>;
-	setSlideDirection: React.Dispatch<React.SetStateAction<string>>;
+	increase: () => void;
+	decrease: () => void;
 	activeTicket: TicketType | undefined;
 	setActiveTicket: React.Dispatch<
 		React.SetStateAction<TicketType | undefined>
@@ -38,9 +37,8 @@ const DrawerComponent = ({
 	loadMoreTickets,
 	showTicketLimit,
 	isLg,
-	level,
-	setLevel,
-	setSlideDirection,
+	increase,
+	decrease,
 	activeTicket,
 	setActiveTicket,
 }: DrawerComponentProps) => {
@@ -54,29 +52,6 @@ const DrawerComponent = ({
 	const [activePaymentMethod, setActivePaymentMethod] = useState<
 		number | undefined
 	>(undefined);
-
-	const minMax = {
-		min: 0,
-		max: 2,
-	};
-
-	const decrease = () => {
-		setSlideDirection("left");
-		if (level > minMax.min) {
-			setLevel((prevLevel) => prevLevel - 1);
-		} else {
-			setLevel(minMax.max);
-		}
-	};
-
-	const increase = () => {
-		setSlideDirection("right");
-		if (level < minMax.max) {
-			setLevel((prevLevel) => prevLevel + 1);
-		} else {
-			setLevel(minMax.min);
-		}
-	};
 
 	useEffect(() => {
 		if (!searching) {
@@ -150,7 +125,7 @@ const DrawerComponent = ({
 									: snap === 0.4
 									? "max-h-[40%] w-full"
 									: "max-h-[140px] w-full"
-								: `w-[540px] !pt-[310px] h-full`
+								: `w-[540px] !pt-[380px] h-full`
 						} py-[40px] lg:py-5 duration-300 bg-background fixed right-0 top-0 z-[90] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]`}
 					>
 						<div className="absolute right-1/2 translate-x-1/2 lg:translate-x-0 top-5 lg:-right-[60px] lg:rotate-90 lg:-translate-y-1/2 lg:top-1/2 px-5 lg:py-10 cursor-pointer">
@@ -162,80 +137,50 @@ const DrawerComponent = ({
 							}`}
 						>
 							{stage === "browseTicketsStage" && (
-								<div>
-									<div
-										className={`flex flex-row gap-2.5 w-full`}
-									>
-										<RippleButton
-											onClick={decrease}
-											type="button"
-											style="nofill"
-											className="w-full !flex-shrink bg-secondary !text-foreground"
-											speed="medium"
-											data-vaul-no-drag
-										>
-											{ArrowIcon(false, "w-5 h-5")}
-											Previous Level
-										</RippleButton>
-										<RippleButton
-											onClick={increase}
-											type="button"
-											style="nofill"
-											className="w-full !flex-shrink bg-secondary !text-foreground"
-											speed="medium"
-										>
-											Next Level
-											{ArrowIcon(
-												false,
-												"w-5 h-5 rotate-180"
-											)}
-										</RippleButton>
-									</div>
-									<div className="flex flex-col gap-2.5 md:gap-5 w-full mt-2.5 md:mt-5">
-										{searchReqData &&
-											"tickets" in searchReqData &&
-											searchReqData.tickets.map(
-												(ticket, index) => {
-													if (index > showTicketLimit)
-														return;
-													return (
-														<Ticket
-															key={index}
-															ticket={ticket}
-															onClick={() => {
-																setActiveTicket(
-																	ticket
-																);
-																setStage(
-																	"moreInfoTicketStage"
-																);
-															}}
-														/>
-													);
-												}
-											)}
-										{searchReqData &&
+								<div className="flex flex-col gap-2.5 md:gap-5 w-full ">
+									{searchReqData &&
 										"tickets" in searchReqData &&
-										searchReqData.tickets.length >
-											showTicketLimit ? (
-											<RippleButton
-												onClick={loadMoreTickets}
-												type="button"
-												style="gradient"
-												className="w-full !flex-shrink"
-												speed="medium"
-											>
-												Load More
-											</RippleButton>
-										) : (
-											<p>No more tickets available</p>
+										searchReqData.tickets.map(
+											(ticket, index) => {
+												if (index > showTicketLimit)
+													return;
+												return (
+													<Ticket
+														key={index}
+														ticket={ticket}
+														onClick={() => {
+															setActiveTicket(
+																ticket
+															);
+															setStage(
+																"moreInfoTicketStage"
+															);
+														}}
+													/>
+												);
+											}
 										)}
-									</div>
+									{searchReqData &&
+									"tickets" in searchReqData &&
+									searchReqData.tickets.length >
+										showTicketLimit ? (
+										<RippleButton
+											onClick={loadMoreTickets}
+											type="button"
+											style="gradient"
+											className="w-full !flex-shrink"
+											speed="medium"
+										>
+											Load More
+										</RippleButton>
+									) : (
+										<p>No more tickets available</p>
+									)}
 								</div>
 							)}
 							{stage === "moreInfoTicketStage" && (
 								<div>
-									<div className="flex flex-col gap-2.5 md:gap-5 w-full mt-2.5 md:mt-5">
+									<div className="flex flex-col gap-2.5 md:gap-5 w-full ">
 										{activeTicket && searchReqData && (
 											<ExpandedTicket
 												key={
@@ -255,7 +200,7 @@ const DrawerComponent = ({
 							)}
 							{stage === "buyTicketStage" && activeTicket && (
 								<div>
-									<div className="flex flex-col gap-2.5 md:gap-5 w-full mt-2.5 md:mt-5">
+									<div className="flex flex-col gap-2.5 md:gap-5 w-full ">
 										<Drawer.Title className="flex flex-row justify-between items-center">
 											<span className="text-[20px] lg:text-[24px] font-bold">
 												Buy Ticket
@@ -295,7 +240,7 @@ const DrawerComponent = ({
 							{stage === "addPaymentMethodStage" &&
 								activeTicket && (
 									<div>
-										<div className="flex flex-col gap-2.5 md:gap-5 w-full mt-2.5 md:mt-5">
+										<div className="flex flex-col gap-2.5 md:gap-5 w-full ">
 											<Drawer.Title className="flex flex-row justify-between items-center">
 												<span className="text-[20px] lg:text-[24px] font-bold">
 													Add Payment Method

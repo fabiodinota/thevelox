@@ -69,6 +69,7 @@ export const buyTicket = async (req: CustomRequest, res: Response) => {
 				journey_date: ticket.departureTime,
 				booking_date: new Date(),
 				price: ticket.price,
+				ticket_object: JSON.stringify(ticket),
 			},
 		});
 
@@ -77,4 +78,26 @@ export const buyTicket = async (req: CustomRequest, res: Response) => {
 		console.error(error);
 		res.status(500).json({ message: "Internal server error" });
 	}
+};
+
+export const getActiveTickets = async (req: CustomRequest, res: Response) => {
+	const user_id = req.user?.user_id;
+
+	if (!user_id) {
+		return res.status(400).json({ message: "User ID is required" });
+	}
+
+	const activeTickets = await prisma.tickets.findMany({
+		where: {
+			user_id,
+			journey_date: {
+				gte: new Date(),
+			},
+		},
+		include: {
+			journeys: true,
+		},
+	});
+
+	res.status(200).json(activeTickets);
 };
