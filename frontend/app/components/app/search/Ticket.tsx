@@ -161,7 +161,7 @@ export const ExpandedTicket: React.FC<TicketProps> = ({
 					"lines" in searchReqData &&
 					searchReqData.fullPath.map(
 						(station: Station, index: number) => (
-							<div className="relative">
+							<div key={index} className="relative">
 								<div
 									key={index}
 									className="flex flex-row gap-5 items-center h-5"
@@ -189,7 +189,10 @@ export const ExpandedTicket: React.FC<TicketProps> = ({
 								</div>
 								{index !==
 									searchReqData.fullPath.length - 1 && (
-									<div className="absolute left-[85px] top-[14px]">
+									<div
+										key={`${index}-lines`}
+										className="absolute left-[85px] top-[14px]"
+									>
 										<p className=" absolute top-1/2 -translate-y-1/2 left-5 opacity-50 text-[14px] whitespace-nowrap">
 											Line {getLine(index)}
 										</p>

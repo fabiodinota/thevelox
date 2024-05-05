@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import AnimatePresenceProvider from "@/app/context/AnimatePresenceProvider";
 import SelectPaymentMethod from "./SelectPaymentMethod";
 import ActiveTicketHeader from "./ActiveTicketHeader";
+import AddPaymentMethod from "./AddPaymentMethod";
 
 interface DrawerComponentProps {
 	searching: boolean;
@@ -42,8 +43,14 @@ const DrawerComponent = ({
 }: DrawerComponentProps) => {
 	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 	const [stage, setStage] = useState<
-		"browseTicketsStage" | "moreInfoTicketStage" | "buyTicketStage"
+		| "browseTicketsStage"
+		| "moreInfoTicketStage"
+		| "buyTicketStage"
+		| "addPaymentMethodStage"
 	>("browseTicketsStage");
+	const [activePaymentMethod, setActivePaymentMethod] = useState<
+		number | undefined
+	>(undefined);
 
 	const minMax = {
 		min: 0,
@@ -82,6 +89,16 @@ const DrawerComponent = ({
 	const handleBack = () => {
 		setStage("browseTicketsStage");
 		setActiveTicket(undefined);
+	};
+
+	useEffect(() => {
+		if (stage === "buyTicketStage") {
+			setSnap(1);
+		}
+	}, [stage]);
+
+	const handleBuyTicket = () => {
+		console.log("Buying ticket", activeTicket, activePaymentMethod);
 	};
 
 	return (
@@ -196,6 +213,10 @@ const DrawerComponent = ({
 									<div className="flex flex-col gap-2.5 md:gap-5 w-full mt-2.5 md:mt-5">
 										{activeTicket && searchReqData && (
 											<ExpandedTicket
+												key={
+													activeTicket.startStation +
+													activeTicket.endStation
+												}
 												ticket={activeTicket}
 												handleBuyActiveTicket={
 													handleBuyActiveTicket
@@ -226,10 +247,41 @@ const DrawerComponent = ({
 											</span>
 										</Drawer.Title>
 										<BuyTicket ticket={activeTicket} />
-										<SelectPaymentMethod />
+										<SelectPaymentMethod
+											setStage={setStage}
+											setActivePaymentMethod={
+												setActivePaymentMethod
+											}
+											activePaymentMethod={
+												activePaymentMethod
+											}
+										/>
+										<RippleButton
+											onClick={handleBuyTicket}
+											style="gradient"
+											speed="medium"
+											className=""
+										>
+											Buy Ticket
+										</RippleButton>
 									</div>
 								</div>
 							)}
+							{stage === "addPaymentMethodStage" &&
+								activeTicket && (
+									<div>
+										<div className="flex flex-col gap-2.5 md:gap-5 w-full mt-2.5 md:mt-5">
+											<Drawer.Title className="flex flex-row justify-between items-center">
+												<span className="text-[20px] lg:text-[24px] font-bold">
+													Add Payment Method
+												</span>
+											</Drawer.Title>
+											<AddPaymentMethod
+												setStage={setStage}
+											/>
+										</div>
+									</div>
+								)}
 						</div>
 					</Drawer.Content>
 				</Drawer.Portal>

@@ -292,14 +292,7 @@ export const Line16Icon = (className: string) => (
 );
 
 export const LineArrowIcon = (className: string) => (
-	<svg
-		width="16"
-		height="11"
-		viewBox="0 0 16 11"
-		className={className}
-		fill="none"
-		xmlns="http://www.w3.org/2000/svg"
-	>
+	<svg className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path
 			d="M12.8 6.25227H1.43848C1.22566 6.25227 1.04746 6.18048 0.903876 6.0369C0.760276 5.89332 0.688477 5.71512 0.688477 5.5023C0.688477 5.28948 0.760276 5.11128 0.903876 4.9677C1.04746 4.82412 1.22566 4.75232 1.43848 4.75232H12.8L9.50768 1.45997C9.35896 1.31126 9.28557 1.13722 9.2875 0.937873C9.28942 0.738523 9.36281 0.561282 9.50768 0.406149C9.66281 0.251032 9.84101 0.170907 10.0423 0.165774C10.2436 0.160641 10.4218 0.235641 10.5769 0.390774L15.0557 4.86962C15.1493 4.96321 15.2153 5.06192 15.2538 5.16577C15.2923 5.26961 15.3115 5.38178 15.3115 5.5023C15.3115 5.62282 15.2923 5.73499 15.2538 5.83882C15.2153 5.94267 15.1493 6.04139 15.0557 6.13497L10.5769 10.6138C10.4282 10.7625 10.2516 10.8359 10.0471 10.834C9.84262 10.8321 9.66281 10.7536 9.50768 10.5984C9.36281 10.4433 9.28781 10.2677 9.28268 10.0715C9.27756 9.87537 9.35256 9.69974 9.50768 9.54462L12.8 6.25227Z"
 			className="fill-foreground"
@@ -310,11 +303,7 @@ export const LineArrowIcon = (className: string) => (
 import { SVGProps } from "react";
 
 export const Bancontact = (props: SVGProps<SVGSVGElement>) => (
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		viewBox="0 0 758.356 567.439"
-		{...props}
-	>
+	<svg xmlns="http://www.w3.org/2000/svg" {...props}>
 		<defs>
 			<linearGradient
 				id="a"
@@ -484,7 +473,7 @@ export const Generic = (props: SVGProps<SVGSVGElement>) => (
 );
 
 export const Hiper = (props: SVGProps<SVGSVGElement>) => (
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 500" {...props}>
+	<svg xmlns="http://www.w3.org/2000/svg" {...props}>
 		<path
 			fill="#f37421"
 			d="M724.3 0H55.7C25.4 0 .8 24.6.8 54.9v390.2c0 30.3 24.6 54.9 54.9 54.9h668.7c30.3 0 54.9-24.6 54.9-54.9V54.9c-.1-30.3-24.7-54.9-55-54.9z"
@@ -508,13 +497,7 @@ export const Hiper = (props: SVGProps<SVGSVGElement>) => (
 );
 
 export const Hipercard = (props: SVGProps<SVGSVGElement>) => (
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		width={780}
-		height={500}
-		viewBox="0 0 780 501"
-		{...props}
-	>
+	<svg xmlns="http://www.w3.org/2000/svg" {...props}>
 		<path
 			fill="#fff"
 			d="M725 0H55C24.673 0 0 24.673 0 55v391c0 30.327 24.673 55 55 55h670c30.325 0 55-24.673 55-55V55c0-30.327-24.675-55-55-55z"
@@ -634,7 +617,7 @@ export const Mastercard = (props: SVGProps<SVGSVGElement>) => (
 );
 
 export const Mir = (props: SVGProps<SVGSVGElement>) => (
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 500" {...props}>
+	<svg xmlns="http://www.w3.org/2000/svg" {...props}>
 		<linearGradient
 			id="a"
 			x1={362.405}

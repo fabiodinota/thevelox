@@ -266,7 +266,7 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 				/>
 				{errors.fullName && (
 					<div className="flex flex-row gap-3 items-center w-full justify-start">
-						{xIcon({})}
+						{xIcon({ fill: "[#E31937]" })}
 						<p className="md:text-[16px] text-[14px]">
 							{errors.fullName.message}
 						</p>
@@ -327,7 +327,7 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 				</div>
 				{errors.dateOfBirth && (
 					<div className="flex flex-row gap-3 items-center w-full justify-start">
-						{xIcon({})}
+						{xIcon({ fill: "[#E31937]" })}
 						<p className="md:text-[16px] text-[14px]">
 							{errors.dateOfBirth.message}
 						</p>
@@ -368,7 +368,7 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 					<div className="w-full">
 						{errors.countryCode && (
 							<div className="flex flex-row gap-3 items-center">
-								{xIcon({})}
+								{xIcon({ fill: "[#E31937]" })}
 								<p className="md:text-[16px] text-[14px]">
 									{errors.countryCode?.message}
 								</p>
@@ -376,7 +376,7 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 						)}
 						{errors.phoneNumber && (
 							<div className="flex flex-row gap-3 items-center">
-								{xIcon({})}
+								{xIcon({ fill: "[#E31937]" })}
 								<p className="md:text-[16px] text-[14px]">
 									{errors.phoneNumber?.message}
 								</p>

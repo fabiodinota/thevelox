@@ -184,7 +184,7 @@ const SignIn = ({
 			/>
 			{errors.email && (
 				<div className="flex flex-row gap-3 items-center w-full justify-start">
-					{xIcon({})}
+					{xIcon({ fill: "[#E31937]" })}
 					<p className="md:text-[16px] text-[14px]">
 						{errors.email.message}
 					</p>
@@ -207,7 +207,7 @@ const SignIn = ({
 					passwordValidation.number &&
 					passwordValidation.special
 						? checkIcon
-						: xIcon({})}
+						: xIcon({ fill: "[#E31937]" })}
 					<p className="md:text-[16px] text-[14px]">
 						Password contains atleast 1 uppercase, 1 special, and 3
 						number characters.
@@ -216,7 +216,7 @@ const SignIn = ({
 
 				{errors.password && (
 					<div className="flex flex-row gap-3 items-center">
-						{xIcon({})}
+						{xIcon({ fill: "[#E31937]" })}
 						<p className="md:text-[16px] text-[14px]">
 							{errors.password.message}
 						</p>
@@ -234,7 +234,7 @@ const SignIn = ({
 			</RippleButton>
 			{errorMessage && (
 				<div className="flex flex-row gap-3 items-center w-full">
-					{xIcon({})}
+					{xIcon({ fill: "[#E31937]" })}
 					<p className="md:text-[16px] text-[14px]">{errorMessage}</p>
 				</div>
 			)}

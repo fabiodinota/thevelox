@@ -54,4 +54,25 @@ export type CARD_NAMES =
 	| "mir"
 	| "unionpay"
 	| "visa"
-	| "bancontact";
+	| "bancontact"
+	| "paypal";
+
+export type PaymentMethod = {
+	user_id: number;
+	type: CARD_NAMES;
+	card_number: string;
+	card_holder_name: string;
+	card_expiry: string;
+	card_cvv: string;
+	paypal_email: string;
+	last_updated: string;
+	created_on: string;
+	payment_method_id: number;
+};
+
+export type PaymentMethodResponse = {
+	payment_method_id: number;
+	type: CARD_NAMES;
+	formatted_card_number: string;
+	formatted_paypal_email: string;
+};

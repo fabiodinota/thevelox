@@ -1,50 +1,50 @@
 import React from "react";
-import { Amex } from "@/app/components/Icons";
-import { Bancontact } from "@/app/components/Icons";
-import { Diners } from "@/app/components/Icons";
-import { Discover } from "@/app/components/Icons";
-import { Elo } from "@/app/components/Icons";
-import { Generic } from "@/app/components/Icons";
-import { Hiper } from "@/app/components/Icons";
-import { Hipercard } from "@/app/components/Icons";
-import { Jcb } from "@/app/components/Icons";
-import { Maestro } from "@/app/components/Icons";
-import { Mastercard } from "@/app/components/Icons";
-import { Mir } from "@/app/components/Icons";
-import { Unionpay } from "@/app/components/Icons";
-import { Visa } from "@/app/components/Icons";
+import Amex from "@/public/icons/credit_cards/amex.svg";
+import Bancontact from "@/public/icons/credit_cards/bancontact.svg";
+import Diners from "@/public/icons/credit_cards/diners.svg";
+import Discover from "@/public/icons/credit_cards/discover.svg";
+import Elo from "@/public/icons/credit_cards/elo.svg";
+import Generic from "@/public/icons/credit_cards/generic.svg";
+import Hiper from "@/public/icons/credit_cards/hiper.svg";
+import Hipercard from "@/public/icons/credit_cards/hipercard.svg";
+import Jcb from "@/public/icons/credit_cards/jcb.svg";
+import Maestro from "@/public/icons/credit_cards/maestro.svg";
+import Mastercard from "@/public/icons/credit_cards/mastercard.svg";
+import Mir from "@/public/icons/credit_cards/mir.svg";
+import Unionpay from "@/public/icons/credit_cards/unionpay.svg";
+import Visa from "@/public/icons/credit_cards/visa.svg";
 import { CARD_NAMES } from "../types/types";
 
 const getIconFromCard = (name: CARD_NAMES, className: string) => {
 	switch (name) {
 		case "american_express":
-			return <Amex className={className} />;
+			return Amex;
 		case "bancontact":
-			return <Bancontact className={className} />;
+			return Bancontact;
 		case "diners_club":
-			return <Diners className={className} />;
+			return Diners;
 		case "discover":
-			return <Discover className={className} />;
+			return Discover;
 		case "elo":
-			return <Elo className={className} />;
+			return Elo;
 		case "hipercard":
-			return <Hipercard className={className} />;
+			return Hipercard;
 		case "hiper":
-			return <Hiper className={className} />;
+			return Hiper;
 		case "jcb":
-			return <Jcb className={className} />;
+			return Jcb;
 		case "maestro":
-			return <Maestro className={className} />;
+			return Maestro;
 		case "mastercard":
-			return <Mastercard className={className} />;
+			return Mastercard;
 		case "mir":
-			return <Mir className={className} />;
+			return Mir;
 		case "unionpay":
-			return <Unionpay className={className} />;
+			return Unionpay;
 		case "visa":
-			return <Visa className={className} />;
+			return Visa;
 		default:
-			return <Generic className={className} />;
+			return Generic;
 	}
 };
 
