@@ -105,7 +105,7 @@ export const addPaymentMethod = async (req: CustomRequest, res: Response) => {
 					card_number: card_number,
 					card_holder_name: card_holder_name,
 					expiration_date: card_expiry,
-					card_cvv,
+					card_cvv: card_cvv,
 					last_updated: new Date(),
 					created_on: new Date(),
 				},
