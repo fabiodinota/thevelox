@@ -1,9 +1,9 @@
 import express from "express";
 import { authenticateToken } from "../middleware/authenticateToken";
-import { createTicket } from "../controllers/ticket";
+import { buyTicket } from "../controllers/ticket";
 
 const router = express.Router();
 
-router.post("/createTicket", authenticateToken, createTicket);
+router.post("/buyTicket", authenticateToken, buyTicket);
 
 export default router;

@@ -70,7 +70,7 @@ model tickets {
   payment_method_id Int             @db.UnsignedInt
   journey_date      DateTime        @db.DateTime(0)
   booking_date      DateTime        @db.DateTime(0)
-  price             BigInt
+  price             Float?          @db.Float
   journeys          journeys        @relation(fields: [journey_id], references: [journey_id], onDelete: NoAction, onUpdate: NoAction, map: "tickets_journey_id_foreign")
   payment_methods   payment_methods @relation(fields: [payment_method_id], references: [payment_method_id], onDelete: NoAction, onUpdate: NoAction, map: "tickets_payment_method_id_foreign")
   users             users           @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "tickets_user_id_foreign")

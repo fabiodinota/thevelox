@@ -9,6 +9,7 @@ import AnimatePresenceProvider from "@/app/context/AnimatePresenceProvider";
 import SelectPaymentMethod from "./SelectPaymentMethod";
 import ActiveTicketHeader from "./ActiveTicketHeader";
 import AddPaymentMethod from "./AddPaymentMethod";
+import axios from "axios";
 
 interface DrawerComponentProps {
 	searching: boolean;
@@ -97,8 +98,25 @@ const DrawerComponent = ({
 		}
 	}, [stage]);
 
-	const handleBuyTicket = () => {
+	const handleBuyTicket = async () => {
 		console.log("Buying ticket", activeTicket, activePaymentMethod);
+		axios
+			.post(
+				`${process.env.NEXT_PUBLIC_API_URL}/ticket/buyTicket`,
+				{
+					ticket: activeTicket,
+					payment_method_id: activePaymentMethod,
+				},
+				{
+					withCredentials: true,
+				}
+			)
+			.then((res) => {
+				console.log("Ticket bought", res);
+			})
+			.catch((err) => {
+				console.error("Error buying ticket", err);
+			});
 	};
 
 	return (

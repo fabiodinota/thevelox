@@ -24,7 +24,7 @@ export type Ticket = {
 	price: number;
 };
 
-export const createTicket = async (req: CustomRequest, res: Response) => {
+export const buyTicket = async (req: CustomRequest, res: Response) => {
 	try {
 		const user_id = req.user?.user_id;
 
@@ -74,7 +74,7 @@ export const createTicket = async (req: CustomRequest, res: Response) => {
 
 		res.status(200).json(newTicket);
 	} catch (error) {
-		console.error("Error getting payment methods:", error);
-		res.status(500).json({ message: "Error getting payment methods" });
+		console.error(error);
+		res.status(500).json({ message: "Internal server error" });
 	}
 };
