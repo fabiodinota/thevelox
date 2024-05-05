@@ -1,12 +1,13 @@
 "use client";
 
 import AnimatedInput from "@/app/components/AnimatedInput";
-import { xIcon } from "@/app/components/Icons";
+import { errorIcon, xIcon } from "@/app/components/Icons";
 import RippleButton from "@/app/components/RippleButton";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 interface PaypalFormProps {
@@ -51,9 +52,12 @@ const PaypalForm = ({ setStage }: PaypalFormProps) => {
 				{ withCredentials: true }
 			)
 			.then((res) => {
+				toast.success("Payment method added successfully");
+
 				setStage("buyTicketStage");
 			})
 			.catch((err) => {
+				toast.error(err.response.data.message || "Unknown error");
 				setErrorMessage(err);
 			});
 	});
@@ -92,7 +96,7 @@ const PaypalForm = ({ setStage }: PaypalFormProps) => {
 			/>
 			{errors.paypal_email && (
 				<div className="flex flex-row gap-3 items-center w-full justify-start">
-					{xIcon({ fill: "[#E31937]" })}
+					{errorIcon}
 					<p className="md:text-[16px] text-[14px]">
 						{errors.paypal_email.message}
 					</p>
@@ -114,12 +118,12 @@ const PaypalForm = ({ setStage }: PaypalFormProps) => {
 			>
 				Back
 			</RippleButton>
-			{errorMessage && (
+			{/* {errorMessage && (
 				<div className="flex flex-row gap-3 items-center w-full justify-start">
-					{xIcon({ fill: "[#E31937]" })}
+					{errorIcon}
 					<p className="md:text-[16px] text-[14px]">{errorMessage}</p>
 				</div>
-			)}
+			)} */}
 		</form>
 	);
 };

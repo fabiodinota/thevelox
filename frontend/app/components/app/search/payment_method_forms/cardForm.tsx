@@ -4,11 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { isCreditCard } from "validator";
-import { xIcon } from "@/app/components/Icons";
+import { errorIcon, xIcon } from "@/app/components/Icons";
 import creditCardType from "credit-card-type";
 import { CARD_NAMES } from "@/app/types/types";
 import axios from "axios";
 import RippleButton from "@/app/components/RippleButton";
+import { toast } from "sonner";
 
 interface CardFormProps {
 	setStage: React.Dispatch<
@@ -109,9 +110,11 @@ const CardForm = ({ setStage }: CardFormProps) => {
 				{ withCredentials: true }
 			)
 			.then((res) => {
+				toast.success("Payment method added successfully");
 				setStage("buyTicketStage");
 			})
 			.catch((err) => {
+				toast.error(err.response.data.message || "Unknown error");
 				setErrorMessage(err);
 			});
 	});
@@ -212,7 +215,7 @@ const CardForm = ({ setStage }: CardFormProps) => {
 			/>
 			{errors.card_number && (
 				<div className="flex flex-row gap-3 items-center w-full justify-start">
-					{xIcon({ fill: "[#E31937]" })}
+					{errorIcon}
 					<p className="md:text-[16px] text-[14px]">
 						{errors.card_number.message}
 					</p>
@@ -232,7 +235,7 @@ const CardForm = ({ setStage }: CardFormProps) => {
 			/>
 			{errors.card_name && (
 				<div className="flex flex-row gap-3 items-center w-full justify-start">
-					{xIcon({ fill: "[#E31937]" })}
+					{errorIcon}
 					<p className="md:text-[16px] text-[14px]">
 						{errors.card_name.message}
 					</p>
@@ -267,7 +270,7 @@ const CardForm = ({ setStage }: CardFormProps) => {
 			</div>
 			{errors.card_expiry && (
 				<div className="flex flex-row gap-3 items-center w-full justify-start">
-					{xIcon({ fill: "[#E31937]" })}
+					{errorIcon}
 					<p className="md:text-[16px] text-[14px]">
 						{errors.card_expiry.message}
 					</p>
@@ -275,7 +278,7 @@ const CardForm = ({ setStage }: CardFormProps) => {
 			)}
 			{errors.card_cvc && (
 				<div className="flex flex-row gap-3 items-center w-full justify-start">
-					{xIcon({ fill: "[#E31937]" })}
+					{errorIcon}
 					<p className="md:text-[16px] text-[14px]">
 						{errors.card_cvc.message}
 					</p>
@@ -299,7 +302,7 @@ const CardForm = ({ setStage }: CardFormProps) => {
 			</RippleButton>
 			{errorMessage && (
 				<div className="flex flex-row gap-3 items-center w-full justify-start">
-					{xIcon({ fill: "[#E31937]" })}
+					{errorIcon}
 					<p className="md:text-[16px] text-[14px]">{errorMessage}</p>
 				</div>
 			)}

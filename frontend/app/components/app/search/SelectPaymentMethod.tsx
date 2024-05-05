@@ -79,7 +79,7 @@ const SelectPaymentMethod = ({
 					defaultValue="default"
 				>
 					{paymentMethods.length === 0 && (
-						<div className="flex flex-row justify-center items-center w-full h-20 bg-secondary rounded-xl">
+						<div className="flex flex-row justify-center items-center w-full h-20 bg-secondary rounded-xl px-5">
 							<span className="text-[16px] font-medium">
 								No payment methods found, please add a payment
 								method to continue.

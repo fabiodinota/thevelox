@@ -3,7 +3,9 @@ import React, { MouseEventHandler } from "react";
 
 interface RippleButtonProps {
 	children: React.ReactNode;
-	onClick?: () => void;
+	onClick?: (
+		e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
+	) => void; // Updated type here
 	style: "gradient" | "outlined" | "nofill";
 	className?: string;
 	[x: string]: any;
@@ -56,7 +58,7 @@ const RippleButton = ({
 				className={"rippleButton" + " " + style + " " + className}
 				onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
 					createRipple(event);
-					onClick();
+					onClick(event);
 				}}
 				{...props}
 			>
@@ -70,7 +72,7 @@ const RippleButton = ({
 				className={"rippleButton" + " " + style + " " + className}
 				onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
 					createRipple(event);
-					onClick();
+					onClick(event);
 				}}
 				{...props}
 			>

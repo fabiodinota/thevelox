@@ -20,6 +20,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { OnProgressProps } from "react-player/base";
 import RippleButton from "../components/RippleButton";
+import { toast } from "sonner";
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 export default function Home() {

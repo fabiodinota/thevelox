@@ -10,6 +10,7 @@ import SelectPaymentMethod from "./SelectPaymentMethod";
 import ActiveTicketHeader from "./ActiveTicketHeader";
 import AddPaymentMethod from "./AddPaymentMethod";
 import axios from "axios";
+import { toast } from "sonner";
 
 interface DrawerComponentProps {
 	searching: boolean;
@@ -112,10 +113,12 @@ const DrawerComponent = ({
 				}
 			)
 			.then((res) => {
-				console.log("Ticket bought", res);
+				toast.success(
+					"Ticket bought successfully, you can view it in the Home page"
+				);
 			})
 			.catch((err) => {
-				console.error("Error buying ticket", err);
+				toast.error(err.response.data.message || "Unknown error");
 			});
 	};
 
