@@ -11,6 +11,7 @@ import ActiveTicketHeader from "./ActiveTicketHeader";
 import AddPaymentMethod from "./AddPaymentMethod";
 import axios from "axios";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface DrawerComponentProps {
 	searching: boolean;
@@ -99,6 +100,8 @@ const DrawerComponent = ({
 		}
 	}, [stage]);
 
+	const router = useRouter();
+
 	const handleBuyTicket = async () => {
 		console.log("Buying ticket", activeTicket, activePaymentMethod);
 		axios
@@ -116,6 +119,7 @@ const DrawerComponent = ({
 				toast.success(
 					"Ticket bought successfully, you can view it in the Home page"
 				);
+				router.push("/app/home");
 			})
 			.catch((err) => {
 				toast.error(err.response.data.message || "Unknown error");
