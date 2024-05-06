@@ -24,14 +24,6 @@ const AppHomePage = () => {
 
 	const router = useRouter();
 
-	const handleSignOut = async () => {
-		const { success } = await signOut();
-
-		if (success) {
-			router.push("/signin");
-		}
-	};
-
 	const [activeTickets, setActiveTickets] = useState<
 		ParsedTicketResponse[] | undefined
 	>(undefined);
@@ -202,15 +194,6 @@ const AppHomePage = () => {
 							})}
 					</div>
 				</div>
-				{/* You've entered the app directory: {user?.email}
-				<RippleButton
-					style="gradient"
-					className="w-[200px]"
-					onClick={handleSignOut}
-					tabIndex={0}
-				>
-					Sign out
-				</RippleButton> */}
 			</div>
 		</>
 	);

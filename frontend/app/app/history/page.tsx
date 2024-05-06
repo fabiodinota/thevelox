@@ -32,7 +32,7 @@ const AppHistoryPage = () => {
 					const dateB = new Date(b.journey_date).getTime();
 
 					// Sort by closest date to today's date
-					return dateA - dateB;
+					return dateB - dateA;
 				}
 			);
 
@@ -41,13 +41,15 @@ const AppHistoryPage = () => {
 					const journeyDate = new Date(ticket.journey_date);
 					const currentDate = new Date();
 
-					return journeyDate < currentDate;
+					return journeyDate <= currentDate;
 				})
 			);
 		} catch (error) {
 			console.error(error);
 		}
 	};
+
+	console.log(ticketHistory);
 
 	useEffect(() => {
 		handleGetTicketHistory();
@@ -57,7 +59,7 @@ const AppHistoryPage = () => {
 			<Header />
 			<div className="w-full h-full flex justify-start mt-10 items-center flex-col px-5">
 				<div className="max-w-[800px] w-full flex flex-col gap-3">
-					<span className="text-[24px] font-bold">
+					<span className="text-[24px] font-bold mt-5">
 						Ticket History
 					</span>
 					<div className="flex flex-col gap-2.5 lg:gap-5">
@@ -70,8 +72,7 @@ const AppHistoryPage = () => {
 							ticketHistory.map((ticket) => {
 								if (
 									"ticket_object" in ticket &&
-									ticket.ticket_object !== null &&
-									new Date(ticket.journey_date) < new Date()
+									ticket.ticket_object !== null
 								) {
 									return (
 										<div key={ticket.ticket_id}>

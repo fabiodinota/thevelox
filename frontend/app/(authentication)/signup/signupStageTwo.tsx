@@ -342,7 +342,8 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 							suggestions={Array.from(
 								flattenedCountries.values()
 							).map((country) => ({
-								value: country.dialing_code,
+								name: country.dialing_code,
+								level: 0,
 								label: `${country.emoji} +${country.dialing_code}`,
 							}))}
 							onSelectionChange={handleCountryCodeChange}

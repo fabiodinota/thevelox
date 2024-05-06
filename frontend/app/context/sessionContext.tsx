@@ -1,11 +1,9 @@
 "use client";
 
 import axios, { AxiosError } from "axios";
+import { usePathname, useRouter } from "next/navigation";
 import React, { createContext, useContext, useState, useEffect } from "react";
-import Cookies from "js-cookie";
-import { boolean } from "zod";
-import { redirect, usePathname, useRouter } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { toast } from "sonner";
 
 export const useSession = () => {
 	const context = useContext(SessionContext);
@@ -21,7 +19,10 @@ type SessionProviderProps = {
 
 type User = {
 	user_id: number;
-	username: string;
+	full_name: string;
+	birth_date: string;
+	country_code: string;
+	phone_number: string;
 	email: string;
 	password: string;
 	admin: boolean;
@@ -32,6 +33,7 @@ type SessionContextType = {
 	user: User | null;
 	isAuthenticated: boolean;
 	isAdmin: boolean;
+	fetchUserData: () => void;
 	signIn: (
 		credentials: object
 	) => Promise<{ success: boolean; message?: string }>;
@@ -46,6 +48,7 @@ const initialContextValue: SessionContextType = {
 	user: null,
 	isAuthenticated: false,
 	isAdmin: false,
+	fetchUserData: async () => {},
 	signIn: async () => ({ success: true }),
 	signUp: async () => ({ success: true }),
 	signOut: async () => ({ success: true }),
@@ -162,6 +165,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 
 			setUser(response.data.user); // Update the user data in the session context
 
+			toast.success("Sign-in successful.");
 			return { success: true, message: "Sign-in successful." };
 		} catch (error) {
 			let errorMessage = "An unexpected error occurred during sign-in.";
@@ -177,6 +181,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 				errorMessage = axiosError.message || errorMessage;
 			}
 
+			toast.error(errorMessage);
 			console.error("Error during sign-in:", errorMessage);
 			return { success: false, message: errorMessage };
 		}
@@ -195,6 +200,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 
 			setUser(response.data.user); // Update the user data in the session context
 
+			toast.success("Sign-up successful.");
 			return { success: true, message: "Sign-up successful." };
 		} catch (error) {
 			let errorMessage = "An unexpected error occurred during sign-up.";
@@ -211,6 +217,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 				errorMessage = axiosError.message || errorMessage;
 			}
 			console.log(errorMessage);
+			toast.error(errorMessage);
 			return { success: false, message: errorMessage };
 		}
 	};
@@ -225,6 +232,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 			);
 
 			setUser(null); // Update the user data in the session context
+			toast.success("Sign-Out successful.");
 			return { success: true, message: "Sign-Out successful." };
 		} catch (error) {
 			let errorMessage = "An unexpected error occurred during sign-out.";
@@ -241,6 +249,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 				errorMessage = axiosError.message || errorMessage;
 			}
 			console.log(errorMessage);
+			toast.error(errorMessage);
 			return { success: false, message: errorMessage };
 		}
 	};
@@ -251,6 +260,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 				user,
 				isAuthenticated: !!user,
 				isAdmin,
+				fetchUserData,
 				signIn,
 				signUp,
 				signOut,

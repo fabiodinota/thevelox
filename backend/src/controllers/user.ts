@@ -30,3 +30,39 @@ export const getUser = async (req: CustomRequest, res: Response) => {
 		res.status(500).json({ error: "Error retrieving user" });
 	}
 };
+
+export const updateAccountInfo = async (req: CustomRequest, res: Response) => {
+	const user_id = req.user?.user_id;
+
+	const {
+		full_name,
+		birth_date,
+		country_code,
+		phone_number,
+		email,
+	}: {
+		full_name: string;
+		birth_date: string;
+		country_code: string;
+		phone_number: string;
+		email: string;
+	} = req.body;
+
+	try {
+		const updatedUser = await prisma.users.update({
+			where: {
+				user_id,
+			},
+			data: {
+				full_name,
+				birth_date,
+				country_code,
+				phone_number,
+				email,
+			},
+		});
+		res.json(updatedUser);
+	} catch (error) {
+		res.status(500).json({ error: "Error updating user" });
+	}
+};

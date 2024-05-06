@@ -10,18 +10,20 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import AnimatePresenceProvider from "../context/AnimatePresenceProvider";
 import { motion } from "framer-motion";
 import { useAutocomplete } from "../context/AutocompleteContext";
+import { Station } from "../types/types";
 
 interface Props {
 	id: string;
 	placeholder?: string;
 	suggestions: any[];
 	onSelectionChange: (value: string) => void;
-	defaultValue?: string;
+	defaultValue?: string | Station;
 	tabIndex?: number;
 	svgIcon?: React.ReactNode;
 	value?: string;
 	size?: "sm" | "lg";
 	disabled?: boolean;
+	setExternalSuggestion?: string;
 }
 
 const CustomAutocomplete = ({
@@ -34,6 +36,7 @@ const CustomAutocomplete = ({
 	svgIcon,
 	size = "lg",
 	disabled,
+	setExternalSuggestion,
 }: Props) => {
 	const [inputValue, setInputValue] = useState("");
 	const [showSuggestions, setShowSuggestions] = useState(false);
@@ -68,12 +71,25 @@ const CustomAutocomplete = ({
 		);
 	}, [inputValue, suggestions, isObjectSuggestion]);
 
+	const isInitialized = useRef(false);
 	// Handle default value
 	useEffect(() => {
-		if (defaultValue !== undefined) {
-			setInputValue(defaultValue);
+		if (defaultValue && !isInitialized.current) {
+			if (isObjectSuggestion && typeof defaultValue === "object") {
+				setInputValue(defaultValue.label || "");
+			} else if (typeof defaultValue === "string") {
+				setInputValue(defaultValue);
+			}
+			isInitialized.current = true; // Mark as initialized
 		}
 	}, [defaultValue]);
+
+	// Set external suggestion
+	useEffect(() => {
+		if (setExternalSuggestion !== undefined) {
+			setInputValue(setExternalSuggestion);
+		}
+	}, [setExternalSuggestion]);
 
 	// Handle input change with useCallback to prevent function recreation
 	const handleChange = useCallback(

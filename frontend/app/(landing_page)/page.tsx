@@ -168,11 +168,16 @@ export default function Home() {
 								The best transport solution to date.
 							</h1>
 							<p className="text-foreground text-[16px] md:text-[18px] font-normal leading-relaxed">
-								Lorem ipsum dolor sit amet consectetur.
-								Habitasse rhoncus quam augue a nam odio massa
-								turpis. Ultrices eleifend sapien turpis auctor
-								augue ut. Iaculis non sit porttitor at dui
-								tellus. Nulla facilisis magna feugiat volutpat.
+								The Velox represents the pinnacle of modern
+								transportation solutions in New Atlantis,
+								blending efficiency, sustainability, and
+								innovation. As the first fully underwater
+								transit system, it not only meets the unique
+								demands of an aquatic environment but also sets
+								new standards for eco-friendly travel. With its
+								commitment to carbon neutrality and flawless
+								service, The Velox offers a futuristic yet
+								responsible solution for city-wide mobility.
 							</p>
 						</div>
 						<div
@@ -214,11 +219,17 @@ export default function Home() {
 								Next-Generation Public Transport Booking App
 							</h1>
 							<p className="text-foreground text-[16px] md:text-[18px] font-normal leading-relaxed">
-								Lorem ipsum dolor sit amet consectetur.
-								Habitasse rhoncus quam augue a nam odio massa
-								turpis. Ultrices eleifend sapien turpis auctor
-								augue ut. Iaculis non sit porttitor at dui
-								tellus. Nulla facilisis magna feugiat volutpat.
+								Our next-generation booking app for The Velox
+								transforms the way you travel by integrating
+								cutting-edge technology with user-friendly
+								design. The app allows for seamless ticket
+								purchasing, real-time updates, and customizable
+								travel notifications, making it indispensable
+								for daily commuters and occasional visitors
+								alike. With features designed to enhance user
+								experience and streamline public transport
+								logistics, our app ensures that booking a ride
+								on The Velox is as effortless as it is reliable.
 							</p>
 						</div>
 					</div>
@@ -270,10 +281,10 @@ export default function Home() {
 								Can I refund my ticket?
 							</AccordionTrigger>
 							<AccordionContent className="text-[16px] md:text-[18px] font-normal leading-relaxed text-left">
-								Lorem ipsum dolor sit amet consectetur.
-								Habitasse rhoncus quam augue a nam odio massa
-								turpis. Ultrices eleifend sapien turpis auctor
-								augue ut.
+								No, tickets purchased for The Velox are
+								non-refundable. Please be certain of your travel
+								plans before booking, as we cannot offer refunds
+								once a ticket has been purchased.
 							</AccordionContent>
 						</AccordionItem>
 						<AccordionItem
@@ -288,10 +299,11 @@ export default function Home() {
 								Do you require any identification?
 							</AccordionTrigger>
 							<AccordionContent className="text-[16px] md:text-[18px] font-normal leading-relaxed text-left">
-								Lorem ipsum dolor sit amet consectetur.
-								Habitasse rhoncus quam augue a nam odio massa
-								turpis. Ultrices eleifend sapien turpis auctor
-								augue ut.
+								Yes, identification is required for purchasing
+								tickets and during check-in for certain services
+								at The Velox. Please ensure you have a valid
+								form of ID with you to avoid any delays in your
+								travel plans.
 							</AccordionContent>
 						</AccordionItem>
 						<AccordionItem
@@ -306,10 +318,12 @@ export default function Home() {
 								Do you store any payment information?
 							</AccordionTrigger>
 							<AccordionContent className="text-[16px] md:text-[18px] font-normal leading-relaxed text-left">
-								Lorem ipsum dolor sit amet consectetur.
-								Habitasse rhoncus quam augue a nam odio massa
-								turpis. Ultrices eleifend sapien turpis auctor
-								augue ut.
+								Yes, we can store your payment information if
+								you choose to enable this feature for easier
+								future transactions. Be assured that any stored
+								payment details are fully secure and encrypted,
+								protecting your financial data and maintaining
+								your privacy.
 							</AccordionContent>
 						</AccordionItem>
 					</Accordion>

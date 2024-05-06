@@ -4,6 +4,7 @@ import { useTheme } from "@/app/context/themeContext";
 import React, { useEffect, useState } from "react";
 import {
 	AccountCircleIcon,
+	AdminIcon,
 	HomeIcon,
 	SearchIcon,
 	TicketIcon,
@@ -12,6 +13,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useMediaQuery } from "react-responsive";
 import RippleButton from "../RippleButton";
+import { useSession } from "@/app/context/sessionContext";
 
 const BottomNav = () => {
 	const pathname = usePathname();
@@ -30,6 +32,8 @@ const BottomNav = () => {
 
 	const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
 
+	const { isAdmin } = useSession();
+
 	return (
 		<nav
 			className={
@@ -37,7 +41,7 @@ const BottomNav = () => {
 			}
 		>
 			<div className="w-full lg:max-w-[600px] group flex justify-center items-center h-[80px] xl:h-[90px] rounded-[20px] bg-background/70 dark:bg-background back backdrop-blur-2xl xl:bg-background shadow-[0_0_35px_0_#00000010] dark:shadow-[0_0_35px_0_#FFFFFF10]  xl:shadow-[0_0_35px_0_#84848420] xl:dark:shadow-[0_0_35px_0_#FFFFFF06]">
-				<div className="w-full flex flex-row px-2.5 py-2.5 gap-0 justify-evenly xl:justify-center xl:gap-10 items-center">
+				<div className="w-full flex flex-row px-2.5 md:px-10 py-2.5 gap-0 justify-evenly xl:justify-center xl:gap-10 items-center">
 					<RippleButton
 						onClick={() => setActiveRoute("home")}
 						asLink
@@ -146,6 +150,35 @@ const BottomNav = () => {
 							Account
 						</span>
 					</RippleButton>
+					{isAdmin && (
+						<RippleButton
+							onClick={() => setActiveRoute("admin")}
+							asLink
+							href={"/app/admin"}
+							style="nofill"
+							speed="fast"
+							className="lg:hover:bg-secondary max-w-[100px] !flex-shrink w-full !py-2 !h-full duration-100 flex flex-col !gap-2 justify-center items-center"
+						>
+							<div
+								className={`${
+									activeRoute === "admin"
+										? "text-gradient"
+										: `text-foreground ${iconAnimation}`
+								} delay-150`}
+							>
+								{AdminIcon(activeRoute === "admin")}
+							</div>
+							<span
+								className={`leading-none select-none text-[14px] xl:text-[16px]  delay-150 ${
+									activeRoute === "admin"
+										? "text-gradient"
+										: `text-foreground ${textAnimation}`
+								}`}
+							>
+								Admin
+							</span>
+						</RippleButton>
+					)}
 				</div>
 			</div>
 		</nav>

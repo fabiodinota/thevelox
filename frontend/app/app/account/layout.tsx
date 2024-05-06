@@ -23,7 +23,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<div className={`pb-[120px] flex flex-col`}>
+		<div className={`pb-[140px] pt-[70px] flex flex-col`}>
 			<main className="h-full ">{children}</main>
 			<BottomNav />
 		</div>

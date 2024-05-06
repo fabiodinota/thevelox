@@ -31,11 +31,13 @@ const page = () => {
 						data-aos-once="true"
 						data-aos-easing="ease-out"
 						data-aos-delay="100"
-						className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center"
+						className="rounded-[20px] overflow-hidden bg-secondary w-full aspect-video grid place-content-center"
 					>
-						<span className="text-[20px] font-regular opacity-50">
-							Placeholder Image
-						</span>
+						<img
+							src="https://storage.thevelox.co/booking.png"
+							alt="Thumbnail"
+							className="w-full h-full object-cover aspect-video"
+						/>
 					</div>
 					<div
 						data-aos="fade-down"
@@ -49,11 +51,17 @@ const page = () => {
 							Next-Generation Public Transport Booking App
 						</h1>
 						<p className="text-foreground text-[16px] md:text-[18px] font-normal leading-relaxed">
-							Lorem ipsum dolor sit amet consectetur. Habitasse
-							rhoncus quam augue a nam odio massa turpis. Ultrices
-							eleifend sapien turpis auctor augue ut. Iaculis non
-							sit porttitor at dui tellus. Nulla facilisis magna
-							feugiat volutpat.
+							Our next-generation booking app for The Velox
+							transforms the way you travel by integrating
+							cutting-edge technology with user-friendly design.
+							The app allows for seamless ticket purchasing,
+							real-time updates, and customizable travel
+							notifications, making it indispensable for daily
+							commuters and occasional visitors alike. With
+							features designed to enhance user experience and
+							streamline public transport logistics, our app
+							ensures that booking a ride on The Velox is as
+							effortless as it is reliable.
 						</p>
 					</div>
 				</div>
@@ -82,14 +90,14 @@ const page = () => {
 							2020
 						</span>
 						<h3 className="text-[20px] md:text-[28px] font-bold">
-							The Devastating Effects Of Climate Change
+							Climate Crisis Recognition
 						</h3>
 						<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-							Lorem ipsum dolor sit amet consectetur. Habitasse
-							rhoncus quam augue a nam odio massa turpis. Ultrices
-							eleifend sapien turpis auctor augue ut. Iaculis non
-							sit porttitor at dui tellus. Nulla facilisis magna
-							feugiat volutpat.
+							The year 2020 marked a turning point as devastating
+							climate events underscored the critical need for
+							sustainable practices. Governments and industries
+							acknowledged the imperative shift required to
+							protect our planet.
 						</p>
 					</div>
 					<div
@@ -120,14 +128,14 @@ const page = () => {
 							2021
 						</span>
 						<h3 className="text-[20px] md:text-[28px] font-bold">
-							Start Of R&D On Sustainable Transit
+							Sustainable Transit R&D{" "}
 						</h3>
 						<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-							Lorem ipsum dolor sit amet consectetur. Habitasse
-							rhoncus quam augue a nam odio massa turpis. Ultrices
-							eleifend sapien turpis auctor augue ut. Iaculis non
-							sit porttitor at dui tellus. Nulla facilisis magna
-							feugiat volutpat.
+							In response to the escalating environmental crisis,
+							2021 saw the launch of intensive research and
+							development in sustainable transportation. This
+							global collaboration aimed to dramatically decrease
+							carbon emissions and enhance efficiency.
 						</p>
 					</div>
 					<div
@@ -154,17 +162,18 @@ const page = () => {
 						ref={thirdRef}
 					>
 						<span className="text-gradient text-[24px] md:text-[36px] font-medium leading-tight">
-							2023, October
+							2023
 						</span>
 						<h3 className="text-[20px] md:text-[28px] font-bold">
 							Birth Of New Atlantis
 						</h3>
 						<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-							Lorem ipsum dolor sit amet consectetur. Habitasse
-							rhoncus quam augue a nam odio massa turpis. Ultrices
-							eleifend sapien turpis auctor augue ut. Iaculis non
-							sit porttitor at dui tellus. Nulla facilisis magna
-							feugiat volutpat.
+							October 2023 witnessed the groundbreaking
+							inauguration of New Atlantis, an underwater city
+							designed for complete sustainability. This project
+							integrated the latest technologies with
+							environmental science to create a blueprint for
+							future urban living.
 						</p>
 					</div>
 					<div
@@ -196,11 +205,11 @@ const page = () => {
 							Mass Construction Sustainable Trains
 						</h3>
 						<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-							Lorem ipsum dolor sit amet consectetur. Habitasse
-							rhoncus quam augue a nam odio massa turpis. Ultrices
-							eleifend sapien turpis auctor augue ut. Iaculis non
-							sit porttitor at dui tellus. Nulla facilisis magna
-							feugiat volutpat.
+							Infrastructure The construction of New Atlantis’s
+							eco-friendly infrastructure began in 2024, focusing
+							on carbon-neutral trains powered by renewable
+							energies. This initiative set new standards in
+							sustainable urban development.
 						</p>
 					</div>
 				</div>
@@ -274,10 +283,14 @@ const page = () => {
 									1. Affordability
 								</h1>
 								<p className="text-[16px] md:text-[18px] font-light leading-relaxed">
-									Lorem ipsum dolor sit amet consectetur.
-									Habitasse rhoncus quam augue a nam odio
-									massa turpis. Ultrices eleifend sapien
-									turpis auctor augue ut.
+									In New Atlantis, The Velox ensures that
+									transportation is economical and inclusive
+									for all its residents. Offering low-cost
+									fares, it allows everyone to explore the
+									city without financial burden. This
+									affordability strategy ensures that mobility
+									within our underwater city remains
+									accessible to every resident and visitor.
 								</p>
 							</div>
 						</div>
@@ -344,10 +357,14 @@ const page = () => {
 									2. Reliability
 								</h1>
 								<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-									Lorem ipsum dolor sit amet consectetur.
-									Habitasse rhoncus quam augue a nam odio
-									massa turpis. Ultrices eleifend sapien
-									turpis auctor augue ut.
+									The Velox is engineered for flawless
+									operation under the unique environmental
+									conditions of an underwater city. With a
+									commitment to punctuality, it provides
+									dependable transportation services across
+									all districts of New Atlantis. Residents can
+									rely on The Velox for consistent and timely
+									travel throughout the city.
 								</p>
 							</div>
 						</div>
@@ -415,10 +432,15 @@ const page = () => {
 									3. Accessibility
 								</h1>
 								<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-									Lorem ipsum dolor sit amet consectetur.
-									Habitasse rhoncus quam augue a nam odio
-									massa turpis. Ultrices eleifend sapien
-									turpis auctor augue ut.
+									The Velox is designed with accessibility at
+									its core, catering to the needs of all
+									individuals including the elderly and
+									disabled. Features like easy access ramps,
+									priority seating, and intuitive service
+									interfaces ensure that everyone can navigate
+									New Atlantis with ease. This approach makes
+									city-wide mobility smooth and hassle-free
+									for every community member.
 								</p>
 							</div>
 						</div>
@@ -486,10 +508,15 @@ const page = () => {
 									4. Sustainability
 								</h1>
 								<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-									Lorem ipsum dolor sit amet consectetur.
-									Habitasse rhoncus quam augue a nam odio
-									massa turpis. Ultrices eleifend sapien
-									turpis auctor augue ut.
+									Sustainability drives every aspect of The
+									Velox, aligning with New Atlantis’
+									commitment to environmental stewardship. As
+									a carbon-neutral service, it utilizes green
+									technologies and practices to minimize
+									ecological impact. The Velox sets a standard
+									in sustainable public transportation,
+									preserving the integrity of our underwater
+									environment.
 								</p>
 							</div>
 						</div>

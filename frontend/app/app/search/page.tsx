@@ -71,6 +71,7 @@ const AppSearchPage = () => {
 		handleSubmit,
 		setValue,
 		formState: { errors },
+
 		reset,
 	} = useForm<z.infer<typeof FormSchema>>({
 		resolver: zodResolver(FormSchema),
@@ -199,27 +200,71 @@ const AppSearchPage = () => {
 	}, [isLg, searching]);
 
 	useEffect(() => {
-		// Fetch stations on mount
 		fetchStations();
+	}, []);
 
+	const handleQuickBookSearch = () => {
 		const bookingData = JSON.parse(
 			localStorage.getItem("quickBookInfo") || "{}"
 		);
-		localStorage.removeItem("quickBookInfo");
+		console.log("Booking Data Loaded:", bookingData); // Check what is being loaded
 
-		console.log(bookingData);
+		const data = {
+			startStation: bookingData.from,
+			endStation: bookingData.to,
+			departureDate: bookingData.departureDate,
+		};
 
-		if (bookingData) {
-			const { startStation, endStation, departureDate } = bookingData;
-			if (startStation && endStation && departureDate) {
-				handleSearch({
-					startStation,
-					endStation,
-					departureDate: departureDate,
-				});
-			}
+		if (data.startStation && data.endStation && data.departureDate) {
+			setSearching(true);
+
+			stations.some((station: Station) => {
+				if (station.name === data.startStation) {
+					setStartStation({
+						name: station.name,
+						level: station.level,
+						label: station.label,
+					});
+					setValue("startStation", station.name, {
+						shouldValidate: true,
+					});
+				}
+				if (station.name === data.endStation) {
+					setEndStation({
+						name: station.name,
+						level: station.level,
+						label: station.label,
+					});
+					setValue("endStation", station.name, {
+						shouldValidate: true,
+					});
+				}
+			});
+			// Set the date
+			setDepartureDate(data.departureDate);
+			setValue("departureDate", data.departureDate, {
+				shouldValidate: true,
+			});
+
+			console.log(startStation, endStation, departureDate); // Confirm data is correct
+
+			console.log("Initiating search with data:", data); // Confirm data is correct
+			handleSearch({
+				startStation: data.startStation,
+				endStation: data.endStation,
+				departureDate: data.departureDate,
+			});
+			localStorage.removeItem("quickBookInfo");
 		}
-	}, []);
+	};
+
+	useEffect(() => {
+		if (stations.length > 0) {
+			handleQuickBookSearch();
+		} else {
+			fetchStations();
+		}
+	}, [stations]);
 
 	const [level, setLevel] = useState(0);
 	const [slideDirection, setSlideDirection] = useState("right");
