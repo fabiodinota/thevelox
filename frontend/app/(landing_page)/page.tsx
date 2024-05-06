@@ -108,6 +108,7 @@ export default function Home() {
                                 )}
                             </motion.div>
                         </div> */}
+
 						<ReactPlayer
 							onProgress={(e) => setPlayed(e.played)}
 							playing={isPlaying}
@@ -124,7 +125,7 @@ export default function Home() {
 							}
 							playIcon={
 								<svg
-									className="w-7 h-7 relative z-10"
+									className="w-7 h-7"
 									viewBox="0 0 19 23"
 									fill="none"
 									xmlns="http://www.w3.org/2000/svg"
