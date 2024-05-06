@@ -127,12 +127,12 @@ const AppSearchPage = () => {
 			setSearchReqData({
 				startStation: res.data?.startStation || "",
 				endStation: res.data?.endStation || "",
-				startLevel: res.data?.startLevel || 0,
-				endLevel: res.data?.endLevel || 0,
+				startLevel: res.data?.tickets[0].startLevel || 0,
+				endLevel: res.data?.tickets[0].endLevel || 0,
 				lines: res.data?.lines || [],
 				path: res.data?.path || [],
 				fullPath: fullPath,
-				times: res.data?.times || [],
+				times: res.data?.trainTimes || [],
 				tickets: res.data?.tickets || [],
 			});
 		} catch (err) {
@@ -247,6 +247,7 @@ const AppSearchPage = () => {
 					departureDate={departureDate}
 					setDepartureDate={setDepartureDate}
 					handleSubmit={handleSubmit}
+					searchReqData={searchReqData}
 					setValue={setValue}
 					errors={errors}
 					increase={increase}

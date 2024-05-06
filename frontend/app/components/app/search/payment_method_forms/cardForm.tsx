@@ -114,12 +114,11 @@ const CardForm = ({ setStage }: CardFormProps) => {
 				setStage("buyTicketStage");
 			})
 			.catch((err) => {
-				toast.error(err.response.data.message || "Unknown error");
-				setErrorMessage(err);
+				if (err.response.status === 400 && err.response.data.message) {
+					toast.error(err.response.data.message || "Unknown error");
+				}
 			});
 	});
-
-	const [errorMessage, setErrorMessage] = useState<string>("");
 
 	const [CardType, setCardType] = useState<CARD_NAMES | undefined>(undefined);
 
@@ -300,12 +299,6 @@ const CardForm = ({ setStage }: CardFormProps) => {
 			>
 				Back
 			</RippleButton>
-			{errorMessage && (
-				<div className="flex flex-row gap-3 items-center w-full justify-start">
-					{errorIcon}
-					<p className="md:text-[16px] text-[14px]">{errorMessage}</p>
-				</div>
-			)}
 		</form>
 	);
 };

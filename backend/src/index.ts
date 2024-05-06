@@ -9,6 +9,7 @@ import mapRouter from "./routes/map";
 import contactRouter from "./routes/contact";
 import paymentRouter from "./routes/payment";
 import ticketRouter from "./routes/ticket";
+import routesRouter from "./routes/routes";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import { authenticateToken } from "./middleware/authenticateToken";
@@ -59,6 +60,7 @@ app.use("/map", mapRouter);
 app.use("/contact", contactRouter);
 app.use("/payment", paymentRouter);
 app.use("/ticket", ticketRouter);
+app.use("/routes", routesRouter);
 app.get("/test", (req: Request, res: Response) => {
 	res.send({ message: "Test route" });
 });

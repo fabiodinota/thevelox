@@ -19,8 +19,15 @@ import { useAutocomplete } from "@/app/context/AutocompleteContext";
 import searchFormSchema from "@/app/utils/searchFormSchema";
 import { format } from "date-fns";
 import { popoverVariant } from "@/app/utils/animationVariants";
-import { Station, FormSchemaProps } from "@/app/types/types";
+import {
+	Station,
+	FormSchemaProps,
+	FavoriteRoute,
+	ISearchReqData,
+} from "@/app/types/types";
 import { ArrowIcon, HeartIcon, xIcon } from "../../Icons";
+import axios from "axios";
+import { toast } from "sonner";
 
 interface SearchFormProps {
 	stations: Station[];
@@ -33,6 +40,7 @@ interface SearchFormProps {
 	setDepartureDate: (date: Date) => void;
 	handleSubmit: UseFormHandleSubmit<FormSchemaProps, FormSchemaProps>;
 	setValue: UseFormSetValue<FormSchemaProps>;
+	searchReqData: ISearchReqData | {};
 	errors: FieldErrors<FormSchemaProps>;
 	increase: () => void;
 	decrease: () => void;
@@ -49,6 +57,7 @@ const SearchForm = ({
 	setDepartureDate,
 	handleSubmit,
 	setValue,
+	searchReqData,
 	errors,
 	increase,
 	decrease,
@@ -108,10 +117,117 @@ const SearchForm = ({
 		setCalendarOpen(!calendarOpen);
 	};
 
-	const [favoriteRoute, setFavoriteRoute] = useState(false);
+	const [favoriteRoute, setFavoriteRoute] = useState<number | undefined>(
+		undefined
+	);
+
+	const fetchFavoriteRoutes = async () => {
+		try {
+			const response = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/routes/getFavoriteRoutes`,
+				{
+					withCredentials: true,
+				}
+			);
+			console.log("Favorite routes fetched:", response.data); // Debug: See what you get here
+			return response.data;
+		} catch (error) {
+			console.error("Failed to fetch favorite routes", error);
+			return []; // Return an empty array in case of error
+		}
+	};
+
+	const isRouteFavorite = (
+		favoriteRoutes: FavoriteRoute[],
+		startStation: Station,
+		endStation: Station
+	) => {
+		return favoriteRoutes.find(
+			(favorite) =>
+				favorite.start_station === startStation.name &&
+				favorite.end_station === endStation.name
+		);
+	};
+
+	const checkFavoriteRoute = async (
+		startStation: Station,
+		endStation: Station
+	) => {
+		const favoriteRoutes = await fetchFavoriteRoutes();
+		const favorite = isRouteFavorite(
+			favoriteRoutes,
+			startStation,
+			endStation
+		);
+		if (favorite) {
+			setFavoriteRoute(favorite.favorite_id); // Ensure this function exists and works as expected
+			console.log("Route is favorite, ID:", favorite.favorite_id); // Debug output
+		} else {
+			console.log("Route is not a favorite."); // Debug output
+		}
+	};
+
+	useEffect(() => {
+		if (searching && startStation && endStation) {
+			checkFavoriteRoute(startStation, endStation);
+		}
+	}, [searching, startStation, endStation]);
 
 	const handleFavoriteRoute = () => {
-		setFavoriteRoute(!favoriteRoute);
+		if (favoriteRoute) {
+			axios
+				.post(
+					`${process.env.NEXT_PUBLIC_API_URL}/routes/removeFavoriteRoute`,
+					{
+						favorite_id: favoriteRoute,
+					},
+					{
+						withCredentials: true,
+					}
+				)
+				.then(() => {
+					setFavoriteRoute(undefined);
+					toast.success("Route removed from favorites");
+				})
+				.catch((err) => {
+					toast.error(err.response.data.message || "Unknown error");
+					console.error(err);
+				});
+		} else {
+			if (
+				searchReqData &&
+				"tickets" in searchReqData &&
+				startStation &&
+				endStation
+			) {
+				const startLine = `${searchReqData?.tickets[0].startLevel}-${searchReqData?.tickets[0].startLine}`;
+				const endLine = `${searchReqData?.tickets[0].endLevel}-${searchReqData?.tickets[0].endLine}`;
+
+				axios
+					.post(
+						`${process.env.NEXT_PUBLIC_API_URL}/routes/addFavoriteRoute`,
+						{
+							startStation: startStation.name,
+							endStation: endStation.name,
+							startLine: startLine,
+							endLine: endLine,
+						},
+						{
+							withCredentials: true,
+						}
+					)
+					.then((res) => {
+						setFavoriteRoute(res.data.favorite_id);
+						toast.success("Route added to favorites");
+					})
+					.catch((err) => {
+						toast.error(
+							err.response.data.message || "Unknown error"
+						);
+						console.error(err);
+					});
+			}
+		}
 	};
 
 	return (
@@ -316,10 +432,10 @@ const SearchForm = ({
 			</div>
 
 			{searching && (
-				<div className="grid relative flex-1">
+				<div className="grid relative flex-1 place-content-between">
 					<RippleButton
-						/* 						onClick={handleGoBackToMap}
-						 */ style="nofill"
+						onClick={handleGoBackToMap}
+						style="nofill"
 						className="w-min !overflow-visible !h-min self-center"
 					>
 						{xIcon({
@@ -328,13 +444,21 @@ const SearchForm = ({
 								"w-5 h-5 m-2 !scale-100 opacity-50 hover:opacity-100 duration-200",
 						})}
 					</RippleButton>
-					<RippleButton
+					<motion.div
+						initial={{ scale: 1 }}
+						whileHover={{ scale: 1.1 }}
+						whileTap={{ scale: 0.9 }}
+						transition={{ duration: 0.2, type: "spring" }}
 						onClick={handleFavoriteRoute}
-						style="nofill"
-						className="w-min !overflow-visible !h-min place-self-end self-center"
+						className="w-min !h-min place-self-end self-center cursor-pointer"
 					>
-						{HeartIcon(favoriteRoute, "w-8 h-8 opacity-50")}
-					</RippleButton>
+						{HeartIcon(
+							favoriteRoute !== undefined,
+							`w-8 h-8 ${
+								favoriteRoute ? "opacity-100" : "opacity-50"
+							}`
+						)}
+					</motion.div>
 				</div>
 			)}
 		</form>

@@ -80,15 +80,13 @@ export const MainTicket: React.FC<TicketProps> = ({
 		>
 			<div className="flex flex-row justify-between items-center w-full">
 				<span className="text-[16px] lg:text-[20px]">
-					{format(ticket.departureTime, "HH:mm")}
-					{/* 					{getIconFromCard(type, "scale-75")}
-					 */}{" "}
+					{format(new Date(ticket.departureTime), "HH:mm")}
 				</span>
 				<span className="text-[16px] lg:text-[20px] font-medium opacity-50">
 					{format(journeyDate, "d LLL")}
 				</span>
 				<span className="text-[16px] lg:text-[20px]">
-					{format(ticket.arrivalTime, "HH:mm")}
+					{format(new Date(ticket.arrivalTime), "HH:mm")}
 				</span>
 			</div>
 			<div className="flex flex-row justify-between items-center">

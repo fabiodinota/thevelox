@@ -110,3 +110,21 @@ export type ParsedTicketResponse = {
 	ticket_object: Ticket;
 	journeys: Journey;
 };
+
+export type FavoriteRoute = {
+	favorite_id: number;
+	start_station: string;
+	end_station: string;
+	start_line: string;
+	end_line: string;
+};
+
+export type ParsedFavoriteRoute = {
+	favorite_id: number;
+	start_station: string;
+	end_station: string;
+	startStation: Station;
+	endStation: Station;
+	start_line: string;
+	end_line: string;
+};
