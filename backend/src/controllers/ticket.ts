@@ -87,7 +87,7 @@ export const getActiveTickets = async (req: CustomRequest, res: Response) => {
 		return res.status(400).json({ message: "User ID is required" });
 	}
 
-	const activeTickets = await prisma.tickets.findMany({
+	const tickets = await prisma.tickets.findMany({
 		where: {
 			user_id,
 			journey_date: {
@@ -99,5 +99,43 @@ export const getActiveTickets = async (req: CustomRequest, res: Response) => {
 		},
 	});
 
+	// if date is in the past, dont return it
+
+	const activeTickets = tickets.filter((ticket) => {
+		const journeyDate = new Date(ticket.journey_date);
+		const currentDate = new Date();
+
+		return journeyDate >= currentDate;
+	});
+
 	res.status(200).json(activeTickets);
+};
+
+export const TicketHistory = async (req: CustomRequest, res: Response) => {
+	const user_id = req.user?.user_id;
+
+	if (!user_id) {
+		return res.status(400).json({ message: "User ID is required" });
+	}
+
+	const tickets = await prisma.tickets.findMany({
+		where: {
+			user_id,
+			journey_date: {
+				lt: new Date(),
+			},
+		},
+		include: {
+			journeys: true,
+		},
+	});
+
+	const ticketHistory = tickets.filter((ticket) => {
+		const journeyDate = new Date(ticket.journey_date);
+		const currentDate = new Date();
+
+		return journeyDate < currentDate;
+	});
+
+	res.status(200).json(ticketHistory);
 };

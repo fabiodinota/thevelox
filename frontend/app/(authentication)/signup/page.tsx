@@ -48,7 +48,7 @@ const page = () => {
 			}).then(({ success, message }) => {
 				if (success) {
 					console.log("Sign-up successful!");
-					router.push("/app");
+					router.push("/app/search");
 				} else {
 					console.error("Sign-up failed:", message);
 					setErrorMessage(message || "");

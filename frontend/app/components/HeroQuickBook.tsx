@@ -20,6 +20,8 @@ import { motion } from "framer-motion";
 import AnimatePresenceProvider from "../context/AnimatePresenceProvider";
 import RippleButton from "./RippleButton";
 import useStationData from "../utils/useStationData";
+import { useSession } from "../context/sessionContext";
+import { useRouter } from "next/navigation";
 
 type Station = {
 	name: string;
@@ -41,6 +43,8 @@ export function HeroQuickBook({ className }: { className?: string }) {
 	const { setQuickBook, clear } = useQuickBookStore();
 
 	const { stations, fetchStations } = useStationData();
+
+	const { isAuthenticated } = useSession();
 
 	const FormSchema = z.object({
 		from: z
@@ -67,12 +71,6 @@ export function HeroQuickBook({ className }: { className?: string }) {
 			.refine((value) => new Date(value) > new Date(new Date()), {
 				message: "The departure date must be in the future",
 			}),
-		passengers: z
-			.number({ invalid_type_error: "This input only accepts numbers." })
-			.default(1)
-			.refine((value) => value >= 1 && value <= 4, {
-				message: "The number of passengers must be in between 1 and 4.",
-			}),
 	});
 
 	useEffect(() => {
@@ -81,6 +79,8 @@ export function HeroQuickBook({ className }: { className?: string }) {
 
 		setDate(halfHourLater);
 	}, []);
+
+	const router = useRouter();
 
 	const {
 		handleSubmit,
@@ -91,15 +91,9 @@ export function HeroQuickBook({ className }: { className?: string }) {
 	});
 
 	const handleQuickBook = async (data: z.infer<typeof FormSchema>) => {
-		clear();
+		localStorage.setItem("quickBookInfo", JSON.stringify(data));
 
-		setQuickBook({
-			from: data.from,
-			to: data.to,
-			departureDate: data.departureDate,
-			passengers: data.passengers,
-			searching: true,
-		});
+		router.push("/app/search");
 	};
 
 	useEffect(() => {
@@ -307,45 +301,10 @@ export function HeroQuickBook({ className }: { className?: string }) {
 							)}
 						</AnimatePresenceProvider>
 					</div>
-					<CustomAutocomplete
-						id="passengers"
-						placeholder="Passengers"
-						svgIcon={
-							<svg
-								className="relative z-10"
-								width="23"
-								height="17"
-								viewBox="0 0 23 17"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M0.101562 16.8032V14.0032C0.101562 13.4366 0.247396 12.9157 0.539062 12.4407C0.830729 11.9657 1.21823 11.6032 1.70156 11.3532C2.7349 10.8366 3.7849 10.4491 4.85156 10.1907C5.91823 9.93239 7.00156 9.80322 8.10156 9.80322C9.20156 9.80322 10.2849 9.93239 11.3516 10.1907C12.4182 10.4491 13.4682 10.8366 14.5016 11.3532C14.9849 11.6032 15.3724 11.9657 15.6641 12.4407C15.9557 12.9157 16.1016 13.4366 16.1016 14.0032V16.8032H0.101562ZM18.1016 16.8032V13.8032C18.1016 13.0699 17.8974 12.3657 17.4891 11.6907C17.0807 11.0157 16.5016 10.4366 15.7516 9.95322C16.6016 10.0532 17.4016 10.2241 18.1516 10.4657C18.9016 10.7074 19.6016 11.0032 20.2516 11.3532C20.8516 11.6866 21.3099 12.0574 21.6266 12.4657C21.9432 12.8741 22.1016 13.3199 22.1016 13.8032V16.8032H18.1016ZM8.10156 8.80322C7.00156 8.80322 6.0599 8.41156 5.27656 7.62822C4.49323 6.84489 4.10156 5.90322 4.10156 4.80322C4.10156 3.70322 4.49323 2.76156 5.27656 1.97822C6.0599 1.19489 7.00156 0.803223 8.10156 0.803223C9.20156 0.803223 10.1432 1.19489 10.9266 1.97822C11.7099 2.76156 12.1016 3.70322 12.1016 4.80322C12.1016 5.90322 11.7099 6.84489 10.9266 7.62822C10.1432 8.41156 9.20156 8.80322 8.10156 8.80322ZM18.1016 4.80322C18.1016 5.90322 17.7099 6.84489 16.9266 7.62822C16.1432 8.41156 15.2016 8.80322 14.1016 8.80322C13.9182 8.80322 13.6849 8.78239 13.4016 8.74072C13.1182 8.69906 12.8849 8.65322 12.7016 8.60322C13.1516 8.06989 13.4974 7.47822 13.7391 6.82822C13.9807 6.17822 14.1016 5.50322 14.1016 4.80322C14.1016 4.10322 13.9807 3.42822 13.7391 2.77822C13.4974 2.12822 13.1516 1.53656 12.7016 1.00322C12.9349 0.919889 13.1682 0.865723 13.4016 0.840723C13.6349 0.815723 13.8682 0.803223 14.1016 0.803223C15.2016 0.803223 16.1432 1.19489 16.9266 1.97822C17.7099 2.76156 18.1016 3.70322 18.1016 4.80322ZM2.10156 14.8032H14.1016V14.0032C14.1016 13.8199 14.0557 13.6532 13.9641 13.5032C13.8724 13.3532 13.7516 13.2366 13.6016 13.1532C12.7016 12.7032 11.7932 12.3657 10.8766 12.1407C9.9599 11.9157 9.0349 11.8032 8.10156 11.8032C7.16823 11.8032 6.24323 11.9157 5.32656 12.1407C4.4099 12.3657 3.50156 12.7032 2.60156 13.1532C2.45156 13.2366 2.33073 13.3532 2.23906 13.5032C2.1474 13.6532 2.10156 13.8199 2.10156 14.0032V14.8032ZM8.10156 6.80322C8.65156 6.80322 9.1224 6.60739 9.51406 6.21572C9.90573 5.82406 10.1016 5.35322 10.1016 4.80322C10.1016 4.25322 9.90573 3.78239 9.51406 3.39072C9.1224 2.99906 8.65156 2.80322 8.10156 2.80322C7.55156 2.80322 7.08073 2.99906 6.68906 3.39072C6.2974 3.78239 6.10156 4.25322 6.10156 4.80322C6.10156 5.35322 6.2974 5.82406 6.68906 6.21572C7.08073 6.60739 7.55156 6.80322 8.10156 6.80322Z"
-									className="fill-foreground"
-								/>
-							</svg>
-						}
-						suggestions={[
-							{ label: "1", name: 1, level: 1 },
-							{ label: "2", name: 2, level: 1 },
-							{ label: "3", name: 3, level: 1 },
-							{ label: "4", name: 4, level: 1 },
-						]} // Assuming stations is an array of object'
-						onSelectionChange={(value) =>
-							setValue("passengers", parseInt(value), {
-								shouldValidate: true,
-							})
-						}
-					/>
 				</div>
 				{errors.departureDate && (
 					<span className="text-red-500">
 						{errors.departureDate.message}
-					</span>
-				)}
-				{errors.passengers && (
-					<span className="text-red-500">
-						{errors.passengers.message}
 					</span>
 				)}
 				<RippleButton type="submit" style="gradient" className="w-full">

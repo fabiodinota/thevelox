@@ -64,7 +64,15 @@ const AppHomePage = () => {
 					return dateA - dateB;
 				}
 			);
-			setActiveTickets(sortedTickets);
+
+			setActiveTickets(
+				sortedTickets.filter((ticket: ParsedTicketResponse) => {
+					const journeyDate = new Date(ticket.journey_date);
+					const currentDate = new Date();
+
+					return journeyDate >= currentDate;
+				})
+			);
 		} catch (error) {
 			console.error(error);
 		}
@@ -80,10 +88,8 @@ const AppHomePage = () => {
 					withCredentials: true,
 				}
 			);
-			console.log("Favorite routes fetched:", response.data); // Debug: See what you get here
 			return response.data;
 		} catch (error) {
-			console.error("Failed to fetch favorite routes", error);
 			toast.error("Failed to fetch favorite routes");
 			return []; // Return an empty array in case of error
 		}
@@ -100,10 +106,6 @@ const AppHomePage = () => {
 				const endStation = stations.find(
 					(station) => station.name === route.end_station
 				);
-
-				console.log("startStation: ", startStation);
-				console.log("endStation: ", endStation);
-
 				return {
 					...route,
 					startStation,
@@ -111,7 +113,6 @@ const AppHomePage = () => {
 				};
 			}
 		);
-		console.log("updatedFavoriteRoutes: ", updatedFavoriteRoutes);
 		setFavoriteRoutes(updatedFavoriteRoutes);
 	};
 
@@ -127,8 +128,6 @@ const AppHomePage = () => {
 			fetchStations();
 		}
 	}, [stations]);
-
-	console.log("favorite routes: ", favoriteRoutes);
 
 	const handleSearchFavoriteRoute = (route: ParsedFavoriteRoute) => {
 		const adjustedDate = new Date();
@@ -147,10 +146,42 @@ const AppHomePage = () => {
 			<Header />
 			<div className="w-full h-full flex justify-start mt-10 items-center flex-col px-5">
 				<div className="max-w-[800px] w-full flex flex-col gap-3">
+					<span className="text-[24px] font-bold mt-5">
+						Favorite Routes
+					</span>
+					<div className="flex flex-col gap-2.5 lg:gap-5">
+						{favoriteRoutes.length === 0 && (
+							<span className="text-[14px] md:text-[16px] text-primary opacity-50">
+								No favorite routes found. Add your first
+								favorite route.
+							</span>
+						)}
+						{favoriteRoutes.map((route) => {
+							return (
+								<div
+									onClick={() =>
+										handleSearchFavoriteRoute(route)
+									}
+									key={route.favorite_id}
+								>
+									<Route
+										startStation={route.startStation}
+										endStation={route.endStation}
+										route={route}
+									/>
+								</div>
+							);
+						})}
+					</div>
 					<span className="text-[24px] font-bold">
 						Active Tickets
 					</span>
 					<div className="flex flex-col gap-2.5 lg:gap-5">
+						{activeTickets?.length === 0 && (
+							<span className="text-[14px] md:text-[16px] text-primary opacity-50">
+								No active tickets found. Book your first ticket
+							</span>
+						)}
 						{activeTickets &&
 							activeTickets.map((ticket) => {
 								if (
@@ -169,28 +200,6 @@ const AppHomePage = () => {
 									);
 								}
 							})}
-					</div>
-					<span className="text-[24px] font-bold mt-5">
-						Favorite Routes
-					</span>
-					<div className="flex flex-col gap-2.5 lg:gap-5">
-						{favoriteRoutes.map((route) => {
-							console.log(route);
-							return (
-								<div
-									onClick={() =>
-										handleSearchFavoriteRoute(route)
-									}
-									key={route.favorite_id}
-								>
-									<Route
-										startStation={route.startStation}
-										endStation={route.endStation}
-										route={route}
-									/>
-								</div>
-							);
-						})}
 					</div>
 				</div>
 				{/* You've entered the app directory: {user?.email}

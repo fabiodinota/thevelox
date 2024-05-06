@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.post("/buyTicket", authenticateToken, buyTicket);
 router.get("/getActiveTickets", authenticateToken, getActiveTickets);
+router.get("/getTicketHistory", authenticateToken, getActiveTickets);
 
 export default router;

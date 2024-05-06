@@ -34,7 +34,7 @@ const page = () => {
 			}).then(({ success, message }) => {
 				if (success) {
 					console.log("Sign-in successful!");
-					router.push("/app");
+					router.push("/app/search");
 				} else {
 					console.error("Sign-in failed:", message);
 					setErrorMessage(message || "");

@@ -201,6 +201,24 @@ const AppSearchPage = () => {
 	useEffect(() => {
 		// Fetch stations on mount
 		fetchStations();
+
+		const bookingData = JSON.parse(
+			localStorage.getItem("quickBookInfo") || "{}"
+		);
+		localStorage.removeItem("quickBookInfo");
+
+		console.log(bookingData);
+
+		if (bookingData) {
+			const { startStation, endStation, departureDate } = bookingData;
+			if (startStation && endStation && departureDate) {
+				handleSearch({
+					startStation,
+					endStation,
+					departureDate: departureDate,
+				});
+			}
+		}
 	}, []);
 
 	const [level, setLevel] = useState(0);

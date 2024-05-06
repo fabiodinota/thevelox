@@ -42,13 +42,13 @@ export async function middleware(request: NextRequest) {
 
 	if (user?.user_id) {
 		if (["/signin", "/signup", "/app"].includes(request.nextUrl.pathname)) {
-			return NextResponse.redirect(new URL("/app/home", request.url));
+			return NextResponse.redirect(new URL("/app/search", request.url));
 		}
 		if (
 			request.nextUrl.pathname.startsWith("/app/admin") &&
 			user.admin === false
 		) {
-			return NextResponse.redirect(new URL("/app/home", request.url));
+			return NextResponse.redirect(new URL("/app/search", request.url));
 		}
 
 		return NextResponse.next();
@@ -57,7 +57,7 @@ export async function middleware(request: NextRequest) {
 		if (request.nextUrl.pathname === "/app/admin") {
 			return NextResponse.next();
 		} else {
-			return NextResponse.redirect(new URL("/app/home", request.url));
+			return NextResponse.redirect(new URL("/app/search", request.url));
 		}
 	} else if (user === null) {
 		if (request.nextUrl.pathname === "/app/admin") {
