@@ -246,6 +246,12 @@ const AppSearchPage = () => {
 				shouldValidate: true,
 			});
 
+			router.push(
+				`/app/search?startStation=${data.startStation}&endStation=${
+					data.endStation
+				}&departureDate=${format(data.departureDate, "PP HH:mm")}`
+			);
+
 			console.log(startStation, endStation, departureDate); // Confirm data is correct
 
 			console.log("Initiating search with data:", data); // Confirm data is correct
