@@ -5,7 +5,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 export const ThemeContext = createContext({
-	theme: "light",
+	theme: "dark",
 	toggleTheme: () => {},
 	setLight: () => {},
 	setDark: () => {},

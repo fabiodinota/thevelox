@@ -411,22 +411,22 @@ const SearchForm = ({
 						onClick={decrease}
 						type="button"
 						style="nofill"
-						className="w-full !flex-shrink bg-secondary !text-foreground"
+						className="w-full !flex-shrink bg-secondary !text-foreground text-[14px] md:text-[16px]"
 						speed="medium"
 						data-vaul-no-drag
 					>
-						{ArrowIcon(false, "w-5 h-5")}
+						{ArrowIcon(false, "w-3 md:w-5 h-3 md:h-5")}
 						Previous Level
 					</RippleButton>
 					<RippleButton
 						onClick={increase}
 						type="button"
 						style="nofill"
-						className="w-full !flex-shrink bg-secondary !text-foreground"
+						className="w-full !flex-shrink bg-secondary !text-foreground text-[14px] md:text-[16px]"
 						speed="medium"
 					>
 						Next Level
-						{ArrowIcon(false, "w-5 h-5 rotate-180")}
+						{ArrowIcon(false, "w-3 md:w-5 h-3 md:h-5 rotate-180")}
 					</RippleButton>
 				</div>
 			</div>

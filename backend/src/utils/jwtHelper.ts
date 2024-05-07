@@ -6,7 +6,7 @@ dotenv.config({
 });
 
 // Helper function to generate an access token
-function generateAccessToken(user_id: number) {
+function generateAccessToken(user_id: number, admin: boolean) {
 	if (!process.env.JWT_SECRET) {
 		throw new Error(
 			"JWT_SECRET is not defined in the environment variables"
@@ -14,11 +14,13 @@ function generateAccessToken(user_id: number) {
 	}
 
 	console.log("Access token generated");
-	return jwt.sign({ user_id }, process.env.JWT_SECRET, { expiresIn: "15m" });
+	return jwt.sign({ user_id, admin }, process.env.JWT_SECRET, {
+		expiresIn: "15m",
+	});
 }
 
 // Helper function to generate a refresh token
-function generateRefreshToken(user_id: number) {
+function generateRefreshToken(user_id: number, admin: boolean) {
 	if (!process.env.JWT_REFRESH_TOKEN_SECRET) {
 		throw new Error(
 			"JWT_SECRET is not defined in the environment variables"
@@ -26,7 +28,7 @@ function generateRefreshToken(user_id: number) {
 	}
 
 	console.log("Refresh token generated");
-	return jwt.sign({ user_id }, process.env.JWT_REFRESH_TOKEN_SECRET, {
+	return jwt.sign({ user_id, admin }, process.env.JWT_REFRESH_TOKEN_SECRET, {
 		expiresIn: "7d",
 	});
 }
@@ -43,7 +45,7 @@ export const verifyRefreshToken = (token: string) => {
 			if (error) {
 				console.log(
 					"Refresh token verification failed: ",
-					error.message,
+					error.message
 				);
 				reject(error); // Token verification failed
 			} else {

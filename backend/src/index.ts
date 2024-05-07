@@ -10,6 +10,7 @@ import contactRouter from "./routes/contact";
 import paymentRouter from "./routes/payment";
 import ticketRouter from "./routes/ticket";
 import routesRouter from "./routes/routes";
+import adminRouter from "./routes/admin";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import { authenticateToken } from "./middleware/authenticateToken";
@@ -61,6 +62,7 @@ app.use("/contact", contactRouter);
 app.use("/payment", paymentRouter);
 app.use("/ticket", ticketRouter);
 app.use("/routes", routesRouter);
+app.use("/admin", adminRouter);
 app.get("/test", (req: Request, res: Response) => {
 	res.send({ message: "Test route" });
 });

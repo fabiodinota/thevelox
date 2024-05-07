@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 interface CustomRequest extends Request {
 	user?: {
 		user_id: number;
+		admin: boolean;
 		iat: string;
 		exp: string;
 	};

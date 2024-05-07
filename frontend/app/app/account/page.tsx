@@ -545,6 +545,7 @@ const AppAccountPage = () => {
 					</div>
 					<RippleButton
 						onClick={handleSignOut}
+						type="button"
 						style="outlined"
 						tabIndex={4}
 						className="w-full"

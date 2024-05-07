@@ -71,7 +71,7 @@ export default function RootLayout({
 								position="top-right"
 								toastOptions={{
 									className:
-										"bg-background text-white shadow-[0_0_35px_0_#00000010] dark:shadow-[0_0_35px_0_#FFFFFF10] border-0 rounded-xl py-5 px-7",
+										"bg-background text-foreground shadow-[0_0_35px_0_#00000010] dark:shadow-[0_0_35px_0_#FFFFFF10] border-0 rounded-xl py-5 px-7",
 									duration: 3000,
 									closeButton: true,
 									cancelButtonStyle: {

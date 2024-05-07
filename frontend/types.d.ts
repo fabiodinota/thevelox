@@ -5,3 +5,4 @@ declare namespace NodeJS {
 }
 
 declare module "react-autocomplete";
+declare module "@videsk/tailwind-random-color";

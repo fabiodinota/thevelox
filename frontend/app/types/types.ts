@@ -1,3 +1,14 @@
+export type User = {
+	user_id: number;
+	full_name: string;
+	birth_date: string;
+	country_code: string;
+	phone_number: string;
+	email: string;
+	password: string;
+	admin: boolean;
+};
+
 export type Ticket = {
 	departureTime: string;
 	arrivalTime: string;

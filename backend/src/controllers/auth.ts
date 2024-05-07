@@ -42,8 +42,12 @@ export const signUp = async (req: Request, res: Response) => {
 		},
 	});
 
-	const accessToken = generateAccessToken(newUser.user_id); // Set expiresIn as needed
-	const refreshToken = generateRefreshToken(newUser.user_id); // Set expiresIn as needed
+	if (!newUser.admin) {
+		newUser.admin = false;
+	}
+
+	const accessToken = generateAccessToken(newUser.user_id, newUser.admin); // Set expiresIn as needed
+	const refreshToken = generateRefreshToken(newUser.user_id, newUser.admin); // Set expiresIn as needed
 
 	const encryptedAccessToken = encryptToken(accessToken);
 	const encryptedRefreshToken = encryptToken(refreshToken);
@@ -83,10 +87,14 @@ export const signIn = async (req: Request, res: Response) => {
 
 	const passwordMatch = await verifyPassword(password, user.password);
 
+	if (!user.admin) {
+		user.admin = false;
+	}
+
 	if (passwordMatch) {
 		// Generate a JWT token for the authenticated user    // Generate a JWT token for the newly registered user
-		const accessToken = generateAccessToken(user.user_id); // Set expiresIn as needed
-		const refreshToken = generateRefreshToken(user.user_id); // Set expiresIn as needed
+		const accessToken = generateAccessToken(user.user_id, user.admin); // Set expiresIn as needed
+		const refreshToken = generateRefreshToken(user.user_id, user.admin); // Set expiresIn as needed
 
 		const encryptedAccessToken = encryptToken(accessToken);
 		const encryptedRefreshToken = encryptToken(refreshToken);
@@ -117,6 +125,7 @@ export const signIn = async (req: Request, res: Response) => {
 interface CustomRequest extends Request {
 	user?: {
 		user_id: number;
+		admin: boolean;
 		iat: string;
 		exp: string;
 	};

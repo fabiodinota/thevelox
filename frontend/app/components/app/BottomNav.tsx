@@ -111,7 +111,10 @@ const BottomNav = () => {
 									: `text-foreground ${iconAnimation}`
 							} delay-100`}
 						>
-							{TicketIcon(activeRoute === "history")}
+							{TicketIcon(
+								activeRoute === "history",
+								"w-6 h-6 xl:w-7 xl:h-7"
+							)}
 						</div>
 						<span
 							className={`leading-none select-none text-[14px] xl:text-[16px] delay-100 ${

@@ -43,7 +43,11 @@ export const refreshJWTToken = async (req: Request, res: Response) => {
 			return res.status(401).json({ message: "User not found" });
 		}
 
-		const accessToken = generateAccessToken(user.user_id);
+		if (!user.admin) {
+			user.admin = false;
+		}
+
+		const accessToken = generateAccessToken(user.user_id, user.admin);
 
 		const encryptedAccessToken = encryptToken(accessToken);
 

@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import { usePathname, useRouter } from "next/navigation";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "sonner";
+import { User } from "../types/types";
 
 export const useSession = () => {
 	const context = useContext(SessionContext);
@@ -15,17 +16,6 @@ export const useSession = () => {
 
 type SessionProviderProps = {
 	children: React.ReactNode;
-};
-
-type User = {
-	user_id: number;
-	full_name: string;
-	birth_date: string;
-	country_code: string;
-	phone_number: string;
-	email: string;
-	password: string;
-	admin: boolean;
 };
 
 // Define a type for the context value
