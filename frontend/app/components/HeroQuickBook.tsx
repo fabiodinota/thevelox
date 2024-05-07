@@ -93,7 +93,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
 	const handleQuickBook = async (data: z.infer<typeof FormSchema>) => {
 		localStorage.setItem("quickBookInfo", JSON.stringify(data));
 
-		router.push("/app/search");
+		router.push("/app");
 	};
 
 	useEffect(() => {
