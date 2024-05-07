@@ -262,7 +262,9 @@ const AppSearchPage = () => {
 
 	useEffect(() => {
 		if (stations.length > 0) {
-			handleQuickBookSearch();
+			setTimeout(() => {
+				handleQuickBookSearch();
+			}, 1000);
 		} else {
 			fetchStations();
 		}
