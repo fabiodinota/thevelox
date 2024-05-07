@@ -261,7 +261,10 @@ const AppSearchPage = () => {
 	};
 
 	useEffect(() => {
-		if (stations.length > 0) {
+		if (
+			stations.length > 0 &&
+			localStorage.getItem("quickBookInfo") !== null
+		) {
 			handleQuickBookSearch();
 		} else {
 			fetchStations();
