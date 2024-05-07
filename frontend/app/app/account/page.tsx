@@ -524,7 +524,11 @@ const AppAccountPage = () => {
 							</p>
 						</div>
 					)}
-					<ThemeSwitcher className="w-full" size="big" />
+					<ThemeSwitcher
+						className="w-full"
+						size="big"
+						animation={false}
+					/>
 					<RippleButton
 						disabled={disabled}
 						type="submit"
