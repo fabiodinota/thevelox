@@ -86,19 +86,21 @@ const page = () => {
 						data-aos-delay="400"
 						ref={firstRef}
 					>
-						<span className="text-gradient text-[24px] md:text-[36px] font-medium leading-tight">
-							2020
-						</span>
-						<h3 className="text-[20px] md:text-[28px] font-bold">
-							Climate Crisis Recognition
-						</h3>
-						<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-							The year 2020 marked a turning point as devastating
-							climate events underscored the critical need for
-							sustainable practices. Governments and industries
-							acknowledged the imperative shift required to
-							protect our planet.
-						</p>
+						<div>
+							<span className="text-gradient text-[24px] md:text-[36px] font-medium leading-tight">
+								2020
+							</span>
+							<h3 className="text-[20px] md:text-[28px] font-bold">
+								Climate Crisis Recognition
+							</h3>
+							<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
+								The year 2020 marked a turning point as
+								devastating climate events underscored the
+								critical need for sustainable practices.
+								Governments and industries acknowledged the
+								imperative shift required to protect our planet.
+							</p>
+						</div>
 					</div>
 					<div
 						data-aos="fade-up"
