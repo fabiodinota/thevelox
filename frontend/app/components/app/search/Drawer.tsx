@@ -108,7 +108,7 @@ const DrawerComponent = ({
 				open={searching || drawerOpen}
 				dismissible={false}
 				direction={isLg ? "bottom" : "left"}
-				snapPoints={isLg ? ["140px", 0.4, 1] : [0, "540px"]}
+				snapPoints={isLg ? ["140px", 0.4, 1] : [0, "520px"]}
 				activeSnapPoint={snap}
 				setActiveSnapPoint={setSnap}
 				modal={false}
@@ -118,21 +118,20 @@ const DrawerComponent = ({
 			>
 				<Drawer.Portal>
 					<Drawer.Content
-						className={`flex flex-col rounded-t-[30px] lg:rounded-r-[30px] focus-visible:!outline-none max-h-[100%] h-full ${
+						className={`flex flex-col rounded-t-[30px] lg:rounded-[30px] focus-visible:!outline-none max-h-[100%] h-full ${
 							isLg
 								? snap === 1
 									? "max-h-full w-full"
 									: snap === 0.4
 									? "max-h-[40%] w-full"
 									: "max-h-[140px] w-full"
-								: `w-[540px] !pt-[380px] h-full`
-						} py-[40px] lg:py-5 duration-300 bg-background fixed right-0 top-0 z-[90] shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]`}
+								: `w-[500px] !top-[380px] lg:h-[calc(100%-400px)]`
+						} py-[20px] lg:py-5 duration-300 bg-background fixed right-0 top-0 z-[90] after:opacity-0 shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]`}
 					>
-						<div className="absolute right-1/2 translate-x-1/2 lg:translate-x-0 top-5 lg:-right-[60px] lg:rotate-90 lg:-translate-y-1/2 lg:top-1/2 px-5 lg:py-10 cursor-pointer">
-							<div className="w-12 h-1 flex-shrink-0 rounded-full bg-zinc-300" />
-						</div>
+						<Drawer.Handle className="w-12 h-1 flex-shrink-0 rounded-full bg-zinc-300 mr-auto lg:!top-1/2 lg:-translate-y-1/2 lg:!-right-10 lg:!rotate-90 lg:!mr-0" />
 						<div
-							className={`p-5 pt-0 rounded-t-[20px]  flex-1 w-full h-full overflow-scroll pb-20 lg:pb-0 noscrollbar  duration-100 ${
+							data-vaul-no-drag
+							className={`p-5 mt-5 lg:mt-0 pt-0 rounded-t-[20px]  flex-1 w-full h-full overflow-scroll pb-24 lg:pb-0 noscrollbar  duration-100 ${
 								snap === "140px" ? "opacity-0" : "opacity-100"
 							}`}
 						>

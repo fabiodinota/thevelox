@@ -87,7 +87,7 @@ const AppSearchPage = () => {
 			}&departureDate=${format(data.departureDate, "PP HH:mm")}`
 		);
 
-		setSnap(isLg ? 0.4 : "540px");
+		setSnap(isLg ? 0.4 : "520px");
 
 		// Fetch the route data
 		if (data.startStation && data.endStation && data.departureDate) {
@@ -193,7 +193,7 @@ const AppSearchPage = () => {
 		if (isLg && searching) {
 			setSnap(0.4);
 		} else if (!isLg && searching) {
-			setSnap("540px");
+			setSnap("520px");
 		} else {
 			setSnap(0);
 		}
