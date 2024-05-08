@@ -450,7 +450,7 @@ const SearchForm = ({
 						whileTap={{ scale: 0.9 }}
 						transition={{ duration: 0.2, type: "spring" }}
 						onClick={handleFavoriteRoute}
-						className="w-min !h-min place-self-end self-center cursor-pointer"
+						className="w-min !h-min place-self-end self-center cursor-pointer p-1"
 					>
 						{HeartIcon(
 							favoriteRoute !== undefined,
