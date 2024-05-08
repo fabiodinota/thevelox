@@ -115,6 +115,7 @@ const DrawerComponent = ({
 				onOpenChange={(open) => {
 					setDrawerOpen(open);
 				}}
+				handleOnly
 			>
 				<Drawer.Portal>
 					<Drawer.Content
@@ -130,7 +131,6 @@ const DrawerComponent = ({
 					>
 						<Drawer.Handle className="w-12 h-1 flex-shrink-0 rounded-full bg-zinc-300 mr-auto lg:!top-1/2 lg:-translate-y-1/2 lg:!-right-10 lg:!rotate-90 lg:!mr-0" />
 						<div
-							data-vaul-no-drag
 							className={`p-5 mt-5 lg:mt-0 pt-0 rounded-t-[20px]  flex-1 w-full h-full overflow-scroll pb-24 lg:pb-0 noscrollbar  duration-100 ${
 								snap === "140px" ? "opacity-0" : "opacity-100"
 							}`}
