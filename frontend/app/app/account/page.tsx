@@ -358,6 +358,7 @@ const AppAccountPage = () => {
 
 		if (success) {
 			router.push("/signin");
+			router.refresh();
 		}
 	};
 

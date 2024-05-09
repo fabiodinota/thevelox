@@ -216,13 +216,13 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 	const signOut = async () => {
 		// Clear the user data and tokens in the state
 		try {
-			const response = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/auth/signout`,
-				{ withCredentials: true }
-			);
+			await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/signout`, {
+				withCredentials: true,
+			});
 
 			setUser(null); // Update the user data in the session context
 			toast.success("Sign-Out successful.");
+			router.refresh();
 			return { success: true, message: "Sign-Out successful." };
 		} catch (error) {
 			let errorMessage = "An unexpected error occurred during sign-out.";
