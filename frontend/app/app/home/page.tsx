@@ -165,7 +165,7 @@ const AppHomePage = () => {
 							);
 						})}
 					</div>
-					<span className="text-[24px] font-bold">
+					<span className="text-[24px] font-bold mt-5">
 						Active Tickets
 					</span>
 					<div className="flex flex-col gap-2.5 lg:gap-5">
