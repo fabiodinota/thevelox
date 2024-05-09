@@ -54,17 +54,12 @@ export function ContactForm({ className }: { className?: string }) {
 	});
 
 	const onSubmit = handleSubmit(async (data) => {
-		// Your submission logic, using data from the form
-		console.log("Form Data: ", data);
-		// Note: Since you're using Zod for validation, data is already validated here
-
 		axios
 			.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/contact/sendContactForm`,
 				data
 			)
 			.then((res) => {
-				console.log("Res: ", res);
 				setContactMessage(
 					"Thank you for your message! We will get back to you soon."
 				);

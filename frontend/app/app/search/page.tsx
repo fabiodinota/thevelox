@@ -207,7 +207,6 @@ const AppSearchPage = () => {
 		const bookingData = JSON.parse(
 			localStorage.getItem("quickBookInfo") || "{}"
 		);
-		console.log("Booking Data Loaded:", bookingData); // Check what is being loaded
 
 		const data = {
 			startStation: bookingData.from,
@@ -246,9 +245,6 @@ const AppSearchPage = () => {
 				shouldValidate: true,
 			});
 
-			console.log(startStation, endStation, departureDate); // Confirm data is correct
-
-			console.log("Initiating search with data:", data); // Confirm data is correct
 			if (data.startStation && data.endStation && data.departureDate) {
 				handleSearch({
 					startStation: data.startStation,

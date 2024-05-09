@@ -49,8 +49,6 @@ const AppHistoryPage = () => {
 		}
 	};
 
-	console.log(ticketHistory);
-
 	useEffect(() => {
 		handleGetTicketHistory();
 	}, []);

@@ -43,8 +43,6 @@ const AppAccountPage = () => {
 
 	const [changes, setChanges] = useState<boolean>(false);
 
-	console.log(changes);
-
 	const [disabled, setDisabled] = useState<boolean>(true);
 
 	const [calendarOpen, setCalendarOpen] = useState(false);
@@ -55,7 +53,6 @@ const AppAccountPage = () => {
 
 	useEffect(() => {
 		if (user) {
-			console.log(user);
 			if (user.full_name || !fullName) {
 				setFullName(user.full_name);
 				setValue("fullName", user.full_name);
@@ -190,7 +187,6 @@ const AppAccountPage = () => {
 					{ withCredentials: true }
 				)
 				.then((response) => {
-					console.log(response.data);
 					toast.success("Account information updated successfully");
 					fetchUserData();
 				})
@@ -223,31 +219,25 @@ const AppAccountPage = () => {
 		};
 
 		if (values.fullName !== userValues.full_name) {
-			console.log("Full name changed");
 			return true;
 		}
 
 		if (values.dateOfBirth !== userValues.birth_date) {
-			console.log("Date of birth changed");
 			return true;
 		}
 
 		if (values.countryCode !== userValues.country_code) {
-			console.log("Country code changed");
 			return true;
 		}
 
 		if (values.phoneNumber !== userValues.phone_number) {
-			console.log("Phone number changed");
 			return true;
 		}
 
 		if (values.email !== userValues.email) {
-			console.log("Email changed");
 			return true;
 		}
 
-		console.log("No changes");
 		return false;
 	}, [getValues, user]);
 

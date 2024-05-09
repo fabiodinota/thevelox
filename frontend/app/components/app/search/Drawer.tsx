@@ -78,7 +78,6 @@ const DrawerComponent = ({
 	const router = useRouter();
 
 	const handleBuyTicket = async () => {
-		console.log("Buying ticket", activeTicket, activePaymentMethod);
 		axios
 			.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/ticket/buyTicket`,

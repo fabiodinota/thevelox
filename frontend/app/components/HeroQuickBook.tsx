@@ -101,10 +101,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
 	}, []);
 
 	const onSubmit = handleSubmit(async (data) => {
-		// Your submission logic, using data from the form
-		console.log("Form Data: ", data);
 		handleQuickBook(data);
-		// Note: Since you're using Zod for validation, data is already validated here
 	});
 
 	const handleDateChange = (newDate: Date | undefined) => {
@@ -116,7 +113,6 @@ export function HeroQuickBook({ className }: { className?: string }) {
 			newDate.setHours(hours, minutes);
 		}
 
-		// If the new date is in the past, don't update the state
 		if (newDate > new Date(new Date())) {
 			setDate(newDate);
 		}

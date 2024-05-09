@@ -41,8 +41,6 @@ const AdminPage = () => {
 		handleGetAllUsers();
 	}, []);
 
-	console.log(users);
-
 	const handleViewUserTickets = async (user_id: number) => {
 		const user = users.find((user) => user.user_id === user_id);
 		setActiveUser(user);
@@ -57,12 +55,10 @@ const AdminPage = () => {
 				withCredentials: true,
 			})
 			.then((res) => {
-				console.log(res.data);
 				toast.success("User deleted successfully");
 				handleGetAllUsers();
 			})
 			.catch((err) => {
-				console.log(err);
 				toast.error("Error deleting user");
 			});
 	};

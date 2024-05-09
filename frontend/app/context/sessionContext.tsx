@@ -206,7 +206,6 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 			} else {
 				errorMessage = axiosError.message || errorMessage;
 			}
-			console.log(errorMessage);
 			toast.error(errorMessage);
 			return { success: false, message: errorMessage };
 		}
@@ -238,7 +237,6 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 			} else {
 				errorMessage = axiosError.message || errorMessage;
 			}
-			console.log(errorMessage);
 			toast.error(errorMessage);
 			return { success: false, message: errorMessage };
 		}

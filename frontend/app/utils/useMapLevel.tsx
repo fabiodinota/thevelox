@@ -21,7 +21,6 @@ const useMapLevel = () => {
 		}
 	};
 
-	console.log("level", level);
 	const increase = () => {
 		setSlideDirection("right");
 		if (level < minMax.max) {

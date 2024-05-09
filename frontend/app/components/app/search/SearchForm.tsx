@@ -129,7 +129,6 @@ const SearchForm = ({
 					withCredentials: true,
 				}
 			);
-			console.log("Favorite routes fetched:", response.data); // Debug: See what you get here
 			return response.data;
 		} catch (error) {
 			console.error("Failed to fetch favorite routes", error);
@@ -161,7 +160,6 @@ const SearchForm = ({
 		);
 		if (favorite) {
 			setFavoriteRoute(favorite.favorite_id); // Ensure this function exists and works as expected
-			console.log("Route is favorite, ID:", favorite.favorite_id); // Debug output
 		} else {
 			console.log("Route is not a favorite."); // Debug output
 		}
