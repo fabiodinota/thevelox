@@ -148,8 +148,20 @@ export const verifyToken = async (req: CustomRequest, res: Response) => {
 };
 
 export const signOut = async (req: Request, res: Response) => {
-	res.clearCookie("accessToken");
-	res.clearCookie("refreshToken");
+	res.cookie("accessToken", "", {
+		httpOnly: true,
+		secure: true,
+		sameSite: "strict",
+		domain: process.env.COOKIE_DOMAIN,
+		expires: new Date(Date.now() + 1000 * 60 * 15), // 15 mins
+	});
+	res.cookie("refreshToken", "", {
+		httpOnly: true,
+		secure: true,
+		sameSite: "strict",
+		domain: process.env.COOKIE_DOMAIN,
+		expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
+	});
 
 	res.send({ message: "User has been signed out" });
 };
