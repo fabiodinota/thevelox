@@ -88,6 +88,10 @@ select:-webkit-autofill:focus {
 	background-color: red;
 }
 
+[vaul-handle-hitarea] {
+	width: 100vw !important;
+}
+
 @layer base {
 	* {
 		@apply border-border;

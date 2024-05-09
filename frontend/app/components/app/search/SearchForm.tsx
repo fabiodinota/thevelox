@@ -257,6 +257,7 @@ const SearchForm = ({
 						</svg>
 					}
 					defaultValue={searching ? startStation.label : ""}
+					setExternalSuggestion={searching ? startStation.label : ""}
 					suggestions={stations} // Assuming stations is an array of objects
 					onSelectionChange={(value) =>
 						setValue("startStation", value, {
@@ -290,6 +291,7 @@ const SearchForm = ({
 						</svg>
 					}
 					defaultValue={searching ? endStation.label : ""}
+					setExternalSuggestion={searching ? endStation.label : ""}
 					suggestions={stations} // Assuming stations is an array of object'
 					onSelectionChange={(value) => {
 						setValue("endStation", value, {

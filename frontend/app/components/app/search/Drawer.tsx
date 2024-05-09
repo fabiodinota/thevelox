@@ -42,7 +42,6 @@ const DrawerComponent = ({
 	activeTicket,
 	setActiveTicket,
 }: DrawerComponentProps) => {
-	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 	const [stage, setStage] = useState<
 		| "browseTicketsStage"
 		| "moreInfoTicketStage"
@@ -104,16 +103,13 @@ const DrawerComponent = ({
 		<>
 			<Drawer.Root
 				shouldScaleBackground
-				open={searching || drawerOpen}
+				open={searching}
 				dismissible={false}
 				direction={isLg ? "bottom" : "left"}
 				snapPoints={isLg ? ["140px", 0.4, 1] : [0, "520px"]}
 				activeSnapPoint={snap}
 				setActiveSnapPoint={setSnap}
 				modal={false}
-				onOpenChange={(open) => {
-					setDrawerOpen(open);
-				}}
 				handleOnly
 			>
 				<Drawer.Portal>
@@ -128,7 +124,7 @@ const DrawerComponent = ({
 								: `w-[500px] !top-[380px] lg:h-[calc(100%-400px)]`
 						} py-[20px] lg:py-5 duration-300 bg-background fixed right-0 top-0 z-[90] after:opacity-0 shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]`}
 					>
-						<Drawer.Handle className="w-12 h-1 flex-shrink-0 rounded-full bg-zinc-300 mr-auto lg:!top-1/2 lg:-translate-y-1/2 lg:!-right-10 lg:!rotate-90 lg:!mr-0" />
+						<Drawer.Handle className="w-full flex-shrink-0 rounded-full bg-zinc-300 mr-auto lg:!top-1/2 lg:-translate-y-1/2 lg:!-right-10 lg:!rotate-90 lg:!mr-0" />
 						<div
 							className={`p-5 mt-5 lg:mt-0 pt-0 rounded-t-[20px]  flex-1 w-full h-full overflow-scroll pb-24 lg:pb-0 noscrollbar  duration-100 ${
 								snap === "140px" ? "opacity-0" : "opacity-100"
