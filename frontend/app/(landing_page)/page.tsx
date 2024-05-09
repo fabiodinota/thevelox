@@ -148,6 +148,7 @@ export default function Home() {
 						asLink
 						href="/signup"
 						style="gradient"
+						prefetch={false}
 						className="max-w-[400px] w-full h-[60px]"
 					>
 						<span className="text-[16px] md:text-[18px] font-medium">

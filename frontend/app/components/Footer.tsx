@@ -15,9 +15,10 @@ const Footer = () => {
 					Book Your Journey in Seconds!
 				</h1>
 				<RippleButton
-					/* 	asLink
-					href="/signup" */
+					asLink
+					href="/signup"
 					style="nofill"
+					prefetch={false}
 					className="w-full max-w-[400px] bg-white"
 					rippleColor="#00000010"
 				>

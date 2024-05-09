@@ -126,6 +126,7 @@ const Navbar = () => {
 								asLink
 								href="/signup"
 								style="gradient"
+								prefetch={false}
 								className="w-[220px] !h-[50px]"
 							>
 								Launch App
@@ -259,6 +260,7 @@ const Navbar = () => {
 								<Link
 									className="text-gradient nav-item-mobile hover:text-foreground/80 duration-100 text-[42px] xs:text-[50px] sm:text-[60px] w-full text-left"
 									href="/signup"
+									prefetch={false}
 								>
 									<motion.span className="pl-5">
 										4. Launch App
