@@ -55,6 +55,8 @@ export const Map = ({
 		lines: string[];
 	};
 
+	console.log(searchReqData);
+
 	const { path, lines } = searchReqData;
 
 	const [drawingEdges, setDrawingEdges] = useState<Element[]>([]);
@@ -86,13 +88,20 @@ export const Map = ({
 			});
 			stations.forEach((station) => {
 				station?.classList.add("saturate-0");
-				station?.id === searchReqData.startStation &&
+				station?.setAttribute("filter", "url(#saturateFilter)");
+				if (station?.id === searchReqData.startStation) {
 					station?.classList.remove("saturate-0");
-				station?.id === searchReqData.endStation &&
+					station?.removeAttribute("filter");
+				}
+				if (station?.id === searchReqData.endStation) {
 					station?.classList.remove("saturate-0");
+					station?.removeAttribute("filter");
+				}
 				for (let i = 0; i < path?.length; i++) {
-					station?.id === path[i] &&
+					if (station?.id === path[i]) {
 						station?.classList.remove("saturate-0");
+						station?.removeAttribute("filter");
+					}
 				}
 			});
 			numberTags.forEach((numberTag) => {
@@ -117,6 +126,7 @@ export const Map = ({
 			});
 			stations.forEach((station) => {
 				station?.classList.remove("saturate-0");
+				station?.removeAttribute("filter");
 			});
 
 			numberTags.forEach((numberTag) => {
@@ -196,6 +206,14 @@ export const Map = ({
 							fill="none"
 							xmlns="http://www.w3.org/2000/svg"
 						>
+							<defs>
+								<filter
+									id="saturateFilter"
+									colorInterpolationFilters="sRGB"
+								>
+									<feColorMatrix type="saturate" values="0" />
+								</filter>
+							</defs>
 							<AnimatePresence mode="popLayout">
 								{level === 0 && (
 									<motion.g

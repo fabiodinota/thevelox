@@ -260,7 +260,7 @@ const AppSearchPage = () => {
 		if (stations.length > 0) {
 			setTimeout(() => {
 				handleQuickBookSearch();
-			}, 1000);
+			}, 500);
 		} else {
 			fetchStations();
 		}
