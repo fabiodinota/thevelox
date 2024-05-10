@@ -87,28 +87,25 @@ export const Map = ({
 				}
 			});
 			stations.forEach((station) => {
-				station?.classList.add("saturate-0");
 				station?.setAttribute("filter", "url(#saturateFilter)");
 				if (station?.id === searchReqData.startStation) {
-					station?.classList.remove("saturate-0");
 					station?.removeAttribute("filter");
 				}
 				if (station?.id === searchReqData.endStation) {
-					station?.classList.remove("saturate-0");
 					station?.removeAttribute("filter");
 				}
 				for (let i = 0; i < path?.length; i++) {
 					if (station?.id === path[i]) {
-						station?.classList.remove("saturate-0");
 						station?.removeAttribute("filter");
 					}
 				}
 			});
 			numberTags.forEach((numberTag) => {
-				numberTag?.classList.add("saturate-0");
+				numberTag?.setAttribute("filter", "url(#saturateFilter)");
 				for (let i = 0; i < path?.length; i++) {
-					numberTag?.id === path[i] &&
-						numberTag?.classList.remove("saturate-0");
+					if (numberTag?.id === path[i]) {
+						numberTag?.removeAttribute("filter");
+					}
 				}
 			});
 		}
@@ -125,12 +122,11 @@ export const Map = ({
 				edge?.classList.remove("brightness-50");
 			});
 			stations.forEach((station) => {
-				station?.classList.remove("saturate-0");
 				station?.removeAttribute("filter");
 			});
 
 			numberTags.forEach((numberTag) => {
-				numberTag?.classList.remove("saturate-0");
+				numberTag?.removeAttribute("filter");
 			});
 			setDrawingEdges([]);
 		}
