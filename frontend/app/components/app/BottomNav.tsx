@@ -41,7 +41,7 @@ const BottomNav = () => {
 			}
 		>
 			<div className="w-full lg:max-w-[600px] group flex justify-center items-center h-[80px] xl:h-[90px] rounded-[20px] bg-background/70 dark:bg-background back backdrop-blur-2xl xl:bg-background shadow-[0_0_35px_0_#00000010] dark:shadow-[0_0_35px_0_#FFFFFF10]  xl:shadow-[0_0_35px_0_#84848420] xl:dark:shadow-[0_0_35px_0_#FFFFFF06]">
-				<div className="w-full flex flex-row px-2.5 md:px-10 py-2.5 gap-0 justify-evenly xl:justify-center xl:gap-10 items-center">
+				<div className="w-full flex flex-row px-2.5 md:px-10 py-2.5 gap-0 justify-evenly xl:justify-between xl:px-2.5 items-center">
 					<RippleButton
 						onClick={() => setActiveRoute("home")}
 						asLink
