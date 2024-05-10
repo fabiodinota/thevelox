@@ -353,7 +353,7 @@ const AppAccountPage = () => {
 	};
 
 	return (
-		<>
+		<div className="pb-[140px] pt-[70px]">
 			<Header />
 			<div className="w-full h-full flex justify-center items-center mt-10">
 				<form
@@ -545,7 +545,7 @@ const AppAccountPage = () => {
 					</RippleButton>
 				</form>
 			</div>
-		</>
+		</div>
 	);
 };
 

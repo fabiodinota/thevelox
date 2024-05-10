@@ -64,7 +64,7 @@ const AdminPage = () => {
 	};
 
 	return (
-		<>
+		<div className="pb-[140px] pt-[70px]">
 			<Header />
 			<div className="w-full h-full flex justify-center items-center flex-col mt-10 gap-5">
 				<div className="max-w-[800px] w-full flex flex-col gap-3 px-5">
@@ -121,7 +121,7 @@ const AdminPage = () => {
 					)}
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 

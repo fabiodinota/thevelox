@@ -296,7 +296,7 @@ const AppSearchPage = () => {
 	};
 
 	return (
-		<div className="w-full h-full overflow-hidden relative flex items-center justify-center">
+		<div className="w-full h-screen overflow-hidden relative flex items-center justify-center">
 			<div
 				className={`absolute top-5 z-[80] lg:z-[100] w-full px-5 flex justify-start items-center`}
 			>

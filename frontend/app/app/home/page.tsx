@@ -134,7 +134,7 @@ const AppHomePage = () => {
 	};
 
 	return (
-		<>
+		<div className="pb-[140px] pt-[70px]">
 			<Header />
 			<div className="w-full h-full flex justify-start mt-10 items-center flex-col px-5">
 				<div className="max-w-[800px] w-full flex flex-col gap-3">
@@ -195,7 +195,7 @@ const AppHomePage = () => {
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 
