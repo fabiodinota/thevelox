@@ -83,7 +83,7 @@ export function ContactForm({ className }: { className?: string }) {
 				transition={{ duration: 0.4, ease: customease, delay: 0 }}
 				onSubmit={onSubmit}
 				className={
-					"w-full max-w-[1400px] flex flex-col gap-2.5 p-5 rounded-[20px] bg-background " +
+					"w-full max-w-[1400px] flex flex-col gap-2.5 rounded-[20px]" +
 					className
 				}
 			>
