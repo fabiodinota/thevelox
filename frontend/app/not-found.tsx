@@ -5,7 +5,7 @@ import RippleButton from "./components/RippleButton";
 
 export default function NotFound() {
 	return (
-		<main className="flex h-[100dvh] flex-col items-center justify-center bg-white px-4 dark:bg-gray-950">
+		<main className="flex h-[100dvh] flex-col items-center justify-center">
 			<div className="space-y-4 text-center">
 				<h1 className="text-9xl font-bold tracking-tighter text-foreground">
 					404
