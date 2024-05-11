@@ -112,7 +112,6 @@ export default function Home() {
 						<ReactPlayer
 							onProgress={(e) => setPlayed(e.played)}
 							playing={isPlaying}
-							loop
 							url={
 								"https://storage.thevelox.co/commercial_fase3_fabiodinota.mp4"
 							}
