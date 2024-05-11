@@ -114,11 +114,11 @@ export default function Home() {
 							playing={isPlaying}
 							loop
 							url={
-								"https://storage.thevelox.co/moodboard_video_fabiodinota.mp4"
+								"https://storage.thevelox.co/commercial_fase3_fabiodinota.mp4"
 							}
 							light={
 								<img
-									src="https://storage.thevelox.co/0067.png"
+									src="https://storage.thevelox.co/3D_0491_fabiodinota.png"
 									alt="Thumbnail"
 									className="w-full h-full object-cover aspect-video relative"
 								/>
@@ -190,7 +190,7 @@ export default function Home() {
 							className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center overflow-hidden aos-init"
 						>
 							<img
-								src="https://storage.thevelox.co/0476.png"
+								src="https://storage.thevelox.co/3D_0416_fabiodinota.png"
 								alt="Thumbnail"
 								className="w-full h-full object-cover aspect-video"
 							/>
@@ -205,7 +205,7 @@ export default function Home() {
 							className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center overflow-hidden aos-init"
 						>
 							<img
-								src="https://storage.thevelox.co/0741.png"
+								src="https://storage.thevelox.co/3D_0657_fabiodinota.png"
 								alt="Thumbnail"
 								className="w-full h-full object-cover aspect-video"
 							/>
