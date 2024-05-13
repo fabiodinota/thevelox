@@ -156,16 +156,16 @@ export default function Home() {
 								The best transport solution to date.
 							</h1>
 							<p className="text-foreground text-[16px] md:text-[18px] font-normal leading-relaxed">
-								The Velox represents the pinnacle of modern
-								transportation solutions in New Atlantis,
-								blending efficiency, sustainability, and
-								innovation. As the first fully underwater
-								transit system, it not only meets the unique
-								demands of an aquatic environment but also sets
-								new standards for eco-friendly travel. With its
-								commitment to carbon neutrality and flawless
-								service, The Velox offers a futuristic yet
-								responsible solution for city-wide mobility.
+								The Velox was founded to play an essential role
+								in everyday life, where transportation is
+								crucial for work and leisure. We excel in the
+								three main categories of transportation:
+								affordability, reliability and accessibility,
+								and have added sustainability as our fourth core
+								value. This results in carbon-neutral and
+								environmentally friendly transportation
+								solutions that highlight our commitment to the
+								environment.
 							</p>
 						</div>
 						<div
@@ -207,17 +207,14 @@ export default function Home() {
 								Next-Generation Public Transport Booking App
 							</h1>
 							<p className="text-foreground text-[16px] md:text-[18px] font-normal leading-relaxed">
-								Our next-generation booking app for The Velox
-								transforms the way you travel by integrating
-								cutting-edge technology with user-friendly
-								design. The app allows for seamless ticket
-								purchasing, real-time updates, and customizable
-								travel notifications, making it indispensable
-								for daily commuters and occasional visitors
-								alike. With features designed to enhance user
-								experience and streamline public transport
-								logistics, our app ensures that booking a ride
-								on The Velox is as effortless as it is reliable.
+								Discover the future of public transportation
+								with The Velox's next-generation booking app,
+								where convenience and efficiency are paramount.
+								Our app seamlessly integrates with all levels of
+								accessibility, reliability and sustainability,
+								making every trip smooth. Book your next trip
+								with one click and experience how easy and fast
+								public transportation in New Atlantis can be.
 							</p>
 						</div>
 					</div>

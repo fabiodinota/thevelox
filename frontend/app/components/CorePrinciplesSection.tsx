@@ -125,11 +125,11 @@ const CorePrinciplesSection = () => {
 							1. Affordability
 						</h1>
 						<p className="text-[16px] md:text-[18px] font-light leading-relaxed">
-							The Velox offers low-cost fares, making
-							transportation affordable and inclusive. This
-							approach enables all residents and visitors to
-							explore the city, ensuring accessible mobility
-							across the underwater metropolis.
+							At The Velox, affordability is key, making
+							sustainable transportation accessible to everyone.
+							We ensure that environmentally friendly travel
+							remains a viable option for all New Atlantis
+							residents.
 						</p>
 					</div>
 				</div>
@@ -190,10 +190,11 @@ const CorePrinciplesSection = () => {
 							2. Reliability
 						</h1>
 						<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-							Engineered for flawless operation in an underwater
-							city, The Velox provides punctual transportation
-							across all districts of New Atlantis. Residents can
-							consistently rely on The Velox for timely travel.
+							The Velox is committed to reliability in public
+							transportation, always providing punctual and
+							efficient service. Our commitment ensures that you
+							can always count on us, which is essential to daily
+							life in New Atlantis.
 						</p>
 					</div>
 				</div>
@@ -254,11 +255,11 @@ const CorePrinciplesSection = () => {
 							3. Accessibility
 						</h1>
 						<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-							The Velox prioritizes accessibility, catering to
-							everyone including the elderly and disabled with
-							features like easy access ramps and priority
-							seating. This design ensures smooth mobility across
-							New Atlantis for all community members.
+							Accessibility is crucial at The Velox, where our
+							transportation is designed to be user-friendly for
+							everyone, regardless of age or mobility impairment.
+							This keeps every corner of New Atlantis accessible
+							to all residents.
 						</p>
 					</div>
 				</div>
@@ -318,11 +319,11 @@ const CorePrinciplesSection = () => {
 							4. Sustainability
 						</h1>
 						<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-							The Velox embodies sustainability, utilizing
-							carbon-neutral technologies and practices that align
-							with New Atlantis' environmental goals. It sets a
-							high standard in eco-friendly public transportation,
-							protecting our underwater environment.
+							Sustainability is crucial to The Velox, with our
+							commitment to carbon-neutral transportation
+							solutions that protect the environment. In this way,
+							New Atlantis remains at the forefront of
+							environmental responsibility.
 						</p>
 					</div>
 				</div>

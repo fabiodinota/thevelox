@@ -51,17 +51,14 @@ const page = () => {
 							Next-Generation Public Transport Booking App
 						</h1>
 						<p className="text-foreground text-[16px] md:text-[18px] font-normal leading-relaxed">
-							Our next-generation booking app for The Velox
-							transforms the way you travel by integrating
-							cutting-edge technology with user-friendly design.
-							The app allows for seamless ticket purchasing,
-							real-time updates, and customizable travel
-							notifications, making it indispensable for daily
-							commuters and occasional visitors alike. With
-							features designed to enhance user experience and
-							streamline public transport logistics, our app
-							ensures that booking a ride on The Velox is as
-							effortless as it is reliable.
+							Discover the future of public transportation with
+							The Velox's next-generation booking app, where
+							convenience and efficiency are paramount. Our app
+							seamlessly integrates with all levels of
+							accessibility, reliability and sustainability,
+							making every trip smooth. Book your next trip with
+							one click and experience how easy and fast public
+							transportation in New Atlantis can be.
 						</p>
 					</div>
 				</div>
@@ -285,14 +282,11 @@ const page = () => {
 									1. Affordability
 								</h1>
 								<p className="text-[16px] md:text-[18px] font-light leading-relaxed">
-									In New Atlantis, The Velox ensures that
-									transportation is economical and inclusive
-									for all its residents. Offering low-cost
-									fares, it allows everyone to explore the
-									city without financial burden. This
-									affordability strategy ensures that mobility
-									within our underwater city remains
-									accessible to every resident and visitor.
+									At The Velox, affordability is key, making
+									sustainable transportation accessible to
+									everyone. We ensure that environmentally
+									friendly travel remains a viable option for
+									all New Atlantis residents.
 								</p>
 							</div>
 						</div>
@@ -359,14 +353,12 @@ const page = () => {
 									2. Reliability
 								</h1>
 								<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-									The Velox is engineered for flawless
-									operation under the unique environmental
-									conditions of an underwater city. With a
-									commitment to punctuality, it provides
-									dependable transportation services across
-									all districts of New Atlantis. Residents can
-									rely on The Velox for consistent and timely
-									travel throughout the city.
+									The Velox is committed to reliability in
+									public transportation, always providing
+									punctual and efficient service. Our
+									commitment ensures that you can always count
+									on us, which is essential to daily life in
+									New Atlantis.
 								</p>
 							</div>
 						</div>
@@ -434,15 +426,12 @@ const page = () => {
 									3. Accessibility
 								</h1>
 								<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-									The Velox is designed with accessibility at
-									its core, catering to the needs of all
-									individuals including the elderly and
-									disabled. Features like easy access ramps,
-									priority seating, and intuitive service
-									interfaces ensure that everyone can navigate
-									New Atlantis with ease. This approach makes
-									city-wide mobility smooth and hassle-free
-									for every community member.
+									Accessibility is crucial at The Velox, where
+									our transportation is designed to be
+									user-friendly for everyone, regardless of
+									age or mobility impairment. This keeps every
+									corner of New Atlantis accessible to all
+									residents.
 								</p>
 							</div>
 						</div>
@@ -510,15 +499,12 @@ const page = () => {
 									4. Sustainability
 								</h1>
 								<p className="text-[16px] md:text-[18px] font-normal leading-relaxed">
-									Sustainability drives every aspect of The
-									Velox, aligning with New Atlantis’
-									commitment to environmental stewardship. As
-									a carbon-neutral service, it utilizes green
-									technologies and practices to minimize
-									ecological impact. The Velox sets a standard
-									in sustainable public transportation,
-									preserving the integrity of our underwater
-									environment.
+									Sustainability is crucial to The Velox, with
+									our commitment to carbon-neutral
+									transportation solutions that protect the
+									environment. In this way, New Atlantis
+									remains at the forefront of environmental
+									responsibility.
 								</p>
 							</div>
 						</div>
