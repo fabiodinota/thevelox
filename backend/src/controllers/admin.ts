@@ -112,3 +112,32 @@ export const deleteUser = async (req: CustomRequest, res: Response) => {
 		res.status(500).json({ message: "Internal server error" });
 	}
 };
+
+export const deleteTicket = async (req: CustomRequest, res: Response) => {
+	const admin = req.user?.admin;
+
+	const { ticket_id }: { ticket_id: number } = req.body;
+
+	if (!admin) {
+		return res.status(403).json({ message: "Unauthorized" });
+	}
+
+	if (!ticket_id) {
+		return res
+			.status(400)
+			.json({ message: "Ticket ID is required to delete." });
+	}
+
+	try {
+		await prisma.tickets.delete({
+			where: {
+				ticket_id: ticket_id,
+			},
+		});
+
+		res.status(200).json({ message: "Ticket deleted successfully" });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};

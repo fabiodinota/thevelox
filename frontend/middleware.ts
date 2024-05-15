@@ -1,5 +1,8 @@
+"use server";
+
 import axios from "axios";
 import { NextResponse, NextRequest } from "next/server";
+import Cookies from "js-cookie";
 
 async function validateToken(accessToken: string) {
 	try {
@@ -20,6 +23,21 @@ async function validateToken(accessToken: string) {
 	}
 }
 
+const getIPInfo = async (ip: string) => {
+	try {
+		const data = await fetch(`http://ip-api.com/json/${ip}`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+
+		return await data.json();
+	} catch (error: any) {
+		console.error("Error getting IP info:", error.message);
+	}
+};
+
 type User = {
 	user_id: number;
 	full_name: string;
@@ -34,6 +52,16 @@ type User = {
 
 export async function middleware(request: NextRequest) {
 	const accessToken = request.cookies.get("accessToken")?.value ?? "";
+
+	getIPInfo(request.ip || request.headers.get("X-Forwarded-For") || "").then(
+		(data) => {
+			Cookies.set("timezone", data?.timezone, {
+				path: process.env.NEXT_PUBLIC_ORIGIN,
+				sameSite: "strict",
+				expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
+			});
+		}
+	);
 
 	let user: User | null = null;
 	if (accessToken !== "") {

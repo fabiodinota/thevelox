@@ -3,15 +3,23 @@
 import RippleButton from "@/app/components/RippleButton";
 import Header from "@/app/components/app/Header";
 import UserView from "@/app/components/app/admin/userView";
-import { MainTicket } from "@/app/components/app/search/Ticket";
+import {
+	AdminViewTicket,
+	ExpandedTicket,
+	MainTicket,
+} from "@/app/components/app/search/Ticket";
 import { useSession } from "@/app/context/sessionContext";
 import {
-	ParsedTicketResponse,
+	ISearchReqData,
+	Station,
 	Ticket,
 	TicketResponse,
 	User,
 } from "@/app/types/types";
+import useStationData from "@/app/utils/useStationData";
 import axios from "axios";
+import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -24,6 +32,66 @@ const AdminPage = () => {
 	const [activeUser, setActiveUser] = useState<UserInfo | undefined>(
 		undefined
 	);
+	const [activeTicket, setActiveTicket] = useState<
+		TicketResponse | undefined
+	>(undefined);
+
+	const [searchReqData, setSearchReqData] = useState<ISearchReqData | {}>({});
+
+	const { stations } = useStationData();
+
+	const router = useRouter();
+
+	useEffect(() => {
+		const fetchData = async () => {
+			if (activeTicket) {
+				const ticketObject: Ticket = JSON.parse(
+					activeTicket.ticket_object
+				);
+				if (!ticketObject) {
+					return;
+				}
+
+				const adjustedDate = new Date(ticketObject.departureTime);
+				adjustedDate.setTime(
+					adjustedDate.getTime() +
+						adjustedDate.getTimezoneOffset() * 60 * 1000
+				); // Adjust for local timezone
+
+				const res = await axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/map/search?startStation=${ticketObject.startStation}&endStation=${ticketObject.endStation}&departureDate=${adjustedDate}`,
+					{ withCredentials: true }
+				);
+
+				let fullPath: Station[] = [];
+
+				res.data?.path.forEach((pathStation: string) => {
+					stations.some((station: Station) => {
+						if (station.name === pathStation) {
+							fullPath.push(station);
+						}
+					});
+				});
+
+				setSearchReqData({
+					startStation: res.data?.startStation || "",
+					endStation: res.data?.endStation || "",
+					startLevel: res.data?.tickets[0].startLevel || 0,
+					endLevel: res.data?.tickets[0].endLevel || 0,
+					lines: res.data?.lines || [],
+					path: res.data?.path || [],
+					fullPath: fullPath,
+					times: res.data?.trainTimes || [],
+					tickets: res.data?.tickets || [],
+				});
+			} else {
+				setSearchReqData({});
+			}
+		};
+
+		fetchData();
+	}, [activeTicket]);
+
 	const handleGetAllUsers = async () => {
 		axios
 			.get(`${process.env.NEXT_PUBLIC_API_URL}/admin/getAllUsers`, {
@@ -56,10 +124,47 @@ const AdminPage = () => {
 			})
 			.then((res) => {
 				toast.success("User deleted successfully");
+				setUsers([]);
 				handleGetAllUsers();
 			})
 			.catch((err) => {
 				toast.error("Error deleting user");
+			});
+	};
+
+	const handleDeleteTicket = async (ticket_id: number) => {
+		await axios
+			.delete(`${process.env.NEXT_PUBLIC_API_URL}/admin/deleteTicket`, {
+				data: {
+					ticket_id,
+				},
+				withCredentials: true,
+			})
+			.then((res) => {
+				toast.success("Ticket deleted successfully");
+				setActiveTicket(undefined);
+
+				setUsers((prevUsers) =>
+					prevUsers.map((user) => ({
+						...user,
+						tickets: user.tickets.filter(
+							(ticket) => ticket.ticket_id !== ticket_id
+						),
+					}))
+				);
+
+				setActiveUser((prevActiveUser) => {
+					if (!prevActiveUser) return undefined;
+					return {
+						...prevActiveUser,
+						tickets: prevActiveUser.tickets.filter(
+							(ticket) => ticket.ticket_id !== ticket_id
+						),
+					};
+				});
+			})
+			.catch((err) => {
+				toast.error("Error deleting ticket.");
 			});
 	};
 
@@ -84,6 +189,47 @@ const AdminPage = () => {
 								/>
 							))}
 						</>
+					) : activeTicket ? (
+						(() => {
+							const ticketObject: Ticket = JSON.parse(
+								activeTicket.ticket_object
+							);
+							if (!ticketObject) {
+								return null;
+							}
+							return (
+								<>
+									<div className="w-full justify-between items-center flex flex-row mt-5">
+										<span className="text-[24px] font-bold">
+											Ticket Details
+										</span>
+										<button
+											onClick={() =>
+												setActiveTicket(undefined)
+											}
+										>
+											Back
+										</button>
+									</div>
+									<AdminViewTicket
+										key={
+											ticketObject.startStation +
+											ticketObject.endStation
+										}
+										ticket={ticketObject}
+										searchReqData={searchReqData}
+										handleBack={() =>
+											setActiveTicket(undefined)
+										}
+										handleDeleteTicket={() => {
+											handleDeleteTicket(
+												activeTicket.ticket_id
+											);
+										}}
+									/>
+								</>
+							);
+						})()
 					) : (
 						<>
 							<div className="w-full justify-between items-center flex flex-row mt-5">
@@ -111,6 +257,9 @@ const AdminPage = () => {
 								return (
 									<div key={ticket.ticket_id}>
 										<MainTicket
+											onClick={() => {
+												setActiveTicket(ticket);
+											}}
 											journeyDate={ticket.journey_date}
 											ticket={ticketObject}
 										/>

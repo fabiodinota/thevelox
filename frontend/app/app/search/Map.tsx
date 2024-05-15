@@ -55,8 +55,6 @@ export const Map = ({
 		lines: string[];
 	};
 
-	console.log(searchReqData);
-
 	const { path, lines } = searchReqData;
 
 	const [drawingEdges, setDrawingEdges] = useState<Element[]>([]);
