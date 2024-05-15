@@ -23,21 +23,6 @@ async function validateToken(accessToken: string) {
 	}
 }
 
-const getIPInfo = async (ip: string) => {
-	try {
-		const data = await fetch(`http://ip-api.com/json/${ip}`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-
-		return await data.json();
-	} catch (error: any) {
-		console.error("Error getting IP info:", error.message);
-	}
-};
-
 type User = {
 	user_id: number;
 	full_name: string;
@@ -53,10 +38,6 @@ type User = {
 export async function middleware(request: NextRequest) {
 	const accessToken = request.cookies.get("accessToken")?.value ?? "";
 
-	const IPInfo = getIPInfo(
-		request.ip || request.headers.get("X-Forwarded-For") || ""
-	);
-
 	let user: User | null = null;
 	if (accessToken !== "") {
 		user = await validateToken(accessToken);
@@ -64,63 +45,31 @@ export async function middleware(request: NextRequest) {
 
 	if (user?.user_id) {
 		if (["/signin", "/signup", "/app"].includes(request.nextUrl.pathname)) {
-			const response = NextResponse.redirect(
-				new URL("/app/search", request.url)
-			);
-			response.headers.set("timezone", JSON.stringify(IPInfo));
-			return response;
+			return NextResponse.redirect(new URL("/app/search", request.url));
 		}
 		if (
 			request.nextUrl.pathname.startsWith("/app/admin") &&
 			user.admin === false
 		) {
-			const response = NextResponse.redirect(
-				new URL("/app/search", request.url)
-			);
-			response.headers.set("timezone", JSON.stringify(IPInfo));
-			return response;
+			return NextResponse.redirect(new URL("/app/search", request.url));
 		}
 
-		const response = NextResponse.next();
-
-		response.headers.set("timezone", JSON.stringify(IPInfo));
-
-		return response;
+		return NextResponse.next();
 	} else if (user && user.admin === true) {
 		console.log("User is an admin:", user);
 		if (request.nextUrl.pathname === "/app/admin") {
-			const response = NextResponse.next();
-
-			response.headers.set("timezone", JSON.stringify(IPInfo));
-
-			return response;
+			return NextResponse.next();
 		} else {
-			const response = NextResponse.redirect(
-				new URL("/app/search", request.url)
-			);
-			response.headers.set("timezone", JSON.stringify(IPInfo));
-			return response;
+			return NextResponse.redirect(new URL("/app/search", request.url));
 		}
 	} else if (user === null) {
 		if (request.nextUrl.pathname === "/app/admin") {
-			const response = NextResponse.redirect(
-				new URL("/signin", request.url)
-			);
-			response.headers.set("timezone", JSON.stringify(IPInfo));
-			return response;
+			return NextResponse.redirect(new URL("/signin", request.url));
 		}
 		if (request.nextUrl.pathname.startsWith("/app")) {
-			const response = NextResponse.redirect(
-				new URL("/signin", request.url)
-			);
-			response.headers.set("timezone", JSON.stringify(IPInfo));
-			return response;
+			return NextResponse.redirect(new URL("/signin", request.url));
 		}
-		const response = NextResponse.next();
-
-		response.headers.set("timezone", JSON.stringify(IPInfo));
-
-		return response;
+		return NextResponse.next();
 	}
 }
 
