@@ -100,10 +100,6 @@ const AppSearchPage = () => {
 		}
 	};
 
-	const { timezone } = JSON.parse(headers().get("timezone") || "{}");
-
-	console.log("Timezone: ", timezone);
-
 	const getRoute = async (
 		startStation: string,
 		endStation: string,
