@@ -53,14 +53,8 @@ type User = {
 export async function middleware(request: NextRequest) {
 	const accessToken = request.cookies.get("accessToken")?.value ?? "";
 
-	getIPInfo(request.ip || request.headers.get("X-Forwarded-For") || "").then(
-		(data) => {
-			Cookies.set("timezone", data?.timezone, {
-				path: process.env.NEXT_PUBLIC_ORIGIN,
-				sameSite: "strict",
-				expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
-			});
-		}
+	const IPInfo = getIPInfo(
+		request.ip || request.headers.get("X-Forwarded-For") || ""
 	);
 
 	let user: User | null = null;
@@ -70,31 +64,63 @@ export async function middleware(request: NextRequest) {
 
 	if (user?.user_id) {
 		if (["/signin", "/signup", "/app"].includes(request.nextUrl.pathname)) {
-			return NextResponse.redirect(new URL("/app/search", request.url));
+			const response = NextResponse.redirect(
+				new URL("/app/search", request.url)
+			);
+			response.headers.set("timezone", JSON.stringify(IPInfo));
+			return response;
 		}
 		if (
 			request.nextUrl.pathname.startsWith("/app/admin") &&
 			user.admin === false
 		) {
-			return NextResponse.redirect(new URL("/app/search", request.url));
+			const response = NextResponse.redirect(
+				new URL("/app/search", request.url)
+			);
+			response.headers.set("timezone", JSON.stringify(IPInfo));
+			return response;
 		}
 
-		return NextResponse.next();
+		const response = NextResponse.next();
+
+		response.headers.set("timezone", JSON.stringify(IPInfo));
+
+		return response;
 	} else if (user && user.admin === true) {
 		console.log("User is an admin:", user);
 		if (request.nextUrl.pathname === "/app/admin") {
-			return NextResponse.next();
+			const response = NextResponse.next();
+
+			response.headers.set("timezone", JSON.stringify(IPInfo));
+
+			return response;
 		} else {
-			return NextResponse.redirect(new URL("/app/search", request.url));
+			const response = NextResponse.redirect(
+				new URL("/app/search", request.url)
+			);
+			response.headers.set("timezone", JSON.stringify(IPInfo));
+			return response;
 		}
 	} else if (user === null) {
 		if (request.nextUrl.pathname === "/app/admin") {
-			return NextResponse.redirect(new URL("/signin", request.url));
+			const response = NextResponse.redirect(
+				new URL("/signin", request.url)
+			);
+			response.headers.set("timezone", JSON.stringify(IPInfo));
+			return response;
 		}
 		if (request.nextUrl.pathname.startsWith("/app")) {
-			return NextResponse.redirect(new URL("/signin", request.url));
+			const response = NextResponse.redirect(
+				new URL("/signin", request.url)
+			);
+			response.headers.set("timezone", JSON.stringify(IPInfo));
+			return response;
 		}
-		return NextResponse.next();
+		const response = NextResponse.next();
+
+		response.headers.set("timezone", JSON.stringify(IPInfo));
+
+		return response;
 	}
 }
 

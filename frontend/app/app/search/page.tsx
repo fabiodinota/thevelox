@@ -27,6 +27,7 @@ import {
 import { getSearchParams } from "@/app/utils/getSearchParams";
 import DrawerComponent from "@/app/components/app/search/Drawer";
 import ActiveTicketHeader from "@/app/components/app/search/ActiveTicketHeader";
+import { headers } from "next/headers";
 
 const AppSearchPage = () => {
 	const [startStation, setStartStation] = useState<Station>({
@@ -98,6 +99,10 @@ const AppSearchPage = () => {
 			);
 		}
 	};
+
+	const { timezone } = JSON.parse(headers().get("timezone") || "{}");
+
+	console.log("Timezone: ", timezone);
 
 	const getRoute = async (
 		startStation: string,
