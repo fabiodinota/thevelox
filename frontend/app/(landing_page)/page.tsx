@@ -117,7 +117,7 @@ export default function Home() {
 							}
 							light={
 								<img
-									src="https://storage.thevelox.co/3D_0491_fabiodinota.png"
+									src="https://storage.thevelox.co/3D_0491_fabiodinota.webp"
 									alt="Thumbnail"
 									className="w-full h-full object-cover aspect-video relative"
 								/>
@@ -176,7 +176,7 @@ export default function Home() {
 							className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center overflow-hidden aos-init"
 						>
 							<img
-								src="https://storage.thevelox.co/3D_0416_fabiodinota.png"
+								src="https://storage.thevelox.co/3D_0416_fabiodinota.webp"
 								alt="Thumbnail"
 								className="w-full h-full object-cover aspect-video"
 							/>
@@ -191,7 +191,7 @@ export default function Home() {
 							className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center overflow-hidden aos-init"
 						>
 							<img
-								src="https://storage.thevelox.co/3D_0657_fabiodinota.png"
+								src="https://storage.thevelox.co/3D_0657_fabiodinota.webp"
 								alt="Thumbnail"
 								className="w-full h-full object-cover aspect-video"
 							/>

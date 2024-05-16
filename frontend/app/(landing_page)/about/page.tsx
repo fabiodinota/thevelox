@@ -34,7 +34,7 @@ const page = () => {
 						className="rounded-[20px] overflow-hidden bg-secondary w-full aspect-video grid place-content-center"
 					>
 						<img
-							src="https://storage.thevelox.co/booking.png"
+							src="https://storage.thevelox.co/booking.webp"
 							alt="Thumbnail"
 							className="w-full h-full object-cover aspect-video"
 						/>
