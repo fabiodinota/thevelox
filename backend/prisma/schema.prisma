@@ -47,17 +47,18 @@ model journeys {
 }
 
 model payment_methods {
-  payment_method_id Int       @id @default(autoincrement()) @db.UnsignedInt
-  user_id           Int       @db.UnsignedInt
-  type              String?   @db.VarChar(255)
-  card_holder_name  String?   @db.VarChar(255)
-  card_number       String?   @db.VarChar(255)
-  expiration_date   String?   @db.VarChar(255)
-  card_cvv          String?   @db.Char(4)
-  paypal_email      String?   @db.VarChar(255)
-  created_on        DateTime  @db.DateTime(0)
-  last_updated      DateTime  @db.DateTime(0)
-  users             users     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "payment_methods_user_id_foreign")
+  payment_method_id Int                    @id @default(autoincrement()) @db.UnsignedInt
+  user_id           Int                    @db.UnsignedInt
+  type              String?                @db.VarChar(255)
+  card_holder_name  String?                @db.VarChar(255)
+  card_number       String?                @db.VarChar(255)
+  expiration_date   String?                @db.VarChar(255)
+  card_cvv          String?                @db.Char(4)
+  paypal_email      String?                @db.VarChar(255)
+  status            payment_methods_status @default(active)
+  created_on        DateTime               @db.DateTime(0)
+  last_updated      DateTime               @db.DateTime(0)
+  users             users                  @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "payment_methods_user_id_foreign")
   tickets           tickets[]
 
   @@index([user_id], map: "payment_methods_user_id_foreign")
@@ -79,4 +80,9 @@ model tickets {
   @@index([journey_id], map: "tickets_journey_id_foreign")
   @@index([payment_method_id], map: "tickets_payment_method_id_foreign")
   @@index([user_id], map: "tickets_user_id_foreign")
+}
+
+enum payment_methods_status {
+  active
+  inactive
 }

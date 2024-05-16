@@ -2,7 +2,7 @@
 
 import AnimatedInput from "@/app/components/AnimatedInput";
 import CustomAutocomplete from "@/app/components/Autocomplete";
-import { errorIcon } from "@/app/components/Icons";
+import { ArrowIcon, errorIcon } from "@/app/components/Icons";
 import Header from "@/app/components/app/Header";
 import { Calendar } from "@/app/components/ui/calendarDOB";
 import AnimatePresenceProvider from "@/app/context/AnimatePresenceProvider";
@@ -355,166 +355,189 @@ const AppAccountPage = () => {
 	return (
 		<div className="pb-[140px] pt-[70px]">
 			<Header />
-			<div className="w-full h-full flex justify-center items-center mt-10">
-				<form
-					onSubmit={onSubmit}
-					className="w-full h-full flex justify-center items-center flex-col max-w-[700px] gap-2.5 p-5"
-				>
-					<span className="text-[24px] font-bold mt-5 w-full text-left">
-						Account Information
+			<div className="w-full h-full flex justify-center items-start mt-10">
+				<div className="flex flex-col gap-2.5 p-5 justify-center items-center max-w-[700px] w-full">
+					<span className="text-[24px] font-bold w-full text-left">
+						Payment Methods
 					</span>
-					<AnimatedInput
-						id="fullName"
-						placeholder="Full Name"
-						type="text"
-						tabIndex={6}
-						inputRef={fullNameRef}
-						active={fullName || fullNameActive ? true : false}
-						inputValue={fullName}
-						handleChange={(e) =>
-							handleFullNameChange(e.target.value)
-						}
-						handleFocus={() => setFullNameActive(true)}
-						handleBlur={() => setFullNameActive(false)}
-					/>
-					{errors.fullName && (
-						<div className="flex flex-row gap-3 items-center w-full justify-start">
-							{errorIcon}
-							<p className="md:text-[16px] text-[14px]">
-								{errors.fullName.message}
-							</p>
-						</div>
-					)}
-					<div className="relative w-full">
-						<button
-							onClick={handleCalendarClick}
-							id="calendarDOB"
-							tabIndex={7}
-							className={
-								"flex items-center flex-row w-full h-[70px] md:h-[80px] bg-secondary rounded-xl px-2.5 lg:px-5 text-left font-normal text-[16px] justify-start"
+					<RippleButton
+						asLink
+						href="/app/account/managePaymentMethods"
+						style="nofill"
+						tabIndex={4}
+						speed="medium"
+						className="w-full bg-secondary hover:bg-accent !justify-between px-5"
+					>
+						Manage Payment Methods
+						{ArrowIcon(false, "rotate-180 w-3 h-3")}
+					</RippleButton>
+					<form
+						onSubmit={onSubmit}
+						className="w-full h-full flex justify-center items-center flex-col gap-2.5"
+					>
+						<span className="text-[24px] font-bold mt-5 w-full text-left">
+							Account Information
+						</span>
+						<AnimatedInput
+							id="fullName"
+							placeholder="Full Name"
+							type="text"
+							tabIndex={6}
+							inputRef={fullNameRef}
+							active={fullName || fullNameActive ? true : false}
+							inputValue={fullName}
+							handleChange={(e) =>
+								handleFullNameChange(e.target.value)
 							}
-						>
-							<div className="flex items-center flex-row w-full relative">
-								<p
-									className={`absolute cursor-pointer left-3 text-foreground/50 transition-all duration-200 ease-in-out top-1/2 transform -translate-y-5 md:-translate-y-6 text-[13px] md:text-[15px]`}
-								>
-									Date of Birth
+							handleFocus={() => setFullNameActive(true)}
+							handleBlur={() => setFullNameActive(false)}
+						/>
+						{errors.fullName && (
+							<div className="flex flex-row gap-3 items-center w-full justify-start">
+								{errorIcon}
+								<p className="md:text-[16px] text-[14px]">
+									{errors.fullName.message}
 								</p>
-								<div className="pt-4 pl-3 text-[16px] md:text-[18px] font-medium">
-									{dateOfBirth ? (
-										format(dateOfBirth, "PP")
-									) : (
-										<span>Pick a date of birth</span>
-									)}
-								</div>
 							</div>
-						</button>
-						<AnimatePresenceProvider>
-							{calendarOpen && (
-								<div className="relative">
-									<motion.div
-										variants={popoverVariant}
-										initial="initial"
-										animate="animate"
-										exit="exit"
-										key={"calendarDOB"}
-										className="absolute z-[100] mt-1 w-auto p-0 bg-white dark:bg-background border border-muted rounded-lg shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]"
+						)}
+						<div className="relative w-full">
+							<button
+								onClick={handleCalendarClick}
+								id="calendarDOB"
+								tabIndex={7}
+								className={
+									"flex items-center flex-row w-full h-[70px] md:h-[80px] bg-secondary rounded-xl px-2.5 lg:px-5 text-left font-normal text-[16px] justify-start"
+								}
+							>
+								<div className="flex items-center flex-row w-full relative">
+									<p
+										className={`absolute cursor-pointer left-3 text-foreground/50 transition-all duration-200 ease-in-out top-1/2 transform -translate-y-5 md:-translate-y-6 text-[13px] md:text-[15px]`}
 									>
-										<Calendar
-											mode="single"
-											captionLayout="dropdown-buttons"
-											selected={dateOfBirth}
-											onSelect={handleDateOfBirthChange}
-											initialFocus
-											fromYear={1920}
-											toYear={2030}
-										/>
-									</motion.div>
-									{/* <div
+										Date of Birth
+									</p>
+									<div className="pt-4 pl-3 text-[16px] md:text-[18px] font-medium">
+										{dateOfBirth ? (
+											format(dateOfBirth, "PP")
+										) : (
+											<span>Pick a date of birth</span>
+										)}
+									</div>
+								</div>
+							</button>
+							<AnimatePresenceProvider>
+								{calendarOpen && (
+									<div className="relative">
+										<motion.div
+											variants={popoverVariant}
+											initial="initial"
+											animate="animate"
+											exit="exit"
+											key={"calendarDOB"}
+											className="absolute z-[100] mt-1 w-auto p-0 bg-white dark:bg-background border border-muted rounded-lg shadow-[0px_0px_20px_0px_#00000015] dark:shadow-[0px_0px_20px_0px_#FFFFFF07]"
+										>
+											<Calendar
+												mode="single"
+												captionLayout="dropdown-buttons"
+												selected={dateOfBirth}
+												onSelect={
+													handleDateOfBirthChange
+												}
+												initialFocus
+												fromYear={1920}
+												toYear={2030}
+											/>
+										</motion.div>
+										{/* <div
                                         className="top-0 left-0 fixed w-screen h-screen z-10"
                                         onClick={() => setCalendarOpen(false)}
                                     /> */}
-								</div>
-							)}
-						</AnimatePresenceProvider>
-					</div>
-					{errors.dateOfBirth && (
-						<div className="flex flex-row gap-3 items-center w-full justify-start">
-							{errorIcon}
-							<p className="md:text-[16px] text-[14px]">
-								{errors.dateOfBirth.message}
-							</p>
+									</div>
+								)}
+							</AnimatePresenceProvider>
 						</div>
-					)}
-					<div className="flex flex-row gap-2.5 w-full">
-						<div className="w-[200px]">
-							<CustomAutocomplete
-								id="countryCode"
-								placeholder="Code"
-								tabIndex={8}
-								suggestions={countryCodeSuggestions}
-								onSelectionChange={handleCountryCodeChange}
-								defaultValue={defaultCountryCode}
+						{errors.dateOfBirth && (
+							<div className="flex flex-row gap-3 items-center w-full justify-start">
+								{errorIcon}
+								<p className="md:text-[16px] text-[14px]">
+									{errors.dateOfBirth.message}
+								</p>
+							</div>
+						)}
+						<div className="flex flex-row gap-2.5 w-full">
+							<div className="w-[200px]">
+								<CustomAutocomplete
+									id="countryCode"
+									placeholder="Code"
+									tabIndex={8}
+									suggestions={countryCodeSuggestions}
+									onSelectionChange={handleCountryCodeChange}
+									defaultValue={defaultCountryCode}
+								/>
+							</div>
+							{/* phone number input */}
+							<AnimatedInput
+								id="phoneNumber"
+								placeholder="Phone Number"
+								type="text"
+								tabIndex={9}
+								inputRef={phoneNumberRef}
+								active={
+									phoneNumber || phoneNumberActive
+										? true
+										: false
+								}
+								inputValue={phoneNumber}
+								handleChange={(e) =>
+									handlePhoneNumberChange(e.target.value)
+								}
+								handleFocus={() => setPhoneNumberActive(true)}
+								handleBlur={() => setPhoneNumberActive(false)}
 							/>
 						</div>
-						{/* phone number input */}
+						{(errors.countryCode || errors.phoneNumber) && (
+							<div className="w-full">
+								{errors.countryCode && (
+									<div className="flex flex-row gap-3 items-center">
+										{errorIcon}
+										<p className="md:text-[16px] text-[14px]">
+											{errors.countryCode?.message}
+										</p>
+									</div>
+								)}
+								{errors.phoneNumber && (
+									<div className="flex flex-row gap-3 items-center">
+										{errorIcon}
+										<p className="md:text-[16px] text-[14px]">
+											{errors.phoneNumber?.message}
+										</p>
+									</div>
+								)}
+							</div>
+						)}
 						<AnimatedInput
-							id="phoneNumber"
-							placeholder="Phone Number"
+							id="email"
+							placeholder="Email"
 							type="text"
-							tabIndex={9}
-							inputRef={phoneNumberRef}
-							active={
-								phoneNumber || phoneNumberActive ? true : false
-							}
-							inputValue={phoneNumber}
+							tabIndex={1}
+							inputRef={emailRef}
+							active={email || emailActive ? true : false}
+							inputValue={email}
 							handleChange={(e) =>
-								handlePhoneNumberChange(e.target.value)
+								handleEmailChange(e.target.value)
 							}
-							handleFocus={() => setPhoneNumberActive(true)}
-							handleBlur={() => setPhoneNumberActive(false)}
+							handleFocus={() => setEmailActive(true)}
+							handleBlur={() => setEmailActive(false)}
 						/>
-					</div>
-					{(errors.countryCode || errors.phoneNumber) && (
-						<div className="w-full">
-							{errors.countryCode && (
-								<div className="flex flex-row gap-3 items-center">
-									{errorIcon}
-									<p className="md:text-[16px] text-[14px]">
-										{errors.countryCode?.message}
-									</p>
-								</div>
-							)}
-							{errors.phoneNumber && (
-								<div className="flex flex-row gap-3 items-center">
-									{errorIcon}
-									<p className="md:text-[16px] text-[14px]">
-										{errors.phoneNumber?.message}
-									</p>
-								</div>
-							)}
-						</div>
-					)}
-					<AnimatedInput
-						id="email"
-						placeholder="Email"
-						type="text"
-						tabIndex={1}
-						inputRef={emailRef}
-						active={email || emailActive ? true : false}
-						inputValue={email}
-						handleChange={(e) => handleEmailChange(e.target.value)}
-						handleFocus={() => setEmailActive(true)}
-						handleBlur={() => setEmailActive(false)}
-					/>
-					{errors.email && (
-						<div className="flex flex-row gap-3 items-center w-full justify-start">
-							{errorIcon}
-							<p className="md:text-[16px] text-[14px]">
-								{errors.email.message}
-							</p>
-						</div>
-					)}
+						{errors.email && (
+							<div className="flex flex-row gap-3 items-center w-full justify-start">
+								{errorIcon}
+								<p className="md:text-[16px] text-[14px]">
+									{errors.email.message}
+								</p>
+							</div>
+						)}
+					</form>
+
 					<ThemeSwitcher
 						className="w-full"
 						size="big"
@@ -543,7 +566,7 @@ const AppAccountPage = () => {
 					>
 						Sign Out
 					</RippleButton>
-				</form>
+				</div>
 			</div>
 		</div>
 	);

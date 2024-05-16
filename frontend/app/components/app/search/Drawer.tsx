@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Drawer } from "vaul";
-import { ArrowIcon, xIcon } from "../../Icons";
+import { xIcon } from "../../Icons";
 import RippleButton from "../../RippleButton";
 import Ticket, { BuyTicket, ExpandedTicket } from "./Ticket";
 import { ISearchReqData, Ticket as TicketType } from "@/app/types/types";
-import { AnimatePresence, motion } from "framer-motion";
-import AnimatePresenceProvider from "@/app/context/AnimatePresenceProvider";
 import SelectPaymentMethod from "./SelectPaymentMethod";
-import ActiveTicketHeader from "./ActiveTicketHeader";
 import AddPaymentMethod from "./AddPaymentMethod";
 import axios from "axios";
 import { toast } from "sonner";
@@ -131,7 +128,7 @@ const DrawerComponent = ({
 							}`}
 						>
 							{stage === "browseTicketsStage" && (
-								<div className="flex flex-col gap-2.5 md:gap-5 w-full ">
+								<div className="flex flex-col gap-2.5 w-full ">
 									{searchReqData &&
 										"tickets" in searchReqData &&
 										searchReqData.tickets.map(
@@ -174,7 +171,7 @@ const DrawerComponent = ({
 							)}
 							{stage === "moreInfoTicketStage" && (
 								<div>
-									<div className="flex flex-col gap-2.5 md:gap-5 w-full ">
+									<div className="flex flex-col gap-2.5 w-full ">
 										{activeTicket && searchReqData && (
 											<ExpandedTicket
 												key={
@@ -194,7 +191,7 @@ const DrawerComponent = ({
 							)}
 							{stage === "buyTicketStage" && activeTicket && (
 								<div>
-									<div className="flex flex-col gap-2.5 md:gap-5 w-full ">
+									<div className="flex flex-col gap-2.5 w-full ">
 										<Drawer.Title className="flex flex-row justify-between items-center">
 											<span className="text-[20px] lg:text-[24px] font-bold">
 												Buy Ticket

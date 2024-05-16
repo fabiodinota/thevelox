@@ -15,37 +15,18 @@ export const getPaymentMethods = async (req: CustomRequest, res: Response) => {
 	try {
 		const user_id = req.user?.user_id;
 
+		if (!user_id) {
+			return res.status(400).json({ message: "User ID is required" });
+		}
+
 		const paymentMethods = await prisma.payment_methods.findMany({
 			where: {
 				user_id,
+				status: "active",
 			},
 		});
 
-		const formattedPaymentMethods = paymentMethods.map((paymentMethod) => {
-			// turn a card number into a formatted card number like this 4111 **** **** 1234
-			const formattedCardNumber = paymentMethod.card_number
-				? paymentMethod.card_number
-						.replace(/.(?=.{4})/g, "*")
-						.replace(/(.{4})(.*)(.{4})/, "$1 **** **** $3")
-				: null;
-
-			// turn a paypal email into a formatted paypal email like this fabi****@gmail.com
-			const formattedPaypalEmail = paymentMethod.paypal_email
-				? paymentMethod.paypal_email.replace(
-						/(.{4})[^@]*(?=@)/,
-						"$1****"
-				  )
-				: null;
-
-			return {
-				payment_method_id: paymentMethod.payment_method_id,
-				type: paymentMethod.type,
-				formatted_card_number: formattedCardNumber,
-				formatted_paypal_email: formattedPaypalEmail,
-			};
-		});
-
-		res.status(200).json(formattedPaymentMethods);
+		res.status(200).json(paymentMethods);
 	} catch (error) {
 		console.error("Error getting payment methods:", error);
 		res.status(500).json({ message: "Error getting payment methods" });
@@ -106,6 +87,7 @@ export const addPaymentMethod = async (req: CustomRequest, res: Response) => {
 					card_holder_name: card_holder_name,
 					expiration_date: card_expiry,
 					card_cvv: card_cvv,
+					status: "active",
 					last_updated: new Date(),
 					created_on: new Date(),
 				},
@@ -127,5 +109,34 @@ export const addPaymentMethod = async (req: CustomRequest, res: Response) => {
 	} catch (error) {
 		console.error("Error adding payment method:", error);
 		res.status(500).json({ message: "Error adding payment method" });
+	}
+};
+
+export const deletePaymentMethod = async (
+	req: CustomRequest,
+	res: Response
+) => {
+	try {
+		const user_id = req.user?.user_id;
+		if (!user_id) {
+			return res.status(400).json({ message: "User ID is required" });
+		}
+		const { payment_method_id } = req.body;
+
+		const paymentMethod = await prisma.payment_methods.update({
+			where: {
+				payment_method_id,
+				user_id,
+			},
+			data: {
+				status: "inactive",
+				last_updated: new Date(),
+			},
+		});
+
+		res.status(200).json(paymentMethod);
+	} catch (error) {
+		console.error("Error deleting payment method:", error);
+		res.status(500).json({ message: "Error deleting payment method" });
 	}
 };

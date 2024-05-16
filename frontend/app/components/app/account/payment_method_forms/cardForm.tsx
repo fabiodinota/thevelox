@@ -12,18 +12,9 @@ import RippleButton from "@/app/components/RippleButton";
 import { toast } from "sonner";
 import { encryptToken } from "@/app/utils/cryptToken";
 
-interface CardFormProps {
-	setStage: React.Dispatch<
-		React.SetStateAction<
-			| "browseTicketsStage"
-			| "moreInfoTicketStage"
-			| "buyTicketStage"
-			| "addPaymentMethodStage"
-		>
-	>;
-}
+interface CardFormProps {}
 
-const CardForm = ({ setStage }: CardFormProps) => {
+const CardForm = ({}: CardFormProps) => {
 	const CardPaymentMethodSchema = z.object({
 		card_number: z
 			.string({
@@ -118,7 +109,6 @@ const CardForm = ({ setStage }: CardFormProps) => {
 			)
 			.then((res) => {
 				toast.success("Payment method added successfully");
-				setStage("buyTicketStage");
 			})
 			.catch((err) => {
 				if (err.response.status === 400 && err.response.data.message) {
@@ -308,7 +298,8 @@ const CardForm = ({ setStage }: CardFormProps) => {
 				Add Payment Method
 			</RippleButton>
 			<RippleButton
-				onClick={() => setStage("buyTicketStage")}
+				asLink
+				href="/app/account/managePaymentMethods"
 				style="outlined"
 				tabIndex={4}
 				className="w-full"

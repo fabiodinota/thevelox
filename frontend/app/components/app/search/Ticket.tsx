@@ -276,7 +276,7 @@ export const ExpandedTicket: React.FC<TicketProps> = ({
 	);
 };
 
-export const BuyTicket = async ({ ticket, ...props }: { ticket: Ticket }) => {
+export const BuyTicket = ({ ticket, ...props }: { ticket: Ticket }) => {
 	return (
 		<div
 			className="w-full p-5 bg-secondary rounded-xl flex flex-col gap-3 text-foreground"
@@ -325,7 +325,7 @@ export const BuyTicket = async ({ ticket, ...props }: { ticket: Ticket }) => {
 					<span className="text-[14px] lg:text-[16px] font-medium px-4 py-1 border-[1px] border-accent rounded-lg bg-secondary">
 						{ticket.price.toFixed(2)}€
 					</span>
-					{/* travel time in minutes */}
+
 					<span className="text-[14px] lg:text-[16px] font-medium">
 						Travel Time:{" "}
 						{Math.floor(

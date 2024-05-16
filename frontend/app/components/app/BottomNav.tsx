@@ -56,16 +56,16 @@ const BottomNav = () => {
 					>
 						<div
 							className={`${
-								activeRoute === "home"
+								activeRoute.startsWith("home")
 									? "text-gradient"
 									: `text-foreground ${iconAnimation}`
 							} delay-0`}
 						>
-							{HomeIcon(activeRoute === "home")}
+							{HomeIcon(activeRoute.startsWith("home"))}
 						</div>
 						<span
 							className={`leading-none select-none text-[14px] xl:text-[16px] delay-0 ${
-								activeRoute === "home"
+								activeRoute.startsWith("home")
 									? "text-gradient"
 									: `text-foreground ${textAnimation}`
 							}`}
@@ -83,16 +83,16 @@ const BottomNav = () => {
 					>
 						<div
 							className={`${
-								activeRoute === "search"
+								activeRoute.startsWith("search")
 									? "text-gradient"
 									: `text-foreground ${iconAnimation}`
 							} delay-75`}
 						>
-							{SearchIcon(activeRoute === "search")}
+							{SearchIcon(activeRoute.startsWith("search"))}
 						</div>
 						<span
 							className={`leading-none select-none text-[14px] xl:text-[16px] delay-75 ${
-								activeRoute === "search"
+								activeRoute.startsWith("search")
 									? "text-gradient"
 									: `text-foreground ${textAnimation}`
 							}`}
@@ -110,19 +110,19 @@ const BottomNav = () => {
 					>
 						<div
 							className={`${
-								activeRoute === "history"
+								activeRoute.startsWith("history")
 									? "text-gradient"
 									: `text-foreground ${iconAnimation}`
 							} delay-100`}
 						>
 							{TicketIcon(
-								activeRoute === "history",
+								activeRoute.startsWith("history"),
 								"w-6 h-6 xl:w-7 xl:h-7"
 							)}
 						</div>
 						<span
 							className={`leading-none select-none text-[14px] xl:text-[16px] delay-100 ${
-								activeRoute === "history"
+								activeRoute.startsWith("history")
 									? "text-gradient"
 									: `text-foreground ${textAnimation}`
 							}`}
@@ -140,16 +140,18 @@ const BottomNav = () => {
 					>
 						<div
 							className={`${
-								activeRoute === "account"
+								activeRoute.startsWith("account")
 									? "text-gradient"
 									: `text-foreground ${iconAnimation}`
 							} delay-150`}
 						>
-							{AccountCircleIcon(activeRoute === "account")}
+							{AccountCircleIcon(
+								activeRoute.startsWith("account")
+							)}
 						</div>
 						<span
 							className={`leading-none select-none text-[14px] xl:text-[16px]  delay-150 ${
-								activeRoute === "account"
+								activeRoute.startsWith("account")
 									? "text-gradient"
 									: `text-foreground ${textAnimation}`
 							}`}
@@ -168,16 +170,18 @@ const BottomNav = () => {
 						>
 							<div
 								className={`${
-									activeRoute === "admin"
+									activeRoute.startsWith("admin")
 										? "text-gradient"
 										: `text-foreground ${iconAnimation}`
 								} delay-150`}
 							>
-								{AdminIcon(activeRoute === "admin")}
+								{AdminIcon({
+									active: activeRoute.startsWith("admin"),
+								})}
 							</div>
 							<span
 								className={`leading-none select-none text-[14px] xl:text-[16px]  delay-150 ${
-									activeRoute === "admin"
+									activeRoute.startsWith("admin")
 										? "text-gradient"
 										: `text-foreground ${textAnimation}`
 								}`}

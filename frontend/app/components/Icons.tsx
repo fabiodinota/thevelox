@@ -178,12 +178,18 @@ export const SearchIcon = (active: boolean) => (
 	</svg>
 );
 
-export const AdminIcon = (active: boolean) => (
+export const AdminIcon = ({
+	active,
+	className = "w-6 h-6 xl:w-7 xl:h-7",
+}: {
+	active: boolean;
+	className?: string;
+}) => (
 	<svg
 		width="16"
 		height="20"
 		viewBox="0 0 16 20"
-		className="w-6 h-6 xl:w-7 xl:h-7"
+		className={className}
 		fill="none"
 		xmlns="http://www.w3.org/2000/svg"
 	>

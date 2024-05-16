@@ -1,6 +1,5 @@
-/* import CryptoJS from "crypto-js";
+import CryptoJS from "crypto-js";
 
-// Secret key for encryption and decryption (replace with your secret key)
 const secretKey = process.env.CRYPT_SECRET_KEY;
 if (!secretKey) {
 	throw new Error("Secret key is undefined.");
@@ -20,4 +19,3 @@ const decryptToken = (encryptedToken: string) => {
 };
 
 export { encryptToken, decryptToken };
- */

@@ -11,18 +11,9 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-interface PaypalFormProps {
-	setStage: React.Dispatch<
-		React.SetStateAction<
-			| "browseTicketsStage"
-			| "moreInfoTicketStage"
-			| "buyTicketStage"
-			| "addPaymentMethodStage"
-		>
-	>;
-}
+interface PaypalFormProps {}
 
-const PaypalForm = ({ setStage }: PaypalFormProps) => {
+const PaypalForm = ({}: PaypalFormProps) => {
 	const PaypalPaymentMethodSchema = z.object({
 		paypal_email: z
 			.string({
@@ -55,8 +46,6 @@ const PaypalForm = ({ setStage }: PaypalFormProps) => {
 			)
 			.then((res) => {
 				toast.success("Payment method added successfully");
-
-				setStage("buyTicketStage");
 			})
 			.catch((err) => {
 				toast.error(err.response.data.message || "Unknown error");
@@ -130,7 +119,8 @@ const PaypalForm = ({ setStage }: PaypalFormProps) => {
 				Add Payment Method
 			</RippleButton>
 			<RippleButton
-				onClick={() => setStage("buyTicketStage")}
+				asLink
+				href="/app/account/managePaymentMethods"
 				style="outlined"
 				tabIndex={4}
 				className="w-full"

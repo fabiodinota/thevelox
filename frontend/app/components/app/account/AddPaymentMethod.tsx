@@ -5,23 +5,14 @@ import RippleButton from "../../RippleButton";
 import CardForm from "./payment_method_forms/cardForm";
 import PaypalForm from "./payment_method_forms/paypalForm";
 
-interface AddPaymentMethodProps {
-	setStage: React.Dispatch<
-		React.SetStateAction<
-			| "browseTicketsStage"
-			| "moreInfoTicketStage"
-			| "buyTicketStage"
-			| "addPaymentMethodStage"
-		>
-	>;
-}
+interface AddPaymentMethodProps {}
 
-const AddPaymentMethod = ({ setStage }: AddPaymentMethodProps) => {
+const AddPaymentMethod = ({}: AddPaymentMethodProps) => {
 	const [activePaymentMethod, setActivePaymentMethod] =
 		useState<string>("paypal");
 
 	return (
-		<div className="flex flex-col gap-2.5">
+		<div className="flex flex-col gap-2.5 w-full">
 			<div className={`flex flex-row gap-2.5 w-full`}>
 				<RippleButton
 					onClick={() => setActivePaymentMethod("paypal")}
@@ -51,16 +42,8 @@ const AddPaymentMethod = ({ setStage }: AddPaymentMethodProps) => {
 					Card
 				</RippleButton>
 			</div>
-			{activePaymentMethod === "paypal" && (
-				<PaypalForm
-					/* savePaymentMethodIsChecked={savePaymentMethodIsChecked}
-					setSavePaymentMethodIsChecked={
-						setSavePaymentMethodIsChecked
-					} */
-					setStage={setStage}
-				/>
-			)}
-			{activePaymentMethod === "card" && <CardForm setStage={setStage} />}
+			{activePaymentMethod === "paypal" && <PaypalForm />}
+			{activePaymentMethod === "card" && <CardForm />}
 		</div>
 	);
 };

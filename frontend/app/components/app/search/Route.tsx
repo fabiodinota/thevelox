@@ -1,16 +1,7 @@
-import { format } from "date-fns";
 import React from "react";
 import { LineArrowIcon } from "../../Icons";
-import {
-	CARD_NAMES,
-	ParsedFavoriteRoute,
-	Station,
-	Ticket,
-} from "@/app/types/types";
+import { ParsedFavoriteRoute, Station } from "@/app/types/types";
 import getLevelIcon from "@/app/utils/getLevelIcon";
-import RippleButton from "../../RippleButton";
-import CreditCardType from "credit-card-type";
-import getIconFromCard from "@/app/utils/getIconFromCard";
 
 interface RouteProps {
 	startStation: Station;

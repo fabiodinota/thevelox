@@ -141,3 +141,36 @@ export const deleteTicket = async (req: CustomRequest, res: Response) => {
 		res.status(500).json({ message: "Internal server error" });
 	}
 };
+
+export const changeRole = async (req: CustomRequest, res: Response) => {
+	const admin = req.user?.admin;
+
+	const { user_id, admin: adminStatus }: { user_id: number; admin: boolean } =
+		req.body;
+
+	if (!admin) {
+		return res.status(403).json({ message: "Unauthorized" });
+	}
+
+	if (!user_id || adminStatus === undefined) {
+		return res
+			.status(400)
+			.json({ message: "User ID and new role are required." });
+	}
+
+	try {
+		await prisma.users.update({
+			where: {
+				user_id: user_id,
+			},
+			data: {
+				admin: adminStatus ? false : true,
+			},
+		});
+
+		res.status(200).json({ message: "Role changed successfully" });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};

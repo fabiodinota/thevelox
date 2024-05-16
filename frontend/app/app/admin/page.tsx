@@ -168,6 +168,28 @@ const AdminPage = () => {
 			});
 	};
 
+	const handleChangeRole = async (user_id: number, admin: boolean) => {
+		await axios
+			.put(
+				`${process.env.NEXT_PUBLIC_API_URL}/admin/changeRole`,
+				{
+					user_id,
+					admin,
+				},
+				{
+					withCredentials: true,
+				}
+			)
+			.then((res) => {
+				toast.success("Role changed successfully");
+				setUsers([]);
+				handleGetAllUsers();
+			})
+			.catch((err) => {
+				toast.error("Error changing role");
+			});
+	};
+
 	return (
 		<div className="pb-[140px] pt-[70px]">
 			<Header />
@@ -184,6 +206,7 @@ const AdminPage = () => {
 									handleViewUserTickets={
 										handleViewUserTickets
 									}
+									handleChangeRole={handleChangeRole}
 									key={index}
 									user={user}
 								/>

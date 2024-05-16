@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { UserInfo } from "@/app/app/admin/page";
-import { Ticket } from "@/app/types/types";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
-import TailwindColor from "@videsk/tailwind-random-color";
-import RippleButton from "../../RippleButton";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
 } from "../../ui/tooltip";
-import { Button } from "../../ui/button";
-import { TicketIcon, DeleteIcon } from "../../Icons";
+import { TicketIcon, DeleteIcon, AdminIcon } from "../../Icons";
 
 const UserView = ({
 	user,
 	handleViewUserTickets,
 	handleDeleteUser,
+	handleChangeRole,
 	...props
 }: {
 	user: UserInfo;
 	handleViewUserTickets: (user_id: number) => void;
 	handleDeleteUser: (user_id: number) => void;
+	handleChangeRole: (user_id: number, admin: boolean) => void;
 }) => {
 	const [color, setColor] = useState("#000");
 
@@ -73,6 +71,28 @@ const UserView = ({
 			</div>
 			<div className="flex flex-row gap-3">
 				<TooltipProvider>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<button
+								onClick={() =>
+									handleChangeRole(user.user_id, user.admin)
+								}
+							>
+								{AdminIcon({
+									active: user.admin,
+									className:
+										"w-5 h-5 xl:w-6 xl:h-6 cursor-pointer",
+								})}
+							</button>
+						</TooltipTrigger>
+						<TooltipContent className="bg-background border-none">
+							<p>
+								{user.admin
+									? "Demote to role: User"
+									: "Promote to role: Admin"}
+							</p>
+						</TooltipContent>
+					</Tooltip>
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<button

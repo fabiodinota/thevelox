@@ -12,6 +12,9 @@ const nextConfig = {
 			},
 		],
 	},
+	env: {
+		CRYPT_SECRET_KEY: process.env.CRYPT_SECRET_KEY,
+	},
 };
 
 // Configuration object tells the next-pwa plugin
