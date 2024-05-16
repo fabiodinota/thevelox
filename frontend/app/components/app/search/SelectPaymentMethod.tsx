@@ -121,7 +121,7 @@ const SelectPaymentMethod = ({
 							}
 							speed="medium"
 							key={method.payment_method_id}
-							className={`flex items-center space-x-2 w-full !justify-between bg-secondary ${
+							className={`flex items-center !text-foreground space-x-2 w-full !justify-between bg-secondary ${
 								activePaymentMethod === method.payment_method_id
 									? "border border-blue-500"
 									: ""
@@ -167,7 +167,7 @@ const SelectPaymentMethod = ({
 					style="nofill"
 					speed="medium"
 					onClick={() => setStage("addPaymentMethodStage")}
-					className="flex flex-row justify-between items-center bg-secondary w-full px-5 py-5 rounded-xl gap-5 !h-[60px]"
+					className="flex flex-row justify-between items-center bg-secondary !text-foreground w-full px-5 py-5 rounded-xl gap-5 !h-[60px]"
 				>
 					{/* add payment method */}
 					<span className="text-[14px] lg:text-[16px] font-medium rounded-xl flex flex-row gap-5 items-center w-full">

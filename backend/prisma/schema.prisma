@@ -53,7 +53,7 @@ model payment_methods {
   card_holder_name  String?                @db.VarChar(255)
   card_number       String?                @db.VarChar(255)
   expiration_date   String?                @db.VarChar(255)
-  card_cvv          String?                @db.Char(4)
+  card_cvv          String?                @db.VarChar(255)
   paypal_email      String?                @db.VarChar(255)
   status            payment_methods_status @default(active)
   created_on        DateTime               @db.DateTime(0)

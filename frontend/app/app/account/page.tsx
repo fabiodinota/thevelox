@@ -260,11 +260,10 @@ const AppAccountPage = () => {
 		// If the new date is in the past, don't update the state
 		if (newDate < new Date(new Date())) {
 			setDateOfBirth(newDate);
+			setValue("dateOfBirth", format(newDate, "PP"), {
+				shouldValidate: true,
+			});
 		}
-
-		setValue("dateOfBirth", format(newDate, "PP"), {
-			shouldValidate: true,
-		});
 
 		setCalendarOpen(false);
 	};
@@ -366,7 +365,7 @@ const AppAccountPage = () => {
 						style="nofill"
 						tabIndex={4}
 						speed="medium"
-						className="w-full bg-secondary hover:bg-accent !justify-between px-5"
+						className="w-full bg-secondary hover:bg-accent !text-foreground !justify-between px-5"
 					>
 						Manage Payment Methods
 						{ArrowIcon(false, "rotate-180 w-3 h-3")}
@@ -442,7 +441,6 @@ const AppAccountPage = () => {
 												onSelect={
 													handleDateOfBirthChange
 												}
-												initialFocus
 												fromYear={1920}
 												toYear={2030}
 											/>

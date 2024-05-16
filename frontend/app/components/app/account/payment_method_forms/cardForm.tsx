@@ -11,6 +11,7 @@ import axios from "axios";
 import RippleButton from "@/app/components/RippleButton";
 import { toast } from "sonner";
 import { encryptToken } from "@/app/utils/cryptToken";
+import { useRouter } from "next/navigation";
 
 interface CardFormProps {}
 
@@ -78,6 +79,8 @@ const CardForm = ({}: CardFormProps) => {
 			}),
 	});
 
+	const router = useRouter();
+
 	const {
 		handleSubmit,
 		setValue,
@@ -109,6 +112,7 @@ const CardForm = ({}: CardFormProps) => {
 			)
 			.then((res) => {
 				toast.success("Payment method added successfully");
+				router.push("/app/account/managePaymentMethods");
 			})
 			.catch((err) => {
 				if (err.response.status === 400 && err.response.data.message) {

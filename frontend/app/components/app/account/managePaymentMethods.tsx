@@ -135,7 +135,7 @@ const ManagePaymentMethods = ({}: ManagePaymentMethodsProps) => {
 							}
 							speed="medium"
 							key={method.payment_method_id}
-							className={`!relative flex items-center space-x-2 w-full !justify-between bg-secondary px-5 !h-[60px]`}
+							className={`!relative flex items-center !text-foreground space-x-2 w-full !justify-between bg-secondary px-5 !h-[60px]`}
 						>
 							<div className="flex items-center gap-5">
 								{/* <div
@@ -168,21 +168,21 @@ const ManagePaymentMethods = ({}: ManagePaymentMethodsProps) => {
 										: "opacity-0 translate-x-5"
 								}`}
 							>
-								<TooltipProvider>
+								<button>
+									{DeleteIcon(
+										false,
+										"w-5 h-5 cursor-pointer"
+									)}
+								</button>
+								{/* <TooltipProvider>
 									<Tooltip>
 										<TooltipTrigger asChild>
-											<button>
-												{DeleteIcon(
-													false,
-													"w-5 h-5 cursor-pointer"
-												)}
-											</button>
 										</TooltipTrigger>
 										<TooltipContent className="bg-background border-none">
 											<p>Delete Payment Method</p>
 										</TooltipContent>
 									</Tooltip>
-								</TooltipProvider>
+								</TooltipProvider> */}
 							</div>
 							<div>
 								<Image
@@ -208,7 +208,7 @@ const ManagePaymentMethods = ({}: ManagePaymentMethodsProps) => {
 					speed="medium"
 					asLink
 					href="/app/account/addPaymentMethod"
-					className="flex flex-row justify-between items-center bg-secondary w-full px-5 py-5 rounded-xl gap-5 !h-[60px]"
+					className="flex flex-row justify-between items-center bg-secondary !text-foreground w-full px-5 py-5 rounded-xl gap-5 !h-[60px]"
 				>
 					{/* add payment method */}
 					<span className="text-[14px] lg:text-[16px] font-medium rounded-xl flex flex-row gap-5 items-center w-full">

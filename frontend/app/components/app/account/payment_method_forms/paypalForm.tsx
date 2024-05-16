@@ -6,6 +6,7 @@ import RippleButton from "@/app/components/RippleButton";
 import { encryptToken } from "@/app/utils/cryptToken";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -22,6 +23,8 @@ const PaypalForm = ({}: PaypalFormProps) => {
 			})
 			.email({ message: "Invalid email address" }),
 	});
+
+	const router = useRouter();
 
 	const {
 		handleSubmit,
@@ -46,6 +49,7 @@ const PaypalForm = ({}: PaypalFormProps) => {
 			)
 			.then((res) => {
 				toast.success("Payment method added successfully");
+				router.push("/app/account/managePaymentMethods");
 			})
 			.catch((err) => {
 				toast.error(err.response.data.message || "Unknown error");
