@@ -60,7 +60,7 @@ const AppHistoryPage = () => {
 					<span className="text-[24px] font-bold mt-5">
 						Ticket History
 					</span>
-					<div className="flex flex-col gap-2.5 lg:gap-5">
+					<div className="flex flex-col gap-2.5">
 						{ticketHistory?.length === 0 && (
 							<span className="text-[14px] md:text-[16px] text-primary opacity-50">
 								No ticket history found. Book your first ticket

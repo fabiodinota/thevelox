@@ -141,7 +141,7 @@ const AppHomePage = () => {
 					<span className="text-[24px] font-bold mt-5">
 						Favorite Routes
 					</span>
-					<div className="flex flex-col gap-2.5 lg:gap-5">
+					<div className="flex flex-col gap-2.5">
 						{favoriteRoutes.length === 0 && (
 							<span className="text-[14px] md:text-[16px] text-primary opacity-50">
 								No favorite routes found. Add your first
@@ -168,7 +168,7 @@ const AppHomePage = () => {
 					<span className="text-[24px] font-bold mt-5">
 						Active Tickets
 					</span>
-					<div className="flex flex-col gap-2.5 lg:gap-5">
+					<div className="flex flex-col gap-2.5">
 						{activeTickets?.length === 0 && (
 							<span className="text-[14px] md:text-[16px] text-primary opacity-50">
 								No active tickets found. Book your first ticket
