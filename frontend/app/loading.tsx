@@ -43,17 +43,20 @@ export default function Loading() {
 					className="bg-background fixed top-0 left-0 z-50 h-screen w-screen flex justify-center items-center"
 				>
 					<div className="flex justify-center items-center flex-col h-full w-full">
-						<Image
-							priority
-							unoptimized
-							src={
-								theme === "dark"
-									? Logo_Animation
-									: Logo_Animation_Dark
-							}
-							alt="TheVelox"
-							className="w-[50%] md:w-[30%] xl:w-[400px] object-contain xl:h-[200px]"
-						/>
+						<div className="relative w-[50%] md:w-[30%] xl:w-[400px] xl:h-[200px]">
+							<Image
+								priority
+								unoptimized
+								src={
+									theme === "dark"
+										? "https://storage.thevelox.co/Logo_Animation.gif"
+										: "https://storage.thevelox.co/Logo_Animation_dark.gif"
+								}
+								fill
+								alt="TheVelox"
+								className=" object-contain w-full h-full"
+							/>
+						</div>
 						<Progress
 							value={progress}
 							className=" w-[50%] xl:w-full max-w-[500px] h-[2px]"
