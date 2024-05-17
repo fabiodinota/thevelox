@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import { motion, useScroll } from "framer-motion";
+import Image from "next/image";
 
 const page = () => {
 	const firstRef = useRef(null);
@@ -31,11 +32,13 @@ const page = () => {
 						data-aos-once="true"
 						data-aos-easing="ease-out"
 						data-aos-delay="100"
-						className="rounded-[20px] overflow-hidden bg-secondary w-full aspect-video grid place-content-center"
+						className="rounded-[20px] relative overflow-hidden bg-secondary w-full aspect-video grid place-content-center"
 					>
-						<img
+						<Image
 							src="https://storage.thevelox.co/booking.webp"
 							alt="Thumbnail"
+							sizes="(max-width: 1000px) 90vw, 700px"
+							fill
 							className="w-full h-full object-cover aspect-video"
 						/>
 					</div>

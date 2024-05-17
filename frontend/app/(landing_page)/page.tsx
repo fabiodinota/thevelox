@@ -173,11 +173,13 @@ export default function Home() {
 							data-aos-duration="600"
 							data-aos-once="true"
 							data-aos-easing="ease-out"
-							className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center overflow-hidden aos-init"
+							className="rounded-[20px] relative bg-secondary w-full aspect-video grid place-content-center overflow-hidden aos-init"
 						>
-							<img
+							<Image
 								src="https://storage.thevelox.co/3D_0416_fabiodinota.webp"
 								alt="Thumbnail"
+								sizes="(max-width: 768px) 90vw, 700px"
+								fill
 								className="w-full h-full object-cover aspect-video"
 							/>
 						</div>
@@ -188,11 +190,13 @@ export default function Home() {
 							data-aos-duration="600"
 							data-aos-once="true"
 							data-aos-easing="ease-out"
-							className="rounded-[20px] bg-secondary w-full aspect-video grid place-content-center overflow-hidden aos-init"
+							className="rounded-[20px] relative bg-secondary w-full aspect-video grid place-content-center overflow-hidden aos-init"
 						>
-							<img
+							<Image
 								src="https://storage.thevelox.co/3D_0657_fabiodinota.webp"
 								alt="Thumbnail"
+								sizes="(max-width: 768px) 90vw, 700px"
+								fill
 								className="w-full h-full object-cover aspect-video"
 							/>
 						</div>
