@@ -10,12 +10,15 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import axios from "axios";
 import RippleButton from "./RippleButton";
+import { toast } from "sonner";
 
 export function ContactForm({ className }: { className?: string }) {
 	const { isAuthenticated } = useSession();
 
 	const [isFocused, setIsFocused] = useState<string | null>(null);
 	const [messageLength, setMessageLength] = useState<number>(0);
+
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const [contactMessage, setContactMessage] = useState<string>("");
 
@@ -54,18 +57,21 @@ export function ContactForm({ className }: { className?: string }) {
 	});
 
 	const onSubmit = handleSubmit(async (data) => {
+		setLoading(true);
 		axios
 			.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/contact/sendContactForm`,
 				data
 			)
 			.then((res) => {
-				setContactMessage(
+				toast.success(
 					"Thank you for your message! We will get back to you soon."
 				);
+				setLoading(false);
 			})
 			.catch((err) => {
-				console.log("Err: ", err);
+				toast.error("An error occurred. Please try again later.");
+				setLoading(false);
 			});
 	});
 
@@ -222,13 +228,14 @@ export function ContactForm({ className }: { className?: string }) {
 						{errors.message.message}
 					</span>
 				)}
-				<RippleButton type="submit" style="gradient" className="w-full">
+				<RippleButton
+					type="submit"
+					loading={loading}
+					style="gradient"
+					className="w-full"
+				>
 					Continue
 				</RippleButton>
-
-				{contactMessage && (
-					<span className="text-green-600">{contactMessage}</span>
-				)}
 			</motion.form>
 		</>
 	);
