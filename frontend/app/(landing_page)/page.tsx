@@ -116,15 +116,11 @@ export default function Home() {
 								"https://storage.thevelox.co/promovideo_fase3_fabiodinota.mp4"
 							}
 							light={
-								<div className="aspect-video relative w-full h-full">
-									<Image
-										src="https://storage.thevelox.co/3D_0491_fabiodinota.webp"
-										alt="Thumbnail"
-										sizes="(max-width: 1400px) 90vw, 1400px"
-										fill
-										className="w-full h-full object-cover aspect-video"
-									/>
-								</div>
+								<img
+									src="https://storage.thevelox.co/3D_0491_fabiodinota.webp"
+									alt="Thumbnail"
+									className="w-full h-full object-cover aspect-video relative"
+								/>
 							}
 							controls
 							width={"100%"}
