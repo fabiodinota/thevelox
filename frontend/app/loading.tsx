@@ -1,8 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Logo_Animation from "@/public/Logo_Animation.gif";
-import Logo_Animation_Dark from "@/public/Logo_Animation_dark.gif";
 import { motion } from "framer-motion";
 import { Progress } from "./components/ui/progress";
 import React from "react";
@@ -54,7 +52,7 @@ export default function Loading() {
 								}
 								fill
 								alt="TheVelox"
-								className=" object-contain w-full h-full"
+								className="object-contain w-full h-full"
 							/>
 						</div>
 						<Progress
