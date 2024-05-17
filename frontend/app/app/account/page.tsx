@@ -59,8 +59,10 @@ const AppAccountPage = () => {
 			}
 
 			if (user.birth_date || !dateOfBirth) {
-				setDateOfBirth(new Date(user.birth_date));
-				setValue("dateOfBirth", user.birth_date);
+				const date = new Date(user.birth_date);
+				date.setDate(date.getDate() + 1);
+				setDateOfBirth(date);
+				setValue("dateOfBirth", format(date, "PP"));
 			}
 
 			const countryCode = countryCodeSuggestions.find(
@@ -257,6 +259,8 @@ const AppAccountPage = () => {
 			newDate.setHours(hours, minutes);
 		}
 
+		console.log("newDate: ", newDate);
+
 		// If the new date is in the past, don't update the state
 		if (newDate < new Date(new Date())) {
 			setDateOfBirth(newDate);
@@ -267,6 +271,8 @@ const AppAccountPage = () => {
 
 		setCalendarOpen(false);
 	};
+
+	console.log(dateOfBirth);
 
 	const handleCalendarClick = () => {
 		setCalendarOpen(!calendarOpen);
@@ -355,7 +361,7 @@ const AppAccountPage = () => {
 		<div className="pb-[140px] pt-[70px]">
 			<Header />
 			<div className="w-full h-full flex justify-center items-start mt-10">
-				<div className="flex flex-col gap-2.5 p-5 justify-center items-center max-w-[700px] w-full">
+				<div className="flex flex-col gap-2.5 p-5 justify-center items-center max-w-[800px] w-full">
 					<span className="text-[24px] font-bold w-full text-left">
 						Payment Methods
 					</span>
@@ -403,6 +409,7 @@ const AppAccountPage = () => {
 							<button
 								onClick={handleCalendarClick}
 								id="calendarDOB"
+								type="button"
 								tabIndex={7}
 								className={
 									"flex items-center flex-row w-full h-[70px] md:h-[80px] bg-secondary rounded-xl px-2.5 lg:px-5 text-left font-normal text-[16px] justify-start"
@@ -441,6 +448,7 @@ const AppAccountPage = () => {
 												onSelect={
 													handleDateOfBirthChange
 												}
+												initialFocus
 												fromYear={1920}
 												toYear={2030}
 											/>
@@ -534,36 +542,35 @@ const AppAccountPage = () => {
 								</p>
 							</div>
 						)}
+						<ThemeSwitcher
+							className="w-full"
+							size="big"
+							animation={false}
+						/>
+						<RippleButton
+							disabled={disabled}
+							type="submit"
+							style="gradient"
+							tabIndex={4}
+							className="w-full"
+						>
+							Save Account Information
+						</RippleButton>
+						<div className="w-full flex flex-row gap-10 h-[30px] items-center">
+							<div className="w-full h-[1px] bg-foreground"></div>
+							<p>OR</p>
+							<div className="w-full h-[1px] bg-foreground"></div>
+						</div>
+						<RippleButton
+							onClick={handleSignOut}
+							type="button"
+							style="outlined"
+							tabIndex={4}
+							className="w-full"
+						>
+							Sign Out
+						</RippleButton>
 					</form>
-
-					<ThemeSwitcher
-						className="w-full"
-						size="big"
-						animation={false}
-					/>
-					<RippleButton
-						disabled={disabled}
-						type="submit"
-						style="gradient"
-						tabIndex={4}
-						className="w-full"
-					>
-						Save Account Information
-					</RippleButton>
-					<div className="w-full flex flex-row gap-10 h-[30px] items-center">
-						<div className="w-full h-[1px] bg-foreground"></div>
-						<p>OR</p>
-						<div className="w-full h-[1px] bg-foreground"></div>
-					</div>
-					<RippleButton
-						onClick={handleSignOut}
-						type="button"
-						style="outlined"
-						tabIndex={4}
-						className="w-full"
-					>
-						Sign Out
-					</RippleButton>
 				</div>
 			</div>
 		</div>
