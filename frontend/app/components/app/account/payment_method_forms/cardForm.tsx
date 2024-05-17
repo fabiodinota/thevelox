@@ -92,6 +92,7 @@ const CardForm = ({}: CardFormProps) => {
 	});
 
 	const onSubmit = handleSubmit(async (data) => {
+		setLoading(true);
 		const encryptedCardData = {
 			card_number: encryptToken(data.card_number),
 			card_name: encryptToken(data.card_name),
@@ -113,13 +114,17 @@ const CardForm = ({}: CardFormProps) => {
 			.then((res) => {
 				toast.success("Payment method added successfully");
 				router.push("/app/account/managePaymentMethods");
+				setLoading(false);
 			})
 			.catch((err) => {
 				if (err.response.status === 400 && err.response.data.message) {
 					toast.error(err.response.data.message || "Unknown error");
+					setLoading(false);
 				}
 			});
 	});
+
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const [CardType, setCardType] = useState<CARD_NAMES | undefined>(undefined);
 
@@ -199,7 +204,7 @@ const CardForm = ({}: CardFormProps) => {
 	return (
 		<form
 			onSubmit={onSubmit}
-			className={`w-full h-full lg:max-w-[700px] relative flex-shrink-0 flex flex-col items-start gap-2.5`}
+			className={`w-full h-full lg:max-w-[800px] relative flex-shrink-0 flex flex-col items-start gap-2.5`}
 		>
 			<AnimatedInput
 				id="card_number"
@@ -298,6 +303,7 @@ const CardForm = ({}: CardFormProps) => {
 				style="gradient"
 				tabIndex={4}
 				className="w-full"
+				loading={loading}
 			>
 				Add Payment Method
 			</RippleButton>

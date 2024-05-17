@@ -62,6 +62,8 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 
 	const { releaseFocus } = useAutocomplete();
 
+	const [loading, setLoading] = useState<boolean>(false);
+
 	useEffect(() => {
 		if (calendarOpen) {
 			releaseFocus();
@@ -138,6 +140,7 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 	});
 
 	const onSubmit = handleSubmit(async (data) => {
+		setLoading(true);
 		setStage(3);
 		setStageData((prev) => ({
 			...prev,
@@ -391,6 +394,7 @@ const SignUpStageTwo = ({ setStage, setStageData }: SignUpStageOneProps) => {
 					style="gradient"
 					tabIndex={4}
 					className="w-full"
+					loading={loading}
 				>
 					Sign Up
 				</RippleButton>

@@ -98,6 +98,7 @@ const CardForm = ({ setStage }: CardFormProps) => {
 	});
 
 	const onSubmit = handleSubmit(async (data) => {
+		setLoading(true);
 		const encryptedCardData = {
 			card_number: encryptToken(data.card_number),
 			card_name: encryptToken(data.card_name),
@@ -118,14 +119,18 @@ const CardForm = ({ setStage }: CardFormProps) => {
 			)
 			.then((res) => {
 				toast.success("Payment method added successfully");
+				setLoading(false);
 				setStage("buyTicketStage");
 			})
 			.catch((err) => {
 				if (err.response.status === 400 && err.response.data.message) {
 					toast.error(err.response.data.message || "Unknown error");
+					setLoading(false);
 				}
 			});
 	});
+
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const [CardType, setCardType] = useState<CARD_NAMES | undefined>(undefined);
 
@@ -304,6 +309,7 @@ const CardForm = ({ setStage }: CardFormProps) => {
 				style="gradient"
 				tabIndex={4}
 				className="w-full"
+				loading={loading}
 			>
 				Add Payment Method
 			</RippleButton>

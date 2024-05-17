@@ -113,7 +113,7 @@ export default function Home() {
 							onProgress={(e) => setPlayed(e.played)}
 							playing={isPlaying}
 							url={
-								"https://storage.thevelox.co/commercial_fase3_fabiodinota.mp4"
+								"https://storage.thevelox.co/promovideo_fase3_fabiodinota.mp4"
 							}
 							light={
 								<img

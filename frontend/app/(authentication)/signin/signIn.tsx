@@ -49,6 +49,8 @@ const SignIn = ({
 		special: false,
 	});
 
+	const [loading, setLoading] = useState<boolean>(false);
+
 	useEffect(() => {
 		setEmail(signInData.email);
 	}, []);
@@ -79,6 +81,7 @@ const SignIn = ({
 	});
 
 	const onSubmit = handleSubmit(async (data) => {
+		setLoading(true);
 		setStage(2);
 		setSignInData(() => ({
 			email: data.email,
@@ -103,6 +106,7 @@ const SignIn = ({
 			setValue("password", "", {
 				shouldValidate: true,
 			});
+			setLoading(false);
 		}
 	}, [errorMessage, setPassword, setValue, setPasswordValidation]);
 
@@ -229,6 +233,7 @@ const SignIn = ({
 				style="gradient"
 				tabIndex={4}
 				className="w-full"
+				loading={loading}
 			>
 				Sign In
 			</RippleButton>

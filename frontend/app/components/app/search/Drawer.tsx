@@ -73,7 +73,10 @@ const DrawerComponent = ({
 
 	const router = useRouter();
 
+	const [loading, setLoading] = useState<boolean>(false);
+
 	const handleBuyTicket = async () => {
+		setLoading(true);
 		axios
 			.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/ticket/buyTicket`,
@@ -90,9 +93,11 @@ const DrawerComponent = ({
 					"Ticket bought successfully, you can view it in the Home page"
 				);
 				router.push("/app/home");
+				setLoading(false);
 			})
 			.catch((err) => {
 				toast.error(err.response.data.message || "Unknown error");
+				setLoading(false);
 			});
 	};
 
@@ -222,6 +227,7 @@ const DrawerComponent = ({
 											style="gradient"
 											speed="medium"
 											className=""
+											loading={loading}
 										>
 											Buy Ticket
 										</RippleButton>

@@ -64,6 +64,7 @@ const SearchForm = ({
 }: SearchFormProps) => {
 	const [calendarOpen, setCalendarOpen] = useState(false);
 	const { releaseFocus } = useAutocomplete();
+	const [loading, setLoading] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (calendarOpen) {
@@ -73,11 +74,18 @@ const SearchForm = ({
 
 	const onSubmit = handleSubmit(async (data) => {
 		if (!searching) {
+			setLoading(true);
 			handleSearch(data);
 		} else {
 			handleGoBackToMap();
 		}
 	});
+
+	useEffect(() => {
+		if (searchReqData && "tickets" in searchReqData) {
+			setLoading(false);
+		}
+	}, [searchReqData]);
 
 	const handleDateChange = (newDate: Date | undefined) => {
 		if (!newDate) return;
@@ -389,6 +397,7 @@ const SearchForm = ({
 							type="submit"
 							style="gradient"
 							className="w-full"
+							loading={loading}
 						>
 							<svg
 								width="18"

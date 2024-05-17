@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React, { MouseEventHandler } from "react";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface RippleButtonProps {
 	children: React.ReactNode;
@@ -13,6 +14,7 @@ interface RippleButtonProps {
 	href?: string;
 	rippleColor?: string;
 	speed?: "fast" | "medium" | "slow";
+	loading?: boolean;
 }
 const RippleButton = ({
 	children,
@@ -23,6 +25,7 @@ const RippleButton = ({
 	href = "/",
 	rippleColor = "rgba(255, 255, 255, 0.15)",
 	speed = "slow",
+	loading,
 	...props
 }: RippleButtonProps) => {
 	function createRipple(
@@ -62,7 +65,8 @@ const RippleButton = ({
 				}}
 				{...props}
 			>
-				{children}
+				{loading && <LoadingSpinner />}
+				{!loading && children}
 			</button>
 		);
 	} else {
@@ -76,7 +80,8 @@ const RippleButton = ({
 				}}
 				{...props}
 			>
-				{children}
+				{loading && <LoadingSpinner />}
+				{!loading && children}
 			</Link>
 		);
 	}

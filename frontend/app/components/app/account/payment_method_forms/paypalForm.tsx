@@ -38,6 +38,7 @@ const PaypalForm = ({}: PaypalFormProps) => {
 
 	const onSubmit = handleSubmit(async (data) => {
 		const encryptedPaypalEmail = encryptToken(data.paypal_email);
+		setLoading(true);
 		axios
 			.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/payment/addPaymentMethod`,
@@ -49,15 +50,19 @@ const PaypalForm = ({}: PaypalFormProps) => {
 			)
 			.then((res) => {
 				toast.success("Payment method added successfully");
+				setLoading(false);
 				router.push("/app/account/managePaymentMethods");
 			})
 			.catch((err) => {
 				toast.error(err.response.data.message || "Unknown error");
 				setErrorMessage(err);
+				setLoading(false);
 			});
 	});
 
 	const [errorMessage, setErrorMessage] = useState<string>("");
+
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const paypalRef = useRef<HTMLInputElement>(null);
 	const [paypalEmail, setPaypalEmail] = useState<string>("");
@@ -75,7 +80,7 @@ const PaypalForm = ({}: PaypalFormProps) => {
 	return (
 		<form
 			onSubmit={onSubmit}
-			className={`w-full h-full lg:max-w-[700px] relative flex-shrink-0 flex flex-col items-start gap-2.5`}
+			className={`w-full h-full lg:max-w-[800px] relative flex-shrink-0 flex flex-col items-start gap-2.5`}
 		>
 			<AnimatedInput
 				id="paypal"
@@ -119,6 +124,7 @@ const PaypalForm = ({}: PaypalFormProps) => {
 				style="gradient"
 				tabIndex={4}
 				className="w-full"
+				loading={loading}
 			>
 				Add Payment Method
 			</RippleButton>

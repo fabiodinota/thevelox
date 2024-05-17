@@ -64,6 +64,8 @@ const PaypalForm = ({ setStage }: PaypalFormProps) => {
 			});
 	});
 
+	const [loading, setLoading] = useState<boolean>(false);
+
 	const [errorMessage, setErrorMessage] = useState<string>("");
 
 	const paypalRef = useRef<HTMLInputElement>(null);
@@ -126,6 +128,7 @@ const PaypalForm = ({ setStage }: PaypalFormProps) => {
 				style="gradient"
 				tabIndex={4}
 				className="w-full"
+				loading={loading}
 			>
 				Add Payment Method
 			</RippleButton>
