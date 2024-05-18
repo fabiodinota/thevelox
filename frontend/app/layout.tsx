@@ -15,11 +15,26 @@ const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "The Velox - Home",
-	description: "The Velox - Home",
+	description: "Fictional Ticket Booking App for The Velox",
 	generator: "Next.js",
 	manifest: "/manifest.json",
 	keywords: [],
 	authors: [{ name: "Fabio Di Nota" }],
+	openGraph: {
+		type: "website",
+		locale: "en_US",
+		url: "https://www.thevelox.co",
+		title: "The Velox - Home",
+		description: "Fictional Ticket Booking App for The Velox",
+		images: [
+			{
+				url: "/public/og-image.png",
+				width: 1418,
+				height: 798,
+				alt: "The Velox",
+			},
+		],
+	},
 	icons: [
 		{ rel: "apple-touch-icon", url: "/icons/icon-192x192.png" },
 		{ rel: "icon", url: "/icons/icon-192x192.png" },
