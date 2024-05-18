@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { Progress } from "./components/ui/progress";
 import React from "react";
 import AnimatePresenceProvider from "./context/AnimatePresenceProvider";
+import Logo_Animation from "@/public/Logo_Animation.gif";
+import Logo_Animation_Dark from "@/public/Logo_Animation_dark.gif";
 import { useTheme } from "./context/themeContext";
 
 export default function Loading() {
@@ -47,8 +49,8 @@ export default function Loading() {
 								unoptimized
 								src={
 									theme === "dark"
-										? "https://storage.thevelox.co/Logo_Animation.gif"
-										: "https://storage.thevelox.co/Logo_Animation_dark.gif"
+										? Logo_Animation
+										: Logo_Animation_Dark
 								}
 								fill
 								alt="TheVelox"
