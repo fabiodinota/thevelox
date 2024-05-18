@@ -43,7 +43,7 @@ export default function Loading() {
 					className="bg-background fixed top-0 left-0 z-50 h-screen w-screen flex justify-center items-center"
 				>
 					<div className="flex justify-center items-center flex-col h-full w-full">
-						<div className="relative w-[50%] md:w-[30%] xl:w-[400px] xl:h-[200px] flex-shrink-0">
+						<div className="relative w-[50%] md:w-[30%] h-full xl:w-[400px] xl:h-[200px] flex-shrink-0">
 							<Image
 								priority
 								unoptimized
