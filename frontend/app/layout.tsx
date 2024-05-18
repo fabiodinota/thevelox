@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 		description: "Fictional Ticket Booking App for The Velox",
 		images: [
 			{
-				url: "/og-image.png",
+				url: "/opengraph-image.png",
 				width: 1418,
 				height: 798,
 				alt: "The Velox",
