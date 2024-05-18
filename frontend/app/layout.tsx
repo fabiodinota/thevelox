@@ -71,9 +71,19 @@ export default function RootLayout({
 								property="og:image"
 								content="https://storage.thevelox.co/opengraph-image.png"
 							/>
+							<meta property="og:image:width" content="1200" />
+							<meta property="og:image:height" content="630" />
 							<meta
 								name="twitter:image"
 								content="https://storage.thevelox.co/opengraph-image.png"
+							/>
+							<meta
+								property="twitter:image:width"
+								content="1200"
+							/>
+							<meta
+								property="twitter:image:height"
+								content="630"
 							/>
 						</head>
 						<body
