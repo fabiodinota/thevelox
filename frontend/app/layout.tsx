@@ -26,14 +26,6 @@ export const metadata: Metadata = {
 		url: "https://www.thevelox.co",
 		title: "The Velox - Home",
 		description: "Fictional Ticket Booking App for The Velox",
-		images: [
-			{
-				url: "/opengraph-image.png",
-				width: 1418,
-				height: 798,
-				alt: "The Velox",
-			},
-		],
 	},
 	icons: [
 		{ rel: "apple-touch-icon", url: "/icons/icon-192x192.png" },
@@ -74,6 +66,14 @@ export default function RootLayout({
 							<link
 								rel="preconnect"
 								href="https://api.thevelox.co"
+							/>
+							<meta
+								property="og:image"
+								content="https://storage.thevelox.co/opengraph-image.png"
+							/>
+							<meta
+								name="twitter:image"
+								content="https://storage.thevelox.co/opengraph-image.png"
 							/>
 						</head>
 						<body
