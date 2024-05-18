@@ -73,13 +73,6 @@ export function HeroQuickBook({ className }: { className?: string }) {
 			}),
 	});
 
-	useEffect(() => {
-		const currentDate = new Date();
-		const halfHourLater = new Date(currentDate.getTime() + 30 * 60000); // Adding 30 minutes in milliseconds
-
-		setDate(halfHourLater);
-	}, []);
-
 	const router = useRouter();
 
 	const {
@@ -89,6 +82,16 @@ export function HeroQuickBook({ className }: { className?: string }) {
 	} = useForm<z.infer<typeof FormSchema>>({
 		resolver: zodResolver(FormSchema),
 	});
+
+	useEffect(() => {
+		const currentDate = new Date();
+		const halfHourLater = new Date(currentDate.getTime() + 30 * 60000); // Adding 30 minutes in milliseconds
+
+		setDate(halfHourLater);
+		setValue("departureDate", format(halfHourLater, "PP HH:mm"), {
+			shouldValidate: true,
+		});
+	}, []);
 
 	const handleQuickBook = async (data: z.infer<typeof FormSchema>) => {
 		localStorage.setItem("quickBookInfo", JSON.stringify(data));
