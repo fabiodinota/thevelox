@@ -31,7 +31,7 @@ type Ticket = {
 	booking_date: Date;
 	price: number | null;
 	ticket_object: string | null;
-	journeys?: Journey; // Define journeys as an array of Journey objects
+	journeys?: Journey;
 };
 
 type User = {
@@ -44,7 +44,7 @@ type User = {
 	password: string;
 	admin: boolean | null;
 	created_on: Date;
-	tickets?: Ticket[]; // Define tickets as an array of Ticket objects
+	tickets?: Ticket[];
 };
 
 export const getAllUsers = async (req: CustomRequest, res: Response) => {
@@ -56,7 +56,6 @@ export const getAllUsers = async (req: CustomRequest, res: Response) => {
 			return res.status(403).json({ message: "Unauthorized" });
 		}
 
-		// Fetch all users
 		const usersWithTickets: User[] = await prisma.users.findMany({
 			include: {
 				tickets: true,

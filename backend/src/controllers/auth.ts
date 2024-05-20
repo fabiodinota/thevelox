@@ -6,7 +6,6 @@ import { decryptToken, encryptToken } from "../utils/cryptToken";
 
 const prisma = new PrismaClient();
 
-// Sign up a new user with username, email, and password
 export const signUp = async (req: Request, res: Response) => {
 	const { fullName, dateOfBirth, countryCode, phoneNumber, email, password } =
 		req.body;
@@ -46,8 +45,8 @@ export const signUp = async (req: Request, res: Response) => {
 		newUser.admin = false;
 	}
 
-	const accessToken = generateAccessToken(newUser.user_id, newUser.admin); // Set expiresIn as needed
-	const refreshToken = generateRefreshToken(newUser.user_id, newUser.admin); // Set expiresIn as needed
+	const accessToken = generateAccessToken(newUser.user_id, newUser.admin);
+	const refreshToken = generateRefreshToken(newUser.user_id, newUser.admin);
 
 	const encryptedAccessToken = encryptToken(accessToken);
 	const encryptedRefreshToken = encryptToken(refreshToken);
@@ -70,7 +69,6 @@ export const signUp = async (req: Request, res: Response) => {
 	res.send({ user: newUser });
 };
 
-// Sign in a user based on username and password
 export const signIn = async (req: Request, res: Response) => {
 	const { email, password } = req.body;
 
@@ -92,9 +90,8 @@ export const signIn = async (req: Request, res: Response) => {
 	}
 
 	if (passwordMatch) {
-		// Generate a JWT token for the authenticated user    // Generate a JWT token for the newly registered user
-		const accessToken = generateAccessToken(user.user_id, user.admin); // Set expiresIn as needed
-		const refreshToken = generateRefreshToken(user.user_id, user.admin); // Set expiresIn as needed
+		const accessToken = generateAccessToken(user.user_id, user.admin);
+		const refreshToken = generateRefreshToken(user.user_id, user.admin);
 
 		const encryptedAccessToken = encryptToken(accessToken);
 		const encryptedRefreshToken = encryptToken(refreshToken);

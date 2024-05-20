@@ -12,7 +12,6 @@ export const refreshJWTToken = async (req: Request, res: Response) => {
 
 	let token = "";
 
-	// Check if the authorization header exists and extract the token.
 	if (authorization) {
 		const authHeader = authorization.split(" ");
 		token = authHeader[1];
@@ -28,12 +27,10 @@ export const refreshJWTToken = async (req: Request, res: Response) => {
 	const refreshToken = decryptToken(token) as string;
 
 	try {
-		// Verify the refresh token
 		const decoded = (await verifyRefreshToken(refreshToken)) as {
 			user_id: number;
 		};
 
-		// Check if the user exists (you can also include additional checks here)
 		const user = await prisma.users.findUnique({
 			where: { user_id: decoded.user_id },
 		});
@@ -58,7 +55,7 @@ export const refreshJWTToken = async (req: Request, res: Response) => {
 			secure: true,
 			sameSite: "strict",
 			domain: process.env.COOKIE_DOMAIN,
-			expires: new Date(Date.now() + 1000 * 60 * 15), // 15 mins
+			expires: new Date(Date.now() + 1000 * 60 * 15),
 		});
 		res.status(200).send({ message: "Access token refreshed" });
 	} catch (error) {

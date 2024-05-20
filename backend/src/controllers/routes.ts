@@ -8,7 +8,7 @@ interface CustomRequest extends Request {
 		user_id: number;
 		iat: string;
 		exp: string;
-	}; // Adjusted to match the types that jwt.verify can return
+	};
 }
 
 export const getFavoriteRoutes = async (req: CustomRequest, res: Response) => {

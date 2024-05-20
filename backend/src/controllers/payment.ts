@@ -8,7 +8,7 @@ interface CustomRequest extends Request {
 		user_id: number;
 		iat: string;
 		exp: string;
-	}; // Adjusted to match the types that jwt.verify can return
+	};
 }
 
 export const getPaymentMethods = async (req: CustomRequest, res: Response) => {
@@ -47,8 +47,6 @@ export const addPaymentMethod = async (req: CustomRequest, res: Response) => {
 			card_cvv = null,
 			paypal_email = null,
 		} = req.body;
-
-		// check if payment method already exists
 
 		if (type !== "paypal") {
 			const existingPaymentMethod =
@@ -92,8 +90,8 @@ export const addPaymentMethod = async (req: CustomRequest, res: Response) => {
 					created_on: new Date(),
 				},
 			});
-			/* 			getPaymentMethods(req, res);
-			 */ res.status(200).json(paymentMethod);
+
+			res.status(200).json(paymentMethod);
 		} else if (type === "paypal") {
 			const paymentMethod = await prisma.payment_methods.create({
 				data: {

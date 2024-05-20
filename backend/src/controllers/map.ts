@@ -9,7 +9,7 @@ interface CustomRequest extends Request {
 		user_id: number;
 		iat: string;
 		exp: string;
-	}; // Adjusted to match the types that jwt.verify can return
+	};
 }
 
 export type Ticket = {
@@ -25,7 +25,6 @@ export type Ticket = {
 	price?: number;
 };
 
-// Search for the optimal/shortest path between two stations
 export const search = async (req: CustomRequest, res: Response) => {
 	const startStation = req.query.startStation as string;
 	const targetStation = req.query.endStation as string;
@@ -66,9 +65,8 @@ export const search = async (req: CustomRequest, res: Response) => {
 			endLevel: number,
 			lines: string[]
 		) => {
-			// Calculate the price based on the difference in levels and amount of stops and line changes
 			const levelDifference = Math.abs(endLevel - startLevel);
-			const stops = result.path.length - 1; // Number of stops
+			const stops = result.path.length - 1;
 
 			let price = 0;
 			if (levelDifference === 0) {
@@ -145,13 +143,11 @@ export const generateTrainTimes = ({
 }: TrainTimeProps) => {
 	let times = [];
 	console.log("Initial time received:", initialTime);
-	// Parse the initial time explicitly as UTC
 	let initialDeparture = new Date(initialTime + "Z");
 	console.log("Converted Date object:", initialDeparture.toISOString());
 
 	for (let trainIndex = 0; trainIndex < numberOfTrains; trainIndex++) {
-		let startDelay = Math.floor(Math.random() * 6) + 5; // Delay between 5 to 10 minutes
-		// Adjust the time using UTC methods
+		let startDelay = Math.floor(Math.random() * 6) + 5;
 		let currentTime = new Date(
 			initialDeparture.getTime() + startDelay * 60000
 		);
@@ -159,15 +155,14 @@ export const generateTrainTimes = ({
 		let pathTimes = [];
 
 		for (let station of stations) {
-			let travelTime = Math.floor(Math.random() * 2) + 1; // Travel time between 1 to 2 minutes
+			let travelTime = Math.floor(Math.random() * 2) + 1;
 			currentTime = new Date(currentTime.getTime() + travelTime * 60000);
 			pathTimes.push(currentTime.toISOString());
 		}
 
-		times.push(pathTimes); // Collect times for one complete path across all stations
+		times.push(pathTimes);
 
-		// IMPORTANT: Update the initial departure time for the next train to be after the last station time
-		let nextTrainDelay = Math.floor(Math.random() * 11) + 5; // Delay for next train between 5 to 15 minutes
+		let nextTrainDelay = Math.floor(Math.random() * 11) + 5;
 		initialDeparture = new Date(
 			currentTime.getTime() + nextTrainDelay * 60000
 		);

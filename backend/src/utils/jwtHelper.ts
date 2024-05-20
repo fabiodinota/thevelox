@@ -5,7 +5,7 @@ dotenv.config({
 	path: "../.env",
 });
 
-// Helper function to generate an access token
+// function to generate an access token
 function generateAccessToken(user_id: number, admin: boolean) {
 	if (!process.env.JWT_SECRET) {
 		throw new Error(
@@ -19,7 +19,7 @@ function generateAccessToken(user_id: number, admin: boolean) {
 	});
 }
 
-// Helper function to generate a refresh token
+// function to generate a refresh token
 function generateRefreshToken(user_id: number, admin: boolean) {
 	if (!process.env.JWT_REFRESH_TOKEN_SECRET) {
 		throw new Error(
@@ -38,7 +38,7 @@ if (!process.env.JWT_REFRESH_TOKEN_SECRET) {
 }
 const refreshSecretKey = process.env.JWT_REFRESH_TOKEN_SECRET;
 
-// Helper function to verify a refresh token
+// function to verify a refresh token
 export const verifyRefreshToken = (token: string) => {
 	return new Promise((resolve, reject) => {
 		jwt.verify(token, refreshSecretKey, (error, decoded) => {
@@ -47,10 +47,10 @@ export const verifyRefreshToken = (token: string) => {
 					"Refresh token verification failed: ",
 					error.message
 				);
-				reject(error); // Token verification failed
+				reject(error);
 			} else {
 				console.log("Refresh token verified");
-				resolve(decoded); // Token is valid, and 'decoded' contains the payload
+				resolve(decoded);
 			}
 		});
 	});

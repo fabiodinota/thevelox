@@ -8,7 +8,7 @@ interface CustomRequest extends Request {
 		user_id: number;
 		iat: string;
 		exp: string;
-	}; // Adjusted to match the types that jwt.verify can return
+	};
 }
 
 export type Ticket = {
@@ -95,8 +95,6 @@ export const getActiveTickets = async (req: CustomRequest, res: Response) => {
 			journeys: true,
 		},
 	});
-
-	// if date is in the past, dont return it
 
 	const activeTickets = tickets.filter((ticket) => {
 		const journeyDate = new Date(ticket.journey_date);

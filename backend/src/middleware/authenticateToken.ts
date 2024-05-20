@@ -6,7 +6,7 @@ import { decryptToken } from "../utils/cryptToken";
 dotenv.config();
 
 interface CustomRequest extends Request {
-	user?: JwtPayload | string; // Adjusted to match the types that jwt.verify can return
+	user?: JwtPayload | string;
 }
 
 export const authenticateToken = (
@@ -19,7 +19,6 @@ export const authenticateToken = (
 
 	let token = "";
 
-	// Check if the authorization header exists and extract the token.
 	if (authorization) {
 		const authHeader = authorization.split(" ");
 		token = authHeader[1];
@@ -32,7 +31,7 @@ export const authenticateToken = (
 	if (!decryptedToken) {
 		return res
 			.status(401)
-			.send("Unfortunately you're not authenticated, please log in."); // If no token, return unauthorized
+			.send("Unfortunately you're not authenticated, please log in.");
 	}
 
 	if (!process.env.JWT_SECRET) {
@@ -43,18 +42,16 @@ export const authenticateToken = (
 		decryptedToken,
 		process.env.JWT_SECRET,
 		(err: unknown, decoded: unknown) => {
-			// Explicitly check the type of `err` and `decoded` due to TypeScript's type safety
-			if (err) return res.sendStatus(403); // If token is not valid or expired, return forbidden
+			if (err) return res.sendStatus(403);
 
-			// Assuming `decoded` is of type JwtPayload if not an error, adjust as necessary for your payload
 			if (typeof decoded === "object" && decoded !== null) {
 				req.user = decoded;
-				console.log("Decoded token:", decoded); // Log the decoded token to check its contents
-				next(); // Proceed to the next middleware/function
+				console.log("Decoded token:", decoded);
+				next();
 			} else {
 				return res.sendStatus(403).send({
 					message: "Token was not authorized, please try again",
-				}); // Handle the case where decoded is not as expected
+				});
 			}
 		}
 	);
