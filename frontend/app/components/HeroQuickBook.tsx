@@ -22,6 +22,7 @@ import RippleButton from "./RippleButton";
 import useStationData from "../utils/useStationData";
 import { useSession } from "../context/sessionContext";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type Station = {
 	name: string;
@@ -104,6 +105,11 @@ export function HeroQuickBook({ className }: { className?: string }) {
 	}, []);
 
 	const onSubmit = handleSubmit(async (data) => {
+		if (data.from === data.to) {
+			toast.error("Start and end stations can't be the same");
+			return;
+		}
+
 		handleQuickBook(data);
 	});
 
