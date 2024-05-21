@@ -28,6 +28,7 @@ import { getSearchParams } from "@/app/utils/getSearchParams";
 import DrawerComponent from "@/app/components/app/search/Drawer";
 import ActiveTicketHeader from "@/app/components/app/search/ActiveTicketHeader";
 import { headers } from "next/headers";
+import { toast } from "sonner";
 
 const AppSearchPage = () => {
 	const [startStation, setStartStation] = useState<Station>({
@@ -81,6 +82,11 @@ const AppSearchPage = () => {
 
 	const handleSearch = async (data: FormSchemaProps) => {
 		// Push the search params to the URL
+
+		if (data.startStation === data.endStation) {
+			toast.error("Start and end stations can't be the same");
+			return;
+		}
 
 		router.push(
 			`/app/search?startStation=${data.startStation}&endStation=${
