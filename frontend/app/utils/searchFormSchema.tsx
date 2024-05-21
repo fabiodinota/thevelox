@@ -22,7 +22,10 @@ const searchFormSchema = ({ stations, startStation }: FormSchemaProps) => {
 				{
 					message: "Enter a valid station",
 				}
-			),
+			)
+			.refine((value) => value !== startStation.name, {
+				message: "Start and end stations can't be the same",
+			}),
 		endStation: z
 			.string({ required_error: "Set a destination station" })
 			.min(1, { message: "Set a destination station" })
