@@ -317,6 +317,7 @@ const SearchForm = ({
 						<button
 							onClick={handleCalendarClick}
 							disabled={searching}
+							type="button"
 							className={
 								"flex items-center flex-row w-full h-[60px] md:h-[70px] bg-secondary rounded-xl px-2.5 text-left font-normal text-[16px] justify-start"
 							}
