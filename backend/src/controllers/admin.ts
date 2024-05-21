@@ -99,21 +99,54 @@ export const deleteUser = async (req: CustomRequest, res: Response) => {
 	}
 
 	try {
-		await prisma.users.delete({
-			where: {
-				user_id: user_id,
-			},
-			include: {
-				payment_methods: true,
-				tickets: {
-					include: {
-						journeys: true,
-					},
-				},
-				favorites: true,
-			},
+		const tickets = await prisma.tickets.findMany({
+			where: { user_id: user_id },
+			select: { journey_id: true },
 		});
 
+		await prisma.tickets.deleteMany({
+			where: { user_id: user_id },
+		});
+
+		const favorites = await prisma.favorites.findMany({
+			where: { user_id: user_id },
+			select: { journey_id: true },
+		});
+
+		await prisma.favorites.deleteMany({
+			where: { user_id: user_id },
+		});
+
+		const journeyIds = [
+			...new Set([
+				...tickets.map((t) => t.journey_id),
+				...favorites.map((f) => f.journey_id),
+			]),
+		];
+
+		for (const journey_id of journeyIds) {
+			const journeyReferences =
+				(await prisma.tickets.count({
+					where: { journey_id: journey_id },
+				})) +
+				(await prisma.favorites.count({
+					where: { journey_id: journey_id },
+				}));
+
+			if (journeyReferences === 0) {
+				await prisma.journeys.delete({
+					where: { journey_id: journey_id },
+				});
+			}
+		}
+
+		await prisma.payment_methods.deleteMany({
+			where: { user_id: user_id },
+		});
+
+		await prisma.users.delete({
+			where: { user_id: user_id },
+		});
 		res.status(200).json({ message: "User deleted successfully" });
 	} catch (error) {
 		console.error(error);
