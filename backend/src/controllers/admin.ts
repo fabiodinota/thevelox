@@ -103,6 +103,11 @@ export const deleteUser = async (req: CustomRequest, res: Response) => {
 			where: {
 				user_id: user_id,
 			},
+			include: {
+				payment_methods: true,
+				tickets: true,
+				favorites: true,
+			},
 		});
 
 		res.status(200).json({ message: "User deleted successfully" });
