@@ -85,6 +85,7 @@ const AppSearchPage = () => {
 
 		if (data.startStation === data.endStation) {
 			toast.error("Start and end stations can't be the same");
+			setSearching(false);
 			return;
 		}
 
