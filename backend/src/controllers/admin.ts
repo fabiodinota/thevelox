@@ -105,7 +105,11 @@ export const deleteUser = async (req: CustomRequest, res: Response) => {
 			},
 			include: {
 				payment_methods: true,
-				tickets: true,
+				tickets: {
+					include: {
+						journeys: true,
+					},
+				},
 				favorites: true,
 			},
 		});
