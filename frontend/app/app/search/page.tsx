@@ -67,6 +67,7 @@ const AppSearchPage = () => {
 	const FormSchema = searchFormSchema({
 		stations,
 		startStation,
+		endStation,
 	});
 
 	const {

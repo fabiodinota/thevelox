@@ -10,9 +10,14 @@ type Station = {
 interface FormSchemaProps {
 	stations: Station[];
 	startStation: Station;
+	endStation: Station;
 }
 
-const searchFormSchema = ({ stations, startStation }: FormSchemaProps) => {
+const searchFormSchema = ({
+	stations,
+	startStation,
+	endStation,
+}: FormSchemaProps) => {
 	const FormSchema = z.object({
 		startStation: z
 			.string({ required_error: "Set a starting station" })
@@ -23,7 +28,7 @@ const searchFormSchema = ({ stations, startStation }: FormSchemaProps) => {
 					message: "Enter a valid station",
 				}
 			)
-			.refine((value) => value !== startStation.name, {
+			.refine((value) => value !== endStation.name, {
 				message: "Start and end stations can't be the same",
 			}),
 		endStation: z
