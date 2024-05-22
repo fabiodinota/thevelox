@@ -234,6 +234,7 @@ export function HeroQuickBook({ className }: { className?: string }) {
 					<div className="relative w-full">
 						<button
 							onClick={handleCalendarClick}
+							type="button"
 							className={
 								"flex items-center flex-row w-full h-[70px] md:h-[80px] bg-secondary rounded-xl px-2.5 lg:px-5 text-left font-normal text-[16px] justify-start"
 							}
