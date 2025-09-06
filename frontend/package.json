@@ -27,7 +27,7 @@
 		"@types/three": "^0.160.0",
 		"@videsk/tailwind-random-color": "^0.2.0-beta",
 		"aos": "^2.3.4",
-		"axios": "^1.6.5",
+		"axios": "^1.8.2",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.0",
 		"credit-card-type": "^10.0.0",
